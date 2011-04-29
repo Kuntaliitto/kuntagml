@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> RakennetutTilat  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> RakennettuTila  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_RakennettuTila" type="kanta:AbstractRakennettuTilaType" abstract="true" substitutionGroup="kanta:_Rakennettutilakohde">
+		<xs:annotation>
+			<xs:documentation>Kantakohde rakennetuille tiloille</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractRakennettuTilaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRakennettutilakohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<xs:element name="tila" type="kanta:RakennuksenTilaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen tilanne elinkaarella</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="reunaviiva" type="gml:CurvePropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<!--xs:element name="sijaintipiste" type="gml:PointPropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<xs:element name="rakennustunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennustunnus
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kottovuosi" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen käyttöönottohetki</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> MaanalainenTila  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MaanalainenTila" type="kanta:MaanalainenTilaType" substitutionGroup="kanta:_RakennettuTila">
+		<xs:annotation>
+			<xs:documentation>Maan alle rakennettu rakennuslupaa edellyttävä tila</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaanalainenTilaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRakennettuTilaType">
+				<xs:sequence>
+					<xs:element name="maanalaisentilanosat" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maanalaisen tilan osat</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:MaanalaisenTilanOsa" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> MaanalaisenTilanOsa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MaanalaisenTilanOsa" type="kanta:MaanalaisenTilanOsaType" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Maanalaisen tilan osa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaanalaisenTilanOsaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:MaanalaisenTilanOsaTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maanalaisen rakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rakennelma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rakennelma" type="kanta:RakennelmaType" substitutionGroup="kanta:_Rakennettutilakohde">
+		<xs:annotation>
+			<xs:documentation>Kevyt ja pienehkö rakennelma, joka ei edellytä rakennuslupaa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakennelmaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRakennettutilakohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="kanta:RakennelmanKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennelman käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType"/-->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rakennus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rakennus" type="kanta:RakennusType" substitutionGroup="kanta:_RakennettuTila">
+		<xs:annotation>
+			<xs:documentation>Rakennuslupaa edellyttävät maanpääliset tilat ja niiden rakenteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakennusType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRakennettuTilaType">
+				<xs:sequence>
+					<xs:element name="rakennuksenKayttotarkoitus" type="kanta:RakennetunTilanKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennetun tilan käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitusmerkinta" type="xs:string" minOccurs="0"/>
+					<xs:element name="julkisivumateriaali" type="kanta:JulkisivumateriaaliType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Julkisivun rakennusmateriaali</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kerrosluku" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen kerrosluku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="korkeusasema" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen korkeusasema</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen osoitteet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rakennuksenosat" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen osarakenteet</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:RakennuksenOsa" minOccurs="0" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Rakennuksen osa</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kayttotarkoituskoodi" type="kanta:RakennuksenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JHS suosituksen mukainen käyttötarkoituskoodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> RakennuksenOsa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="RakennuksenOsa" type="kanta:RakennuksenOsaType" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Rakennuksen osa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakennuksenOsaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:RakennuksenOsaTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennuksen osan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

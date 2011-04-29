@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Vesiliikenneverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Vesiliikennealue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Vesiliikennealue" type="kanta:VesiliikennealueType" substitutionGroup="kanta:_Vesiliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Vesilikenteen alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesiliikennealueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractVesiliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:VesiliikennealueenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vesiliikennealueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Vesiliikennevayla  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Vesiliikennevayla" type="kanta:VesiliikennevaylaType" substitutionGroup="kanta:_Vesiliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Vesiliikenneväylän reunaviivojen ja niiden päätepisteiden rajaama alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesiliikennevaylaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractVesiliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:VesiliikennevaylanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vesiliikenneväylän tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> VesiliikenteenErityisrakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="VesiliikenteenErityisrakenne" type="kanta:VesiliikenteenErityisrakenneType" substitutionGroup="kanta:_Vesiliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Tiettyyn väylänosaan liittyvä, väylään liittyvä rakenne</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesiliikenteenErityisrakenneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractVesiliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:VesiliikenteenErityisrakenteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Erityisrakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> VesiliikenteenTurvaLaite  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="VesiliikenteenTurvaLaite" type="kanta:VesiliikenteenTurvaLaiteType" substitutionGroup="kanta:_Vesiliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Vesiliikenteen turvalaite</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesiliikenteenTurvaLaiteType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractVesiliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:VesiliikenteenTurvaLaiteTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Turvalaitteen tyyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

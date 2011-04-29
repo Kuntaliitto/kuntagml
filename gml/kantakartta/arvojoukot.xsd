@@ -1,0 +1,1613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Arvojoukot  -->
+	<!-- ================================================= -->
+	<xs:simpleType name="VerkkoMateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Maali"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="Bitumi"/>
+			<xs:enumeration value="Kumi"/>
+			<xs:enumeration value="Lujitemuovi"/>
+			<xs:enumeration value="PVC"/>
+			<xs:enumeration value="PEM"/>
+			<xs:enumeration value="PEL"/>
+			<xs:enumeration value="PEH"/>
+			<xs:enumeration value="Lasitettu savi"/>
+			<xs:enumeration value="Asbesti sementti"/>
+			<xs:enumeration value="Pallografiitti valurauta"/>
+			<xs:enumeration value="Harmaa valurauta"/>
+			<xs:enumeration value="Ruostumaton teräs"/>
+			<xs:enumeration value="Hapon kestävä teräs"/>
+			<xs:enumeration value="Lyijy"/>
+			<xs:enumeration value="Muu materiaali"/>
+			<xs:enumeration value="Betoni"/>
+			<xs:enumeration value="Muovi"/>
+			<xs:enumeration value="Teräs"/>
+			<xs:enumeration value="Valurauta"/>
+			<xs:enumeration value="Kivi"/>
+			<xs:enumeration value="Tiili"/>
+			<xs:enumeration value="Puu"/>
+			<xs:enumeration value="kaapelitv"/>
+			<xs:enumeration value="Koaksaali"/>
+			<xs:enumeration value="Kuitu"/>
+			<xs:enumeration value="Kupari"/>
+			<xs:enumeration value="Alumiini"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> AjoradanPinta  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="AjoradanPintaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kestopäällystetty"/>
+			<xs:enumeration value="kestopäällystämätön"/>
+			<xs:enumeration value="rakenteilla"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennekohteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennekohteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="luiska"/>
+			<xs:enumeration value="maastoportaat"/>
+			<xs:enumeration value="allas"/>
+			<xs:enumeration value="antennimasto"/>
+			<xs:enumeration value="valonheitinmasto"/>
+			<xs:enumeration value="muu masto"/>
+			<xs:enumeration value="savupiippu"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="suihkukaivo"/>
+			<xs:enumeration value="lipputanko"/>
+			<xs:enumeration value="puistokaluste"/>
+			<xs:enumeration value="muistomerkki"/>
+			<xs:enumeration value="polttoaineen jakelulaite"/>
+			<xs:enumeration value="tukimuurin yläreuna"/>
+			<xs:enumeration value="tukimuurin alareuna"/>
+			<xs:enumeration value="aita"/>
+			<xs:enumeration value="pato"/>
+			<xs:enumeration value="tukivaijeri"/>
+			<xs:enumeration value="sisäluiskan alareuna"/>
+			<xs:enumeration value="sisäluiskan yläreuna"/>
+			<xs:enumeration value="ulkoluiskan alareuna"/>
+			<xs:enumeration value="ulkoluiskan yläreuna"/>
+			<xs:enumeration value="porras"/>
+			<xs:enumeration value="meluaita"/>
+			<xs:enumeration value="terassi"/>
+			<xs:enumeration value="tuulivoimajalusta"/>
+			<xs:enumeration value="aluekeräyspiste"/>
+			<xs:enumeration value="portinpylväs"/>
+			<xs:enumeration value="lintutorni"/>
+			<xs:enumeration value="suojakaide"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> ErityiskayttoalueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ErityiskayttoalueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="piha-alue"/>
+			<xs:enumeration value="jättöalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> ErityiskayttooikeusalueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ErityiskayttooikeusalueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="vuokra-alue"/>
+			<xs:enumeration value="rasitealue"/>
+			<xs:enumeration value="yksityistie"/>
+			<xs:enumeration value="rajavyöhyke"/>
+			<xs:enumeration value="ampuma_alue"/>
+			<xs:enumeration value="sotilasalue"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> ErityisrakenteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ErityisrakenteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="koroke"/>
+			<xs:enumeration value="reunakivi"/>
+			<xs:enumeration value="reunakiven alareuna"/>
+			<xs:enumeration value="reunakiven yläreuna"/>
+			<xs:enumeration value="autopaikka"/>
+			<xs:enumeration value="suojatie"/>
+			<xs:enumeration value="tunneli"/>
+			<xs:enumeration value="kallio- ja maaleikkauksen raja"/>
+			<xs:enumeration value="päällysteen reuna"/>
+			<xs:enumeration value="maaliviiva"/>
+			<xs:enumeration value="liikennemerkin jalusta"/>
+			<xs:enumeration value="ilmarata"/>
+			<xs:enumeration value="paikoitusalue"/>
+			<xs:enumeration value="kääntöpaikka"/>
+			<xs:enumeration value="levähdysalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> HallintoalueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="HallintoalueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="valtio"/>
+			<xs:enumeration value="lääni"/>
+			<xs:enumeration value="kunta"/>
+			<xs:enumeration value="kylä"/>
+			<xs:enumeration value="kaupunginosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Havupuusuku  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="HavupuusukuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kataja"/>
+			<xs:enumeration value="kuusi"/>
+			<xs:enumeration value="lehtikuusi"/>
+			<xs:enumeration value="mänty"/>
+			<xs:enumeration value="sembramänty"/>
+			<xs:enumeration value="sypressi"/>
+			<xs:enumeration value="tuija"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Huomattavuus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="HuomattavuusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="huomattava"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Julkisivumateriaali  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="JulkisivumateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="betoni"/>
+			<xs:enumeration value="tiili"/>
+			<xs:enumeration value="kevytbetoni"/>
+			<xs:enumeration value="metallilevy"/>
+			<xs:enumeration value="kivennäispohjainen levy"/>
+			<xs:enumeration value="puu"/>
+			<xs:enumeration value="muu materiaali"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> JyrkanteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="JyrkanteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="luonnonmukainen"/>
+			<xs:enumeration value="rakennettu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KaatopaikanKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KaatopaikanKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="yhdyskuntajätteiden kaatopaikka"/>
+			<xs:enumeration value="maankaatopaikka"/>
+			<xs:enumeration value="muu kaatopaikka"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KasviryhmanTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KasviryhmanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kaislikko"/>
+			<xs:enumeration value="varvikko"/>
+			<xs:enumeration value="pensaikko"/>
+			<xs:enumeration value="istutusalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Kayratyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KayratyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="syvyyskäyrä"/>
+			<xs:enumeration value="korkeuskäyrä"/>
+			<xs:enumeration value="johtokäyrä"/>
+			<xs:enumeration value="välikäyrä"/>
+			<xs:enumeration value="apukäyrä"/>
+			<xs:enumeration value="syvyysjohtokäyrä"/>
+			<xs:enumeration value="syvyysvälikäyrä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Kayttotieto  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KayttotietoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="käytössä"/>
+			<xs:enumeration value="ei käytössä"/>
+			<xs:enumeration value="käytöstä poistettu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KiintopisteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KiintopisteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="tasokiintopiste"/>
+			<xs:enumeration value="tasotukipiste"/>
+			<xs:enumeration value="korkeuskiintopiste"/>
+			<xs:enumeration value="korkeustukipiste"/>
+			<xs:enumeration value="kolmiopiste"/>
+			<xs:enumeration value="apupiste"/>
+			<xs:enumeration value="vesiasterikko"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Lehtijakotunnus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="LehtijakotunnusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="valtakunnallinen"/>
+			<xs:enumeration value="paikallinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Lehtipuusuku  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="LehtipuusukuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="haapa"/>
+			<xs:enumeration value="hevoskastanja"/>
+			<xs:enumeration value="hieskoivu"/>
+			<xs:enumeration value="jalava"/>
+			<xs:enumeration value="kirsikkapuu"/>
+			<xs:enumeration value="kriikunapuu"/>
+			<xs:enumeration value="lehmus"/>
+			<xs:enumeration value="leppä"/>
+			<xs:enumeration value="luumupuu"/>
+			<xs:enumeration value="mantelipuu"/>
+			<xs:enumeration value="omenapuu"/>
+			<xs:enumeration value="paju"/>
+			<xs:enumeration value="pihlaja"/>
+			<xs:enumeration value="piilipuu"/>
+			<xs:enumeration value="poppeli"/>
+			<xs:enumeration value="pyökki"/>
+			<xs:enumeration value="päärynäpuu"/>
+			<xs:enumeration value="raita"/>
+			<xs:enumeration value="rauduskoivu"/>
+			<xs:enumeration value="saarni"/>
+			<xs:enumeration value="tammi"/>
+			<xs:enumeration value="tuomi"/>
+			<xs:enumeration value="vaahtera"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> IlmaliikennekohdeTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="IlmaliikennekohdeTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="matkustajaterminaalialue"/>
+			<xs:enumeration value="liikelentoterminaalialue"/>
+			<xs:enumeration value="rahtiterminaalialue"/>
+			<xs:enumeration value="matkustajahuoltoalue"/>
+			<xs:enumeration value="palvelu- ja hallintoalue"/>
+			<xs:enumeration value="lentokenttähuollon alue"/>
+			<xs:enumeration value="yhdyskuntateknisen huollon alue"/>
+			<xs:enumeration value="varastoalue"/>
+			<xs:enumeration value="lentotiedotusalue"/>
+			<xs:enumeration value="maamerkki"/>
+			<xs:enumeration value="tutka"/>
+			<xs:enumeration value="lentoeste"/>
+			<xs:enumeration value="ilmailuviestilaite"/>
+			<xs:enumeration value="viestilinkki"/>
+			<xs:enumeration value="lentosuunnistuslaite"/>
+			<xs:enumeration value="ilmatilanJako"/>
+			<xs:enumeration value="rajattuIlmatila"/>
+			<xs:enumeration value="reittipiste"/>
+			<xs:enumeration value="ilmaliikennepalvelureitin segmentti"/>
+			<xs:enumeration value="lentopaikka"/>
+			<xs:enumeration value="lentoliikenteen suoja-alue"/>
+			<xs:enumeration value="lentokoneiden huoltoalue"/>
+			<xs:enumeration value="suojaviheralue"/>
+			<xs:enumeration value="lentoliikenteen vaara-alue"/>
+			<xs:enumeration value="erityisalue"/>
+			<xs:enumeration value="selvitysalue"/>
+			<xs:enumeration value="lentomeluvyöhyke"/>
+			<xs:enumeration value="lentopaikan lentoliikennealue"/>
+			<xs:enumeration value="kiitoalue"/>
+			<xs:enumeration value="rullaustie"/>
+			<xs:enumeration value="lentokoneiden seisonta-Alue"/>
+			<xs:enumeration value="lähi-Ilmatilan lentoliikennealueet"/>
+			<xs:enumeration value="kiitotien suunta"/>
+			<xs:enumeration value="lähestymisvalot"/>
+			<xs:enumeration value="lähestymissektorit"/>
+			<xs:enumeration value="mittarilähestymissektorit"/>
+			<xs:enumeration value="näkölähestymissektori"/>
+			<xs:enumeration value="noususektori"/>
+			<xs:enumeration value="kynnys"/>
+			<xs:enumeration value="kynnysvalot"/>
+			<xs:enumeration value="mittarilaskeutumisjärjestelmä"/>
+			<xs:enumeration value="merkkimajakka"/>
+			<xs:enumeration value="ILS-Sektori"/>
+			<xs:enumeration value="lentomenetelmä"/>
+			<xs:enumeration value="estevarakorkeus"/>
+			<xs:enumeration value="korkeusrajoituspinta"/>
+			<xs:enumeration value="sektori"/>
+			<xs:enumeration value="siirtymäpinta"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Liikunta-alueenKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="Liikunta-alueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="yleisurheilukenttä"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Maa-ainesTunnus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="Maa-ainesTunnusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sora"/>
+			<xs:enumeration value="hiekka"/>
+			<xs:enumeration value="louhos"/>
+			<xs:enumeration value="savi"/>
+			<xs:enumeration value="muta"/>
+			<xs:enumeration value="turve"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Maa-alueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="Maa-alueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="niitty"/>
+			<xs:enumeration value="nurmikko"/>
+			<xs:enumeration value="pelto"/>
+			<xs:enumeration value="puisto"/>
+			<xs:enumeration value="puutarha"/>
+			<xs:enumeration value="avokallio"/>
+			<xs:enumeration value="hietikko"/>
+			<xs:enumeration value="louhikko"/>
+			<xs:enumeration value="tulva-alue"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="kivikko"/>
+			<xs:enumeration value="piha-alue"/>
+			<xs:enumeration value="jättöalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> MaaliikennevaylanTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="MaaliikennevaylanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="ajoradan keskilinja"/>
+			<xs:enumeration value="ajoradan reuna"/>
+			<xs:enumeration value="kevyenliikenteenväylä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> MaapohjanTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="MaapohjanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="harva louhikko"/>
+			<xs:enumeration value="soistuma"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> MetsanLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="MetsanLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="havumetsä"/>
+			<xs:enumeration value="lehtimetsä"/>
+			<xs:enumeration value="sekametsä"/>
+			<xs:enumeration value="hakattu metsä"/>
+			<xs:enumeration value="taimikko"/>
+			<xs:enumeration value="pensaikko"/>
+			<xs:enumeration value="varvikko"/>
+			<xs:enumeration value="havupensaikko"/>
+			<xs:enumeration value="lehtipensaikko"/>
+			<xs:enumeration value="kuusimetsä"/>
+			<xs:enumeration value="mäntymetsä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> MuuntamonRakenteellinenLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="MuuntamonRakenteellinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="pylväsmuuntamo"/>
+			<xs:enumeration value="kaksipylväsmuuntamo"/>
+			<xs:enumeration value="monipylväsmuuntamo"/>
+			<xs:enumeration value="kiinteistömuuntamo"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Pensassuku  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="PensassukuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="selja"/>
+			<xs:enumeration value="syreeni"/>
+			<xs:enumeration value="orapihlaja"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> PysakinRakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="PysakinRakenneType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="katettu"/>
+			<xs:enumeration value="ei katettu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Raideleveys  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RaideleveysType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="normaali"/>
+			<xs:enumeration value="kapea"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennelmanKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennelmanKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="varasto"/>
+			<xs:enumeration value="autotalli"/>
+			<xs:enumeration value="kasvihuone"/>
+			<xs:enumeration value="maakellari"/>
+			<xs:enumeration value="hyppyrimäki"/>
+			<xs:enumeration value="näkötorni"/>
+			<xs:enumeration value="muu käyttö"/>
+			<xs:enumeration value="puhelinkioski"/>
+			<xs:enumeration value="lastauslaituri"/>
+			<xs:enumeration value="katos"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennelmanTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennelmanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sisäänkäynti"/>
+			<xs:enumeration value="ajoluiska"/>
+			<xs:enumeration value="portaat"/>
+			<xs:enumeration value="katos"/>
+			<xs:enumeration value="sisennys"/>
+			<xs:enumeration value="uloke"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakenneputkenToiminnallinenLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakenneputkenToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="suojaputki"/>
+			<xs:enumeration value="suojakouru"/>
+			<xs:enumeration value="imuputki"/>
+			<xs:enumeration value="alitusputki"/>
+			<xs:enumeration value="salaoja"/>
+			<xs:enumeration value="kanava"/>
+			<xs:enumeration value="suojalaatta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennetunTilanKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennetunTilanKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="toimisto ja hallintorakennus"/>
+			<xs:enumeration value="kokoontumisrakennus"/>
+			<xs:enumeration value="opetusrakennus"/>
+			<xs:enumeration value="teollisuusrakennus"/>
+			<xs:enumeration value="varastorakennus"/>
+			<xs:enumeration value="maa- metsä- ja kalatalousrakennus"/>
+			<xs:enumeration value="liikenne tai muu rakennus"/>
+			<xs:enumeration value="muu rakennus"/>
+			<xs:enumeration value="asuinrakennus"/>
+			<xs:enumeration value="hoitoalan rakennus"/>
+			<xs:enumeration value="myymälä ja majoitus rakennus"/>
+			<xs:enumeration value="vapaa-ajan rakennus"/>
+			<xs:enumeration value="voimalaitos"/>
+			<xs:enumeration value="muuntamo"/>
+			<xs:enumeration value="tietoliikenneverkon laitetila"/>
+			<xs:enumeration value="lämmönsiirrinasema"/>
+			<xs:enumeration value="k-asema"/>
+			<xs:enumeration value="vedenottamo"/>
+			<xs:enumeration value="vedenkäsittelylaitos"/>
+			<xs:enumeration value="pumppaamo"/>
+			<xs:enumeration value="vesijohtoverkon pumppu"/>
+			<xs:enumeration value="vesijohtoverkon paineenkorotusasema"/>
+			<xs:enumeration value="ylävesisäiliö"/>
+			<xs:enumeration value="alavesisäiliö"/>
+			<xs:enumeration value="jäteveden puhdistamo"/>
+			<xs:enumeration value="pysäköintitalo"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennuksenTila  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennuksenTilaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="keskeneräinen"/>
+			<xs:enumeration value="valmis"/>
+			<xs:enumeration value="rappeutunut"/>
+			<xs:enumeration value="raunio"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Rakennusalusta  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennusalustaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kallio"/>
+			<xs:enumeration value="maaperäkivi"/>
+			<xs:enumeration value="sokkeli"/>
+			<xs:enumeration value="seinä"/>
+			<xs:enumeration value="katto"/>
+			<xs:enumeration value="asfaltti"/>
+			<xs:enumeration value="puu"/>
+			<xs:enumeration value="maaperä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Rakennusmateriaali  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennusmateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="puu"/>
+			<xs:enumeration value="tiili"/>
+			<xs:enumeration value="kivi"/>
+			<xs:enumeration value="valurauta"/>
+			<xs:enumeration value="teräs"/>
+			<xs:enumeration value="muovi"/>
+			<xs:enumeration value="betoni"/>
+			<xs:enumeration value="muu materiaali"/>
+			<xs:enumeration value="alumiini"/>
+			<xs:enumeration value="kupari"/>
+			<xs:enumeration value="lyijy"/>
+			<xs:enumeration value="haponkestävä teräs"/>
+			<xs:enumeration value="ruostumaton teräs"/>
+			<xs:enumeration value="harmaavalurauta"/>
+			<xs:enumeration value="pallografiittivalurauta"/>
+			<xs:enumeration value="asbestisementti"/>
+			<xs:enumeration value="lasitettu savi"/>
+			<xs:enumeration value="PEH"/>
+			<xs:enumeration value="PEL"/>
+			<xs:enumeration value="PEM"/>
+			<xs:enumeration value="PVC"/>
+			<xs:enumeration value="lujitemuovi"/>
+			<xs:enumeration value="kumi"/>
+			<xs:enumeration value="bitumi"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="maali"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RaideliikenneRakenteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RaideliikenneRakenteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="ratapiha"/>
+			<xs:enumeration value="rautatietunneli"/>
+			<xs:enumeration value="rautatiesilta"/>
+			<xs:enumeration value="laskumäki"/>
+			<xs:enumeration value="tasoristeys"/>
+			<xs:enumeration value="päällysrakenne"/>
+			<xs:enumeration value="rataosa"/>
+			<xs:enumeration value="pölkytys"/>
+			<xs:enumeration value="tukirakenne"/>
+			<xs:enumeration value="alusrakenne"/>
+			<xs:enumeration value="rautatielaituri"/>
+			<xs:enumeration value="ajojohto"/>
+			<xs:enumeration value="rautatiesiltarumpu"/>
+			<xs:enumeration value="alitus"/>
+			<xs:enumeration value="kiskotus"/>
+			<xs:enumeration value="kmPylväs"/>
+			<xs:enumeration value="ratajohtopylväs"/>
+			<xs:enumeration value="stoppari"/>
+			<xs:enumeration value="vaihde"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RautatienTurvaLaiteTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RautatienTurvaLaiteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="opastin"/>
+			<xs:enumeration value="baliisi"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Sahkoistys  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SahkoistysType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sähköistetty"/>
+			<xs:enumeration value="ei sähköistetty"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SuoalueenKulkukelpoisuus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SuoalueenKulkukelpoisuusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="helppokulkuinen"/>
+			<xs:enumeration value="vaikeakulkuinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SuojaAlueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SuojaAlueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="lentoliikenteen suoja-alue"/>
+			<xs:enumeration value="suojaviheralue"/>
+			<xs:enumeration value="vaaraalue"/>
+			<xs:enumeration value="erityisalue"/>
+			<xs:enumeration value="selvitysalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> TilastollisenAlueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="TilastollisenAlueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="tilastoalue"/>
+			<xs:enumeration value="suuralue"/>
+			<xs:enumeration value="pienalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> ToiminnansuunnittelualueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ToiminnansuunnittelualueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="koulupiiri"/>
+			<xs:enumeration value="vaalipiiri"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Tukipisteluokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="TukipisteluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="luokka_I"/>
+			<xs:enumeration value="luokka_II"/>
+			<xs:enumeration value="luokka_III"/>
+			<xs:enumeration value="luokka_IV"/>
+			<xs:enumeration value="luokka_V"/>
+			<xs:enumeration value="luokka_VI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Tulkittavuus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="TulkittavuusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="epämääräinen"/>
+			<xs:enumeration value="yksikäsitteinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VarastoalueenKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VarastoalueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="puuvarasto"/>
+			<xs:enumeration value="hiilivarasto"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesikohteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesikohteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="meri"/>
+			<xs:enumeration value="jarvi"/>
+			<xs:enumeration value="lampi"/>
+			<xs:enumeration value="maatuvaVesialue"/>
+			<xs:enumeration value="joki"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="salaoja"/>
+			<xs:enumeration value="lähde"/>
+			<xs:enumeration value="koski"/>
+			<xs:enumeration value="virtaussuuntanuoli"/>
+			<xs:enumeration value="vedenpäällinen kivi"/>
+			<xs:enumeration value="vedenpinnassa kivi"/>
+			<xs:enumeration value="vedenalainen kivi"/>
+			<xs:enumeration value="matalikko"/>
+			<xs:enumeration value="veden täyttämä maakuoppa"/>
+			<xs:enumeration value="rantaviiva"/>
+			<xs:enumeration value="epämääräinenrantaviiva"/>
+			<xs:enumeration value="keinotekoinenrantaviiva"/>
+			<xs:enumeration value="säännöstellynvedenrantaviiva"/>
+			<xs:enumeration value="tulva-alue"/>
+			<xs:enumeration value="valuma-alue"/>
+			<xs:enumeration value="virtaussuunta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiliikennealueenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiliikennealueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="väylä-alue"/>
+			<xs:enumeration value="satama"/>
+			<xs:enumeration value="erityisalue"/>
+			<xs:enumeration value="kanavanLuiskaverhous"/>
+			<xs:enumeration value="laituri"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiliikennevaylanTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiliikennevaylanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="vesiväylä"/>
+			<xs:enumeration value="kanava"/>
+			<xs:enumeration value="väylänosa"/>
+			<xs:enumeration value="väylälinja"/>
+			<xs:enumeration value="väylänosan reunaviiva"/>
+			<xs:enumeration value="risteämä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiliikenteenErityisrakenteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiliikenteenErityisrakenteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sulku"/>
+			<xs:enumeration value="uittolaite"/>
+			<xs:enumeration value="aallonmurtaja"/>
+			<xs:enumeration value="pato"/>
+			<xs:enumeration value="johde"/>
+			<xs:enumeration value="tihtaali"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiliikenteenTurvaLaiteTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiliikenteenTurvaLaiteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="merimajakka"/>
+			<xs:enumeration value="loisto"/>
+			<xs:enumeration value="linjamerkki"/>
+			<xs:enumeration value="suuntamerkki"/>
+			<xs:enumeration value="reunamerkki"/>
+			<xs:enumeration value="tutkamerkki"/>
+			<xs:enumeration value="poiju"/>
+			<xs:enumeration value="viitta"/>
+			<xs:enumeration value="tunnusmajakka/pooki"/>
+			<xs:enumeration value="kummeli"/>
+			<xs:enumeration value="tutkamajakka"/>
+			<xs:enumeration value="viittamerkki pohjois"/>
+			<xs:enumeration value="viittamerkki etelä"/>
+			<xs:enumeration value="viittamerkki itä"/>
+			<xs:enumeration value="viittamerkki länsi"/>
+			<xs:enumeration value="viittamerkki vasen"/>
+			<xs:enumeration value="viittamerkki oikea"/>
+			<xs:enumeration value="viittamerkki kari"/>
+			<xs:enumeration value="viittamerkki turvavesi"/>
+			<xs:enumeration value="viittamerkki erikois"/>
+			<xs:enumeration value="poiju pohjois"/>
+			<xs:enumeration value="poiju etelä"/>
+			<xs:enumeration value="poiju itä"/>
+			<xs:enumeration value="poiju länsi"/>
+			<xs:enumeration value="poiju vasen"/>
+			<xs:enumeration value="poiju oikea"/>
+			<xs:enumeration value="poiju kari"/>
+			<xs:enumeration value="poiju tuvavesi"/>
+			<xs:enumeration value="poiju erikois"/>
+			<xs:enumeration value="reunamerkki pohjois"/>
+			<xs:enumeration value="reunamerkki etelä"/>
+			<xs:enumeration value="reunamerkki itä"/>
+			<xs:enumeration value="reunamerkki länsi"/>
+			<xs:enumeration value="reunamerkki vasen"/>
+			<xs:enumeration value="reunamerkki oikea"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Viivatyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ViivatyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="profiili"/>
+			<xs:enumeration value="rinneviiva"/>
+			<xs:enumeration value="taiteviiva"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VirtaavanVedenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VirtaavanVedenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="joki"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="salaoja"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SuojelukohteenTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SuojelukohteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="suojelukohde"/>
+			<xs:enumeration value="kansallispuisto"/>
+			<xs:enumeration value="aarnialue"/>
+			<xs:enumeration value="luonnonhoitometsä"/>
+			<xs:enumeration value="luonnonpuisto"/>
+			<xs:enumeration value="rauhoitusalue"/>
+			<xs:enumeration value="miljöönsuojelualue"/>
+			<xs:enumeration value="kiinteä muinaisjäännös"/>
+			<xs:enumeration value="merkittävä luontokohde"/>
+			<xs:enumeration value="luonnonmuistomerkki"/>
+			<xs:enumeration value="suoja-alue"/>
+			<xs:enumeration value="suojavyöhyke"/>
+			<xs:enumeration value="pohjavesialue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> PaikannimiLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="PaikannimiLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="maastonimi"/>
+			<xs:enumeration value="vesistonimi"/>
+			<xs:enumeration value="kulttuurinimi"/>
+			<xs:enumeration value="liikennepaikannimi"/>
+			<xs:enumeration value="lääni"/>
+			<xs:enumeration value="kunta"/>
+			<xs:enumeration value="kylä"/>
+			<xs:enumeration value="jakokunta"/>
+			<xs:enumeration value="yksinäistalo"/>
+			<xs:enumeration value="yhteismetsä"/>
+			<xs:enumeration value="kaupunginosa"/>
+			<xs:enumeration value="iso asutuskeskus tai kylä"/>
+			<xs:enumeration value="asutuskeskus"/>
+			<xs:enumeration value="kylä tai kulmakunta"/>
+			<xs:enumeration value="tila"/>
+			<xs:enumeration value="rautatieliikennepaikan nimi"/>
+			<xs:enumeration value="väylännimi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KarttaseliteLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KarttaseliteLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="selite"/>
+			<xs:enumeration value="merkintä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KokoLuokka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KokoLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="suuri"/>
+			<xs:enumeration value="keskikokoinen"/>
+			<xs:enumeration value="pieni"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RaideliikenteenTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RaideliikenteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="juna"/>
+			<xs:enumeration value="metro"/>
+			<xs:enumeration value="raitiotie"/>
+			<xs:enumeration value="pikaraitiotie"/>
+			<xs:enumeration value="museo"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KieliType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KieliType">
+		<xs:annotation>
+			<xs:documentation>Viralliset kielikoodit katso http://babelwiki.babelzilla.org/index.php?title=Language_codes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fi-FI"/>
+			<xs:enumeration value="sv-FI"/>
+			<xs:enumeration value="se-FI"/>
+			<xs:enumeration value="smn-FI"/>
+			<xs:enumeration value="sms-FI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SiltarakenteenTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SiltarakenteenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="maatuki"/>
+			<xs:enumeration value="reunapalkin alareuna"/>
+			<xs:enumeration value="reunapalkin yläreuna"/>
+			<xs:enumeration value="pilari"/>
+			<xs:enumeration value="siltapalkki"/>
+			<xs:enumeration value="kannen alapinta"/>
+			<xs:enumeration value="arkku"/>
+			<xs:enumeration value="taiteviiva"/>
+			<xs:enumeration value="maaliviiva"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> MaanalaisenTilanOsaTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="MaanalaisenTilanOsaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="ulkoreuna"/>
+			<xs:enumeration value="sisäänkäynti"/>
+			<xs:enumeration value="portaat"/>
+			<xs:enumeration value="alinKohta"/>
+			<xs:enumeration value="laki"/>
+			<xs:enumeration value="ajoluiska"/>
+			<xs:enumeration value="pystykuilu"/>
+			<xs:enumeration value="kerrosraja"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennuksenOsaTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennuksenOsaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="seinälinja"/>
+			<xs:enumeration value="kerrosraja"/>
+			<xs:enumeration value="harja"/>
+			<xs:enumeration value="räystäs"/>
+			<xs:enumeration value="korkein kohta"/>
+			<xs:enumeration value="julkisivu"/>
+			<xs:enumeration value="kattorakenne"/>
+			<xs:enumeration value="sisäänkäynti"/>
+			<xs:enumeration value="sisennys"/>
+			<xs:enumeration value="uloke"/>
+			<xs:enumeration value="katos"/>
+			<xs:enumeration value="porras"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> PolunKayttotarkoitusType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="PolunKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kävelypolku"/>
+			<xs:enumeration value="ajopolku"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SahkoverkonJanniteType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SahkoverkonJanniteType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="400kv"/>
+			<xs:enumeration value="220kv"/>
+			<xs:enumeration value="110kv"/>
+			<xs:enumeration value="muu suurjännite"/>
+			<xs:enumeration value="20kv"/>
+			<xs:enumeration value="10kv"/>
+			<xs:enumeration value="6kv"/>
+			<xs:enumeration value="1kv"/>
+			<xs:enumeration value="muu keskijännite"/>
+			<xs:enumeration value="pienjännite"/>
+			<xs:enumeration value="muu jännite"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> SahkoverkonOsanToiminnallinenLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SahkoverkonOsanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sähkölinja"/>
+			<xs:enumeration value="maadoitus"/>
+			<xs:enumeration value="ulkovalaistus"/>
+			<xs:enumeration value="muujohto"/>
+			<xs:enumeration value="liikennevalo"/>
+			<xs:enumeration value="liittymis"/>
+			<xs:enumeration value="raitiotie"/>
+			<xs:enumeration value="viesti"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="kaappi"/>
+			<xs:enumeration value="ilmaisin"/>
+			<xs:enumeration value="sähköpylväs"/>
+			<xs:enumeration value="yhteiskäyttöpylväs"/>
+			<xs:enumeration value="liikennevalopylväs"/>
+			<xs:enumeration value="ulkovalopylväs"/>
+			<xs:enumeration value="puhelinpylväs"/>
+			<xs:enumeration value="valonheitinpylväs"/>
+			<xs:enumeration value="viestimastopylväs"/>
+			<xs:enumeration value="muuntamo"/>
+			<xs:enumeration value="pylväsmuuntamo"/>
+			<xs:enumeration value="kaksipylväsmuuntamo"/>
+			<xs:enumeration value="monipylväsmuuntamo"/>
+			<xs:enumeration value="kiinteistömuuntamo"/>
+			<xs:enumeration value="merkkipaalu"/>
+			<xs:enumeration value="vesistokaapelitaulu"/>
+			<xs:enumeration value="sijaintikilpi"/>
+			<xs:enumeration value="merkkikilpi"/>
+			<xs:enumeration value="vesistönalitustaulu"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="kaapelireitti"/>
+			<xs:enumeration value="varoalue"/>
+			<xs:enumeration value="selitys"/>
+			<xs:enumeration value="varoitusteksti"/>
+			<xs:enumeration value="muu sähkoverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VerkostokohteenSijaintiTilaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="maa"/>
+			<xs:enumeration value="ilma"/>
+			<xs:enumeration value="vesi"/>
+			<xs:enumeration value="tunneli"/>
+			<xs:enumeration value="maanpinta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KaasuverkonOsanToiminnallinenLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KaasuverkonOsanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="venttiili"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="merkkipaalu"/>
+			<xs:enumeration value="sijaintikilpi"/>
+			<xs:enumeration value="vesistönalitustaulu"/>
+			<xs:enumeration value="kaasuputki"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="anodikaapeli"/>
+			<xs:enumeration value="anodikenttä"/>
+			<xs:enumeration value="varoalue"/>
+			<xs:enumeration value="muu kaasuverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> KaukolampoverkonOsanToiminnallinenLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KaukolampoverkonOsanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="johto"/>
+			<xs:enumeration value="rakenne"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="tuuletusputki"/>
+			<xs:enumeration value="muu kaukolämpöverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> TietoliikenneverkonOsanToiminnallinenLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="TietoliikenneverkonOsanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="johto"/>
+			<xs:enumeration value="pylväs"/>
+			<xs:enumeration value="pilari"/>
+			<xs:enumeration value="kaappi"/>
+			<xs:enumeration value="rakennus"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="rakenne"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="merkkipaalu"/>
+			<xs:enumeration value="vesistökaapelitaulu"/>
+			<xs:enumeration value="sijaintikilpi"/>
+			<xs:enumeration value="merkkikilpi"/>
+			<xs:enumeration value="merkkiantenni"/>
+			<xs:enumeration value="vesistönalitustaulu"/>
+			<xs:enumeration value="kaapelireitti"/>
+			<xs:enumeration value="varoalue"/>
+			<xs:enumeration value="selitys"/>
+			<xs:enumeration value="varoitusteksti"/>
+			<xs:enumeration value="muu tietoliikenneverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TietoliikenneLajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="puhelin"/>
+			<xs:enumeration value="tietoverkko"/>
+			<xs:enumeration value="kaapelitv"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiverkonOsanToiminnallinenLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiverkonosanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="päävesijohto"/>
+			<xs:enumeration value="jakeluvesijohto"/>
+			<xs:enumeration value="tonttivesijohto"/>
+			<xs:enumeration value="sprinklervesijohto"/>
+			<xs:enumeration value="kesävesijohto"/>
+			<xs:enumeration value="kasteluvesijohto"/>
+			<xs:enumeration value="palovesijohto"/>
+			<xs:enumeration value="raakavesijohto"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> VesiverkonOsanTyyppiType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="VesiverkonOsanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="putki"/>
+			<xs:enumeration value="tunneli"/>
+			<xs:enumeration value="venttiili"/>
+			<xs:enumeration value="vesiposti"/>
+			<xs:enumeration value="rakenne"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="merkkipaalu"/>
+			<xs:enumeration value="vesistökaapelitaulu"/>
+			<xs:enumeration value="sijaintikilpi"/>
+			<xs:enumeration value="merkkikilpi"/>
+			<xs:enumeration value="merkkiantenni"/>
+			<xs:enumeration value="vesistönalitustaulu"/>
+			<xs:enumeration value="kaapelireitti"/>
+			<xs:enumeration value="varoalue"/>
+			<xs:enumeration value="selitys"/>
+			<xs:enumeration value="varoitusteksti"/>
+			<xs:enumeration value="vedenottamo"/>
+			<xs:enumeration value="pumppaamo"/>
+			<xs:enumeration value="pumppu"/>
+			<xs:enumeration value="paloposti"/>
+			<xs:enumeration value="muu vesihuoltoverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ViemaroitavaNesteType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="jätevesi"/>
+			<xs:enumeration value="sadevesi"/>
+			<xs:enumeration value="sekavesi"/>
+			<xs:enumeration value="muu jätevesi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> ViemariverkonOsanTyyppiLuokkaType -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="ViemariverkonOsanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="putki"/>
+			<xs:enumeration value="avoviemäri"/>
+			<xs:enumeration value="paineputki"/>
+			<xs:enumeration value="kaivo"/>
+			<xs:enumeration value="venttiili"/>
+			<xs:enumeration value="purkuaukko"/>
+			<xs:enumeration value="imuaukko"/>
+			<xs:enumeration value="tarkastusputki"/>
+			<xs:enumeration value="perustamisrakenne"/>
+			<xs:enumeration value="tukirakenne"/>
+			<xs:enumeration value="suojarakenne"/>
+			<xs:enumeration value="merkkipaalu"/>
+			<xs:enumeration value="vesistökaapelitaulu"/>
+			<xs:enumeration value="sijaintikilpi"/>
+			<xs:enumeration value="merkkikilpi"/>
+			<xs:enumeration value="merkkiantenni"/>
+			<xs:enumeration value="vesistönalitustaulu"/>
+			<xs:enumeration value="muu viemäriverkonosa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ViemariverkonOsanToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="pääviemäri"/>
+			<xs:enumeration value="keräilyviemäri"/>
+			<xs:enumeration value="tonttiviemäri"/>
+			<xs:enumeration value="ylivuotoviemäri"/>
+			<xs:enumeration value="purkuviemäri"/>
+			<xs:enumeration value="muuviemäri"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RekisteriyksikkolajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="(Tuntematon)"/>
+			<xs:enumeration value="Tila"/>
+			<xs:enumeration value="Valtion metsämaa"/>
+			<xs:enumeration value="Lunastusyksikkö"/>
+			<xs:enumeration value="Kruununkalastus"/>
+			<xs:enumeration value="Yleiseen tarpeeseen erotettu alue"/>
+			<xs:enumeration value="Erillinen vesijättö"/>
+			<xs:enumeration value="Yleinen vesialue"/>
+			<xs:enumeration value="Yhteinen alue"/>
+			<xs:enumeration value="Yhteismetsä"/>
+			<xs:enumeration value="Tie- tai liitännäisalue"/>
+			<xs:enumeration value="Lakkautettu tie- tai liitännäisalue"/>
+			<xs:enumeration value="Tontti"/>
+			<xs:enumeration value="Yleinen alue"/>
+			<xs:enumeration value="Selvittämätön yhteinen alue"/>
+			<xs:enumeration value="Yhteinen vesialue"/>
+			<xs:enumeration value="Yhteinen maa-alue"/>
+			<xs:enumeration value="Suojelualuekiinteistö"/>
+			<xs:enumeration value="Tie- tai liitännäisalue tieoikeudella"/>
+			<xs:enumeration value="Tie- tai liitännäisalue omistusoikeudella"/>
+			<xs:enumeration value="Yleisen alueen lisäosa"/>
+			<xs:enumeration value="Tuntematon kunnan rekisteriyksikkö"/>
+			<xs:enumeration value="Selvittämätön alue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Kiinteistorajalaji">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="(Tuntematon)"/>
+			<xs:enumeration value="Valtakunnanraja"/>
+			<xs:enumeration value="Kunnanraja"/>
+			<xs:enumeration value="Kylän tai kunnanosan raja"/>
+			<xs:enumeration value="Rekisteriyksikön raja"/>
+			<xs:enumeration value="Tekninen apuviiva"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> RakennuspaikanTyyppiType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="RakennuspaikanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Sitovan tonttijaon mukainen tontti"/>
+			<xs:enumeration value="Ohjeellisen tonttijaon tontti"/>
+			<xs:enumeration value="Muu rakennuspaikka"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Olotila">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Voimassaoleva"/>
+			<xs:enumeration value="Lakannut"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KayttooikeusyksikkolajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="(Tuntematon)"/>
+			<xs:enumeration value="Autojen pitäminen"/>
+			<xs:enumeration value="Autojen pitäminen, venevalkama ja -laituri"/>
+			<xs:enumeration value="Autojen pysäköimispaikka"/>
+			<xs:enumeration value="Autojen säilytyspaikka"/>
+			<xs:enumeration value="Erityinen oikeus, johto tai vastaava"/>
+			<xs:enumeration value="Erityisesti suojeltavan lajin esiintymispaikka"/>
+			<xs:enumeration value="Hiekan ottaminen"/>
+			<xs:enumeration value="Huoltorasite"/>
+			<xs:enumeration value="Johto"/>
+			<xs:enumeration value="Johtorasite"/>
+			<xs:enumeration value="Jätteiden kokoamispaikan sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Jätteiden kokoamispaikka"/>
+			<xs:enumeration value="Kaasujohdon pitäminen"/>
+			<xs:enumeration value="Kaasujohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Kaasujohto"/>
+			<xs:enumeration value="Kaivospiiri"/>
+			<xs:enumeration value="Kaivospiirin apualue"/>
+			<xs:enumeration value="Kaivospiirin käyttöalue"/>
+			<xs:enumeration value="Kalastuksen kielto lohi- ja siikapitoisessa vesistössä"/>
+			<xs:enumeration value="Kalastuksen kielto padon alapuolella"/>
+			<xs:enumeration value="Kalastus"/>
+			<xs:enumeration value="Kalastusta varten tarpeellinen maa"/>
+			<xs:enumeration value="Kalastusta varten tarvittava alue"/>
+			<xs:enumeration value="Kalastusta varten tarvittavan alueen käyttäminen"/>
+			<xs:enumeration value="Kalaväylä"/>
+			<xs:enumeration value="Karjanajo, rasite lakannut 1.6.2002 (L 449/2000)"/>
+			<xs:enumeration value="Kattorasite"/>
+			<xs:enumeration value="Kiinnike tai tuki lennätinjohtoa varten"/>
+			<xs:enumeration value="Kiinnike tai tuki muita yleisiä tarpeita palvelevia laitteita varten"/>
+			<xs:enumeration value="Kiinnike tai tuki puhelinjohtoa varten"/>
+			<xs:enumeration value="Kiinnike tai tuki valaistusjohtoa varten"/>
+			<xs:enumeration value="Kiinnike tai tuki voimajohtoa varten"/>
+			<xs:enumeration value="Kiinteistöjen yhteinen lämpökeskus"/>
+			<xs:enumeration value="Kiinteä muinaisjäännös"/>
+			<xs:enumeration value="Kiinteä muinaismuisto"/>
+			<xs:enumeration value="Kiven ottaminen"/>
+			<xs:enumeration value="Kulkuoikeus"/>
+			<xs:enumeration value="Kulkuyhteys asemakaava-alueella"/>
+			<xs:enumeration value="Kulkuyhteyttä varten tarvittava alue"/>
+			<xs:enumeration value="Käyttörasite"/>
+			<xs:enumeration value="Käyttörasite rakennuksessa"/>
+			<xs:enumeration value="Käytävärasite"/>
+			<xs:enumeration value="Laiterasite"/>
+			<xs:enumeration value="Laituri"/>
+			<xs:enumeration value="Laituria varten tarvittavan alueen käyttäminen"/>
+			<xs:enumeration value="Laiturin pitäminen"/>
+			<xs:enumeration value="Lakannut yhteinen tie"/>
+			<xs:enumeration value="Lakannut yhteinen valtaoja"/>
+			<xs:enumeration value="Lastauspaikka"/>
+			<xs:enumeration value="Leikkipaikka"/>
+			<xs:enumeration value="Lennätinjohto"/>
+			<xs:enumeration value="Lentokentän lähestymisalue"/>
+			<xs:enumeration value="Lunastuslain mukainen erityinen oikeus"/>
+			<xs:enumeration value="Luonnonmuistomerkki"/>
+			<xs:enumeration value="Luonnonsuojelualue"/>
+			<xs:enumeration value="Luonnonsuojelualue (Ahvenanmaa)"/>
+			<xs:enumeration value="Lämpöjohdon pitäminen"/>
+			<xs:enumeration value="Lämpöjohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Lämpöjohto"/>
+			<xs:enumeration value="Lämpökeskuksen pitäminen"/>
+			<xs:enumeration value="Lämpökeskuksen sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Maa-aineksen ottaminen"/>
+			<xs:enumeration value="Maakaapeli"/>
+			<xs:enumeration value="Maakaasujohto"/>
+			<xs:enumeration value="Maantielain mukainen tieoikeus"/>
+			<xs:enumeration value="Maantien liitännäisalue"/>
+			<xs:enumeration value="Maantien näkemäalue"/>
+			<xs:enumeration value="Maantien suoja-alue"/>
+			<xs:enumeration value="Metrorasite"/>
+			<xs:enumeration value="Moottorikelkkailureitti"/>
+			<xs:enumeration value="Muu johto"/>
+			<xs:enumeration value="Muu maa-aineksen ottamiseen tarvittava alue"/>
+			<xs:enumeration value="Muu rasite"/>
+			<xs:enumeration value="Muuntajan pitäminen"/>
+			<xs:enumeration value="Muuntamorasite"/>
+			<xs:enumeration value="Oikeus vesivoimaan"/>
+			<xs:enumeration value="Padotusalue"/>
+			<xs:enumeration value="Pellavain liottamispaikka, rasite lakannut 1.6.2002 (L 449/2000)"/>
+			<xs:enumeration value="Perustusrasite"/>
+			<xs:enumeration value="Perustusten käyttörasite"/>
+			<xs:enumeration value="Perustusten rakentamisrasite"/>
+			<xs:enumeration value="Polku"/>
+			<xs:enumeration value="Puhelinjohdon pitäminen"/>
+			<xs:enumeration value="Puhelinjohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Puhelinjohto"/>
+			<xs:enumeration value="Puutavaran varastointi"/>
+			<xs:enumeration value="Raide"/>
+			<xs:enumeration value="Rajoitettu tieoikeus"/>
+			<xs:enumeration value="Rakennerasite"/>
+			<xs:enumeration value="Rakennus"/>
+			<xs:enumeration value="Rakennuslain mukainen johto"/>
+			<xs:enumeration value="Rantakunnan yhteiskäyttöalue"/>
+			<xs:enumeration value="Rantaosakkaiden yhteiskäyttöalue"/>
+			<xs:enumeration value="Sadevesiviemäri"/>
+			<xs:enumeration value="Saven ottaminen"/>
+			<xs:enumeration value="Seinäaukkorasite"/>
+			<xs:enumeration value="Seinän käyttörasite"/>
+			<xs:enumeration value="Seinärasite"/>
+			<xs:enumeration value="Sietorasite"/>
+			<xs:enumeration value="Sijoittamisrasite rakennuksessa"/>
+			<xs:enumeration value="Sopimus luontoarvokaupasta"/>
+			<xs:enumeration value="Sopimus ympäristötuesta"/>
+			<xs:enumeration value="Sopimus ympäristötuesta lain (1094/96) nojalla"/>
+			<xs:enumeration value="Sopimus ympäristötuesta lain (1286/97) nojalla"/>
+			<xs:enumeration value="Soran ottaminen"/>
+			<xs:enumeration value="Suojeltu luontotyyppi"/>
+			<xs:enumeration value="Suomudan ottaminen"/>
+			<xs:enumeration value="Sähköjohdon pitäminen"/>
+			<xs:enumeration value="Sähköjohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Sähköjohto"/>
+			<xs:enumeration value="Talousveden johtaminen"/>
+			<xs:enumeration value="Talousveden ottaminen"/>
+			<xs:enumeration value="Tie"/>
+			<xs:enumeration value="Tienpitoaineen kuljettaminen"/>
+			<xs:enumeration value="Tienpitoaineen ottaminen"/>
+			<xs:enumeration value="Tienpitäjällä oikeus laskuojaan"/>
+			<xs:enumeration value="Tieoikeus"/>
+			<xs:enumeration value="Turpeen ottaminen"/>
+			<xs:enumeration value="Turpeenottoalue"/>
+			<xs:enumeration value="Tutka-aseman ympäristö"/>
+			<xs:enumeration value="Uimapaikka"/>
+			<xs:enumeration value="Ulko- ja sisäsaariston välinen raja"/>
+			<xs:enumeration value="Ulkoilureitin levähdyspaikka"/>
+			<xs:enumeration value="Ulkoilureitti"/>
+			<xs:enumeration value="Ulkoilureitti tai sen lisäalue"/>
+			<xs:enumeration value="Uoma"/>
+			<xs:enumeration value="Valaistusjohto"/>
+			<xs:enumeration value="Valtion retkeilyalueen lisäalue"/>
+			<xs:enumeration value="Vapaa-alue"/>
+			<xs:enumeration value="Varastoalue"/>
+			<xs:enumeration value="Veden johtaminen"/>
+			<xs:enumeration value="Veden johtaminen maan kuivattamista varten"/>
+			<xs:enumeration value="Veden ottaminen"/>
+			<xs:enumeration value="Veden patoaminen"/>
+			<xs:enumeration value="Vedenottamo"/>
+			<xs:enumeration value="Vedenottamon suoja-alue"/>
+			<xs:enumeration value="Venelaituri"/>
+			<xs:enumeration value="Venevalkama"/>
+			<xs:enumeration value="Venevalkama ja autojen pitäminen"/>
+			<xs:enumeration value="Venevalkama ja -laituri"/>
+			<xs:enumeration value="Vesijohdon pitäminen"/>
+			<xs:enumeration value="Vesijohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Vesijohto"/>
+			<xs:enumeration value="Vesilain mukainen käyttöoikeus"/>
+			<xs:enumeration value="Vesilain mukainen rakennus, laite tai vastaava"/>
+			<xs:enumeration value="Viemärijohdon pitäminen"/>
+			<xs:enumeration value="Viemärijohdon sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Viemärijohto"/>
+			<xs:enumeration value="Voimajohto"/>
+			<xs:enumeration value="Voiman- ja tiedonsiirtolinja"/>
+			<xs:enumeration value="Voimansiirtolinja"/>
+			<xs:enumeration value="Väestönsuojan pitäminen"/>
+			<xs:enumeration value="Väestönsuojelurakennelmien sijoittaminen ja käyttäminen"/>
+			<xs:enumeration value="Väestösuojelua varten tarvittava rakennelma"/>
+			<xs:enumeration value="Vähäisten laitteiden sijoittaminen (Maankäyttö- ja rakennuslaki 163 §)"/>
+			<xs:enumeration value="Väliaikainen oikeus johdon sijoittamiseen"/>
+			<xs:enumeration value="Väliaikainen oikeus tiehen"/>
+			<xs:enumeration value="Väliaikainen oikeus veden johtamiseen"/>
+			<xs:enumeration value="Ydinjätteiden loppusijoituspaikka"/>
+			<xs:enumeration value="Yhdyskuntateknisten laitteiden sijoittaminen (Maankäyttö- ja rakennuslaki 161 §)"/>
+			<xs:enumeration value="Yhteisjärjestely (Maankäyttö- ja rakennuslaki 164 §)"/>
+			<xs:enumeration value="Yhteiskäyttöalue (Maankäyttö- ja rakennuslaki 75 ja 91 §)"/>
+			<xs:enumeration value="Yhteisrasite"/>
+			<xs:enumeration value="Yhteisseinärasite"/>
+			<xs:enumeration value="Yksityinen hauta"/>
+			<xs:enumeration value="Yksityinen tie"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaaraalanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="(Tuntematon)"/>
+			<xs:enumeration value="Määräala"/>
+			<xs:enumeration value="Erillisenä luovutettu yhteisalueosuus"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaaraalanOlotilaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="(Tuntematon)"/>
+			<xs:enumeration value="Erottamaton"/>
+			<xs:enumeration value="Muodostettu osittain rekisteriyksiköksi"/>
+			<xs:enumeration value="Lakannut"/>
+			<xs:enumeration value="Virheellisesti rekisteröity"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RajamerkinOlemassaoloType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Tuntematon"/>
+			<xs:enumeration value="Olemassa"/>
+			<xs:enumeration value="Kadonnut"/>
+			<xs:enumeration value="Ei rakennettu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RajamerkinSuhdeMaanpintaanType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Tuntematon"/>
+			<xs:enumeration value="Näkyvissä"/>
+			<xs:enumeration value="Upotettu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RajamerkinRakenneType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Ei määritelty"/>
+			<xs:enumeration value="Putki"/>
+			<xs:enumeration value="Pultti"/>
+			<xs:enumeration value="Yksikivinen"/>
+			<xs:enumeration value="Nelikulmainen"/>
+			<xs:enumeration value="Viisikivinen"/>
+			<xs:enumeration value="Yksipaaluinen"/>
+			<xs:enumeration value="Viisipaaluinen"/>
+			<xs:enumeration value="Reikä, ura, putki tai pultti kiinteässä alustassa"/>
+			<xs:enumeration value="Peräkkäiset kivet"/>
+			<xs:enumeration value="Peräkkäiset puupaalut"/>
+			<xs:enumeration value="Oja"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RajamerkkilajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Tuntematon"/>
+			<xs:enumeration value="Rajapyykki"/>
+			<xs:enumeration value="Rajapiste"/>
+			<xs:enumeration value="Rajaviitta"/>
+			<xs:enumeration value="Suuntapyykki"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RakennuksenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A Asuinrakennukset"/>
+			<xs:enumeration value="B Vapaa-ajan asuinrakennukset"/>
+			<xs:enumeration value="C Liikerakennukset"/>
+			<xs:enumeration value="D Toimistorakennukset"/>
+			<xs:enumeration value="E Liikenteen rakennukset"/>
+			<xs:enumeration value="F Hoitoalan rakennukset"/>
+			<xs:enumeration value="G Kokoontumisrakennukset"/>
+			<xs:enumeration value="H Opetusrakennukset"/>
+			<xs:enumeration value="J Teollisuusrakennukset"/>
+			<xs:enumeration value="K Varastorakennukset"/>
+			<xs:enumeration value="L Palo- ja pelastustoimen rakennukset"/>
+			<xs:enumeration value="M Maatalousrakennukset"/>
+			<xs:enumeration value="N Muut rakennukset"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TonttijaonLajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="ohjeellinen tonttijako"/>
+			<xs:enumeration value="sitova tonttijako"/>
+			<xs:enumeration value="erillinen tonttijako"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TonttijaonVaiheType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="vireillä"/>
+			<xs:enumeration value="voimassa"/>
+			<xs:enumeration value="kumottu osittain"/>
+			<xs:enumeration value="kumottu kokonaan"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

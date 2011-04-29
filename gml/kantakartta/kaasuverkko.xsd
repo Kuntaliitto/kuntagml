@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Kaasuverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kaasuverkkokohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kaasuverkonosa" type="kanta:KaasuverkkokohdeType" substitutionGroup="kanta:_Kaasuverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Kaasuverkostoon kuuluva kohde(johto,putki, rakennelma jne.)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KaasuverkkokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKaasuverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:KaasuverkonOsanToiminnallinenLuokkaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen toiminta/käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tila" type="kanta:VerkostokohteenSijaintiTilaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainti suhteessa maanpintaa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="verkonomistaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaytossaTila" type="kanta:KaytossaTilaType" minOccurs="0"/>
+					<xs:element name="materiaali" type="kanta:VerkkoMateriaaliType" minOccurs="0"/>
+					<xs:element name="koko" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

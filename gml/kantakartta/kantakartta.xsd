@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:include schemaLocation="sahkoverkko.xsd"/>
+	<xs:include schemaLocation="kaasuverkko.xsd"/>
+	<xs:include schemaLocation="kaukolampoverkko.xsd"/>
+	<xs:include schemaLocation="tietoliikenneverkko.xsd"/>
+	<xs:include schemaLocation="vesiverkko.xsd"/>
+	<xs:include schemaLocation="viemariverkko.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="hallinnolliset_aluejaot.xsd"/>
+	<xs:include schemaLocation="ilmaliikenneverkko.xsd"/>
+	<xs:include schemaLocation="kasvillisuus.xsd"/>
+	<xs:include schemaLocation="maaliikenneverkko.xsd"/>
+	<xs:include schemaLocation="maanpinnan_korkeus.xsd"/>
+	<xs:include schemaLocation="maanpinta.xsd"/>
+	<xs:include schemaLocation="paikannusjarjestelmat.xsd"/>
+	<xs:include schemaLocation="karttatekstit.xsd"/>
+	<xs:include schemaLocation="rakennetut_tilat.xsd"/>
+	<xs:include schemaLocation="rakenteet.xsd"/>
+	<xs:include schemaLocation="rautatieliikenneverkko.xsd"/>
+	<xs:include schemaLocation="vesiliikenneverkko.xsd"/>
+	<xs:include schemaLocation="vesistot.xsd"/>
+	<xs:include schemaLocation="luonnonsuojelu.xsd"/>
+	<xs:include schemaLocation="kiinteistotiedot.xsd"/>
+	<xs:include schemaLocation="tonttijako.xsd"/>
+	<xs:include schemaLocation="luokittelemattomat.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> KantakarttaPerusta  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> KantakarttaAineisto  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Kohdejoukko: KantakarttaAineisto -->
+	<xs:element name="KantakarttaAineisto" type="kanta:KantakarttaAineistoType" substitutionGroup="gml:_GML">
+		<xs:annotation>
+			<xs:documentation>Yleiset tiedot/ominaisuudet kantakartalle. gml:boundedBy esittää aineiston ulottuvuuden suorakaiteena. gml:Envelope:n srsName atribuutti esittää koordinaattijärjestelmän tunnuksen EPSG-koodina (esim projisoidut):
+
+KKJ, kaista 1: 			2391
+KKJ,kaista 2: 			2392
+KKJ, kaista 3: 			2393
+KKJ, kaista 4: 			2394
+YKJ: 				2393
+ETRS-TM35FIN: 		3067
+WGS84 / UTM zone 34N: 	32634
+WGS84 / UTM zone 35N: 	32635
+WGS84 / UTM zone 36N: 	32636
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KantakarttaAineistoType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="aineistonnimi" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Aineistoa kuvaava nimi, esim. kaupunginosa, kunta, karttalehden numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aineistotoimittaja" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kuka on tehnyt kyseisen siirtotiedoston, yhteyshenkilö</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Aineiston valmiustila; onko kokonaan valmis, keskeneräinen, täydennys 
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="toimitusPvm" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>Milloin kyseinen siirtotiedosto on tehty</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="teknisetTiedot" type="kanta:TeknisetTiedotType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Aineistoon liittyvät tekniset tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kuntakoodi" type="xs:string" minOccurs="0"/>
+					<xs:element name="kielitieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kunnan kieli tai kieliitieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietotunniste" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Paikkatietohakemistossa aineiston yksilöivä 
+metatietotunniste. Muita nimityksiä: UUID, tiedostotunniste, 
+resurssitunniste, aineiston ID.  Esim: 924a68ba-665f-4ea0-a830-
+26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietoXMLURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL, joka palauttaa aineiston metatiedot XML 
+tiedostona ISO 19139 skeeman mukaisesti. Esim: http://geonetwork.nls.fi/geonetwork/srv/fi/iso19139.xml?uuid=924a68ba-
+665f-4ea0-a830-26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietoURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL www-sivulle, josta aineiston metatiedot ovat 
+luettavissa ”selkokielisenä”. Esim: 
+http://www.paikkatietoikkuna.fi/web/fi/paikkatietoaineisto?inspireMetadat
+aUIID=924a68ba-665f-4ea0-a830-26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tietotuoteURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL, josta saadaan aineistoon liittyvän tietotuotteen 
+tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maanpinnankohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Maanpinnankohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="karttatekstikohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Karttatekstikohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="paikannusjarjestelmakohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Paikannusjarjestelmakohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kasvillisuuskohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Kasvillisuuskohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maanpinnankorkeuskohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Maanpinnankorkeuskohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="vesistokohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Vesistokohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="luonnonsuojelukohteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Luonnonsuojelukohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="hallinnollisetaluejaot" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Hallinnollinenaluejakokohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kiinteistoyksikot" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Kiinteistoyksikkokohde" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element ref="kanta:_Kayttooikeusyksikkokohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="rakennetut_tilat" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Rakennettutilakohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="rakenteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Rakennekohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maaliikenneverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Maaliikenneverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="rautatieliikenneverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Rautatieliikenneverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="vesiliikenneverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Vesiliikenneverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ilmaliikenneverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Ilmaliikenneverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="sahkoverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Sahkoverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kaasuverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Kaasuverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kaukolampoverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Kaukolampoverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="tietoliikenneverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Tietoliikenneverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="vesihuoltoverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Vesihuoltoverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="viemariverkko" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Viemariverkonkohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="tonttijako" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_Tonttijakokohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="luokittelemattomatkohteet" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ne kohteet, jotka eivät kuulu varsinaiseen skeemaan</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:_LuokittelematonKohde" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

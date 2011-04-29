@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:simpleType name="KaytossaTilaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ei käytössä"/>
+			<xs:enumeration value="Käytössä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> KantakarttaPerusta  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kantakohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Kantakohde" type="kanta:AbstractKantakohdeType" abstract="true" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Elementti josta periytetään kaikki muut elementit</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKantakohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kantakohteen määrittely, josta periytetään kaikki muut skeeman kohteet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="metatieto" type="gml:MetaDataPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Kohteen metatiedot. Suositeltavat kentät ovat: sijaintitiedonluontitapa, tarkkuus, datan_luoja, luonti_pvm, muokkaaja, muokkaus_pvm, omistaja, lahteen_pvm, lahteen_tyyppi, mittausera, lisatieto_linkki</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kyseessä olevan kantakartan sisällä yksikäsitteinen kohteen tunnistetieto.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kplkoodi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen Kuntien Paikkaitietoluokituksen(KPL 2.3)) mukainen koodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="yksilointitieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen lähtötietojärjestelmän  tvs. mukainen yksilöintitieto </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="kanta:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="kanta:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="alkuPvm" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontipäivämäärä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loppuPvm" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Milloin kohde on poistettu. Tämän avulla voidaan tunnistaa poistetut kohteet, jos järjestelmät tukevat historiatietojen tallentamista</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="kanta:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+Osoittaa että halutaanko kohteen jokin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+ Ks Myös kohdetyyppi Label dokumentaaatio</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kantakarttakohde" type="kanta:AbstractKantakarttakohdeType" abstract="true" substitutionGroup="kanta:_Kantakohde">
+		<xs:annotation>
+			<xs:documentation>Elementti josta periytetään kaikki sijaintitietoa sisältävät</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKantakarttakohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kantakarttakohteen määrittely, josta periytetään kaikki muut skeeman kohteet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakohdeType">
+				<xs:sequence>
+					<xs:element name="sijainnit" type="kanta:SijainnitType">
+						<xs:annotation>
+							<xs:documentation>Kohteelle annetut sijaintiominaisuudet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Maanpinnankohde" type="kanta:AbstractMaanpinnankohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Maanpinnan kohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractMaanpinnankohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType">
+				<xs:sequence>
+					<xs:element name="alueenTulkittavuus" type="kanta:TulkittavuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alueen tulkitttavuus - yksikäsitteinen/Epämäärinen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kasvillisuuskohde" type="kanta:AbstractKasvillisuuskohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Kasvillisuuskohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKasvillisuuskohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Maanpinnankorkeuskohde" type="kanta:AbstractMaanpinnankorkeuskohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Maanpinnan korkeutta mallintava kohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractMaanpinnankorkeuskohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Luonnonsuojelukohde" type="kanta:AbstractLuonnonsuojelukohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractLuonnonsuojelukohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Hallinnollinenaluejakokohde" type="kanta:AbstractHallinnollinenaluejakokohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractHallinnollinenaluejakokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kiinteistoyksikkokohde" type="kanta:AbstractKiinteistoyksikkokohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractKiinteistoyksikkokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kayttooikeusyksikkokohde" type="kanta:AbstractKayttooikeusyksikkokohdeType" abstract="true" substitutionGroup="kanta:_Kantakohde"/>
+	<xs:complexType name="AbstractKayttooikeusyksikkokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Rakennettutilakohde" type="kanta:AbstractRakennettutilakohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractRakennettutilakohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Rakennekohde" type="kanta:AbstractRakennekohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractRakennekohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Maaliikenneverkonkohde" type="kanta:AbstractMaaliikenneverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractMaaliikenneverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Rautatieliikenneverkonkohde" type="kanta:AbstractRautatieliikenneverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractRautatieliikenneverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType">
+				<xs:sequence>
+					<xs:element name="raideliikenteentyyppi" type="kanta:RaideliikenteenTyyppiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Vesiliikenneverkonkohde" type="kanta:AbstractVesiliikenneverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractVesiliikenneverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Ilmaliikenneverkonkohde" type="kanta:AbstractIlmaliikenneverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractIlmaliikenneverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Karttatekstikohde" type="kanta:AbstractKarttatekstikohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractKarttatekstikohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Paikannusjarjestelmakohde" type="kanta:AbstractPaikannusjarjestelmakohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractPaikannusjarjestelmakohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LabelitType">
+		<xs:sequence>
+			<xs:element ref="kanta:Label" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Label  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Label" type="kanta:LabelType">
+		<xs:annotation>
+			<xs:documentation>
+Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja 
+	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LabelType">
+		<xs:sequence>
+			<xs:element name="ilmentymaElementinNimi" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Viittaus kohteen ominaisuuden(element) nimeen, jonka sisältö halutaan esittää kartalla. Esimerkiksi "kohteentunnus". </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kayttotarkoitus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Esim. missä sovelluksessa tämä label-tieto halutaan visualisoida </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="suunta" type="gml:AngleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Label-tekstin suunta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kohta" type="kanta:KohtaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Viiteviivan päätepiste suhteessa kohteeseen. Mikäli siirtymäsijainti puuttuu, sijoitetaan teksti tähän kohtaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siirtymasijainti" type="gml:PointPropertyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Label-tekstin sijainti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="_Sahkoverkonkohde" type="kanta:AbstractSahkoverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractSahkoverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kaasuverkonkohde" type="kanta:AbstractKaasuverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractKaasuverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kaukolampoverkonkohde" type="kanta:AbstractKaukolampoverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractKaukolampoverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Tietoliikenneverkonkohde" type="kanta:AbstractTietoliikenneverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractTietoliikenneverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Vesihuoltoverkonkohde" type="kanta:AbstractVesihuoltoverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractVesihuoltoverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Viemariverkonkohde" type="kanta:AbstractViemariverkonkohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractViemariverkonkohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Tonttijakokohde" type="kanta:AbstractTonttijakokohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde"/>
+	<xs:complexType name="AbstractTonttijakokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Sijainnit  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="SijainnitType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="kanta:Sijainti" maxOccurs="unbounded"/>
+				<xs:element ref="gml:Null"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Sijainti  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Sijainti" type="kanta:SijaintiType"/>
+	<xs:complexType name="SijaintiType">
+		<xs:choice>
+			<xs:element ref="kanta:keskilinja"/>
+			<xs:element ref="kanta:referenssipiste"/>
+			<xs:element ref="kanta:reunaviiva"/>
+			<xs:element ref="kanta:alue"/>
+		</xs:choice>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Suunta  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Suunta" type="kanta:SuuntaType"/>
+	<xs:complexType name="SuuntaType">
+		<xs:sequence>
+			<xs:element name="suuntakulma" type="gml:AngleType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Siirtyma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Siirtyma" type="kanta:SiirtymaType"/>
+	<xs:complexType name="SiirtymaType">
+		<xs:sequence>
+			<xs:element name="siirtymasijainti" type="gml:PointPropertyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Referenssipiste  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="ReferenssipisteType">
+		<xs:sequence>
+			<xs:element ref="gml:Point"/>
+			<xs:element ref="kanta:Suunta" minOccurs="0"/>
+			<xs:element ref="kanta:Siirtyma" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="keskilinja" type="gml:CurvePropertyType"/>
+	<xs:element name="referenssipiste" type="kanta:ReferenssipisteType"/>
+	<xs:element name="reunaviiva" type="gml:CurvePropertyType"/>
+	<xs:element name="alue" type="gml:SurfacePropertyType"/>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Sijaintiepavarmuus-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SijaintiepavarmuusType">
+		<xs:annotation>
+			<xs:documentation>Kaavoitusmittausohjeet 2003 mukaiset sijaintiepävarmuus tasot</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0.15"/>
+			<xs:enumeration value="0.2"/>
+			<xs:enumeration value="0.3"/>
+			<xs:enumeration value="0.5"/>
+			<xs:enumeration value="0.7"/>
+			<xs:enumeration value="1.0"/>
+			<xs:enumeration value="1.5"/>
+			<xs:enumeration value="2.0"/>
+			<xs:enumeration value="3.0"/>
+			<xs:enumeration value="5.0"/>
+			<xs:enumeration value="7.5"/>
+			<xs:enumeration value="10.0"/>
+			<xs:enumeration value="20.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Luontitapa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="LuontiTapaType">
+		<xs:annotation>
+			<xs:documentation>Kertoo miten kohde on luotu tietokantaan</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="digitointi"/>
+			<xs:enumeration value="maastomittaus"/>
+			<xs:enumeration value="skannattu"/>
+			<xs:enumeration value="kuvamittaus"/>
+			<xs:enumeration value="laserkeilattu"/>
+			<xs:enumeration value="kiinteistötoimitus"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="tuntematon"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==============================================================  -->
+	<!-- Class: <<Enumeration>> Kohta  (kohteen referenssipiste)  -->
+	<!-- =================================================================== -->
+	<xs:simpleType name="KohtaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="avoin"/>
+			<xs:enumeration value="keski"/>
+			<xs:enumeration value="ensimmäinenpiste"/>
+			<xs:enumeration value="itäisin"/>
+			<xs:enumeration value="läntisin"/>
+			<xs:enumeration value="pohjoisin"/>
+			<xs:enumeration value="eteläisin"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> TeknisetTiedotType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="TeknisetTiedotType">
+		<xs:sequence>
+			<xs:element ref="kanta:TekninenTieto" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Teknisiä tietoja ohjeistuksesta
+						</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> TekninenTieto  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="TekninenTieto" type="kanta:TekninenTietoType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="TekninenTietoType">
+		<xs:sequence>
+			<xs:element name="mittakaava" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tulostuksen oletus mittakaava</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="korkeusjarjestelma" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aineiston korkeusjärjestelmä</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

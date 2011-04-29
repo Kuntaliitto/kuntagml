@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Kiinteistötiedot  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kiinteistö  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kiinteisto" type="kanta:KiinteistoType" substitutionGroup="kanta:_Kiinteistoyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Kiinteistö</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KiinteistoType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKiinteistoyksikkokohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType" maxOccurs="unbounded"/-->
+					<xs:element name="kiinteistotunnus" type="kanta:KiinteistotunnusType">
+						<xs:annotation>
+							<xs:documentation>Kiinteistön tunnus </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kiinteistotunnuskartalla" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kiinteistotunnuksen esitysmuoto kartalla</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rekisteriyksikkolaji" type="kanta:RekisteriyksikkolajiType">
+						<xs:annotation>
+							<xs:documentation>Rekisteriin merkitty yksiikölaji</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tonttijaontunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon tunnus johon kiinteistö kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="KiinteistotunnusType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([0-9]{3}){2}([0-9]{4}){2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kiinteistöraja  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kiinteistoraja" type="kanta:KiinteistorajaType" substitutionGroup="kanta:_Kiinteistoyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Kiinteistöraja</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KiinteistorajaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKiinteistoyksikkokohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:CurvePropertyType" maxOccurs="unbounded"/-->
+					<xs:element name="kiinteistorajalaji" type="kanta:Kiinteistorajalaji">
+						<xs:annotation>
+							<xs:documentation>Rajan laji</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="epavarmuus" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rakennuspaikka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rakennuspaikka" type="kanta:RakennuspaikkaType" substitutionGroup="kanta:_Kiinteistoyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Rakennuspaikka</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakennuspaikkaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKiinteistoyksikkokohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType" maxOccurs="unbounded"/-->
+					<xs:element name="tyyppi" type="kanta:RakennuspaikanTyyppiType">
+						<xs:annotation>
+							<xs:documentation>Tieto onko rakennuspaikka sitovan vai ohjeellisen tonttijaon mukainen tontti tai jokin muu </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kayttöoikeusyksikkö  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kayttooikeusyksikko" type="kanta:KayttooikeusyksikkoType" substitutionGroup="kanta:_Kayttooikeusyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Käyttöoikeusyksikkö</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KayttooikeusyksikkoType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKayttooikeusyksikkokohdeType">
+				<xs:sequence>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttooikeusyksikkotunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttooikeusyksikkolaji" type="kanta:KayttooikeusyksikkolajiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Käyttöoikeuden laatu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttooikeusyksikonOsat" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Käyttöoikeusyksikkö voi koostua useasta osasta</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:KayttooikeusyksikonOsa" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="olotila" type="kanta:Olotila" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Lakannut/Voimassa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> KayttöoikeusyksikönOsa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="KayttooikeusyksikonOsa" type="kanta:KayttooikeusyksikonOsaType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Käyttöoikeusyksikön osa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KayttooikeusyksikonOsaType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="kayttooikeusyksikonOsanNumero" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Käyttöoikeusyksikönosan numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="olotila" type="kanta:Olotila" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Olotila</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tekstikartalla" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kartalla näkyvä teksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!-- xs:element name="sijainti" type="gml:SurfacePropertyType" maxOccurs="unbounded"/ -->
+					<xs:element name="sijainnit" type="kanta:SijainnitType">
+						<xs:annotation>
+							<xs:documentation>Sijaintiominaisuudet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="kanta:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+Osoittaa että halutaanko kohteen jokin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+ Ks Myös kohdetyyppi Label dokumentaaatio</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Määräala -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Maaraala" type="kanta:MaaraalaType" substitutionGroup="kanta:_Kiinteistoyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Määräala</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaaraalaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKiinteistoyksikkokohdeType">
+				<xs:sequence>
+					<xs:element name="maaraalatunnus" type="kanta:MaaraalatunnusType">
+						<xs:annotation>
+							<xs:documentation>Määräalan tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="olotila" type="kanta:MaaraalanOlotilaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Olotila</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maaraalanTyyppi" type="kanta:MaaraalanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Määräalan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!-- xs:element name="maaraalanOsa" type="kanta:MaaraalanOsaType" maxOccurs="unbounded"/ 
+                          hoituu extensio basen kautta sijainnit ja labelit ominaisuuksilla   -->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> MaaraalanOsa  (ei tarvi - hoituu SijainnitTypellä) -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="MaaraalanOsaType">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="referenssipiste" type="gml:PointPropertyType" maxOccurs="unbounded"/>
+				<xs:element name="alue" type="gml:SurfacePropertyType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="alue" type="gml:SurfacePropertyType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="MaaraalatunnusType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([0-9]{3}){2}([0-9]{4}){2}M[0-9]{4})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rajamerkki -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rajamerkki" type="kanta:RajamerkkiType" substitutionGroup="kanta:_Kiinteistoyksikkokohde">
+		<xs:annotation>
+			<xs:documentation>Rajamerkki</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RajamerkkiType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKiinteistoyksikkokohdeType">
+				<xs:sequence>
+					<xs:element name="rajamerkkilaji" type="kanta:RajamerkkilajiType">
+						<xs:annotation>
+							<xs:documentation>Rajamerkin laji</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numero" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rakenne" type="kanta:RajamerkinRakenneType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenne</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suhdeMaanpintaan" type="kanta:RajamerkinSuhdeMaanpintaanType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Suhde maanpintaan</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="olemassaolo" type="kanta:RajamerkinOlemassaoloType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko olemassa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType" minOccurs="0"/-->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

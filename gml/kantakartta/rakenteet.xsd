@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Rakenteet  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rakenne" type="kanta:RakenneType" substitutionGroup="kanta:_Rakennekohde">
+		<xs:annotation>
+			<xs:documentation>Yleensä rakennetut kohteet, jotka eivät ole rakennettuja tiloja tai liikenne- ja johtoverkkoihin tai paikannusjärjestelmiin liittyviä rakenteita</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakenneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRakennekohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:RakennekohteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenteen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="materiaali" type="kanta:RakennusmateriaaliType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenteen rakennusmateriaali</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="halkaisija" type="gml:MeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenteen halkaisijatieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="korkeus" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakenteen korkeus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

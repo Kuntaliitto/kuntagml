@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Rautatieliikenneverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> RaideliikenneRakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="RaideliikenneRakenne" type="kanta:RaideliikenneRakenneType" substitutionGroup="kanta:_Rautatieliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Raideliikenteen rakennekohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RaideliikenneRakenneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRautatieliikenneverkonkohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType"/ -->
+					<xs:element name="tyyppi" type="kanta:RaideliikenneRakenteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rautierakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> RautatienTurvaLaite  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="RautatienTurvaLaite" type="kanta:RautatienTurvaLaiteType" substitutionGroup="kanta:_Rautatieliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Rautatien turvalaite</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RautatienTurvaLaiteType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRautatieliikenneverkonkohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType"/-->
+					<xs:element name="tyyppi" type="kanta:RautatienTurvaLaiteTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Turvalaitteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Raide" type="kanta:RaideType" substitutionGroup="kanta:_Rautatieliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Rautatien raide (keskilinja?)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RaideType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractRautatieliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="raideleveys" type="kanta:RaideleveysType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Raideleveyden tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="raiteenSahkoistys" type="kanta:SahkoistysType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sähköistystieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

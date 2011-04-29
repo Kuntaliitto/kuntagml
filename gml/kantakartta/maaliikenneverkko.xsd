@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Maaliikenneverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Erityisrakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Erityisrakenne" type="kanta:ErityisrakenneType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Maaliikenten väylään kiinteästi liittyvät erityisrakenteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ErityisrakenneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:ErityisrakenteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Erityisrakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="sijainti" type="gml:CurvePropertyType"/-->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Liikennevayla  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Liikennevayla" type="kanta:LiikennevaylaType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Liikenneväylä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LiikennevaylaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<!--xs:element name="tyyppi" type="kanta:MaaliikennevaylanTyyppiType"/-->
+					<!--xs:element name="kayttotarkoitus" type="kanta:LiikennevaylanKayttotarkoitusTypeMiksipuuttuu"/-->
+					<xs:element name="pinta" type="kanta:AjoradanPintaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tien pinnan laatu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kevyenliikenteenvayla  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kevyenliikenteenvayla" type="kanta:KevyenliikenteenvaylaType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Kevyen liikenteen väylä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KevyenliikenteenvaylaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<!--xs:element name="tyyppi" type="kanta:MaaliikennevaylanTyyppiType"/-->
+					<!--xs:element name="kayttotarkoitus" type="kanta:KevyenliikenteenvaylanKayttotarkoitusTypeMiksipuuttuu"/-->
+					<xs:element name="pinta" type="kanta:AjoradanPintaType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Porttaali  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Porttaali" type="kanta:PorttaaliType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Opastustaulun tukirakenne</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PorttaaliType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="opastintaulunTeksti" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Teksti opastintaulussa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Pysakki  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Pysakki" type="kanta:PysakkiType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Erillinen kevytrakenteinen pysäkki</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PysakkiType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="rakenne" type="kanta:PysakinRakenneType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tieto pysäkin katteesta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Rumpu  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rumpu" type="kanta:RumpuType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Veden johtamiseen tarkoitettu rumpu liikenneväylän alla</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RumpuType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="materiaali" type="kanta:RakennusmateriaaliType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennusmateriaali</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="halkaisija" type="gml:MeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rummun halkaisija</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Silta  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Silta" type="kanta:SiltaType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Silta</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SiltaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="siltarakenteet" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="kanta:Siltarakenne" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Siltarakenne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Siltarakenne" type="kanta:SiltarakenneType" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Sillan rakenteellinen osa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SiltarakenneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:SiltarakenteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Siltarakenteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Viherkaista  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Viherkaista" type="kanta:ViherkaistaType" substitutionGroup="kanta:_Maaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Ajoradan ja erillisen jalkakäytävän tai kevyen liikenteen väylän väliin jäävä viherkaista</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ViherkaistaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaaliikenneverkonkohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

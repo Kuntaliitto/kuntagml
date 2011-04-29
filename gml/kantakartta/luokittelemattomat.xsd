@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Luokittelemattomat  -->
+	<!-- ================================================= -->
+	<xs:complexType name="AbstractLuokittelematonKohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kantakohde josta luokittelemattomat kohteet periytetään.
+KuntaGML-skeemaan kuulumattomien (luokittelemattomien) kohteiden siirron mahdollistava tyyppi.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon teksti-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonTeksti" type="kanta:LuokittelematonTekstiType" substitutionGroup="kanta:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonTekstiType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu pisteenä(symboli)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:LuokittelematonPisteType">
+				<xs:sequence>
+					<xs:element name="teksti" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kartalla piirrettävä merkkijono</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon piste-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonPiste" type="kanta:LuokittelematonPisteType" substitutionGroup="kanta:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonPisteType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu pisteenä(symboli)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijainti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suunta" type="gml:AngleType">
+						<xs:annotation>
+							<xs:documentation>Symbolin / Tekstin suunta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon viiva-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonViiva" type="kanta:LuokittelematonViivaType" substitutionGroup="kanta:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonViivaType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon alue-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonAlue" type="kanta:LuokittelematonAlueType" substitutionGroup="kanta:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu alueena</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonAlueType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu alueena</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="kanta:AlueSijaintiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_LuokittelematonKohde" type="kanta:AbstractLuokittelematonKohdeType" abstract="true" substitutionGroup="kanta:_Kantakohde"/>
+	<xs:complexType name="AlueSijaintiType">
+		<xs:choice>
+			<xs:element ref="kanta:referenssipiste"/>
+			<xs:element ref="kanta:reunaviiva"/>
+			<xs:element ref="kanta:alue"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

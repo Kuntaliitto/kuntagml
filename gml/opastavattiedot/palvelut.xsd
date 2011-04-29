@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mkpa="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/palvelut" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/palvelut" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Palvelut-->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko:  Palvelut-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  Palvelut-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Palvelut" type="mkpa:PalvelutType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti Kunnan tai muiden tahojen tarjoamat palvelut	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PalvelutType">
+		<xs:annotation>
+			<xs:documentation>Opaskartta elementin sisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType">
+						<xs:annotation>
+							<xs:documentation>Siirron tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kunnanPalvelutieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="mkpa:KunnanPalvelu"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="muuPalvelutieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="mkpa:MuuPalvelu"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="toimintaAluetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="mkpa:ToimintaAlue"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractPalveluType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="nimi" type="xs:string"/>
+					<xs:element name="lisatieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vapamuotoinen lisätietokenttä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType"/>
+					<xs:element name="www" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="kayntiosoite" type="yht:PostiosoiteType" minOccurs="0"/>
+					<xs:element name="postiosoite" type="yht:PostiosoiteType" minOccurs="0"/>
+					<xs:element name="puhelinnumero" type="mkpa:PuhelinnumeroType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="sahkoposti" type="mkpa:SahkopostiType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="toimintaAlue" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="alue" type="gml:SurfacePropertyType">
+									<xs:annotation>
+										<xs:documentation>Jos Toimiipaikalla Toiminta-aluejaosta poikkeava toiminta-alue käytetään tätä</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="toimintaAlueID" type="xs:int" nillable="true">
+									<xs:annotation>
+										<xs:documentation>Viittaus Toiminta-aluejakoon. Jos Toimipaikan toiminta-alue on toimintAluejaon mukainen käytetään tätä</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MuuPalveluType">
+		<xs:complexContent>
+			<xs:extension base="mkpa:AbstractPalveluType">
+				<xs:sequence>
+					<xs:element name="toimialaluokka" type="yht:ToimialaType">
+						<xs:annotation>
+							<xs:documentation>TOLin mukainen luokitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KunnanPalveluType">
+		<xs:complexContent>
+			<xs:extension base="mkpa:AbstractPalveluType">
+				<xs:sequence>
+					<xs:element name="luokkaKoodi" type="yht:ToimialaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luokka</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="virasto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Viraston lyhenne tvs.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aukioloajat" type="xs:string" minOccurs="0"/>
+					<xs:element name="ostopalveluKytkin" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tieto siitä onko palvelu ostettu palvelu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToimintaAlueType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="alue" type="gml:SurfacePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PuhelinnumeroType">
+		<xs:sequence>
+			<xs:element name="kuvaus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Numeron tyypp (fax/gsm/puh) jne.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numero" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SahkopostiType">
+		<xs:sequence>
+			<xs:element name="kuvaus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Sähköpostiosoitteen kuvaus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sahkopostiosoite" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="KunnanPalvelu" type="mkpa:KunnanPalveluType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Kunnan tarjoama palvelu</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MuuPalvelu" type="mkpa:MuuPalveluType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Muu kuin kunnan tarjoama palvelu</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ToimintaAlue" type="mkpa:ToimintaAlueType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Toiminta-alueet voidaan esittää joko tällä elementillä tai  palvelukohteen mukana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

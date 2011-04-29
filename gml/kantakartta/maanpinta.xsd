@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Maanpinta  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Jyrkanne  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Jyrkanne" type="kanta:JyrkanneType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Luonnon muokkaama maastossa selvän kulkuesteen muodostava, yleensä yli 2 m korkea kallio- tai irtomaajyrkänne, jonka kaltevuus on suurempi kuin 1:1</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="JyrkanneType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:CurvePropertyType" maxOccurs="unbounded"/-->
+					<xs:element name="tyyppi" type="kanta:JyrkanteenTyyppiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kaatopaikka  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kaatopaikka" type="kanta:KaatopaikkaType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Jätteiden varastointiin ja käsittelyyn tarkoitettu alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KaatopaikkaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="kanta:KaatopaikanKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaatopaikan käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kivi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kivi" type="kanta:KiviType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Poikkeuksellisen suuri, harvinainen tai yleisesti tunnettu kivi, mallinnetaan pisteenä tai alueena</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KiviType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Liikunta-alue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Liikunta-alue" type="kanta:Liikunta-alueType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Liikuntaa varten varattu ja rakennettu alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Liikunta-alueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="kanta:Liikunta-alueenKayttotarkoitusType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Maa-ainestenOttoalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Maa-ainestenOttoalue" type="kanta:Maa-ainestenOttoalueType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Maa-ainesten ottoon käytetty alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Maa-ainestenOttoalueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="maa-ainesTyyppi" type="kanta:Maa-ainesTunnusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maa-aineen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Maa-alue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MuuMaa-alue" type="kanta:MuuMaa-alueType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Suositeltava esitystapa kohteelle on alue.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MuuMaa-alueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<!-- xs:element name="sijainti" type="gml:SurfacePropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<!--xs:element name="reunaviiva" type="gml:CurvePropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<!--xs:element name="sijaintipiste" type="gml:PointPropertyType" minOccurs="0" maxOccurs="unbounded"/-->
+					<xs:element name="tyyppi" type="kanta:Maa-alueenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maa-alueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Metsa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Metsa" type="kanta:MetsaType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Puun tuotantoon käytettävä alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MetsaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="maapohja" type="kanta:MaapohjanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maapohjan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luokka" type="kanta:MetsanLuokkaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Metsän tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lehtiPuustonSuku" type="kanta:LehtipuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Lehtipuun suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="havupuustonSuku" type="kanta:HavupuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Havupuun suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Polku  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Polku" type="kanta:PolkuType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Käytön muokkaama kulku-ura maastossa, ei ylläpidetä kulkuväylänä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PolkuType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:CurvePropertyType" maxOccurs="unbounded"/-->
+					<xs:element name="kayttotarkoitus" type="kanta:PolunKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Polun käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Suo  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Suo" type="kanta:SuoType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Turvekerroksen peittämä soistuva- tai suoalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SuoType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="kulkukelpoisuus" type="kanta:SuoalueenKulkukelpoisuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Suon kulkukelpoisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Taytemaa-alue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Taytemaa-alue" type="kanta:Taytemaa-alueType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Täytemaa-alueena käytettävä alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Taytemaa-alueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Käyttötarktoitus(vapaa teksti)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Varastoalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Varastoalue" type="kanta:VarastoalueType" substitutionGroup="kanta:_Maanpinnankohde">
+		<xs:annotation>
+			<xs:documentation>Pysyväisluontoiset esim. Puutavaran varastoalueet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VarastoalueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="kanta:VarastoalueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Varaston käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

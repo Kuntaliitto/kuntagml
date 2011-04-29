@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Kasvillisuus  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Puu  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Puu" type="kanta:AbstractPuuType" abstract="true" substitutionGroup="kanta:_Kasvillisuuskohde">
+		<xs:annotation>
+			<xs:documentation>Yksittäisen puukohteen kantatyyppi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractPuuType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKasvillisuuskohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType"/-->
+					<xs:element name="huomattavuus" type="kanta:HuomattavuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko kyseessä huomattava/merkittävä puu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pituus" type="xs:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Puun pituus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Puurivi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Puurivi" type="kanta:AbstractPuuriviType" abstract="true" substitutionGroup="kanta:_Kasvillisuuskohde">
+		<xs:annotation>
+			<xs:documentation>Puurivi kohteen kantatyyppi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractPuuriviType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKasvillisuuskohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Havupuu  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Havupuu" type="kanta:HavupuuType" substitutionGroup="kanta:_Puu">
+		<xs:annotation>
+			<xs:documentation>Havupuihin kuuluva puu</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="HavupuuType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuType">
+				<xs:sequence>
+					<xs:element name="lapimitta" type="gml:MeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Läpimitta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suku" type="kanta:HavupuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Havuppun suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Havupuurivi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Havupuurivi" type="kanta:HavupuuriviType" substitutionGroup="kanta:_Puurivi">
+		<xs:annotation>
+			<xs:documentation>Havupuista koostuva puurivi tai aita</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="HavupuuriviType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuriviType">
+				<xs:sequence>
+					<xs:element name="suku" type="kanta:HavupuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Havupuiden suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kasviryhma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kasviryhma" type="kanta:KasviryhmaType" substitutionGroup="kanta:_Kasvillisuuskohde">
+		<xs:annotation>
+			<xs:documentation>Kiinteä, erillisten kasvien , yleensä puiden tai pensaiden muodostama ryhmä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KasviryhmaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKasvillisuuskohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType"/-->
+					<xs:element name="tyyppi" type="kanta:KasviryhmanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kasvillisuusalueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Lehtipuu  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Lehtipuu" type="kanta:LehtipuuType" substitutionGroup="kanta:_Puu">
+		<xs:annotation>
+			<xs:documentation>Lehtipuihin kuuluva puu</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LehtipuuType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuType">
+				<xs:sequence>
+					<xs:element name="suku" type="kanta:LehtipuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Lehtipuun suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lapimitta" type="gml:MeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Puun läpimitta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Lehtipuurivi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Lehtipuurivi" type="kanta:LehtipuuriviType" substitutionGroup="kanta:_Puurivi">
+		<xs:annotation>
+			<xs:documentation>Lehtipuista koostuva puurivi tai aita</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LehtipuuriviType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuriviType">
+				<xs:sequence>
+					<xs:element name="suku" type="kanta:LehtipuusukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Lehtiouiden suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Pensas  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Pensas" type="kanta:PensasType" substitutionGroup="kanta:_Puu">
+		<xs:annotation>
+			<xs:documentation>Istutettu yksittäinen pensas sekä muu erityisen kookas tai muuten huomattava pensas</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PensasType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuType">
+				<xs:sequence>
+					<xs:element name="suku" type="kanta:PensassukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pensaan suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Pensasaita  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Pensasaita" type="kanta:PensasaitaType" substitutionGroup="kanta:_Puurivi">
+		<xs:annotation>
+			<xs:documentation>Pensaista istutettu aita</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PensasaitaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPuuriviType">
+				<xs:sequence>
+					<xs:element name="suku" type="kanta:PensassukuType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pensaan suku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

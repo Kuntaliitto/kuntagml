@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Paikannusjarjestelmat  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Paikannusjarjestelma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Paikannusjarjestelma" type="kanta:AbstractPaikannusjarjestelmaType" abstract="true" substitutionGroup="kanta:_Paikannusjarjestelmakohde">
+		<xs:annotation>
+			<xs:documentation>Kantakohde :Paikantamiseen käytettävät vertausjärjestelmät ja muu paikantamista havainnollistava ja edistävä tieto</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractPaikannusjarjestelmaType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPaikannusjarjestelmakohdeType">
+				<xs:sequence>
+					<xs:element name="jarjestelma" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Karttalehti  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Karttalehti" type="kanta:KarttalehtiType" substitutionGroup="kanta:_Paikannusjarjestelma">
+		<xs:annotation>
+			<xs:documentation>Karttalehti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KarttalehtiType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPaikannusjarjestelmaType">
+				<xs:sequence>
+					<!--xs:element name="sijanti" type="gml:SurfacePropertyType"/-->
+					<xs:element name="mittakaava" type="xs:integer" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Mittakaava</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lehtijakotunnus" type="kanta:LehtijakotunnusType">
+						<xs:annotation>
+							<xs:documentation>Lehtijaon tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Kiintopiste  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kiintopiste" type="kanta:KiintopisteType" substitutionGroup="kanta:_Paikannusjarjestelma">
+		<xs:annotation>
+			<xs:documentation>Tasosijainnin määrityksen kiintopiste</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KiintopisteType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractPaikannusjarjestelmaType">
+				<xs:sequence>
+					<xs:element name="luokka" type="kanta:TukipisteluokkaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Taso/korkeuskiinto/-tukipisteluokka</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="verkonTunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Verkon tunnistetieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rakennusalusta" type="kanta:RakennusalustaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kiinto/tukipisteen rakennusalusta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType"/-->
+					<xs:element name="tyyppi" type="kanta:KiintopisteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kiinto/tukipisteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pisteNumero" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pisteen tunnistetieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

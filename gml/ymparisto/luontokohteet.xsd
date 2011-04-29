@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yml="http://www.kuntatietopalvelu.fi/gml/ymparisto/luontokohteet" xmlns:gml="http://www.opengis.net/gml" xmlns="" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/luontokohteet" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Luontokohteet -->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Luontokohteet -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Luontokohteet-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Luontokohteet" type="yml:LuontoKohteetType">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuontoKohteetType">
+		<xs:sequence>
+			<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType"/>
+			<xs:element name="luontokohde" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="yml:Luontokohde"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LuontokohdeType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractYmparistotoimiKohde">
+				<xs:sequence>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luontokohteen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kuvaus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luontokohteen lyhyt kuvaus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lisatieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vapamuotoinen lisätietokenttä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+					<xs:element name="havaintotieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Havainto" type="yml:LhavaintoType">
+									<xs:annotation>
+										<xs:documentation>Mitä havaittu</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kohdearvo" type="yml:KohdearvoType" minOccurs="0"/>
+					<xs:element name="julkisuus" type="yml:JulkisuusType" minOccurs="0"/>
+					<xs:element name="tyyppi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Elinympäristötyyppi. vapaamuotoinen luokitus, mutta kuvaava teksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LhavaintoType">
+		<xs:sequence>
+			<xs:element name="havaitsija" type="xs:string"/>
+			<xs:element name="kuvaus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Havainnon tarkempi kuvaus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="havaintoPvm" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Milloin havaittu</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lukuMaara" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Montako havaittu</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uhanalaisuusluokitus" type="yml:UhanalaisuusluokitusType" minOccurs="0"/>
+			<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JulkisuusType">
+		<xs:sequence>
+			<xs:element name="julkinenKytkin" type="xs:boolean"/>
+			<xs:element name="peruste" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KohdearvoType">
+		<xs:sequence>
+			<xs:element name="arvo" type="yml:arvoType"/>
+			<xs:element name="peruste" type="yml:PerusteType" minOccurs="0"/>
+			<xs:element name="suojelullinenArvo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="KuvausType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PerusteType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="luonnosuojelulaki"/>
+			<xs:enumeration value="metsälaki"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="arvoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="paikallisesti arvokas kohde"/>
+			<xs:enumeration value="maakunnallisesti arvokas kohde"/>
+			<xs:enumeration value="kansallisesti arvokas kohde"/>
+			<xs:enumeration value="kansainvälisesti arvokas kohde"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="luokitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="silmälläpidettävät (NT)"/>
+			<xs:enumeration value="vaarantuneet (VU)"/>
+			<xs:enumeration value="erittäin uhanalaiset (EN)"/>
+			<xs:enumeration value="äärimmäisen uhanalaiset (CR)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="UhanalaisuusluokitusType">
+		<xs:sequence>
+			<xs:element name="direktiiviKytkin" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Onko kohde EU direktiivien mukaan uhanalainen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kansallinenKytkin" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Onko kohde kansallisesti uhanalaiseksi luokiteltu</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lajikoodi">
+				<xs:annotation>
+					<xs:documentation>Lajit tieteellisillä nimillä</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ei tiedossa"/>
+						<xs:enumeration value="alcedo atthis "/>
+						<xs:enumeration value="anser erythropus "/>
+						<xs:enumeration value="aquila chrysaetos "/>
+						<xs:enumeration value="aquila clanga "/>
+						<xs:enumeration value="asio flammeus "/>
+						<xs:enumeration value="bonasa bonasia"/>
+						<xs:enumeration value="botaurus stellaris "/>
+						<xs:enumeration value="branta leucopsis "/>
+						<xs:enumeration value="bubo bubo "/>
+						<xs:enumeration value="calidris alpina schinzii"/>
+						<xs:enumeration value="caprimulgus europaeus "/>
+						<xs:enumeration value="charadrius morinellus "/>
+						<xs:enumeration value="chlidonias niger "/>
+						<xs:enumeration value="circus aeroginosus "/>
+						<xs:enumeration value="circus cyaneus "/>
+						<xs:enumeration value="circus pygargus "/>
+						<xs:enumeration value="crex crex "/>
+						<xs:enumeration value="cygnus columbianus bewickii "/>
+						<xs:enumeration value="cygnus cygnus "/>
+						<xs:enumeration value="dendrocopos leucotos "/>
+						<xs:enumeration value="dryocopus martius "/>
+						<xs:enumeration value="emberiza hortulana "/>
+						<xs:enumeration value="falco columbarius "/>
+						<xs:enumeration value="falco peregrinus "/>
+						<xs:enumeration value="falco rusticolus "/>
+						<xs:enumeration value="ficedula parva "/>
+						<xs:enumeration value="gallinago media "/>
+						<xs:enumeration value="gavia arctica "/>
+						<xs:enumeration value="gavia stellata "/>
+						<xs:enumeration value="glaucidium passerinum "/>
+						<xs:enumeration value="grus grus"/>
+						<xs:enumeration value="haliaeetus albicilla "/>
+						<xs:enumeration value="lanius collurio "/>
+						<xs:enumeration value="larus minutus "/>
+						<xs:enumeration value="limosa lapponica "/>
+						<xs:enumeration value="lullula arborea "/>
+						<xs:enumeration value="luscinia svecica svecica "/>
+						<xs:enumeration value="mergus albellus "/>
+						<xs:enumeration value="milvus migrans "/>
+						<xs:enumeration value="nyctea scandiaca "/>
+						<xs:enumeration value="pandion haliaetus "/>
+						<xs:enumeration value="pernis apivorus "/>
+						<xs:enumeration value="phalaropus lobatus "/>
+						<xs:enumeration value="philomachus pugnax "/>
+						<xs:enumeration value="picoides tridactylus "/>
+						<xs:enumeration value="picus canus "/>
+						<xs:enumeration value="pluvialis apricaria "/>
+						<xs:enumeration value="podiceps auritus "/>
+						<xs:enumeration value="polysticta stelleri"/>
+						<xs:enumeration value="porzana porzana "/>
+						<xs:enumeration value="sterna albifrons "/>
+						<xs:enumeration value="sterna caspia "/>
+						<xs:enumeration value="sterna hirundo "/>
+						<xs:enumeration value="sterna paradisaea "/>
+						<xs:enumeration value="strix nebulosa "/>
+						<xs:enumeration value="strix uralensis "/>
+						<xs:enumeration value="surnia ulula "/>
+						<xs:enumeration value="sylvia nisoria "/>
+						<xs:enumeration value="tetrao tetrix tetrix"/>
+						<xs:enumeration value="tetrao urogallus "/>
+						<xs:enumeration value="tringa glareola "/>
+						<xs:enumeration value="xenus cinereus "/>
+						<xs:enumeration value="alopex lagopus "/>
+						<xs:enumeration value="canis lupus "/>
+						<xs:enumeration value="eptesicus nilssonii"/>
+						<xs:enumeration value="castor fiber "/>
+						<xs:enumeration value="lutra lutra"/>
+						<xs:enumeration value="lynx lynx "/>
+						<xs:enumeration value="myotis brandtii "/>
+						<xs:enumeration value="myotis daubentonii "/>
+						<xs:enumeration value="myotis dasycneme"/>
+						<xs:enumeration value="myotis nattereri "/>
+						<xs:enumeration value="myotis mystacinus"/>
+						<xs:enumeration value="nyctalus noctula"/>
+						<xs:enumeration value="phoca hispida botnica "/>
+						<xs:enumeration value="phocoena phocoena"/>
+						<xs:enumeration value="pipistrellus nathusii"/>
+						<xs:enumeration value="pipistrellus pipistrellus"/>
+						<xs:enumeration value="plecotus auritus "/>
+						<xs:enumeration value="pteromys volans "/>
+						<xs:enumeration value="sicista betulina "/>
+						<xs:enumeration value="ursus arctos "/>
+						<xs:enumeration value="vespertilio murinus "/>
+						<xs:enumeration value="coronella austriaca "/>
+						<xs:enumeration value="rana arvalis "/>
+						<xs:enumeration value="triturus cristatus "/>
+						<xs:enumeration value="aeshna viridis "/>
+						<xs:enumeration value="cucujus cinnaberinus "/>
+						<xs:enumeration value="dytiscus latissimus "/>
+						<xs:enumeration value="euphydryas maturna(hypodryas m.)"/>
+						<xs:enumeration value="graphoderus bilineatus "/>
+						<xs:enumeration value="leucorrhinia albifrons "/>
+						<xs:enumeration value="leucorrhinia caudalis "/>
+						<xs:enumeration value="leucorrhinia pectoralis "/>
+						<xs:enumeration value="lopinga achine "/>
+						<xs:enumeration value="lycaena dispar "/>
+						<xs:enumeration value="lycaena helle"/>
+						<xs:enumeration value="glaucopsyche arion (maculinea a.)"/>
+						<xs:enumeration value="ophiogomphus cecilia "/>
+						<xs:enumeration value="osmoderma eremita "/>
+						<xs:enumeration value="parnassius apollo "/>
+						<xs:enumeration value="parnassius mnemosyne "/>
+						<xs:enumeration value="phryganophilus ruficollis"/>
+						<xs:enumeration value="pytho kolwensis "/>
+						<xs:enumeration value="sympecma paedisca"/>
+						<xs:enumeration value="unio crassus "/>
+						<xs:enumeration value="agrimonia pilosa "/>
+						<xs:enumeration value="alisma wahlenbergii "/>
+						<xs:enumeration value="anemone patens (pulsatilla patens) "/>
+						<xs:enumeration value="arctagrostis latifolia "/>
+						<xs:enumeration value="arctophila fulva var. pendulina (a. fulva)"/>
+						<xs:enumeration value="arenaria pseudofrigida"/>
+						<xs:enumeration value="(a. ciliata subsp. pseudofrigida)"/>
+						<xs:enumeration value="artemisia campestris subsp. bottnica "/>
+						<xs:enumeration value="asplenium adulterinum"/>
+						<xs:enumeration value="botrychium simplex "/>
+						<xs:enumeration value="calypso bulbosa "/>
+						<xs:enumeration value="carex holostoma "/>
+						<xs:enumeration value="cinna latifolia "/>
+						<xs:enumeration value="crepis tectorum subsp. nigrescens "/>
+						<xs:enumeration value="cypripedium calceolus "/>
+						<xs:enumeration value="diplazium sibiricum "/>
+						<xs:enumeration value="draba cinerea "/>
+						<xs:enumeration value="dryopteris fragrans "/>
+						<xs:enumeration value="hippuris tetraphylla "/>
+						<xs:enumeration value="liparis loeselii"/>
+						<xs:enumeration value="moehringia lateriflora "/>
+						<xs:enumeration value="najas flexilis "/>
+						<xs:enumeration value="najas tenuissima "/>
+						<xs:enumeration value="persicaria foliosa "/>
+						<xs:enumeration value="primula nutans var. jokelae (primula nutans)"/>
+						<xs:enumeration value="puccinellia phryganodes "/>
+						<xs:enumeration value="ranunculus lapponicus "/>
+						<xs:enumeration value="saxifraga hirculus "/>
+						<xs:enumeration value="silene furcata subsp. angustiflora "/>
+						<xs:enumeration value="sorbus teodorii"/>
+						<xs:enumeration value="trisetum subalpestre "/>
+						<xs:enumeration value="viola rupestris subsp. relicta "/>
+						<xs:enumeration value="leucaspius delineatus"/>
+						<xs:enumeration value="lumpenus lampetraeformis"/>
+						<xs:enumeration value="pomatoschistus minutus"/>
+						<xs:enumeration value="liparis liparis"/>
+						<xs:enumeration value="myoxocephalus scorpius"/>
+						<xs:enumeration value="hyperoplus lanceolatus"/>
+						<xs:enumeration value="cottus poecilopus"/>
+						<xs:enumeration value="noemacheilus barbatulus"/>
+						<xs:enumeration value="zoarces viviparus"/>
+						<xs:enumeration value="cottus gobio"/>
+						<xs:enumeration value="gasterosteus aculeatus"/>
+						<xs:enumeration value="pungitius pungitius"/>
+						<xs:enumeration value="pomatoschistus microps"/>
+						<xs:enumeration value="pelecus cultratus"/>
+						<xs:enumeration value="gobius niger"/>
+						<xs:enumeration value="phoxinus phoxinus"/>
+						<xs:enumeration value="belone belone"/>
+						<xs:enumeration value="blicca bjoerkna"/>
+						<xs:enumeration value="ictalurus nebulosus"/>
+						<xs:enumeration value="taurulus bubalis"/>
+						<xs:enumeration value="lampetra planeri"/>
+						<xs:enumeration value="ammodytes tobianus"/>
+						<xs:enumeration value="cobitis taenia"/>
+						<xs:enumeration value="cyclopterus lumpus"/>
+						<xs:enumeration value="carassius carassius"/>
+						<xs:enumeration value="alburnus alburnus"/>
+						<xs:enumeration value="leuciscus leuciscus"/>
+						<xs:enumeration value="gobiusculus flavescens"/>
+						<xs:enumeration value="nerophis ophidion"/>
+						<xs:enumeration value="scardinius erythrophthalmus"/>
+						<xs:enumeration value="abramis ballerus"/>
+						<xs:enumeration value="sygnathus typhle"/>
+						<xs:enumeration value="pholis gunnellus"/>
+						<xs:enumeration value="leuciscus cephalus"/>
+						<xs:enumeration value="gobio gobio"/>
+						<xs:enumeration value="spinachia spinachia"/>
+						<xs:enumeration value="culaea inconstans"/>
+						<xs:enumeration value="coronella austriaca"/>
+						<xs:enumeration value="natrix natrix"/>
+						<xs:enumeration value="lacerta vivipara"/>
+						<xs:enumeration value="anguis fragilis"/>
+						<xs:enumeration value="bufo bufo"/>
+						<xs:enumeration value="triturus cristatus"/>
+						<xs:enumeration value="rana temporaria"/>
+						<xs:enumeration value="triturus vulgaris"/>
+						<xs:enumeration value="rana arvalis"/>
+						<xs:enumeration value="margaritifera"/>
+						<xs:enumeration value="unio crassus"/>
+						<xs:enumeration value="clossiana thore"/>
+						<xs:enumeration value="pseudophilotes baton"/>
+						<xs:enumeration value="scopula corrivalaria"/>
+						<xs:enumeration value="parnassius apollo"/>
+						<xs:enumeration value="lycaena dispar"/>
+						<xs:enumeration value="zygaena osterodensis"/>
+						<xs:enumeration value="bembecia ichneumoniformis"/>
+						<xs:enumeration value="scolitantides orion"/>
+						<xs:enumeration value="lopinga achine"/>
+						<xs:enumeration value="hypodryas maturna"/>
+						<xs:enumeration value="clossiana titania"/>
+						<xs:enumeration value="maculinea arion"/>
+						<xs:enumeration value="cynaeda dentalis"/>
+						<xs:enumeration value="parnassius mnemosyne"/>
+						<xs:enumeration value="caryocolum petryi"/>
+						<xs:enumeration value="scopula decorata"/>
+						<xs:enumeration value="melitaea diamina"/>
+						<xs:enumeration value="agriades glandon"/>
+						<xs:enumeration value="lobesia euphorbiana"/>
+						<xs:enumeration value="ethmia terminella"/>
+						<xs:enumeration value="osmoderma eremita"/>
+						<xs:enumeration value="graphoderus bilineatus"/>
+						<xs:enumeration value="dytiscus latissimus"/>
+						<xs:enumeration value="cucujus cinnaberinus"/>
+						<xs:enumeration value="aeshna viridis"/>
+						<xs:enumeration value="leucorrhinia caudalis"/>
+						<xs:enumeration value="leucorrhinia albifrons"/>
+						<xs:enumeration value="leucorrhinia pectoralis"/>
+						<xs:enumeration value="anemone trifolia"/>
+						<xs:enumeration value="arnica angustifolia"/>
+						<xs:enumeration value="cinna latifolia"/>
+						<xs:enumeration value="gentianella tenella"/>
+						<xs:enumeration value="najas tenuissima"/>
+						<xs:enumeration value="dianthus arenarius"/>
+						<xs:enumeration value="leersia oryzoides"/>
+						<xs:enumeration value="carlina biebersteinii (c. vulgaris"/>
+						<xs:enumeration value="draba cinerea"/>
+						<xs:enumeration value="agrimonia pilosa"/>
+						<xs:enumeration value="pulmonaria obscura"/>
+						<xs:enumeration value="antennaria lanata"/>
+						<xs:enumeration value="lepidium latifolium"/>
+						<xs:enumeration value="polygala vulgaris"/>
+						<xs:enumeration value="pimpinella major"/>
+						<xs:enumeration value="ranunculus glacialis"/>
+						<xs:enumeration value="anemone patens"/>
+						<xs:enumeration value="saxifraga adscendens"/>
+						<xs:enumeration value="lappula deflexa"/>
+						<xs:enumeration value="gypsophila fastigiata"/>
+						<xs:enumeration value="anemone vernalis"/>
+						<xs:enumeration value="sedum villosum"/>
+						<xs:enumeration value="juniperis communis"/>
+						<xs:enumeration value="erica tetralix"/>
+						<xs:enumeration value="platanthera chloranta"/>
+						<xs:enumeration value="thalictrum minus subsp."/>
+						<xs:enumeration value="ononis arvensis"/>
+						<xs:enumeration value="androsace septentrionalis"/>
+						<xs:enumeration value="carex vulpina"/>
+						<xs:enumeration value="primula veris"/>
+						<xs:enumeration value="lathyrus vernus"/>
+						<xs:enumeration value="campanula uniflora"/>
+						<xs:enumeration value="ophrys insectifera"/>
+						<xs:enumeration value="cynoglossum officinale"/>
+						<xs:enumeration value="bistorta major (polygonumbistorta)"/>
+						<xs:enumeration value="draba alpina"/>
+						<xs:enumeration value="carex lepidocarpa"/>
+						<xs:enumeration value="kobresia simpliciuscula"/>
+						<xs:enumeration value="ulmus laevis"/>
+						<xs:enumeration value="moehringia lateriflora"/>
+						<xs:enumeration value="rhododendron lapponicum"/>
+						<xs:enumeration value="arctagrostis latifolia"/>
+						<xs:enumeration value="trisetum subalpestre"/>
+						<xs:enumeration value="ranunculus lapponicus"/>
+						<xs:enumeration value="armeria maritima"/>
+						<xs:enumeration value="bromus benekenii"/>
+						<xs:enumeration value="cardamine impatiens"/>
+						<xs:enumeration value="festuca gigantea"/>
+						<xs:enumeration value="epipactis helleborine"/>
+						<xs:enumeration value="botrychium virginianum"/>
+						<xs:enumeration value="aconitum lycoctonum"/>
+						<xs:enumeration value="thalictrum aquilegiifolium"/>
+						<xs:enumeration value="saxifraga hirculus"/>
+						<xs:enumeration value="dactylorhiza majalis"/>
+						<xs:enumeration value="polygonum foliosum"/>
+						<xs:enumeration value="viola uliginosa"/>
+						<xs:enumeration value="nymphaea"/>
+						<xs:enumeration value="carex paniculata"/>
+						<xs:enumeration value="carlina vulgaris"/>
+						<xs:enumeration value="anthyllis vulneraria"/>
+						<xs:enumeration value="salsola kali subsp. kali"/>
+						<xs:enumeration value="polygonum oxyspermum"/>
+						<xs:enumeration value="elymus farctus"/>
+						<xs:enumeration value="cardamine flexuosa"/>
+						<xs:enumeration value="epipogium aphyllum"/>
+						<xs:enumeration value="malus sylvestris"/>
+						<xs:enumeration value="diplazium sibiricum"/>
+						<xs:enumeration value="viola collina"/>
+						<xs:enumeration value="calypso bulbosa"/>
+						<xs:enumeration value="hippuris tetraphylla"/>
+						<xs:enumeration value="arenaria norvegica"/>
+						<xs:enumeration value="najas flexilis"/>
+						<xs:enumeration value="galium saxatile"/>
+						<xs:enumeration value="carduus nutans"/>
+						<xs:enumeration value="daphne mezereum"/>
+						<xs:enumeration value="silene wahlbergella"/>
+						<xs:enumeration value="potentilla nivea subsp."/>
+						<xs:enumeration value="viola rupestris"/>
+						<xs:enumeration value="crepis tectorum"/>
+						<xs:enumeration value="carex hartmanii"/>
+						<xs:enumeration value="melampyrum arvense"/>
+						<xs:enumeration value="artemisia"/>
+						<xs:enumeration value="neottia nidus-avis"/>
+						<xs:enumeration value="potentilla neumanniana"/>
+						<xs:enumeration value="botrychium simplex"/>
+						<xs:enumeration value="silene furcata"/>
+						<xs:enumeration value="arctophila fulva"/>
+						<xs:enumeration value="vicia cassubica"/>
+						<xs:enumeration value="cephalanthera rubra"/>
+						<xs:enumeration value="helianthemum nummularium"/>
+						<xs:enumeration value="cardamine parviflora"/>
+						<xs:enumeration value="viola persicifolia"/>
+						<xs:enumeration value="euphorbia palustris"/>
+						<xs:enumeration value="primula nutans"/>
+						<xs:enumeration value="potentilla nivea"/>
+						<xs:enumeration value="schoenus ferrugineus"/>
+						<xs:enumeration value="puccinellia phryganodes"/>
+						<xs:enumeration value="potentilla subarenaria"/>
+						<xs:enumeration value="dactylorhiza sambucina"/>
+						<xs:enumeration value="asplenium"/>
+						<xs:enumeration value="lonicera caerulea"/>
+						<xs:enumeration value="hepatica nobilis"/>
+						<xs:enumeration value="clematis alpina"/>
+						<xs:enumeration value="listera ovata"/>
+						<xs:enumeration value="orchis militaris"/>
+						<xs:enumeration value="erigeron borealis"/>
+						<xs:enumeration value="sium latifolium"/>
+						<xs:enumeration value="polystichum lonchitis"/>
+						<xs:enumeration value="samolus valerandi"/>
+						<xs:enumeration value="lathraea squamaria"/>
+						<xs:enumeration value="epipactis palustris"/>
+						<xs:enumeration value="hammarbya paludosa"/>
+						<xs:enumeration value="microstylis monophyllos"/>
+						<xs:enumeration value="cladium mariscus"/>
+						<xs:enumeration value="salix pyrolifolia"/>
+						<xs:enumeration value="asarum europaeum"/>
+						<xs:enumeration value="cypripedium calceolus"/>
+						<xs:enumeration value="epilobium obscurum"/>
+						<xs:enumeration value="epipactis atrorubens"/>
+						<xs:enumeration value="carex holostoma"/>
+						<xs:enumeration value="arenaria pseudofrigida"/>
+						<xs:enumeration value="oxytropis lapponica"/>
+						<xs:enumeration value="chamorchis alpina"/>
+						<xs:enumeration value="dryopteris fragrans"/>
+						<xs:enumeration value="hippophae¨ rhamnoides"/>
+						<xs:enumeration value="melica ciliata"/>
+						<xs:enumeration value="alisma wahlenbergii"/>
+						<xs:enumeration value="scleranthus perennis"/>
+						<xs:enumeration value="pseudorchis albida"/>
+						<xs:enumeration value="platanthera bifolia"/>
+						<xs:enumeration value="veratrum album"/>
+						<xs:enumeration value="crepis praemorsa"/>
+						<xs:enumeration value="veronica fruticans"/>
+						<xs:enumeration value="dactylorhiza"/>
+						<xs:enumeration value="ulmus glabra"/>
+						<xs:enumeration value="hypericum montanum"/>
+						<xs:enumeration value="asperula tinctoria"/>
+						<xs:enumeration value="cephalozia macounii"/>
+						<xs:enumeration value="dichelyma capillaceum"/>
+						<xs:enumeration value="meesia longiseta"/>
+						<xs:enumeration value="cynodontium suecicum"/>
+						<xs:enumeration value="dicranum viride"/>
+						<xs:enumeration value="limprichtia"/>
+						<xs:enumeration value="buxbaumia viridis"/>
+						<xs:enumeration value="dactylorhiza traunsteineri"/>
+						<xs:enumeration value="gymnadenia conopsea"/>
+						<xs:enumeration value="saxifraga cespitosa"/>
+						<xs:enumeration value="saxifraga nivalis"/>
+						<xs:enumeration value="dianthus superbus"/>
+						<xs:enumeration value="dactylorhiza incarnata"/>
+						<xs:enumeration value="woodsia alpina"/>
+						<xs:enumeration value="catabrosa aquatica"/>
+						<xs:enumeration value="angelica archangelica"/>
+						<xs:enumeration value="corydalis intermedia"/>
+						<xs:enumeration value="polygonatum odoratum"/>
+						<xs:enumeration value="poa remota"/>
+						<xs:enumeration value="iris pseudacorus"/>
+						<xs:enumeration value="impatiens noli-tangere"/>
+						<xs:enumeration value="thelypteris palustris"/>
+						<xs:enumeration value="asplenium ruta-muraria"/>
+						<xs:enumeration value="anemone nemorosa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="luokitus" type="yml:luokitusType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valtakunnallinen luokitus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uhkatekijat" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vapaamuotoinen kenttä, jossa siirretään kohteeseen liittyviä uhkatekijätietoja</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Luontokohde" type="yml:LuontokohdeType" substitutionGroup="gml:_Feature"/>
+</xs:schema>

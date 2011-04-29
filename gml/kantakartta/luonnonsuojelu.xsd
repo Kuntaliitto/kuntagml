@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Suojelualueet  -->
+	<!-- ================================================= -->
+	<xs:element name="SuojeltavaKohde" type="kanta:SuojelukohdeType" substitutionGroup="kanta:_Luonnonsuojelukohde">
+		<xs:annotation>
+			<xs:documentation>Suojelukohde, joka perustuu lakiin tai erilliseen päätökseen</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SuojelukohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractLuonnonsuojelukohdeType">
+				<xs:sequence>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="kanta:SuojelukohteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Suojelukohteen typpi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType"/-->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

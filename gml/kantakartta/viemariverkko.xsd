@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>>Viemariverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Viemariverkkokohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Viemariverkonosa" type="kanta:ViemariverkkokohdeType" substitutionGroup="kanta:_Viemariverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Viemäriverkon kohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ViemariverkkokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractViemariverkonkohdeType">
+				<xs:sequence>
+					<xs:element name="toiminta" type="kanta:ViemariverkonOsanToiminnallinenLuokkaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Viemärin tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="kanta:ViemariverkonOsanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Viemäriverkon kohteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="laji" type="kanta:ViemaroitavaNesteType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Viemäröitävä neste</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tila" type="kanta:VerkostokohteenSijaintiTilaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijoitustila</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="verkonomistaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaytossaTila" type="kanta:KaytossaTilaType" minOccurs="0"/>
+					<xs:element name="rakennusvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="materiaali" type="kanta:VerkkoMateriaaliType" minOccurs="0"/>
+					<xs:element name="halkaisija" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

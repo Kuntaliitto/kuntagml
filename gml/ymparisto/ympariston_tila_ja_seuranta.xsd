@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yms="http://www.kuntatietopalvelu.fi/gml/ymparisto/ympariston_tila_ja_seuranta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ympariston_tila_ja_seuranta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Ympäristön tila ja seuranta-->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Ympäristön tila ja seuranta-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Ympäristön tila ja seuranta-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="YmparistonTilaJaSeuranta" type="yms:YmparistonTilaJaSeurantaType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PintaVesiType">
+		<xs:sequence>
+			<xs:element ref="yms:PintavedenlaatuHavainto"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IlmanlaatuType">
+		<xs:sequence>
+			<xs:element ref="yms:IlmanlaatuHavainto"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HavaintoType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="asema" type="xs:string" minOccurs="0"/>
+					<xs:element name="mitahavaittu" type="xs:string" minOccurs="0"/>
+					<xs:element name="ajanHetki" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="havaintoarvo" type="xs:string" minOccurs="0"/>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PohjavesiType">
+		<xs:sequence>
+			<xs:element ref="yms:PohjavedenlaatuHavainto" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistonTilaJaSeurantaType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType"/>
+					<xs:element name="ilmanlaatuhavaintotieto" type="yms:IlmanlaatuType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="pintavedenlaatuhavaintotieto" type="yms:PintaVesiType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="pohjavedenlaatuhavainnot" type="yms:PohjavesiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="IlmanlaatuHavainto" type="yms:HavaintoType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="PintavedenlaatuHavainto" type="yms:HavaintoType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="PohjavedenlaatuHavainto" type="yms:HavaintoType" substitutionGroup="gml:_Feature"/>
+</xs:schema>

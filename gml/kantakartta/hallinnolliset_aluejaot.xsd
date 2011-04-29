@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> HallinnollisetAluejaot  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> HallinnollinenAlue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_HallinnollinenAlue" type="kanta:AbstractHallinnollinenAlueType" abstract="true" substitutionGroup="kanta:_Hallinnollinenaluejakokohde">
+		<xs:annotation>
+			<xs:documentation>Abstrakti Hallinnollisten aluiden elementti, josta kohteet periytetään</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractHallinnollinenAlueType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kaikille Hallinnollisille alueille yhteisten ominaisuuksien määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractHallinnollinenaluejakokohdeType">
+				<xs:sequence>
+					<!-- xs:element name="sijainti" type="gml:SurfacePropertyType" maxOccurs="unbounded"/ -->
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alueen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Erityiskayttooikeusalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Erityiskayttooikeusalue" type="kanta:ErityiskayttooikeusalueType" substitutionGroup="kanta:_HallinnollinenAlue">
+		<xs:annotation>
+			<xs:documentation>Alue, johon kohdistuu yleensä sopimukseen tai lakiin perustuva käyttöoikeus, mutta jota ei ole tallennettu kiinteistötietojärjestelmään</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ErityiskayttooikeusalueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractHallinnollinenAlueType">
+				<xs:sequence>
+					<xs:element name="tyyppi">
+						<xs:annotation>
+							<xs:documentation>Erityiskäyttöalueen tyyppi</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="kanta:ErityiskayttooikeusalueenTyyppiType"/>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Hallintoalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Hallintoalue" type="kanta:HallintoalueType" substitutionGroup="kanta:_HallinnollinenAlue">
+		<xs:annotation>
+			<xs:documentation>Hallinnollinen aluejaottelun mukainen alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="HallintoalueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractHallinnollinenAlueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:HallintoalueenTyyppiType">
+						<xs:annotation>
+							<xs:documentation>Halinnollisen alueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> TilastollinenAlue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="TilastollinenAlue" type="kanta:TilastollinenAlueType" substitutionGroup="kanta:_HallinnollinenAlue">
+		<xs:annotation>
+			<xs:documentation>Tilastollisen aluejaon mukainen alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TilastollinenAlueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractHallinnollinenAlueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:TilastollisenAlueenTyyppiType">
+						<xs:annotation>
+							<xs:documentation>Osoittaa mihin tilastollinen aluejaon tyyppiin alue kuuluu kunnassa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Toiminnansuunnittelualue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Toiminnansuunnittelualue" type="kanta:ToiminnansuunnittelualueType" substitutionGroup="kanta:_HallinnollinenAlue">
+		<xs:annotation>
+			<xs:documentation>Toiminnansuunnittelun ja toteutuksen apuna käytetyn aluejaon mukainen alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ToiminnansuunnittelualueType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractHallinnollinenAlueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:ToiminnansuunnittelualueenTyyppiType">
+						<xs:annotation>
+							<xs:documentation>Toiminnan suunnittelualueen tyypppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

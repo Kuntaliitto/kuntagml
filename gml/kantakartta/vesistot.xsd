@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Vesistot  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Vesistökohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Vesistokohde" type="kanta:AbstractVesistokohdeType" abstract="true" substitutionGroup="kanta:_Kantakarttakohde">
+		<xs:annotation>
+			<xs:documentation>Kantakohde Vesistön kohteille</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractVesistokohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractKantakarttakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Vesikohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Vesikohde" type="kanta:VesikohdeType" substitutionGroup="kanta:_Vesistokohde">
+		<xs:annotation>
+			<xs:documentation>Vesistöt ja muut vesikohteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesikohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractVesistokohdeType">
+				<xs:sequence>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vesikohteen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="vesistonnimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vesistön nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="kanta:VesikohteenTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vesistökohteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="virtaavavesi" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko kyseessä virtaava vesi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="leveys" type="gml:MeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen leveys</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="virtaussuunta" type="gml:AngleType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Veden virtaussuunta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

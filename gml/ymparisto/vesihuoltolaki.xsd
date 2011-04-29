@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymv="http://www.kuntatietopalvelu.fi/gml/ymparisto/vesihuoltolaki" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/vesihuoltolaki" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Vesihuoltolaki -->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Vesihuoltolaki -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Vesihuoltolaki" type="ymv:VesihuoltolakiType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="JaksoType">
+		<xs:sequence>
+			<xs:element name="alkuHetki" type="xs:dateTime"/>
+			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NimiType">
+		<xs:sequence>
+			<xs:element name="etunimi" type="xs:string"/>
+			<xs:element name="sukunimi" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToiminnanSijaintiType">
+		<xs:sequence>
+			<xs:element name="osoite" type="yht:PostiosoiteType"/>
+			<xs:element name="kunta" type="xs:string"/>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="liite" type="yht:LiiteType" minOccurs="0"/>
+			<xs:element name="kiinteistorekisterinumero" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="kayttoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Asumaton"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Tilapäinen"/>
+			<xs:enumeration value="Vakituinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="kiinteistoonKuuluuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Eläinsuoja"/>
+			<xs:enumeration value="Saunarakennus"/>
+			<xs:enumeration value="Lomarakennus"/>
+			<xs:enumeration value="Asuinrakennus"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vapautustaHaetaanType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Eläinsuoja"/>
+			<xs:enumeration value="Saunarakennus"/>
+			<xs:enumeration value="Lomarakennus"/>
+			<xs:enumeration value="Asuinrakennus"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="kohteenVarustelutasoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Suihku"/>
+			<xs:enumeration value="Tiskiallas"/>
+			<xs:enumeration value="Astianpesukone"/>
+			<xs:enumeration value="Pyykinpesukone"/>
+			<xs:enumeration value="Lämminvesivaraaja"/>
+			<xs:enumeration value="Kuivakäymälä"/>
+			<xs:enumeration value="WC(vesikäymälä)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="hulevedetType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Johdetaan muualle, minne"/>
+			<xs:enumeration value="Johdetaan rajaojaan tai muuhun ojaan"/>
+			<xs:enumeration value="imeytetään maaperään"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="hankintaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Muualta, mistä"/>
+			<xs:enumeration value="Vesihuoltolaitoksen vesijohdosta"/>
+			<xs:enumeration value="Kiinteistön rengaskaivosta"/>
+			<xs:enumeration value="Kiinteistön porakaivosta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="johdatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kannetaan kaivosta tai vesistöstä"/>
+			<xs:enumeration value="pumpataan kaivosta tai vesistöstä"/>
+			<xs:enumeration value="johdetaan paineellisena vesijohtoa pitkin rakennukseen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="riittavyysType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="vesi ajoittain vähissä"/>
+			<xs:enumeration value="vesi riittää talouden tarpeisiin"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VapautusperusteType">
+		<xs:sequence>
+			<xs:element name="liittaminenKohtuutonta" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>liittäminen verkostoon muodostuisi kiinteistön omistajalle tai haltijalle kohtuuttomaksi, kun otetaan huomioon liittämisestä aiheutuvat kustannukset, vesihuoltolaitoksen palvelujen vähäinen tarve tai muu vastaava erityinen syy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eiVaarannaVesihuoltoa" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>vapauttaminen ei vaaranna vesihuollon taloudellista ja asianmukaista hoitamista vesihuoltolaitoksen toiminta-alueella</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lisaksi" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lisäksi:</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="kaytettavissaTalousvetta" type="yht:LiiteType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>vesijohtoon liittämisestä vapautettavalla kiinteistöllä on käytettävissä riittävästi vaatimukset täyttävää talousvettä</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="jatevesistaEiHaittaa" type="yht:LiiteType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>jätevesiviemäriin liittämisestä vapautettavan kiinteistön jätevesien kokoaminen ja käsittely voidaan järjestää niin, ettei niistä aiheudu terveyshaittaa tai ympäristön pilaantumista;</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="hulevedenPoisjohtaminen" type="yht:LiiteType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>huleveden ja perustusten kuivatusveden poisjohtamista varten tarkoitettuun viemäriin liittämisestä vapautettavan kiinteistön hulevesi ja perustusten kuivatusvesi voidaan poistaa muutoin asianmukaisesti</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HaetaanType">
+		<xs:choice>
+			<xs:element name="vesijohtoonLiittymisesta" type="xs:string"/>
+			<xs:element name="jatevesiviemariinLiittymisesta" type="xs:string"/>
+			<xs:element name="hulevesiviemariinLiittymisesta" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TalousvedetType">
+		<xs:sequence>
+			<xs:element name="hankinta" type="ymv:hankintaType"/>
+			<xs:element name="johdatus" type="ymv:johdatusType"/>
+			<xs:element name="riittavyys" type="ymv:riittavyysType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VapautuskohdeType">
+		<xs:sequence>
+			<xs:element name="kiinteistonOmistaja" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kiinteistön omistaja jos joku muu kuin hakija</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0"/>
+			<xs:element name="kiinteistorekisteritunnus" type="xs:string" minOccurs="0"/>
+			<xs:element name="pintaAla" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tontin pinta-ala</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kaytto" type="ymv:kayttoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kiinteistön käyttö</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kiinteistoonKuuluu" type="ymv:kiinteistoonKuuluuType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Kiinteistöön kuuluu </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vapautustaHaetaan" type="ymv:vapautustaHaetaanType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Rakennustyppia, jolle vapautusta haetaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kohteenVarustelutaso" type="ymv:kohteenVarustelutasoType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Vapautushakemuksen kohteena olevan rakennuksen varustelutaso</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hulevedet" type="ymv:hulevedetType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hulevesien imeytys</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="talousvedet" type="ymv:TalousvedetType" minOccurs="0"/>
+			<xs:element name="jatevedet" type="xs:string" minOccurs="0"/>
+			<xs:element name="lisatiedot" type="yht:LiiteType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VapautushakemusType">
+		<xs:sequence>
+			<xs:element name="haetaan" type="ymv:HaetaanType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vapautusta
+haetaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hakija" type="yht:YhteyshenkiloType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hakijan yhteystiedot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kohde" type="ymv:VapautuskohdeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kohde jolle vapautusta  haetaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VapautuksetType">
+		<xs:sequence>
+			<xs:element ref="ymv:Vapautus"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VesihuoltolakiType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType"/>
+					<xs:element name="vapautukset" type="ymv:VapautuksetType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Vesiverkoston Liittämisvelvollisuudesta vapauttaminen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="vapautushakemus" type="ymv:VapautushakemusType">
+		<xs:annotation>
+			<xs:documentation>Hakemus jolla vapautusta haetaan</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Vapautus" type="ymv:VapautusType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="VapautusType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="vapautusperuste" type="ymv:VapautusperusteType">
+						<xs:annotation>
+							<xs:documentation>Vapautus liittämisvelvollisuudesta on myönnettävä, jos:</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="vapautushakemustieto">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Vapautushakemus" type="ymv:VapautushakemusType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mkok="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/opaskartta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/opaskartta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Opaskartta -->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Opaskartta-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Opaskartta-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Opaskartta" type="mkok:OpaskarttaType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OpaskarttaType">
+		<xs:annotation>
+			<xs:documentation>Opaskartta elementin sisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType">
+						<xs:annotation>
+							<xs:documentation>Siirron tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="karttakohteet" type="mkok:KarttakohteetType">
+						<xs:annotation>
+							<xs:documentation>Opaskarttakohteet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AlueetType">
+		<xs:annotation>
+			<xs:documentation>Alueet elementin sisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="aluetieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:Alue"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AlueType">
+		<xs:annotation>
+			<xs:documentation>Alueena esitettävän kohteen tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:SurfacePropertyType"/>
+					<xs:element name="luokkaKoodi">
+						<xs:simpleType>
+							<xs:restriction base="mkok:AlueenTyyppiType"/>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="referenssipiste" type="yht:Referenssipiste" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AlueenTyyppiType">
+		<xs:annotation>
+			<xs:documentation>Aluemaisena esitettävän kohteen tyyppien arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="alueellinen pääkatu"/>
+			<xs:enumeration value="asukaspuisto"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="joki"/>
+			<xs:enumeration value="julkinen rakennus"/>
+			<xs:enumeration value="järvi"/>
+			<xs:enumeration value="kaatopaikka"/>
+			<xs:enumeration value="kantatie"/>
+			<xs:enumeration value="kaupunkimetsä"/>
+			<xs:enumeration value="kerrostalokortteli"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="koirien koulutusalue"/>
+			<xs:enumeration value="kokoojakatu"/>
+			<xs:enumeration value="korkeuskäyrä"/>
+			<xs:enumeration value="kävelykatu"/>
+			<xs:enumeration value="lahti"/>
+			<xs:enumeration value="lampi"/>
+			<xs:enumeration value="leikkipuisto"/>
+			<xs:enumeration value="liikekortteli"/>
+			<xs:enumeration value="liittymäalue"/>
+			<xs:enumeration value="liityntäkatu/asuntokatu"/>
+			<xs:enumeration value="linja-autoasema"/>
+			<xs:enumeration value="lähde"/>
+			<xs:enumeration value="meri"/>
+			<xs:enumeration value="metro-asema"/>
+			<xs:enumeration value="metsä"/>
+			<xs:enumeration value="moottoritie"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="muu liikenneasema"/>
+			<xs:enumeration value="muu yksityistie"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="pelto"/>
+			<xs:enumeration value="pieni puisto"/>
+			<xs:enumeration value="pientalokortteli"/>
+			<xs:enumeration value="pihakatu"/>
+			<xs:enumeration value="puisto"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="pysäköintialue"/>
+			<xs:enumeration value="rakennus"/>
+			<xs:enumeration value="rakentamaton alue"/>
+			<xs:enumeration value="rauhoitettu"/>
+			<xs:enumeration value="rautatieasema"/>
+			<xs:enumeration value="satama"/>
+			<xs:enumeration value="seudullinen pääkatu"/>
+			<xs:enumeration value="seututie"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="sora-alue"/>
+			<xs:enumeration value="suuniteltu kortteli"/>
+			<xs:enumeration value="suuri puisto"/>
+			<xs:enumeration value="taajama"/>
+			<xs:enumeration value="teollisuuskortteli"/>
+			<xs:enumeration value="teollisuusrakennus"/>
+			<xs:enumeration value="tori/aukio"/>
+			<xs:enumeration value="tärkeä yksityistie"/>
+			<xs:enumeration value="täyttömäki"/>
+			<xs:enumeration value="valtatie"/>
+			<xs:enumeration value="vesialue"/>
+			<xs:enumeration value="yhdystie"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NimistoType">
+		<xs:annotation>
+			<xs:documentation>Nimistöelementin tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nimitieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:Nimi"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NimistonimiType">
+		<xs:annotation>
+			<xs:documentation>Nimistön nimi kohteen määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType"/>
+					<xs:element name="teksti" type="yht:NimiType">
+						<xs:annotation>
+							<xs:documentation>Kartalle tuleva nimi. Yht:Nimitype sallii usemman nimen tallentamisen eri kielikoodeilla</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luokkakoodi" type="mkok:NimiTyyppiType"/>
+					<xs:element name="siirtyma" type="gml:PointPropertyType" minOccurs="0"/>
+					<xs:element name="suunta" type="gml:AngleType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="NimiTyyppiType">
+		<xs:annotation>
+			<xs:documentation>Nimikohteen luokkien arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="alueellinen pääkatu"/>
+			<xs:enumeration value="aluekeskus"/>
+			<xs:enumeration value="apteekki"/>
+			<xs:enumeration value="asukaspuisto"/>
+			<xs:enumeration value="automaattiasema"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="golfkenttä"/>
+			<xs:enumeration value="haja-asutus osoitenumero"/>
+			<xs:enumeration value="hotelli"/>
+			<xs:enumeration value="joki"/>
+			<xs:enumeration value="julkinen rakennus"/>
+			<xs:enumeration value="järvi"/>
+			<xs:enumeration value="kaatopaikka"/>
+			<xs:enumeration value="kantatie"/>
+			<xs:enumeration value="Kantatienumero"/>
+			<xs:enumeration value="kerrostalokortteli"/>
+			<xs:enumeration value="keskikokoinen maastonimi"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="koirien koulutusalue"/>
+			<xs:enumeration value="kokoojakatu"/>
+			<xs:enumeration value="kortteli"/>
+			<xs:enumeration value="korttelinumero"/>
+			<xs:enumeration value="koulupiiri"/>
+			<xs:enumeration value="kunnanosa"/>
+			<xs:enumeration value="kunnanosan osa-alue"/>
+			<xs:enumeration value="kunnanosanumero"/>
+			<xs:enumeration value="kunta"/>
+			<xs:enumeration value="kylä"/>
+			<xs:enumeration value="lahti"/>
+			<xs:enumeration value="lampi"/>
+			<xs:enumeration value="leikkipuisto"/>
+			<xs:enumeration value="leirintäalue"/>
+			<xs:enumeration value="lentoasema"/>
+			<xs:enumeration value="liikekortteli"/>
+			<xs:enumeration value="liikenneasema"/>
+			<xs:enumeration value="liittymän nimi"/>
+			<xs:enumeration value="liittymän numero"/>
+			<xs:enumeration value="liityntäkatu/asuntokatu"/>
+			<xs:enumeration value="linja-autoasema"/>
+			<xs:enumeration value="lähde"/>
+			<xs:enumeration value="masto"/>
+			<xs:enumeration value="matkailutoimisto"/>
+			<xs:enumeration value="meri"/>
+			<xs:enumeration value="metro-asema"/>
+			<xs:enumeration value="metsä"/>
+			<xs:enumeration value="moottoritie"/>
+			<xs:enumeration value="motelli"/>
+			<xs:enumeration value="museo"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="muu liikenneasema"/>
+			<xs:enumeration value="muu vesistönimi"/>
+			<xs:enumeration value="muu yksityistie"/>
+			<xs:enumeration value="näyttely"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="oma lääkäri"/>
+			<xs:enumeration value="palvelu"/>
+			<xs:enumeration value="patsas"/>
+			<xs:enumeration value="pelto"/>
+			<xs:enumeration value="pienalue"/>
+			<xs:enumeration value="pieni maastonimi"/>
+			<xs:enumeration value="pieni puisto"/>
+			<xs:enumeration value="pientalokortteli"/>
+			<xs:enumeration value="pihakatu"/>
+			<xs:enumeration value="posti"/>
+			<xs:enumeration value="postipiiri"/>
+			<xs:enumeration value="puhelin"/>
+			<xs:enumeration value="puisto"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="rakennuksen nimi"/>
+			<xs:enumeration value="rauhoitettu"/>
+			<xs:enumeration value="rauhoitettu muu kohde"/>
+			<xs:enumeration value="rauhoitettu puu"/>
+			<xs:enumeration value="rautatieasema"/>
+			<xs:enumeration value="sairaala"/>
+			<xs:enumeration value="satama"/>
+			<xs:enumeration value="seudullinen pääkatu"/>
+			<xs:enumeration value="seututie"/>
+			<xs:enumeration value="seututienumero"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="suuralue"/>
+			<xs:enumeration value="suuri maastonimi"/>
+			<xs:enumeration value="suuri puisto"/>
+			<xs:enumeration value="suurkortteli"/>
+			<xs:enumeration value="taajama osoitenumero"/>
+			<xs:enumeration value="taksi"/>
+			<xs:enumeration value="talo"/>
+			<xs:enumeration value="teatteri"/>
+			<xs:enumeration value="telttailualue"/>
+			<xs:enumeration value="tennis"/>
+			<xs:enumeration value="teollisuuskortteli"/>
+			<xs:enumeration value="teollisuusrakennus"/>
+			<xs:enumeration value="tilastoalue"/>
+			<xs:enumeration value="toimipaikka"/>
+			<xs:enumeration value="tori/aukio"/>
+			<xs:enumeration value="tärkeä yksityistie"/>
+			<xs:enumeration value="täyttömäki"/>
+			<xs:enumeration value="uimahalli"/>
+			<xs:enumeration value="uimaranta"/>
+			<xs:enumeration value="ulkoilumaja"/>
+			<xs:enumeration value="urheilu/vapaa-ajan kohde"/>
+			<xs:enumeration value="urheilulaitos"/>
+			<xs:enumeration value="valtatie"/>
+			<xs:enumeration value="valtatienumero"/>
+			<xs:enumeration value="veistos"/>
+			<xs:enumeration value="venesatama"/>
+			<xs:enumeration value="yhdystie"/>
+			<xs:enumeration value="yhdystienumero"/>
+			<xs:enumeration value="äänestysalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PisteetType">
+		<xs:annotation>
+			<xs:documentation>Pisteet elementin tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="pistetieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:Piste"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PisteType">
+		<xs:annotation>
+			<xs:documentation>Pisteenä esitettävän kohteen tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="mkok:PisteSijaintiType"/>
+					<xs:element name="luokkakoodi" type="mkok:PisteTyyppiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PisteTyyppiType">
+		<xs:annotation>
+			<xs:documentation>Pistekohteen tyyppien arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ajoeste"/>
+			<xs:enumeration value="ankkuripaikka"/>
+			<xs:enumeration value="apteekki"/>
+			<xs:enumeration value="automaattiasema"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="golfkenttä"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="hotelli"/>
+			<xs:enumeration value="huoltoasema"/>
+			<xs:enumeration value="joen virtaussuunta"/>
+			<xs:enumeration value="kirkko"/>
+			<xs:enumeration value="kivi vedessä"/>
+			<xs:enumeration value="koira-aitaus"/>
+			<xs:enumeration value="leirintäalue"/>
+			<xs:enumeration value="lentoasema"/>
+			<xs:enumeration value="lentokenttäalueen panssariaidan portit"/>
+			<xs:enumeration value="liikenneasema"/>
+			<xs:enumeration value="liityntäpysäköinti"/>
+			<xs:enumeration value="lintutorni"/>
+			<xs:enumeration value="masto"/>
+			<xs:enumeration value="matkailutoimisto"/>
+			<xs:enumeration value="motelli"/>
+			<xs:enumeration value="muistomerkki"/>
+			<xs:enumeration value="museo"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="näyttely"/>
+			<xs:enumeration value="opastetaulu"/>
+			<xs:enumeration value="patsas"/>
+			<xs:enumeration value="posti"/>
+			<xs:enumeration value="puhelin"/>
+			<xs:enumeration value="pysäköintialue"/>
+			<xs:enumeration value="pysäköintitalo"/>
+			<xs:enumeration value="raskaan liikenteen pysäköintialue"/>
+			<xs:enumeration value="ratsastus"/>
+			<xs:enumeration value="rauhoitettu muu kohde"/>
+			<xs:enumeration value="rauhoitettu puu"/>
+			<xs:enumeration value="sairaala"/>
+			<xs:enumeration value="taksi"/>
+			<xs:enumeration value="teatteri"/>
+			<xs:enumeration value="telttailualue"/>
+			<xs:enumeration value="tennis"/>
+			<xs:enumeration value="uimahalli"/>
+			<xs:enumeration value="uimaranta"/>
+			<xs:enumeration value="ulkoilumaja"/>
+			<xs:enumeration value="urheilulaitos"/>
+			<xs:enumeration value="veistos"/>
+			<xs:enumeration value="veneenlaskupaikka"/>
+			<xs:enumeration value="venesatama"/>
+			<xs:enumeration value="voimajohdon z-tunnus"/>
+			<xs:enumeration value="yksisuuntainen tie"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AluejaonviivatType">
+		<xs:annotation>
+			<xs:documentation>Aluejaon viivat elementit tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="alueviivatieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:Alueviiva"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AlueenViivaType">
+		<xs:annotation>
+			<xs:documentation>Aluejakoon kuuluvan viivakohteen  tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+					<xs:element name="luokkakoodi" type="mkok:AlueenViivaTyyppiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AlueenViivaTyyppiType">
+		<xs:annotation>
+			<xs:documentation>Aluejakoon kuuluvan viivakohteen tyyppien arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="alueellinen pääkatu"/>
+			<xs:enumeration value="aluekeskus"/>
+			<xs:enumeration value="asukaspuisto"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="joki"/>
+			<xs:enumeration value="julkinen rakennus"/>
+			<xs:enumeration value="järvi"/>
+			<xs:enumeration value="kaatopaikka"/>
+			<xs:enumeration value="kantatie"/>
+			<xs:enumeration value="kerrostalokortteli"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="kokoojakatu"/>
+			<xs:enumeration value="korkeuskäyrä"/>
+			<xs:enumeration value="kortteli"/>
+			<xs:enumeration value="koulupiiri"/>
+			<xs:enumeration value="kunnanosa"/>
+			<xs:enumeration value="kunnanosan osa-alue"/>
+			<xs:enumeration value="kunta"/>
+			<xs:enumeration value="kylä"/>
+			<xs:enumeration value="lahti"/>
+			<xs:enumeration value="lampi"/>
+			<xs:enumeration value="leikkipuisto"/>
+			<xs:enumeration value="liikekortteli"/>
+			<xs:enumeration value="liittymäalue"/>
+			<xs:enumeration value="liityntäkatu/asuntokatu"/>
+			<xs:enumeration value="linja-autoasema"/>
+			<xs:enumeration value="lähde"/>
+			<xs:enumeration value="meluaita"/>
+			<xs:enumeration value="meri"/>
+			<xs:enumeration value="metro-asema"/>
+			<xs:enumeration value="metsä"/>
+			<xs:enumeration value="moottoritie"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="muu liikenneasema"/>
+			<xs:enumeration value="muu yksityistie"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="oma lääkäri"/>
+			<xs:enumeration value="pelto"/>
+			<xs:enumeration value="pienalue"/>
+			<xs:enumeration value="pieni puisto"/>
+			<xs:enumeration value="pientalokortteli"/>
+			<xs:enumeration value="pihakatu"/>
+			<xs:enumeration value="piiloaluemuodostusviiva"/>
+			<xs:enumeration value="postipiiri"/>
+			<xs:enumeration value="puisto"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="rakennus"/>
+			<xs:enumeration value="rakentamaton alue"/>
+			<xs:enumeration value="ratsastusreitti"/>
+			<xs:enumeration value="rauhoitettu"/>
+			<xs:enumeration value="rautatieasema"/>
+			<xs:enumeration value="satama"/>
+			<xs:enumeration value="seudullinen pääkatu"/>
+			<xs:enumeration value="seututie"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="sora-alue"/>
+			<xs:enumeration value="suuniteltu kortteli"/>
+			<xs:enumeration value="suuralue"/>
+			<xs:enumeration value="suuri puisto"/>
+			<xs:enumeration value="suurkortteli"/>
+			<xs:enumeration value="taajama"/>
+			<xs:enumeration value="teollisuuskortteli"/>
+			<xs:enumeration value="teollisuusrakennus"/>
+			<xs:enumeration value="tilastoalue"/>
+			<xs:enumeration value="tori/aukio"/>
+			<xs:enumeration value="tärkeä yksityistie"/>
+			<xs:enumeration value="valtatie"/>
+			<xs:enumeration value="vesialue"/>
+			<xs:enumeration value="yhdystie"/>
+			<xs:enumeration value="äänestysalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MuutViivatType">
+		<xs:annotation>
+			<xs:documentation>muutviivat elementin tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="muuviivatieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:Muuviiva"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MuuViivaType">
+		<xs:annotation>
+			<xs:documentation>MuuViiva kohteen  tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+					<xs:element name="luokkakoodi" type="mkok:MuuViivaTyyppiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="MuuViivaTyyppiType">
+		<xs:annotation>
+			<xs:documentation>MuuViiva kohteen tyyppien arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="korkeuskäyrä"/>
+			<xs:enumeration value="kuntopolku"/>
+			<xs:enumeration value="kuntopolku valaistu"/>
+			<xs:enumeration value="luontopolku"/>
+			<xs:enumeration value="matkailureitti"/>
+			<xs:enumeration value="meluaita"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="patikkareitti"/>
+			<xs:enumeration value="polku"/>
+			<xs:enumeration value="rakennus"/>
+			<xs:enumeration value="rakentamaton alue"/>
+			<xs:enumeration value="ratsastusreitti"/>
+			<xs:enumeration value="rautatie"/>
+			<xs:enumeration value="rautatietunneli"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="suunnitteilla oleva tie"/>
+			<xs:enumeration value="taajama"/>
+			<xs:enumeration value="venereitti"/>
+			<xs:enumeration value="vesialue"/>
+			<xs:enumeration value="voimajohto"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="KarttakohteetType">
+		<xs:sequence>
+			<xs:element name="Alueet" type="mkok:AlueetType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maankäyttöalueet. Kohteet, jotka kuvautuvat väripintana kartalla</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HallinnollisetAlueet" type="mkok:HallinnollisetAlueetType" minOccurs="0"/>
+			<xs:element name="AlueViivat" type="mkok:AluejaonviivatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Viivat, jotka osallistuvat johonkin aluejakoon</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nimisto" type="mkok:NimistoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Opaskartan nimistökohteet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pisteet" type="mkok:PisteetType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Pistemäisiä muita kohteita</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MuutViivat" type="mkok:MuutViivatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Muut viivat- ESPOO+TAMPERE+OULU luokitukseen mukaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PisteSijaintiType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="suunta" type="gml:AngleType" minOccurs="0"/>
+			<xs:element name="siirtyma" type="gml:PointPropertyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mahdollinen siirtymä todellisesta sijainnista</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HallinnollinenAlueType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:SurfacePropertyType"/>
+					<xs:element name="nimi" type="yht:NimiType" minOccurs="0"/>
+					<xs:element name="luokkakoodi" type="mkok:HallinnollinenAlueKoodiType"/>
+					<xs:element name="referenssipiste" type="yht:Referenssipiste" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="HallinnollinenAlueKoodiType">
+		<xs:annotation>
+			<xs:documentation>Hallinnolisen aluejaon luokkakoodin arvojoukko</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aluekeskus"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="kortteli"/>
+			<xs:enumeration value="koulupiiri"/>
+			<xs:enumeration value="kunnanosa"/>
+			<xs:enumeration value="kunnanosan osa-alue"/>
+			<xs:enumeration value="kunta"/>
+			<xs:enumeration value="kylä"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="oma lääkäri"/>
+			<xs:enumeration value="oppilaaksiottoalue"/>
+			<xs:enumeration value="pienalue"/>
+			<xs:enumeration value="postipiiri"/>
+			<xs:enumeration value="suuralue"/>
+			<xs:enumeration value="suurkortteli"/>
+			<xs:enumeration value="tilastoalue"/>
+			<xs:enumeration value="äänestysalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HallinnollisetAlueetType">
+		<xs:sequence>
+			<xs:element name="hallinnollinenAluetieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkok:HallinnollinenAlue"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Alue" type="mkok:AlueType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="HallinnollinenAlue" type="mkok:HallinnollinenAlueType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Alueviiva" type="mkok:AlueenViivaType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Nimi" type="mkok:NimistonimiType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Piste" type="mkok:PisteType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Muuviiva" type="mkok:MuuViivaType" substitutionGroup="gml:_Feature"/>
+</xs:schema>

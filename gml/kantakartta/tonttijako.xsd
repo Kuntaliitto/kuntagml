@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Tonttijako  -->
+	<!-- ================================================= -->
+	<xs:element name="Tonttijako" type="kanta:TonttijakoType" substitutionGroup="kanta:_Tonttijakokohde">
+		<xs:annotation>
+			<xs:documentation>Tonttijako</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TonttijakoType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractTonttijakokohdeType">
+				<xs:sequence>
+					<xs:element name="tunnus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kasittelyVaihe" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon käsittelyvaiheen kooditus päätetään kuntakohtaisesti. Koodi on yksimerkkinen. Koodattavia käsittelyvaiheita voivat olla esimerkiksi "pantu vireille", "pantu nähtäville", "hyväksytty". (JHS 138)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="vaihe" type="kanta:TonttijaonVaiheType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon vaihe (JHS 138)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="laji" type="kanta:TonttijaonLajiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tonttijaon laji (JHS 138)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hyvaksymisPvm" type="xs:date" minOccurs="0"/>
+					<xs:element name="voimaantuloPvm" type="xs:date" minOccurs="0"/>
+					<xs:element name="pintaAla" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="arkistotunnus" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaavatunnus" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaavatilanne" type="yht:KaavanvaiheType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sama arvojoukko kuin Asemakaavassa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lisatiedot" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tekstimuotoinen lisätietokenttä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

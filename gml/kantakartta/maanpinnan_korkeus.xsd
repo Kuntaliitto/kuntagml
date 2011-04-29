@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> MaanpinnanKorkeus  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Korkeuskayra  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Korkeuskayra" type="kanta:KorkeuskayraType" substitutionGroup="kanta:Viivamalli">
+		<xs:annotation>
+			<xs:documentation>Maanpinnan korkeuden tai vesialueen syvyyden  samanarvonkäyrä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KorkeuskayraType">
+		<xs:complexContent>
+			<xs:extension base="kanta:ViivamalliType">
+				<xs:sequence>
+					<xs:element name="korkeus" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Korkeusarvo</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="kanta:KayratyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Korkeus/syvyyskäyrän tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Korkeuspiste  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Korkeuspiste" type="kanta:KorkeuspisteType" substitutionGroup="kanta:_Maanpinnankorkeuskohde">
+		<xs:annotation>
+			<xs:documentation>Korkeusasemaltaan vertailujärjestelmässä tunnettu piste</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KorkeuspisteType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankorkeuskohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:PointPropertyType"/-->
+					<xs:element name="korkeus" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Korkeusarvo</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> MuuViiva  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MuuViiva" type="kanta:MuuViivaType" substitutionGroup="kanta:Viivamalli">
+		<xs:annotation>
+			<xs:documentation>Muu kuin korkeus/syvyyskäyrä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MuuViivaType">
+		<xs:complexContent>
+			<xs:extension base="kanta:ViivamalliType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="kanta:ViivatyyppiType">
+						<xs:annotation>
+							<xs:documentation>Viivan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Pintamalli  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Pintamalli" type="kanta:PintamalliType" substitutionGroup="kanta:_Maanpinnankorkeuskohde">
+		<xs:annotation>
+			<xs:documentation>Maanpinnan korkeusasemaa jollakin alueella tai linjalla mallintavat tiedot</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PintamalliType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankorkeuskohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Viivamalli  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Viivamalli" type="kanta:ViivamalliType" substitutionGroup="kanta:_Maanpinnankorkeuskohde">
+		<xs:annotation>
+			<xs:documentation>Maanpinnan korkeuksia mallintava joukko korkeuskäyriä/pisteitä</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ViivamalliType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractMaanpinnankorkeuskohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

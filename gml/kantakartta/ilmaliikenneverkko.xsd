@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kanta="http://www.kuntatietopalvelu.fi/gml/kantakartta" xmlns:gml="http://www.opengis.net/gml" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kantakartta" elementFormDefault="qualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="arvojoukot.xsd"/>
+	<xs:include schemaLocation="kantakartta_perusta.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<Application Schema>> Ilmaliikenneverkko  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Lentopaikka-alue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Ilmaliikennekohde" substitutionGroup="kanta:_Ilmaliikenneverkonkohde">
+		<xs:annotation>
+			<xs:documentation>Ilmaliikenteen kohde</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="kanta:IlmaliikennekohdeType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="IlmaliikennekohdeType">
+		<xs:complexContent>
+			<xs:extension base="kanta:AbstractIlmaliikenneverkonkohdeType">
+				<xs:sequence>
+					<!--xs:element name="sijainti" type="gml:SurfacePropertyType"/ -->
+					<xs:element name="tyyppi" type="kanta:IlmaliikennekohdeTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen käyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="materiaali" type="kanta:VerkkoMateriaaliType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
