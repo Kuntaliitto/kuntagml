@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	Purpose: detailplan (asemakaava) schema for sending data from municipalities through Itella TYVI to the environmental administration
+	UploadVersion: 1.02
+	Created: 20.12.2002 by Jorma Sipilä
+	Modified: 15.6.2006 by Jorma Sipilä
+	UploadVersion modified: 19.1.2010 by Jorma Sipilä (upload version for municipals) and 16.11.2010 Päivi Malmi
+	Contact: jorma.sipila@ymparisto.fi
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:this="http://www.ymparisto.fi" targetNamespace="http://www.ymparisto.fi" elementFormDefault="qualified">
+	<element name="katsedetailplan">
+		<complexType>
+			<sequence>
+				<element name="detailplan" type="this:ctDetailPlan" minOccurs="1" maxOccurs="1"/>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="ctDetailPlan">
+		<sequence>
+			<element name="documentlabel" type="this:ctDocumentLabel" minOccurs="1" maxOccurs="1"/>
+			<element name="documentid" type="integer" minOccurs="0" maxOccurs="1"/>
+			<element name="documenttype" type="this:stDocumentType" minOccurs="0" maxOccurs="1"/>
+			<element name="documentstatus" type="this:stDocumentStatusType" minOccurs="1" maxOccurs="1"/>
+			<element name="name" type="this:stNameType" minOccurs="0" maxOccurs="1"/>
+			<element name="nameswe" type="this:stNameType" minOccurs="0" maxOccurs="1"/>
+			<element name="fillingdate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="approvalmunicipalcode" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
+			<element name="approvaldate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="proposaldate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="planarea" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="undergroundarea" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="plancode" type="this:stPlanCode" minOccurs="0" maxOccurs="1"/>
+			<element name="generatedcode" type="this:stGeneratedCode" minOccurs="0" maxOccurs="1"/>
+			<element name="approvalauthority" type="this:stApprovalAuthorityType" minOccurs="1" maxOccurs="1"/>
+			<element name="approvalarticle" type="this:stApprovalArticle" minOccurs="1" maxOccurs="1"/>
+			<element name="announcedate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="newplanarea" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="planareachanged" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="coastdetailplan" type="this:ctCoastDetailPlan" minOccurs="0" maxOccurs="1"/>
+			<element name="areareservation" type="this:ctAreaReservation" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="undergroundspace" type="this:ctUndergroundSpace" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="buildingconservation" type="this:ctBuildingConservation" minOccurs="0" maxOccurs="2"/>
+		</sequence>
+	</complexType>
+	<complexType name="ctCoastDetailPlan">
+		<sequence>
+		<!-- kilometreinä kahden desimaalin tarkkuudella, pituus enintään 7 merkkiä väliltä -999,99-999,99 -->
+			<element name="coastlinelenght" type="double" minOccurs="0" maxOccurs="1"/>
+		<!--lukumääränä, pituus enintään 6 merkkiä väliltä -99999-99999 -->
+			<element name="ownsitecount" type="integer" minOccurs="0" maxOccurs="1"/>
+		<!--lukumääränä, pituus enintään 6 merkkiä väliltä -99999-99999 -->
+			<element name="othersitecount" type="integer" minOccurs="0" maxOccurs="1"/>
+		<!--lukumääränä, pituus enintään 6 merkkiä väliltä -99999-99999 -->
+			<element name="ownholidaysitecount" type="integer" minOccurs="0" maxOccurs="1"/>
+		<!--lukumääränä, pituus enintään 6 merkkiä väliltä -99999-99999 -->
+			<element name="otherholidaysitecount" type="integer" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ctAreaReservation">
+		<sequence>
+			<element name="reservationtype" type="this:stReservationType" minOccurs="1" maxOccurs="1"/>
+			<element name="planmark" type="this:stPlanmarkType" minOccurs="1" maxOccurs="1"/>
+			<element name="planmarkexplanation" type="this:stPlanmarkExplanationType" minOccurs="0" maxOccurs="1"/>
+			<element name="planmarkarea" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="areapercent" type="double" minOccurs="0" maxOccurs="1"/>
+			<element name="floorspace" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+			<element name="efficacy" type="double" minOccurs="0" maxOccurs="1"/>
+			<element name="areachanged" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="floorspacechanged" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+		</sequence>
+	</complexType>
+	<complexType name="ctUndergroundSpace">
+		<sequence>
+			<element name="planmark" type="this:stPlanmarkType" minOccurs="1" maxOccurs="1"/>
+			<element name="planmarkexplanation" type="this:stPlanmarkExplanationType" minOccurs="0" maxOccurs="1"/>
+			<element name="planmarkarea" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="areapercent" type="double" minOccurs="0" maxOccurs="1"/>
+			<element name="floorspace" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+			<element name="areachanged" type="this:stAreaType" minOccurs="0" maxOccurs="1"/>
+			<element name="floorspacechanged" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+		</sequence>
+	</complexType>
+	<complexType name="ctBuildingConservation">
+		<sequence>
+			<element name="conservationtype" type="this:stConservationType" minOccurs="1" maxOccurs="1"/>
+			<element name="buildingcount" type="integer" minOccurs="0" maxOccurs="1"/><!--lukumääränä, pituus enintään 5 merkkiä väliltä -9999-9999 -->
+			<element name="floorspace" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+			<element name="countchanged" type="integer" minOccurs="0" maxOccurs="1"/><!--lukumääränä, pituus enintään 5 merkkiä väliltä -9999-9999 -->
+			<element name="floorspacechanged" type="double" minOccurs="0" maxOccurs="1"/><!--kokonaisina kerrosneliömetreinä, pituus enintään 7 merkkiä väliltä -999999-999999 -->
+		</sequence>
+	</complexType>
+	<complexType name="ctDocumentLabel">
+		<sequence>
+			<element name="documentid" type="integer" minOccurs="0" maxOccurs="1"/>
+			<element name="sendingdate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="fillingpersonusername" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="municipalcode" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
+			<element name="municipalname" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<simpleType name="stDocumentType">
+		<restriction base="string">
+			<enumeration value="INSERT"/>
+			<enumeration value="UPDATE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stDocumentStatusType">
+		<restriction base="string">
+			<enumeration value="FULLFILLED"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stNameType">
+		<restriction base="string">
+			<minLength value="0"/>
+			<maxLength value="300"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stPlanCode">
+		<restriction base="string">
+			<minLength value="1"/>
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stGeneratedCode">
+		<restriction base="string">
+			<minLength value="12"/>
+			<maxLength value="15"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stApprovalArticle">
+		<restriction base="string">
+			<minLength value="1"/>
+			<maxLength value="4"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stAreaType">
+	<!--hehtaareina-->
+		<restriction base="decimal">
+			<totalDigits value="9"/>
+			<fractionDigits value="4"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stApprovalAuthorityType">
+		<restriction base="string">
+			<enumeration value="V"/>
+			<enumeration value="H"/>
+			<enumeration value="L"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stReservationType">
+		<restriction base="string">
+			<enumeration value="A"/>
+			<enumeration value="P"/>
+			<enumeration value="Y"/>
+			<enumeration value="C"/>
+			<enumeration value="K"/>
+			<enumeration value="T"/>
+			<enumeration value="V"/>
+			<enumeration value="R"/>
+			<enumeration value="L"/>
+			<enumeration value="E"/>
+			<enumeration value="S"/>
+			<enumeration value="M"/>
+			<enumeration value="W"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stPlanmarkType">
+		<restriction base="string">
+			<minLength value="0"/>
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stPlanmarkExplanationType">
+		<restriction base="string">
+			<minLength value="0"/>
+			<maxLength value="300"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="stConservationType">
+		<restriction base="string">
+			<enumeration value="FILLEDSUM"/>
+			<enumeration value="asemakaava"/>
+			<enumeration value="ei asemakaava"/>
+		</restriction>
+	</simpleType>
+</schema>

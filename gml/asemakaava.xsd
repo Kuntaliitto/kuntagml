@@ -1,0 +1,2470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:akaava="http://www.kuntatietopalvelu.fi/gml/asemakaava" xmlns:gml="http://www.opengis.net/gml" xmlns:tilastot="http://www.ymparisto.fi" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/asemakaava" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.ymparisto.fi" schemaLocation="KatseDetailPlan.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Asemakaava  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> AsemakaavaAineisto  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Kohdejoukko: AsemakaavaAineisto -->
+	<xs:element name="AsemakaavaAineisto" type="akaava:AsemakaavaAineistoType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Yleiset tiedot/ominaisuudet koskien siirrettävää asemakaavaa. gml:boundedBy esittää aineiston ulottuvuuden suorakaiteena. gml:Envelope:n srsName atribuutti esittää koordinaattijärjestelmän tunnuksen EPSG-koodina (esim projisoidut):
+
+KKJ, kaista 1: 			2391
+KKJ,kaista 2: 			2392
+KKJ, kaista 3: 			2393
+KKJ, kaista 4: 			2394
+YKJ: 				2393
+ETRS-TM35FIN: 		3067
+WGS84 / UTM zone 34N: 	32634
+WGS84 / UTM zone 35N: 	32635
+WGS84 / UTM zone 36N: 	32636
+
+	Gml oletuksia:
+						- lukujen desimaalierotin  piste
+						- koordinaattilukujen erotin blanko/space " "
+	Muita sopimuksia:
+						- koordinaattien yksikkö on metri (m)
+						- koordinaattiluvussa korkeintaan 4 desimaalia
+						- labelien (tekstien) asemointikohta on keskipiste
+						- labelien (tekstien) 0-suunta oletuksena itään
+						- pistesymbolien 0-suunta oletuksena pohjoiseen
+						- pistesymbolien asemointipiste on keskipiste
+						- suunta kiertää koko ympyrän myötäpäivään
+						- suunnan puuttuessa sen oletusarvo on 0.0
+						  (katso: tämän skeeman teknisetTiedot-elementtiä)
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AsemakaavaAineistoType">
+		<xs:annotation>
+			<xs:documentation>Määrittelee asemkaavaaineiston siirron sisällön pääelementit</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element name="aineistonnimi" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Aineistoa kuvaava nimi, esim. kaupunginosa, kunta, karttalehden numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aineistotoimittaja" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kuka on tehnyt kyseisen siirtotiedoston, yhteyshenkilö</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Aineiston valmiustila; onko kokonaan valmis, luonnos, demo
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="toimitusPvm" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>Milloin kyseinen siirtotiedosto on tehty</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kuntakoodi" type="xs:string" minOccurs="0"/>
+					<xs:element name="kielitieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kunnan kieli tai kieliitieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietotunniste" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Paikkatietohakemistossa aineiston yksilöivä 
+metatietotunniste. Muita nimityksiä: UUID, tiedostotunniste, 
+resurssitunniste, aineiston ID.  Esim: 924a68ba-665f-4ea0-a830-
+26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietoXMLURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL, joka palauttaa aineiston metatiedot XML 
+tiedostona ISO 19139 skeeman mukaisesti. Esim: http://geonetwork.nls.fi/geonetwork/srv/fi/iso19139.xml?uuid=924a68ba-
+665f-4ea0-a830-26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="metatietoURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL www-sivulle, josta aineiston metatiedot ovat 
+luettavissa ”selkokielisenä”. Esim: 
+http://www.paikkatietoikkuna.fi/web/fi/paikkatietoaineisto?inspireMetadat
+aUIID=924a68ba-665f-4ea0-a830-26e80112b5dc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tietotuoteURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL, josta saadaan aineistoon liittyvän tietotuotteen 
+tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavat" type="akaava:KaavatType">
+						<xs:annotation>
+							<xs:documentation>Kaavojen yleistiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitusalueet" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Käyttötarkoitusalueet</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:_Kayttotarkoitusaluekohde" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maarayskohteetkartalla" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Määräyskohteet, jotka ovat karttakohteita</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:_KaavamaaraysKarttakohde" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="luokittelemattomatkohteet" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ne kohteet, jotka eivät kuulu varsinaiseen skeemaan</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:_LuokittelematonKohde" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kaavayksikot" type="akaava:KaavayksikotType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KaavaType">
+		<xs:annotation>
+			<xs:documentation>Määrittelee asemkaavaaineiston yksittäisen kaavan yleistiedot</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="kieli1" type="akaava:KieliType">
+						<xs:annotation>
+							<xs:documentation>Ensisijainen kieli</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kieli2" type="akaava:KieliType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vaihtoehtoinen kieli</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="muuKaavatunnus" type="gml:CodeType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="arkistotunnus" type="gml:CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavalle annettu arkistointitnunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavanimi1" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kaavan nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavanimi2" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavan varsinaista nimeä täydentävä
+nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavanlaatija" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan laatija (henkilö/organisaatio)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hyvaksyja" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan hyväksynyt viranomainen
+(kunnanvaltuusto/kunnanhallitus/lautakunta)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="vireilletulopvm" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan vireilletulopäivämäärä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hyvaksymispvm" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan hyväksymispäivämäärä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="voimaantulopvm" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan voimaantulopäivämäärä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kuntakoodi" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kolminumeroinen kuntakoodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavanvaihe" type="akaava:KaavanvaiheType">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan käsittelyvaihe</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavatyyppi" type="akaava:KaavalajiType">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nahtavillealkupvm" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavaehdotuksen nähtävilläolon
+alkupäivämäärä (viimeisin nähtävilläoloaika)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nahtavillaviimpvm" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavaehdotuksen nähtävilläolon
+loppupäivämäärä (viimeisin nähtävilläoloaika)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hyvaksymissijainti" type="gml:SurfacePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavan voimassaoloalue, silloin kun kaava hyväksyttiin</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="voimassaolosijainti" type="gml:SurfacePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavan voimassaoloalue nykyisessä vaiheessa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+Osoittaa että halutaanko kohteen jokin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+ Ks Myös kohdetyyppi Label dokumentaaatio</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="liitteet" type="akaava:LiitteetType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavaan liitteet. Esimerkiksi PDF-tuloste,Linkki WWW-svuille jne.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="historiatiedot" type="akaava:HistoriatiedotType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavan
+käsittelyvaiheiden
+historiatieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamaaraykset" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Asemakaavakohteita koskevat määräykset</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:_Kaavamaarayskohde" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="yhteisetkaavamaaraykset" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Koko kaavaa koskevat määräykset</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:_Kaavamaarayskohde" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kaavamerkkikokoelma" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavamerkkikokoelma</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tilastotiedot" type="tilastot:ctDetailPlan" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavan tilastotiedot (SYKE)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kunnanosa" type="akaava:KunnanosaType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Kunnanosa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="teknisetTiedot" type="akaava:TeknisetTiedotType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaava-aineistoon liittyvät tekniset tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamaarayskirjasto" type="akaava:KaavamaarayskirjastoType">
+						<xs:annotation>
+							<xs:documentation>Käytetty kaavamääräyskokoelma</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_KaavamaaraysKarttakohde" type="akaava:AbstractKaavamaaraysKarttakohdeType" abstract="true" substitutionGroup="akaava:_Kaavakohde">
+		<xs:annotation>
+			<xs:documentation>Abstrakti elementti, josta periytetään Kaavamääräykset kartalla</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKaavamaaraysKarttakohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Määrittelee tyypin, josta periytetään Kaavamääräykset kartalla kohteet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:sequence>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus, johon käyttötarkoitusalue kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamerkinta" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Määräyksen kaavamerkinta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poistettava" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Onko poistettava kohde</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maanalainen" type="xs:boolean" default="false">
+						<xs:annotation>
+							<xs:documentation>Onko maanalainen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kohteenvaihe" type="akaava:KohteenvaiheType">
+						<xs:annotation>
+							<xs:documentation>Kohteen vaihe</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ymparistoministerionkoodi" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Ympäristöministeriön asetuksen mukaiset Asemakaavamerkinnät ja määräykset, opas 12. Ks. http://www.ymparisto.fi/ , hakusana kaavamerkinnät</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamaarayslinkit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Linkit kohteeseen liitettyihin kaavamääräyksiin</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:KaavamaaraysLinkki" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kaavamaarayskohde" type="akaava:AbstractKaavamaarayskohdeType" abstract="true" substitutionGroup="akaava:_Kaavatieto">
+		<xs:annotation>
+			<xs:documentation>Abstrakti elementti, josta periytetään kaikki Kaavamääräykset</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKaavamaarayskohdeType">
+		<xs:annotation>
+			<xs:documentation>Abstrakti tyyppi kaavamääräyskohteelle</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Kayttotarkoitusaluekohde" type="akaava:AbstractKayttotarkoitusaluekohdeType" abstract="true" substitutionGroup="akaava:_Kaavakohde">
+		<xs:annotation>
+			<xs:documentation>Abstrakti elementti, josta periytetään eri käyttötarkoitusaluekohteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKayttotarkoitusaluekohdeType">
+		<xs:annotation>
+			<xs:documentation>Määrittelee tyypin, josta periytetään eri käyttötarkoitusalueet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:sequence>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus, johon käyttötarkoitusalue kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aluesijainti" type="akaava:AlueSijainnitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintiominaisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamerkinta" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Määräyksen kaavamerkintä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ymparistoministerionkoodi" type="gml:CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ympäristöministeriön kaavamerkinnän koodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poistettava" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko poistettava kohde</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maanalainen" type="xs:boolean" default="false" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko maanalainen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kohteenvaihe" type="akaava:KohteenvaiheType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen vaihe (1 = suunnitteilla)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tehokkuusluku" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tehokkuusluku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kerrosluku" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kerrosluku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamaarayslinkit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Linkit kohteeseen liitettyihin kaavamääräyksiin</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:KaavamaaraysLinkki" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Korttelinosakohde" type="akaava:AbstractKorttelinosakohdeType" abstract="true" substitutionGroup="akaava:_Kaavakohde">
+		<xs:annotation>
+			<xs:documentation>Abstrakti korttelinosakohde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKorttelinosakohdeType">
+		<xs:annotation>
+			<xs:documentation>Korttelinosakohteen määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:SurfacePropertyType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintiominaisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamerkinta" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Määräyksen kaavamerkintä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ymparistoministerionkoodi" type="gml:CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ympäristöministeriön kaavamerkinnän koodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poistettava" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko poistettava kohde</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maanalainen" type="xs:boolean" default="false" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko maanalainen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kohteenvaihe" type="akaava:KohteenvaiheType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen vaihe (1 = suunnitteilla)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tehokkuusluku" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tehokkuusluku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamaarayslinkit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Linkit kohteeseen liitettyihin kaavamääräyksiin</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:KaavamaaraysLinkki" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Korttelikohde" type="akaava:AbstractKorttelikohdeType" abstract="true" substitutionGroup="akaava:_Kayttotarkoitusaluekohde"/>
+	<xs:complexType name="AbstractKorttelikohdeType">
+		<xs:complexContent>
+			<xs:restriction base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="yksilointitieto" type="xs:string" minOccurs="0"/>
+					<xs:element name="tunnus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kohteen yksilöivä tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus, johon käyttötarkoitusalue kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aluesijainti" type="akaava:AlueSijainnitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintiominaisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="_Tonttikohde" type="akaava:AbstractTonttikohdeType" abstract="true" substitutionGroup="akaava:_Kaavakohde"/>
+	<xs:complexType name="AbstractTonttikohdeType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KunnanKaavaMaaraysKirjastoType">
+		<xs:sequence>
+			<xs:element name="linkki_kirjastoon" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> HistoriatiedotType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="HistoriatiedotType">
+		<xs:annotation>
+			<xs:documentation>Kaavan historiatiedot</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="akaava:Historia" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Historia  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Historia" type="akaava:HistoriaType" substitutionGroup="gml:_Object">
+		<xs:annotation>
+			<xs:documentation>Kaavan historiatieto tapahtuma</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="HistoriaType">
+		<xs:annotation>
+			<xs:documentation>Kaavan historiatietotapahtuman määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="seliteteksti1" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kaavan käsittelyvaiheen (tapahtuman)
+seliteksti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="seliteteksti2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Varsinaistä selitekstiä täydentävä teksti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tapahtuma" type="akaava:KaavanvaiheType">
+				<xs:annotation>
+					<xs:documentation>Kaavan käsittelyvaihe (tapahtuma)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kasittelija" type="akaava:TapahtumaKasittelijaType">
+				<xs:annotation>
+					<xs:documentation>Tapahtuman käsitellyt organisaatio/taho</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paivamaara" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Tapahtuman päivämäärä</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> AbstractKaavakohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Kaavakohde" type="akaava:AbstractKaavakohdeType" abstract="true" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Kohde, josta periytetaan muut kohteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="_Kaavatieto" type="akaava:AbstractKaavakohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kohde, josta periytetaan muut kohteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKaavakohdeType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="metatieto" type="gml:MetaDataPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Kohteen metatiedot. Suositeltavat kentät ovat: sijaintitiedonluontitapa, tarkkuus, datan_luoja, luonti_pvm, muokkaaja, muokkaus_pvm, omistaja, lahteen_pvm, lahteen_tyyppi, mittausera, lisatieto_linkki</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="yksilointitieto" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen lähtötietojärjestelmän  tvs. mukainen yksilöintitieto </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tunnus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kyseessä olevan asemakaavan sisällä yksikäsitteinen kohteen tunnistetieto.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kohdekoodi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen koodi lähtöjärjestelmässä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   KaavamaaraysPiste  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="KaavamaaraysPiste" substitutionGroup="akaava:_KaavamaaraysKarttakohde">
+		<xs:annotation>
+			<xs:documentation> Pistemäisesti kuvautuva asemakaavamerkintä</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="akaava:AbstractKaavamaaraysKarttakohdeType">
+					<xs:sequence>
+						<xs:element name="sijainti" type="gml:PointPropertyType">
+							<xs:annotation>
+								<xs:documentation>Kohteen sijaintiominauus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="suunta" type="gml:AngleType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>pistesymbolin suunta</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Kohteen luontitapa</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="tyyppi" type="akaava:KaavapisteTyyppiType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Kohteen tyyppi</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sitova" type="akaava:SitovaType">
+							<xs:annotation>
+								<xs:documentation>Kaavakohteen sitovuus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   KaavamaaraysViiva  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="KaavamaaraysViiva" substitutionGroup="akaava:_KaavamaaraysKarttakohde">
+		<xs:annotation>
+			<xs:documentation> Viivamaisesti kuvautuva asemakaavamerkintä</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="akaava:AbstractKaavamaaraysKarttakohdeType">
+					<xs:sequence>
+						<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+						<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Kohteen luontitapa</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="tyyppi" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Kaavaviivan tyyppi</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="akaava:KaavaviivaTyyppiType"/>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="sitova" type="akaava:SitovaType">
+							<xs:annotation>
+								<xs:documentation>Kaavakohteen sitovuus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Kaavamaarays  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kaavamaarays" substitutionGroup="akaava:_Kaavamaarayskohde" type="akaava:KaavamaaraysType">
+		<xs:annotation>
+			<xs:documentation>Asemakaava-aluetta
+koskeva kaavamääräys. Jokaisesta määräyksesta on linkki sihen kohteeseen, jota määräys koskee</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KaavamaaraysType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaarayskohdeType">
+				<xs:sequence>
+					<xs:element name="ymparistoministerionkoodi" type="gml:CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ympäristöministeriön kaavamerkinnän koodi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maaraysteksti_primaari" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Määräysteksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="maaraysteksti_sekundaari" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Varsinaistä määräystekstiä täydentävä teksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavamerkinta" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Määräyksen kaavamerkintä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitusaluelinkit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Linkit kayttötarkoitusalueisiin, joita tämä määräys koskee</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:KayttotarkoitusalueLinkki" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maarayskohdelinkit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Linkit kartalla olevein määräyskohteisiin, joita tämä määräys kokskee</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="akaava:MaarayskohdeLinkki" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Korttelinosa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Korttelinosa" type="akaava:KorttelinosaType" substitutionGroup="akaava:_Korttelinosakohde">
+		<xs:annotation>
+			<xs:documentation>Korttelinosa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KorttelinosaType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKorttelinosakohdeType">
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>Yksittäisen korttelinosan pääkäyttötarkoitus</xs:documentation>
+					</xs:annotation>
+					<xs:element name="kayttotarkoitus" type="akaava:KorttelinosanKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!-- xs:element name="tontti" type="akaava:TonttiType" maxOccurs="unbounded"/ -->
+					<xs:element name="tontit" type="akaava:TontitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Korttelinosaan kuuluvat tontit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Korttelinosat  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="KorttelinosatType">
+		<xs:sequence>
+			<xs:element ref="akaava:Korttelinosa" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Virkistysalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Virkistysalue" type="akaava:VirkistysalueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Virkistysalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VirkistysalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="akaava:VirkistysalueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   MuuLiikennealue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MuuLiikennealue" type="akaava:MuuLiikennealueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Muu liikennealue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MuuLiikennealueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="liikennealueennimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Liikennealueen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitus" type="akaava:MuunLiikennealueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Kortteli  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kortteli" type="akaava:KortteliType" substitutionGroup="akaava:_Korttelikohde">
+		<xs:annotation>
+			<xs:documentation>Korttteli</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KortteliType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKorttelikohdeType">
+				<xs:sequence>
+					<xs:element name="korttelinumero" type="xs:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Korttelin numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="korttelinosat" type="akaava:KorttelinosatType">
+						<xs:annotation>
+							<xs:documentation>Korttelin osat, joista kortteli koostuu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Erityisalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Erityisalue" type="akaava:ErityisalueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Erityisalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ErityisalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="korttelinumero" type="xs:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Korttelin numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitus" type="akaava:ErityisalueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   MaaMetsatalousalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MaaMetsatalousalue" type="akaava:MaaMetsatalousalueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Maa- ja Metsatalousalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaaMetsatalousalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="akaava:MaaMetsatalousalueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Suojelualue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Suojelualue" type="akaava:SuojelualueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Suojelualue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SuojelualueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="akaava:SuojeluKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Vesialue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Vesialue" type="akaava:VesialueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Vesialue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VesialueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="kayttotarkoitus" type="akaava:VesialueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Rakennusala  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Rakennusala" type="akaava:RakennusalaType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Rakennusala</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RakennusalaType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="rakennusoikeus" type="xs:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Määräaysalueen kokonaisrakennusoikeus ilman käyttötarkoitusluokittelua</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lisarakennusoikeus" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Määräaysalueen lisärakennusoikeus ilman käyttötarkoitusluokittelua</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="kuvaus" type="xs:string"/>
+								<xs:element name="rakennusoikeus" type="xs:integer" nillable="true"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kerrosluku" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kerrosluku</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="akaava:RakennusalaTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Rakennusalan tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="asuntojenlkm" type="xs:integer" minOccurs="0"/>
+					<xs:element name="autopaikat" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Autopaikka maanalainen"/>
+								<xs:enumeration value="Autopaikka rakennusalan alla"/>
+								<xs:enumeration value="Autopaikka rakennuksessa"/>
+								<xs:enumeration value="Autopaikka ympyröitynä"/>
+								<xs:enumeration value="Autopaikka tontin ulkopuolella"/>
+								<xs:enumeration value="Autopaikka kielletty"/>
+								<xs:enumeration value="ei tiedossa"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="rakennuskieltoPohjakerroksiin" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Katualue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Katualue" type="akaava:KatualueType" substitutionGroup="akaava:_Kayttotarkoitusaluekohde">
+		<xs:annotation>
+			<xs:documentation>Katualue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KatualueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKayttotarkoitusaluekohdeType">
+				<xs:sequence>
+					<xs:element name="kadunnimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kadnu nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitus" type="akaava:KatualueenKayttotarkoitusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Luokiteltu pääkäyttötarkoitus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Tontit  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="TontitType">
+		<xs:sequence>
+			<xs:element ref="akaava:Tontti" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Tontti  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Tontti" type="akaava:TonttiType" substitutionGroup="akaava:_Tonttikohde">
+		<xs:annotation>
+			<xs:documentation>Tontti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TonttiType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractTonttikohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="akaava:AlueSijaintiType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintiominaisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tonttinumero" type="xs:integer" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tontin numero</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sitova" type="akaava:SitovaType">
+						<xs:annotation>
+							<xs:documentation>Kaavakohteen sitovuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Kaavamaaraysalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_Kaavamaaraysalue" type="akaava:AbstractKaavamaaraysalueType" abstract="true" substitutionGroup="akaava:_KaavamaaraysKarttakohde">
+		<xs:annotation>
+			<xs:documentation>Kaavamääräyskohde,joka kuvautuu alueena</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbstractKaavamaaraysalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysKarttakohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="akaava:AlueSijainnitType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintiominaisuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sitova" type="akaava:SitovaType">
+						<xs:annotation>
+							<xs:documentation>Kaavakohteen sitovuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Suojelualuemääräys   -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Suojelualuemaarays" type="akaava:SuojelualuemaaraysType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Suojeltava alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SuojelualuemaaraysType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="akaava:SuojelualueosanTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Suojelualueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Maisema-alue   -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Maisema-alue" type="akaava:Maisema-alueType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Maisemallisesti arvokas alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Maisema-alueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="akaava:Maisema-alueTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Maisema-alueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Muualue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Muualue" type="akaava:MuualueType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Muu kaavamääräaysalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MuualueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="akaava:MuualueTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Liikennointi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Liikennointi" type="akaava:LiikennointiType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Liikennointialue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LiikennointiType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="tyyppi" type="akaava:LiikennointiTyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Liikennointialueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Johdoillevarattualue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Johdoillevarattualue" type="akaava:JohdoillevarattualueType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Johdoille varattu alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="JohdoillevarattualueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Yhteiskayttoalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Yhteiskayttoalue" type="akaava:YhteiskayttoalueType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Yhteiskäyttöalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="YhteiskayttoalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--   Istutusalue  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Istutusalue" type="akaava:IstutusalueType" substitutionGroup="akaava:_Kaavamaaraysalue">
+		<xs:annotation>
+			<xs:documentation>Istutusalue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="IstutusalueType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaaraysalueType">
+				<xs:sequence>
+					<xs:element name="olemassaolo" type="akaava:OlemassaolotietoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko kohde Istutettava vai säilytettävä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Istutuksen tyyppi</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="akaava:IstutustyyppiType"/>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> AbstracLuokittelematon kohde  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="_LuokittelematonKohde" type="akaava:AbstractLuokittelematonKohdeType" abstract="true" substitutionGroup="akaava:_Kaavakohde"/>
+	<xs:complexType name="AbstractLuokittelematonKohdeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Kantakohde josta luokittelemattomat kohteet periytetään.
+KuntaGML-skeemaan kuulumattomien (luokittelemattomien) kohteiden siirron mahdollistava tyyppi.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:sequence>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus, johon kohde kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintiepavarmuus" type="akaava:SijaintiepavarmuusType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainnin epävarmuus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luontitapa" type="akaava:LuontiTapaType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontitapa</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kohdeluokka" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen luokka lähtöjärjestelmässä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon teksti-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonTeksti" type="akaava:LuokittelematonTekstiType" substitutionGroup="akaava:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonTekstiType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu pisteenä(symboli)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:LuokittelematonPisteType">
+				<xs:sequence>
+					<xs:element name="teksti" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kartalla piirrettävä merkkijono</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon piste-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonPiste" type="akaava:LuokittelematonPisteType" substitutionGroup="akaava:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonPisteType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu pisteenä(symboli)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijainti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suunta" type="gml:AngleType">
+						<xs:annotation>
+							<xs:documentation>Symbolin / Tekstin suunta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon viiva-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonViiva" type="akaava:LuokittelematonViivaType" substitutionGroup="akaava:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonViivaType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu viivana</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>>  -->
+	<!--Luokittelematon alue-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="LuokittelematonAlue" type="akaava:LuokittelematonAlueType" substitutionGroup="akaava:_LuokittelematonKohde">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu alueena</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LuokittelematonAlueType">
+		<xs:annotation>
+			<xs:documentation>Luokittelematon kohde, joka kuvautuu alueena</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractLuokittelematonKohdeType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="akaava:AlueSijaintiType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Kieli  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="KieliType">
+		<xs:annotation>
+			<xs:documentation>Viralliset kielikoodit katso http://babelwiki.babelzilla.org/index.php?title=Language_codes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fi-FI"/>
+			<xs:enumeration value="sv-FI"/>
+			<xs:enumeration value="se-FI"/>
+			<xs:enumeration value="smn-FI"/>
+			<xs:enumeration value="sms-FI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   ErityisalueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="ErityisalueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="ET"/>
+			<xs:enumeration value="EN"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="EJ"/>
+			<xs:enumeration value="EO"/>
+			<xs:enumeration value="EK"/>
+			<xs:enumeration value="EMT"/>
+			<xs:enumeration value="EA"/>
+			<xs:enumeration value="EP"/>
+			<xs:enumeration value="EH"/>
+			<xs:enumeration value="EV"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   VirkistysalueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="VirkistysalueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="V - Virkistysalue"/>
+			<xs:enumeration value="VP - Puisto"/>
+			<xs:enumeration value="VL"/>
+			<xs:enumeration value="VK"/>
+			<xs:enumeration value="VU"/>
+			<xs:enumeration value="VR"/>
+			<xs:enumeration value="VV - Uimaranta-alue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   VesialueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="VesialueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="W - Vesialue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   SuojeluKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="SuojeluKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="S"/>
+			<xs:enumeration value="SL"/>
+			<xs:enumeration value="SM"/>
+			<xs:enumeration value="SR"/>
+			<xs:enumeration value="/s"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   MaaMetsatalousalueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="MaaMetsatalousalueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="M"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="ME"/>
+			<xs:enumeration value="MP"/>
+			<xs:enumeration value="MA"/>
+			<xs:enumeration value="MU"/>
+			<xs:enumeration value="MY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   MuunLiikennealueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="MuunLiikennealueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="L - Liikennealue"/>
+			<xs:enumeration value="LT"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="LL"/>
+			<xs:enumeration value="LS"/>
+			<xs:enumeration value="LK"/>
+			<xs:enumeration value="LV"/>
+			<xs:enumeration value="LP"/>
+			<xs:enumeration value="LYT"/>
+			<xs:enumeration value="LYS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   KorttelinosanKayttotarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KorttelinosanKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="AK"/>
+			<xs:enumeration value="AP"/>
+			<xs:enumeration value="AR"/>
+			<xs:enumeration value="AO"/>
+			<xs:enumeration value="AL"/>
+			<xs:enumeration value="AH"/>
+			<xs:enumeration value="AM"/>
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="P"/>
+			<xs:enumeration value="PL"/>
+			<xs:enumeration value="PV"/>
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="YL"/>
+			<xs:enumeration value="YH"/>
+			<xs:enumeration value="YO"/>
+			<xs:enumeration value="YS"/>
+			<xs:enumeration value="YY"/>
+			<xs:enumeration value="YM"/>
+			<xs:enumeration value="YK"/>
+			<xs:enumeration value="YU"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="K"/>
+			<xs:enumeration value="KL"/>
+			<xs:enumeration value="KM"/>
+			<xs:enumeration value="KTY"/>
+			<xs:enumeration value="T"/>
+			<xs:enumeration value="TT"/>
+			<xs:enumeration value="TV"/>
+			<xs:enumeration value="TY"/>
+			<xs:enumeration value="T-kem"/>
+			<xs:enumeration value="R"/>
+			<xs:enumeration value="RA"/>
+			<xs:enumeration value="RM"/>
+			<xs:enumeration value="RL"/>
+			<xs:enumeration value="RV"/>
+			<xs:enumeration value="RP"/>
+			<xs:enumeration value="LH"/>
+			<xs:enumeration value="LHA"/>
+			<xs:enumeration value="LTA"/>
+			<xs:enumeration value="LPY"/>
+			<xs:enumeration value="LPA"/>
+			<xs:enumeration value="KT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   LiikennointiTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="LiikennointiTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ajoyhteys"/>
+			<xs:enumeration value="h"/>
+			<xs:enumeration value="jk"/>
+			<xs:enumeration value="Yleinen jalankulku"/>
+			<xs:enumeration value="su"/>
+			<xs:enumeration value="nä"/>
+			<xs:enumeration value="Eritasoristeys"/>
+			<xs:enumeration value="alitus"/>
+			<xs:enumeration value="ylitys"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   SuojelualueTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="SuojelualueosanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="s"/>
+			<xs:enumeration value="sl"/>
+			<xs:enumeration value="sr"/>
+			<xs:enumeration value="srs"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--  Maisema-alueTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="Maisema-alueTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="un"/>
+			<xs:enumeration value="kp"/>
+			<xs:enumeration value="mp"/>
+			<xs:enumeration value="ma"/>
+			<xs:enumeration value="ge"/>
+			<xs:enumeration value="nat"/>
+			<xs:enumeration value="luo"/>
+			<xs:enumeration value="sk"/>
+			<xs:enumeration value="sm"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--  MuualueTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="MuualueTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="va"/>
+			<xs:enumeration value="sv"/>
+			<xs:enumeration value="tv"/>
+			<xs:enumeration value="ke"/>
+			<xs:enumeration value="saa"/>
+			<xs:enumeration value="pv"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   RakennusalaTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="RakennusalaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="maanalainentila"/>
+			<xs:enumeration value="rakennusala"/>
+			<xs:enumeration value="pk"/>
+			<xs:enumeration value="m"/>
+			<xs:enumeration value="am"/>
+			<xs:enumeration value="t"/>
+			<xs:enumeration value="pj"/>
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="u"/>
+			<xs:enumeration value="kulkuaukko"/>
+			<xs:enumeration value="v"/>
+			<xs:enumeration value="le"/>
+			<xs:enumeration value="ra"/>
+			<xs:enumeration value="p"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   KatualueenKäyttötarkoitus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KatualueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="katu"/>
+			<xs:enumeration value="katuaukio / tori"/>
+			<xs:enumeration value="jalankululle varattu katu/tie"/>
+			<xs:enumeration value="jalankululle ja polkupyöräilylle varattu tie/katu"/>
+			<xs:enumeration value="jalankululle ja polkupyöräilylle varattu tie/katu, jolla huoltoajo sallittu"/>
+			<xs:enumeration value="jalankululle ja polkupyöräilylle varattu tie/katu,jolla tontille/rakennuspaikalle ajo on sallittu"/>
+			<xs:enumeration value="yleiseen tiehen kuuluva jalankulku- ja polkupyörätie"/>
+			<xs:enumeration value="joukkoliikenteelle varattu katu/tie"/>
+			<xs:enumeration value="pihakatu"/>
+			<xs:enumeration value="hidaskatu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Kaavalaji  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KaavalajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="asemakaava"/>
+			<xs:enumeration value="ranta-asemakaava"/>
+			<xs:enumeration value="ajantasa-asemakaava"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Kaavanvaihe  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KaavanvaiheType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="vireilletullut"/>
+			<xs:enumeration value="kaavaehdotus"/>
+			<xs:enumeration value="hyväksytty"/>
+			<xs:enumeration value="lainvoimainen"/>
+			<xs:enumeration value="osittain voimaantullut"/>
+			<xs:enumeration value="oikaisukehoituksen alainen"/>
+			<xs:enumeration value="kumottu"/>
+			<xs:enumeration value="valituksen alainen"/>
+			<xs:enumeration value="rauennut"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Kohteenvaihe  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KohteenvaiheType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="suunnitteilla"/>
+			<xs:enumeration value="hyväksytty"/>
+			<xs:enumeration value="lainvoimainen"/>
+			<xs:enumeration value="oikaisukehoituksen alainen"/>
+			<xs:enumeration value="valituksen alainen"/>
+			<xs:enumeration value="kumottu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   KaavaviivaTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KaavaviivaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Liikennemelulta suojaava ilmanvaihto"/>
+			<xs:enumeration value="Ääntäpitävä aita"/>
+			<xs:enumeration value="Liikennemelueste"/>
+			<xs:enumeration value="Terassiparveke"/>
+			<xs:enumeration value="Likimääräinen korkeuskäyrä"/>
+			<xs:enumeration value="aita asuntotontteja vastaan"/>
+			<xs:enumeration value="yhtenäinen aita"/>
+			<xs:enumeration value="kiviaita"/>
+			<xs:enumeration value="umpiaita"/>
+			<xs:enumeration value="lauta tai pensasaita"/>
+			<xs:enumeration value="lauta-aita"/>
+			<xs:enumeration value="kuusiaita"/>
+			<xs:enumeration value="Voimansiirtoalueen raja"/>
+			<xs:enumeration value="Kantavat rakenteet sallitaan"/>
+			<xs:enumeration value="Muu viiva"/>
+			<xs:enumeration value="Rakennuksen harjansuunta"/>
+			<xs:enumeration value="ei ikkunoita"/>
+			<xs:enumeration value="äänieristys"/>
+			<xs:enumeration value="puurivi"/>
+			<xs:enumeration value="ulkoilureitti"/>
+			<xs:enumeration value="ei ajoneuvoliittymää"/>
+			<xs:enumeration value="melueste"/>
+			<xs:enumeration value="ajoradan reuna"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="Istutettava puurivi"/>
+			<xs:enumeration value="Istutettava pensasrivi"/>
+			<xs:enumeration value="Säilytettävä puurivi"/>
+			<xs:enumeration value="Säilytettävä pensasrivi"/>
+			<xs:enumeration value="Rakennettava tukimuuri"/>
+			<xs:enumeration value="Rakennettava aita"/>
+			<xs:enumeration value="Säilytettävä tukimuuri"/>
+			<xs:enumeration value="Säilytettävä aita"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--  KaavapisteTyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="KaavapisteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Ajoneuvoliittymä nuoli"/>
+			<xs:enumeration value="Ajoneuvoliittymä"/>
+			<xs:enumeration value="Rakennus rakennettava kiinni"/>
+			<xs:enumeration value="Uloskäynti rakennuksesta"/>
+			<xs:enumeration value="Kattokaltevuus"/>
+			<xs:enumeration value="Maanpinnan korkeus"/>
+			<xs:enumeration value="Vesikaton ylin korkeus"/>
+			<xs:enumeration value="Julkisivupinnan ja vesikaton leikkauskohdan ylin korkeus"/>
+			<xs:enumeration value="Julkisivun enimmäiskorkeus"/>
+			<xs:enumeration value="Rakennuksen rakenteiden ja laitteiden ylin korkeus"/>
+			<xs:enumeration value="Suojeltava puu"/>
+			<xs:enumeration value="Muu"/>
+			<xs:enumeration value="Istutettava  puu"/>
+			<xs:enumeration value="Istutettava pensas"/>
+			<xs:enumeration value="Säilytettävä puu"/>
+			<xs:enumeration value="Säilytettävä pensas"/>
+			<xs:enumeration value="Autopaikat"/>
+			<xs:enumeration value="Lisärakennusoikeus autokatoksille"/>
+			<xs:enumeration value="Asuntojen lukumäärä rakennusalalla"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Tapahtuma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="TapahtumaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Luonnos"/>
+			<xs:enumeration value="Ehdotus"/>
+			<xs:enumeration value="Hyväksytty"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class:  -->
+	<!--   Tapahtumakäsittelijä  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Enumeration -->
+	<xs:simpleType name="TapahtumaKasittelijaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Lautakunta"/>
+			<xs:enumeration value="Hallitus"/>
+			<xs:enumeration value="Valtuusto"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> LiitteetType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="LiitteetType">
+		<xs:sequence>
+			<xs:element ref="akaava:Liite" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Liite  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Liite" type="akaava:LiiteType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="LiiteType">
+		<xs:sequence>
+			<xs:element name="nimi" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="linkki" type="xs:anyURI" use="optional"/>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> KaavatType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Kaava" type="akaava:KaavaType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="KaavatType">
+		<xs:sequence>
+			<xs:element ref="akaava:Kaava" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Kaavan yleistieto
+						</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> TeknisetTiedotType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="TeknisetTiedotType">
+		<xs:sequence>
+			<xs:element ref="akaava:TekninenTieto" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Teknisiä tietoja ohjeistuksesta
+						</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> TekninenTieto  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="TekninenTieto" type="akaava:TekninenTietoType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="TekninenTietoType">
+		<xs:sequence>
+			<xs:element name="mittakaava" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tulostuksen oletus mittakaava</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="korkeusjarjestelma" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aineiston korkeusjärjestelmä</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Maarayskohdelinkki  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="MaarayskohdeLinkki" type="akaava:MaarayskohdeLinkkiType" substitutionGroup="akaava:_Kaavatieto"/>
+	<xs:complexType name="MaarayskohdeLinkkiType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Kayttotarkoitusaluelinkki  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="KayttotarkoitusalueLinkki" type="akaava:KayttotarkoitusalueLinkkiType" substitutionGroup="akaava:_Kaavatieto"/>
+	<xs:complexType name="KayttotarkoitusalueLinkkiType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--   Kaavamaarayslinkki  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="KaavamaaraysLinkki" type="akaava:KaavamaaraysLinkkiType"  substitutionGroup="akaava:_Kaavatieto"/>
+	<xs:complexType name="KaavamaaraysLinkkiType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavamaarayskohdeType">
+				<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</xs:extension>
+			<!--xs:attribute name="linkki" type="xs:anyURI" use="optional"/ -->
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> LabelitTpe  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="LabelitType">
+		<xs:sequence>
+			<xs:element ref="akaava:Label" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Label  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Label" type="akaava:LabelType">
+		<xs:annotation>
+			<xs:documentation>
+Label tieto osoittaa, halutaanko kohteen jonkin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+Label tieto voidaan antaa haluttaessa kaikille ominaisuuksille ja kohteella voi olla useita label tietoja 
+	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LabelType">
+		<xs:sequence>
+			<xs:element name="ilmentymaElementinNimi" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Viittaus kohteen ominaisuuden(element) nimeen, jonka sisältö halutaan esittää kartalla. Esimerkiksi "kohteentunnus". </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kayttotarkoitus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Esim. missä sovelluksessa tämä label-tieto halutaan visualisoida </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="suunta" type="gml:AngleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Label-tekstin suunta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kohta" type="akaava:KohtaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Viiteviivan päätepiste suhteessa kohteeseen. Mikäli siirtymäsijainti puuttuu, sijoitetaan teksti tähän kohtaan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siirtymasijainti" type="gml:PointPropertyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Label-tekstin sijainti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==============================================================  -->
+	<!-- Class: <<Enumeration>> Kohta  (kohteen referenssipiste)  -->
+	<!-- =================================================================== -->
+	<xs:simpleType name="KohtaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="avoin"/>
+			<xs:enumeration value="keski"/>
+			<xs:enumeration value="ensimmäinenpiste"/>
+			<xs:enumeration value="itäisin"/>
+			<xs:enumeration value="läntisin"/>
+			<xs:enumeration value="pohjoisin"/>
+			<xs:enumeration value="eteläisin"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==============================================================  -->
+	<!-- Class: <<Enumeration>> SitovaType -->
+	<!-- =================================================================== -->
+	<xs:simpleType name="SitovaType">
+		<xs:annotation>
+			<xs:documentation>Kaavakohteen sitovuus</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="sitova"/>
+			<xs:enumeration value="sitova-sijainti ohjeellinen"/>
+			<xs:enumeration value="ohjeellinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Sijaintiepavarmuus-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="SijaintiepavarmuusType">
+		<xs:annotation>
+			<xs:documentation>Kaavoitusmittausohjeet 2003 mukaiset sijaintiepävarmuus tasot</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0.15"/>
+			<xs:enumeration value="0.2"/>
+			<xs:enumeration value="0.3"/>
+			<xs:enumeration value="0.5"/>
+			<xs:enumeration value="0.7"/>
+			<xs:enumeration value="1.0"/>
+			<xs:enumeration value="1.5"/>
+			<xs:enumeration value="2.0"/>
+			<xs:enumeration value="3.0"/>
+			<xs:enumeration value="5.0"/>
+			<xs:enumeration value="7.5"/>
+			<xs:enumeration value="10.0"/>
+			<xs:enumeration value="20.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Luontitapa  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="LuontiTapaType">
+		<xs:annotation>
+			<xs:documentation>Kertoo miten kohde on luotu tietokantaan</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="digitointi"/>
+			<xs:enumeration value="maastomittaus"/>
+			<xs:enumeration value="skannattu"/>
+			<xs:enumeration value="kuvamittaus"/>
+			<xs:enumeration value="laserkeilattu"/>
+			<xs:enumeration value="kiinteistötoimitus"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="tuntematon"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Asemointi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="AsemointiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="keskellä"/>
+			<xs:enumeration value="vasenAlaReuna"/>
+			<xs:enumeration value="oikeaAlaReuna"/>
+			<xs:enumeration value="pisteTekstissä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Suunta  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Suunta" type="akaava:SuuntaType"/>
+	<xs:complexType name="SuuntaType">
+		<xs:sequence>
+			<xs:element name="suuntakulma" type="gml:AngleType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Siirtyma  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Siirtyma" type="akaava:SiirtymaType"/>
+	<xs:complexType name="SiirtymaType">
+		<xs:sequence>
+			<xs:element name="siirtymasijainti" type="gml:PointPropertyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Referenssipiste  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="ReferenssipisteType">
+		<xs:sequence>
+			<xs:element ref="gml:Point"/>
+			<xs:element ref="akaava:Suunta" minOccurs="0"/>
+			<xs:element ref="akaava:Siirtyma" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Alueensijaintiominaisuus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:complexType name="AlueSijainnitType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="akaava:AlueSijainti" maxOccurs="unbounded"/>
+				<xs:element ref="gml:Null"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> AlueSijainti  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="AlueSijainti" type="akaava:AlueSijaintiType"/>
+	<xs:complexType name="AlueSijaintiType">
+		<xs:choice>
+			<xs:element ref="akaava:referenssipiste"/>
+			<xs:element ref="akaava:reunaviiva"/>
+			<xs:element ref="akaava:alue"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="referenssipiste" type="akaava:ReferenssipisteType"/>
+	<xs:element name="reunaviiva" type="gml:CurvePropertyType"/>
+	<xs:element name="alue" type="gml:SurfacePropertyType"/>
+	<xs:element name="Kunnanosa" type="akaava:KunnanosaType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="KunnanosaType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="akaava:AlueSijaintiType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sijaintiominaisuus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nimi1" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ensisijainen nimi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nimi2" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Toissijainen nimi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numero" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kunnanosan numero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="labelit" type="akaava:LabelitType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Osoittaa että halutaanko kohteen jokin ominaisuus näyttää tekstinä kohteen visualisoinnin yhteydessä.
+ Ks Myös kohdetyyppi Label dokumentaaatio</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="KaavamaarayskirjastoType">
+		<xs:annotation>
+			<xs:documentation>Kertoo minkä aikakauden kaava-asetuksen  tvs. mukaan kaava on tehty</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Ennen vuotta 1932 laadittu asemakaava"/>
+			<xs:enumeration value="1.1.1932 asemakaavalaki"/>
+			<xs:enumeration value="29.6.1943 asetus asemakaavoista"/>
+			<xs:enumeration value="30.9.1959 Sisäasiainministeriön asetus"/>
+			<xs:enumeration value="15.1.1980 Sisäasiainministeriön asetus"/>
+			<xs:enumeration value="1.6.1992 Ympäristöministeriön Asema- ja rakennuskaavamerkinnät ja -määräykset"/>
+			<xs:enumeration value="31.3.2000 Ympäristöministeriön asetus MRL:n mukaisista kaavamerkinnöistä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Olemassaolo  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="OlemassaolotietoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="Istutettava"/>
+			<xs:enumeration value="Säilytettävä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<Enumeration>> Istutustyyppi  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:simpleType name="IstutustyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="puustoistutusalue"/>
+			<xs:enumeration value="Suojavihervyöhyke"/>
+			<xs:enumeration value="Reunavyöhyke"/>
+			<xs:enumeration value="Pensasistutusalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HakijaType">
+		<xs:sequence>
+			<xs:element name="nimi" type="akaava:HenkilonNimiType"/>
+			<xs:element name="osoite" type="yht:PostiosoiteType"/>
+			<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
+			<xs:element name="faksinumero" type="xs:string" minOccurs="0"/>
+			<xs:element name="puhelin" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HenkilonNimiType">
+		<xs:sequence>
+			<xs:element name="etunimi" type="xs:string"/>
+			<xs:element name="sukunimi" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KaavayksikkoType">
+		<xs:complexContent>
+			<xs:extension base="akaava:AbstractKaavakohdeType">
+				<xs:sequence>
+					<xs:element name="kaavatunnus" type="gml:CodeType">
+						<xs:annotation>
+							<xs:documentation>Kaavan yksilöivä tunnus, johon kaavayksikkö kuuluu</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kaavayksikonTunnus" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaavayksikonlaji" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="ei tiedossa"/>
+								<xs:enumeration value="keinoyksikkö (maarekisterialue)"/>
+								<xs:enumeration value="keinokaavayksikkö (yleisen alueen lisäosa)"/>
+								<xs:enumeration value="rekisteröity yleinen alue"/>
+								<xs:enumeration value="yleisen alueen lisäosa (rekisterissä)"/>
+								<xs:enumeration value="muun kuin korttelialueen yksikkö"/>
+								<xs:enumeration value="tonttirekisteritontti"/>
+								<xs:enumeration value="muodostusluetteloon merkitty tontti"/>
+								<xs:enumeration value="hyväksytyn tonttijaon mukainen tontti"/>
+								<xs:enumeration value="vireillä olevan tonttijaonmuutoksen mukainen tontti"/>
+								<xs:enumeration value="vireillä olevan tonttijaon/-muutoksen mukainen tontti"/>
+								<xs:enumeration value="ohjeellinen kaavatontti"/>
+								<xs:enumeration value="korttelin osa"/>
+								<xs:enumeration value="kortteli"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="tonttijaonlaji" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="ei tiedossa"/>
+								<xs:enumeration value="erillinen tonttijako"/>
+								<xs:enumeration value="kaavan sisältyy sitova tonttijako"/>
+								<xs:enumeration value="kaavaan sisältyy ohjeellinen tonttijako"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="tonttijaontunnus" type="xs:string" minOccurs="0"/>
+					<xs:element name="kaavallinenOlotila" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="asemakaavayksikön rajojen muutos, vireillä"/>
+								<xs:enumeration value="asemakaavan muutos, lainvoimainen"/>
+								<xs:enumeration value="asemakaavan muutos, vireillä"/>
+								<xs:enumeration value="ensimmäinen asemakaava, lainvoimainen"/>
+								<xs:enumeration value="ensimmäinen asemakaava, vireillä"/>
+								<xs:enumeration value="asemakaava, lainvoimainen"/>
+								<xs:enumeration value="asemakaava, vireillä"/>
+								<xs:enumeration value="ei tiedossa"/>
+								<xs:enumeration value="rakennuskaava, lainvoimainen"/>
+								<xs:enumeration value="rakennuskaava, vireillä"/>
+								<xs:enumeration value="rantakaava, lainvoimainen"/>
+								<xs:enumeration value="rantakaava, vireillä"/>
+								<xs:enumeration value="vahvistettu yleiskaava, lainvoimainen"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="voimassaolo" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="ei tiedossa"/>
+								<xs:enumeration value="muu"/>
+								<xs:enumeration value="kumottu"/>
+								<xs:enumeration value="kiinteistö kumottu"/>
+								<xs:enumeration value="voimassa"/>
+								<xs:enumeration value="vireillä"/>
+								<xs:enumeration value="numeronvaraus"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="rakennusoikeus" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="perusmaara" type="xs:string" minOccurs="0"/>
+								<xs:element name="kaytetty" type="xs:string" minOccurs="0"/>
+								<xs:element name="lisarakennusoikeus" type="xs:string" minOccurs="0"/>
+								<xs:element name="kellaritilat" type="xs:string" minOccurs="0"/>
+								<xs:element name="ullakkotilat" type="xs:string" minOccurs="0"/>
+								<xs:element name="kerrostenLkm" type="xs:string" minOccurs="0"/>
+								<xs:element name="maanalaistenTilojenLkm" type="xs:string" minOccurs="0"/>
+								<xs:element name="kerrosjaonMaaraytymistapa" type="xs:string" minOccurs="0"/>
+								<xs:element name="lisatehokkuus" type="xs:string" minOccurs="0"/>
+								<xs:element name="tehokkuusluku" type="xs:string" minOccurs="0"/>
+								<xs:element name="maarittamisTapaKoodi" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Tieto siitä miten rakennusoikeus on määritety</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="ei tiedossa"/>
+											<xs:enumeration value="ei rakennusoikeutta"/>
+											<xs:enumeration value="tehokkuusluku"/>
+											<xs:enumeration value="kerrosneliömetreinä"/>
+											<xs:enumeration value="rakennusjärjestyksen perusteella"/>
+											<xs:enumeration value="kaavamääräysten perusteella"/>
+											<xs:enumeration value="mitattu ja laskettu kaavakartalta"/>
+											<xs:enumeration value="rakennusvalvontaviranomaisen tulkinta/tehokkuusluku"/>
+											<xs:enumeration value="rakennusvalvontaviranoimaisen tulkinta/k-m2"/>
+											<xs:enumeration value="ei voida määrittää"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maankayttomuoto" type="xs:string" minOccurs="0"/>
+					<xs:element name="muodostuminen" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TIeto siitä mistä kiinteistä muodostuu ja kuinka suuri osa ko. kiinteistöstä</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence maxOccurs="unbounded">
+								<xs:element name="kiinteisto" type="xs:string"/>
+								<xs:element name="pintaAla" type="xs:decimal" nillable="true"/>
+								<xs:element name="kokoKiinteistoKytkin"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="pintaAla" type="xs:decimal" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kaavayksikön pinta-ala</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pintaAlanMaarittamistapa" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tieto siitä miten pinta-ala on määritetty</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="geodeettinen"/>
+								<xs:enumeration value="ei tiedossa"/>
+								<xs:enumeration value="digitoitu"/>
+								<xs:enumeration value="graafinen"/>
+								<xs:enumeration value="muu"/>
+								<xs:enumeration value="pinta-ala muuttunut kiinteistön kautta"/>
+								<xs:enumeration value="pinta-alaa ei ole määritetty"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="sijainti" type="akaava:AlueSijaintiType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Aluemuoto ensisijainen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rakennettuKytkin" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onko kyseessä uusi(true) vai vanha rakennuspaikka(false)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lisatieto" type="xs:string" minOccurs="0"/>
+					<xs:element name="kayttotarkoitus" type="xs:string" minOccurs="0"/>
+					<xs:element name="osoite" type="yht:OsoiteType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KaavayksikotType">
+		<xs:sequence>
+			<xs:element ref="akaava:Kaavayksikko" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kaavayksikko" type="akaava:KaavayksikkoType" substitutionGroup="akaava:_Kaavakohde"/>
+</xs:schema>

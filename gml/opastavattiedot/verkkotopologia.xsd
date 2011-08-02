@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mkvt="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/verkkotopologia" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/verkkotopologia" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Verkkotopologia -->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Verkkotopologia-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Verkkotopologia-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="Verkkotopologia" type="mkvt:VerkkotopologiaType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VerkkotopologiaType">
+		<xs:annotation>
+			<xs:documentation>Verkkotopologia elementin sisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType">
+						<xs:annotation>
+							<xs:documentation>Siirron tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="verkkokohteet" type="mkvt:VerkkokohteetType">
+						<xs:annotation>
+							<xs:documentation>Digiroad rajapinnan mukainen tietosisältö</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MuutKohteetType">
+		<xs:annotation>
+			<xs:documentation>muutkohteet elementin tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="muukohde" type="mkvt:MuuKohdeType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MuuKohdeType">
+		<xs:annotation>
+			<xs:documentation>MuuKohde kohteen tietosisällön määrittely</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="yht:SijaintiType">
+						<xs:annotation>
+							<xs:documentation>Kohteen sijaintitieto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteen tyyppiä kuvaava vapaamuotoinen teksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="teksti" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohteeseen liitetty teksti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VerkkokohteetType">
+		<xs:annotation>
+			<xs:documentation>Digiroad tietomäärittely</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Verkosto" type="mkvt:DRVerkostoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Katuverkoston tiedot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Palvelut" type="mkvt:DRPalvelutType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Digiroad ylläpidossa olevat palvelut</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DigiroadNimiType">
+		<xs:complexContent>
+			<xs:extension base="yht:NimiType">
+				<xs:sequence>
+					<xs:element name="laji">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="virallinen"/>
+								<xs:enumeration value="vaihtoehtoinen"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AjoneuvotiedotType">
+		<xs:sequence>
+			<xs:element name="rajoitteentieto" type="mkvt:RajoiteTyyppiType">
+				<xs:annotation>
+					<xs:documentation>Kielletty / Sallittu</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ajoneuvotyyppi">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="kaikki"/>
+						<xs:enumeration value="moottoriajoneuvo"/>
+						<xs:enumeration value="ajoneuvo"/>
+						<xs:enumeration value="kuorma-auto"/>
+						<xs:enumeration value="linja-auto"/>
+						<xs:enumeration value="pakettiauto"/>
+						<xs:enumeration value="henkilöauto"/>
+						<xs:enumeration value="taksi"/>
+						<xs:enumeration value="moottoripyörä"/>
+						<xs:enumeration value="mopo"/>
+						<xs:enumeration value="polkupyörä"/>
+						<xs:enumeration value="jalankulkija"/>
+						<xs:enumeration value="ajoneuvoyhdistelmä"/>
+						<xs:enumeration value="traktori tai maatalousajoneuvo"/>
+						<xs:enumeration value="matkailuajoneuvo"/>
+						<xs:enumeration value="jakeluauto"/>
+						<xs:enumeration value="hälytysajoneuvo"/>
+						<xs:enumeration value="kimppakyytiajoneuvo"/>
+						<xs:enumeration value="sotilasajoneuvo"/>
+						<xs:enumeration value="vaarallista lastia kuljettava ajoneuvo"/>
+						<xs:enumeration value="huoltoajo"/>
+						<xs:enumeration value="tontille ajo"/>
+						<xs:enumeration value="läpiajo"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VaikutussuuntaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VaikutustietoType">
+		<xs:sequence>
+			<xs:element name="vaikutussuunta" type="mkvt:VaikutussuuntaType"/>
+			<xs:element name="vaikutusaika" type="xs:string" minOccurs="0"/>
+			<xs:element name="vaikutuskaista" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DynsegsijaintiType">
+		<xs:sequence>
+			<xs:element name="linkki" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Digiroad ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="alku" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ominaisuuden alkukohta elementillä (etäisyys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loppu" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ominaisuuden loppukohta elementillä (etäisyys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DRVerkostoType">
+		<xs:sequence>
+			<xs:element name="tielinkkitieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkvt:Tielinkki"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Dstietotieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkvt:Dstieto"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="kaantymismaaraystieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkvt:Kaantymismaarays"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="solmutieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkvt:Solmu"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TielinkkiType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:CurvePropertyType">
+						<xs:annotation>
+							<xs:documentation>Kohteen geometria</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppi">
+						<xs:annotation>
+							<xs:documentation>"Väylätyyppi"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="maantie"/>
+								<xs:enumeration value="katu"/>
+								<xs:enumeration value="yksityistie"/>
+								<xs:enumeration value="rautatie"/>
+								<xs:enumeration value="kevyen liikenteen väylä"/>
+								<xs:enumeration value="lautta"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="tLuokka">
+						<xs:annotation>
+							<xs:documentation>"Toiminnallinen luokka"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="seudullinen pääkatu / valtatie"/>
+								<xs:enumeration value="seudullinen pääkatu / kantatie"/>
+								<xs:enumeration value="alueellinen pääkatu / seututie"/>
+								<xs:enumeration value="kokoojakatu / yhdystie"/>
+								<xs:enumeration value="liityntäkatu / tärkeä yksityistie"/>
+								<xs:enumeration value="muu yksityistie"/>
+								<xs:enumeration value="kevyen liikenteen väylä"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="linkkityyppi">
+						<xs:annotation>
+							<xs:documentation>Tyyppi kuvaa tie-elementin fyysistä tai liikenteellistä ominaisuustietoa kuten yksiajoratai-sen tien osaa tai kiertoliittymän osaa.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="moottoritien osa"/>
+								<xs:enumeration value="moniajorataisen tien osa, joka ei moottoritie"/>
+								<xs:enumeration value="yksiajorataisen tien osa"/>
+								<xs:enumeration value="kiertoliittymän osa"/>
+								<xs:enumeration value="liitännäisliikennealueen osa"/>
+								<xs:enumeration value="ramppi"/>
+								<xs:enumeration value="huolto- tai pelastustien osa"/>
+								<xs:enumeration value="jalankulkualueen osa"/>
+								<xs:enumeration value="pyörätien osa"/>
+								<xs:enumeration value="moottoriliikennetien osa"/>
+								<xs:enumeration value=""/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="suunta" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Liikennevirran suunta"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="liikenne on sallittua molempiin suuntiin"/>
+								<xs:enumeration value="liikenne on sallittu digitointisuuntaa vastaan"/>
+								<xs:enumeration value="liikenne on sallittu digitointisuuntaan"/>
+								<xs:enumeration value="liikenne on suljettu molemmissa suunnissa"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="nimi" type="mkvt:DigiroadNimiType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>"Tien tai kadun nimi"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="osoitenumerointi" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Osoitenumerointi"</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="vasen_alku" type="xs:string"/>
+								<xs:element name="vasen_loppu" type="xs:string"/>
+								<xs:element name="oikea_alku" type="xs:string"/>
+								<xs:element name="oikea_loppu" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="kLuokka" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Kansallinen tieluokka"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="valtatie"/>
+								<xs:enumeration value="kantatie"/>
+								<xs:enumeration value="seututie"/>
+								<xs:enumeration value="yhdystie"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="enro" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Eurooppatienumero"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="krajaika" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Käyttörajoitus ja käyttöaika"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lm_rh" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Liikennemäärä ja ruuhkautumisherkkyys"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mPituus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Mitattu pituus"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mArvo" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Maisemallinen arvo"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lRTyyppi" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"Lauttatyyppi"</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="lautta"/>
+								<xs:enumeration value="lossi"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="rakentamistilanne" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="rakenteilla"/>
+								<xs:enumeration value="suunniteltu"/>
+								<xs:enumeration value="rakenteilla, mutta avoinna liikenteelle"/>
+								<xs:enumeration value="valmis"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="alkusolmuTunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Elementin alkusolmun Digiroad tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loppusolmuTunnus" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Elementin loppusolmun Digiroad tunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="talvikunnossapitaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="paallysteenKunnossapitaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="rakenteellinenKunnossapitaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="kunnossapitoluokka" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value=""/>
+								<xs:enumeration value="4"/>
+								<xs:enumeration value="3"/>
+								<xs:enumeration value="2"/>
+								<xs:enumeration value="1"/>
+								<xs:enumeration value="0"/>
+								<xs:enumeration value="ei tiedossa"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DstietoType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="taajama" type="mkvt:TaajamaType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>taajamatiet</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="kaistat" type="mkvt:KaistatType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Kaistojen määrä</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ajoneuvorajoitetieto" type="mkvt:AjoneuvorajoitetietoType">
+							<xs:annotation>
+								<xs:documentation>Ajoneuvo kielletty tai sallittu tieto</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="avattavaPuomi" type="mkvt:AvattavaPuomiType" maxOccurs="unbounded"/>
+						<xs:element name="nopeusrajoitus" type="mkvt:NopeusrajoitusType"/>
+						<xs:element name="silta" type="mkvt:SiltaType" maxOccurs="unbounded"/>
+						<xs:element name="suljettuYhteys" type="mkvt:SuljettuYhteysType" maxOccurs="unbounded"/>
+						<xs:element name="valoOhjaus" type="mkvt:ValohjausType"/>
+						<xs:element name="opastaulu" type="mkvt:OpastauluType" maxOccurs="unbounded"/>
+						<xs:element name="tasoristeys" type="mkvt:TasoristeysType"/>
+						<xs:element name="alikulku" type="mkvt:AlikulkuType" maxOccurs="unbounded"/>
+						<xs:element name="paallystettytie" type="mkvt:PaallystettytieType" maxOccurs="unbounded"/>
+						<xs:element name="tunneli" type="mkvt:TunneliType" maxOccurs="unbounded"/>
+						<xs:element name="pysakki" type="mkvt:PysakkiType" maxOccurs="unbounded"/>
+						<xs:element name="suurinSallittu" type="mkvt:SuurinSallittuType" maxOccurs="unbounded"/>
+						<xs:element name="leveys" type="mkvt:LeveysType"/>
+						<xs:element name="rdstmcpaikkatieto">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="mkvt:Rdstmcpaikka" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="sijainti" type="gml:CurvePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Informatiivinen tieto, koska tämän geometrian on oltava sama kuin tielinkin johon tästä kohteesta viitataan</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KaantymismaaraysType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="kaantymiselementti" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Tieto elementeistä joita määräys koskee</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="elementti" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Digirroad ID</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="jarjestyslaji">
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="alkuelementti"/>
+											<xs:enumeration value="välielementti"/>
+											<xs:enumeration value="loppuelementti"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="jarjestysnro" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="tyyppi">
+						<xs:annotation>
+							<xs:documentation>Määryksen tyyppie</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="pakollinen ajosuunta"/>
+								<xs:enumeration value="kielletty kääntymisuunta"/>
+								<xs:enumeration value="fyysinen kääntymisrajoitus"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="vaikutusaika" type="xs:string" minOccurs="0"/>
+					<xs:element name="ajoneuvotiedot" type="mkvt:AjoneuvotiedotType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DRPalvelutType">
+		<xs:sequence>
+			<xs:element name="palvelutieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="mkvt:Palvelu"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DRpalveluType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType">
+						<xs:annotation>
+							<xs:documentation>Sijainti pistemäisenä kohteena</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nimi" type="mkvt:DigiroadNimiType" minOccurs="0"/>
+					<xs:element name="tyyppi" type="mkvt:DRPalvelutyyppiType">
+						<xs:annotation>
+							<xs:documentation>Palvelun tyyppi Digiroad luokituksen mukaan</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lepoalueentyyppi" type="mkvt:LepoalueenltyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Leopalueen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="palveluunPaasytieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="PalveluunPaasy" type="mkvt:DrPalveluunPaasyType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="pysakointipaikkojenmaara" type="xs:string" minOccurs="0"/>
+					<xs:element name="lisatieto" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DrPalveluunPaasyType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="sisaanAjovaylansuunta" type="mkvt:SisaanAjovaylansuuntaType">
+				<xs:annotation>
+					<xs:documentation>sisaan-, uloasjo, tai molemmat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="RajoiteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sallittu"/>
+			<xs:enumeration value="kielletty"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DRPalvelutyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sairaala/poliklinikka"/>
+			<xs:enumeration value="ensiapupiste"/>
+			<xs:enumeration value="tavaraliikennekeskus"/>
+			<xs:enumeration value="tulli"/>
+			<xs:enumeration value="rajanylityspaikka"/>
+			<xs:enumeration value="lepoalue"/>
+			<xs:enumeration value="kaupungin keskusta"/>
+			<xs:enumeration value="lentokenttä"/>
+			<xs:enumeration value="laivaterminaali"/>
+			<xs:enumeration value="taksiasema"/>
+			<xs:enumeration value="rautatieasema"/>
+			<xs:enumeration value="pysäköintialue"/>
+			<xs:enumeration value="autojen lastausterminaali"/>
+			<xs:enumeration value="linja- ja kuorma-autojen pysäköintialue"/>
+			<xs:enumeration value="pysäköintitalo"/>
+			<xs:enumeration value="linja-autoasema"/>
+			<xs:enumeration value="maamerkki"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LepoalueenltyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="levähdysalue, kattavampi varustelu"/>
+			<xs:enumeration value="levähdysalue, perusvarustelu"/>
+			<xs:enumeration value="yksityinen palvelualue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SisaanAjovaylansuuntaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sisään- ja ulosajo"/>
+			<xs:enumeration value="sisäänajo"/>
+			<xs:enumeration value="ulosajo"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="KaistatType">
+		<xs:sequence>
+			<xs:element name="lukumaara"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+			<xs:element name="vaikutussuunta" type="mkvt:VaikutussuuntaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaajamaType">
+		<xs:sequence>
+			<xs:element name="nimi" type="mkvt:DigiroadNimiType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AjoneuvorajoitetietoType">
+		<xs:sequence>
+			<xs:element name="ajoneuvotiedot" type="mkvt:AjoneuvotiedotType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AvattavaPuomiType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="gml:PointPropertyType" minOccurs="0"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SiltaType">
+		<xs:sequence>
+			<xs:element name="nimi" type="mkvt:DigiroadNimiType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuljettuYhteysType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="gml:PointPropertyType" minOccurs="0"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpastauluType">
+		<xs:sequence>
+			<xs:element name="tauluinfo" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="paikkakunta" maxOccurs="unbounded"/>
+						<xs:element name="etaisyys" type="xs:string"/>
+						<xs:element name="tienumero" maxOccurs="unbounded"/>
+						<xs:element name="eurooppaTienumero" maxOccurs="unbounded"/>
+						<xs:element name="nuolenSuunta">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="1"/>
+									<xs:enumeration value="2"/>
+									<xs:enumeration value="3"/>
+									<xs:enumeration value="4"/>
+									<xs:enumeration value="5"/>
+									<xs:enumeration value="6"/>
+									<xs:enumeration value="7"/>
+									<xs:enumeration value="8"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="vari">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="1"/>
+									<xs:enumeration value="2"/>
+									<xs:enumeration value="3"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="etaisyysLiittymaan" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sijainti" type="gml:PointPropertyType" minOccurs="0"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="vaikutussuunta" type="mkvt:VaikutussuuntaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TasoristeysType">
+		<xs:sequence>
+			<xs:element name="turvavarustetyyppi" type="xs:string"/>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="vaikutussuunta" type="mkvt:VaikutussuuntaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValohjausType">
+		<xs:sequence>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="vaikutussuunta" type="mkvt:VaikutussuuntaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AlikulkuType">
+		<xs:sequence>
+			<xs:element name="nimi" type="mkvt:DigiroadNimiType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TunneliType">
+		<xs:sequence>
+			<xs:element name="nimi" type="mkvt:DigiroadNimiType"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PysakkiType">
+		<xs:sequence>
+			<xs:element name="nimi" type="mkvt:DigiroadNimiType"/>
+			<xs:element name="sijainti">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="piste" type="gml:PointPropertyType"/>
+						<xs:element name="vaikutussuunta"/>
+						<xs:element name="tieElementtiID"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+			<xs:element name="yllapitaja" type="xs:string" minOccurs="0"/>
+			<xs:element name="valtakTunnus" type="xs:string"/>
+			<xs:element name="katoskoodi" type="xs:string"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuurinSallittuType">
+		<xs:sequence>
+			<xs:element name="arvo" type="xs:string"/>
+			<xs:element name="tyyppi">
+				<xs:annotation>
+					<xs:documentation>korkeus/pituus/paino/leveys</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ajoneuvon suurin sallittu leveys"/>
+						<xs:enumeration value="ajoneuvon suurin sallittu korkeus"/>
+						<xs:enumeration value="ajoneuvon tai ajoneuvoyhdistelmän suurin sallittu pituus"/>
+						<xs:enumeration value="ajoneuvon suurin sallittu massa"/>
+						<xs:enumeration value="ajoneuvoyhdistelmän suurin sallittu massa"/>
+						<xs:enumeration value="ajoneuvon suurin sallittu akselille kohdistuva massa"/>
+						<xs:enumeration value="ajoneuvon suurin sallittu telille kohdistuva massa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaallystettytieType">
+		<xs:sequence>
+			<xs:element name="paallysteKytkin" type="xs:boolean"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LeveysType">
+		<xs:sequence>
+			<xs:element name="leveys" type="xs:string"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RdstmcpaikkaType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="nimi" type="mkvt:DigiroadNimiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>RdsTMC paikan nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Sijainti: voi olla joko piste, viiva ta alue</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NopeusrajoitusType">
+		<xs:sequence>
+			<xs:element name="nopeus" type="xs:string"/>
+			<xs:element name="dynsegsijainti" type="mkvt:DynsegsijaintiType"/>
+			<xs:element name="vaikutustieto" type="mkvt:VaikutustietoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractDigiroadKohde">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="muutosHetki" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kohten muutoshetki</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="digiroadTunnus" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Digiroad ID/tunniste. Ei ole pakollinen, koska uusilla kohteilla ei vielä ole DR tunnistetta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="katu" type="mkvt:TielinkkiType">
+		<xs:annotation>
+			<xs:documentation>Tiet,Kadut kevyenkiikenteen väylät.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Dstieto" type="mkvt:DstietoType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Dynaamiseslla segmentoinnilla esitettävät tiedot</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Kaantymismaarays" type="mkvt:KaantymismaaraysType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Kääntymiskiellot ja määräykset</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Rdstmcpaikka" type="mkvt:RdstmcpaikkaType">
+		<xs:annotation>
+			<xs:documentation>?</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Palvelu" type="mkvt:DRpalveluType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="SolmuType">
+		<xs:complexContent>
+			<xs:extension base="mkvt:AbstractDigiroadKohde">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType">
+						<xs:annotation>
+							<xs:documentation>Pistesijaiinti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyyppiKoodi" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Arvojoukko tarkentuu Digiroad 2:n myötä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Tielinkki" type="mkvt:TielinkkiType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Solmu" type="mkvt:SolmuType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Solmutieto</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

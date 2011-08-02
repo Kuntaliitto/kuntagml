@@ -32,6 +32,10 @@ XML-tiedostojen luomisessa on sovittu käytettäväksi seuraavia oletusarvoja ja
   - Alue (yksinkertaiset): `Polygon`/`LinearRing`/`pos` (alueen tai sen saarien reuna esitetään yhdellä murtoviivalla)
   - Alue (monimutkaiset): `PolyhedralSurface`/`PolygonPatch`/`Ring`/`Curve`/`LineStringSegment`/`pos` tai `Arc`/`pos` (alueen tai sen saarien reuna esitetään usealla viivalla, joka on murtoviiva tai ympyränkaari)
 
+## Asemakaava
+
+- [Asemakaava](gml/asemakaava.xsd)
+
 ## Kantakartta
 
 Yksittäiset skeematiedostot:
@@ -68,6 +72,7 @@ Yksittäiset skeematiedostot:
 - [Opaskartta](gml/opastavattiedot/opaskartta.xsd)
 - [Osoitteet](gml/opastavattiedot/osoitteet.xsd)
 - [Palvelut](gml/opastavattiedot/palvelut.xsd)
+- [Verkkotopologia](gml/opastavattiedot/verkkotopologia.xsd)
 
 ## Ympäristö
 
