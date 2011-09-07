@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
 	<!-- ================================================= -->
@@ -41,11 +41,14 @@
 						</xs:complexType>
 					</xs:element>
 					<xs:element name="laitoksentiedot" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Laitoksen/toimipaikantiedot</xs:documentation>
+						</xs:annotation>
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element name="Laitos" type="ymy:LaitosType">
 									<xs:annotation>
-										<xs:documentation>Laitos jolle lupaa haetaan</xs:documentation>
+										<xs:documentation>Laitos/toimipaikka jolle lupaa haetaan</xs:documentation>
 									</xs:annotation>
 								</xs:element>
 							</xs:sequence>
@@ -152,6 +155,14 @@ toimista sekä toimista häiriötilanteissa</xs:documentation>
 			</xs:element>
 			<xs:element name="liikeJaYhteisotunnus" type="xs:string" minOccurs="0"/>
 			<xs:element name="kotipaikka" type="xs:string" minOccurs="0"/>
+			<xs:element name="rooli" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="luvan hakija"/>
+						<xs:enumeration value="toiminnanharjoittaja"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RaakaAineetType">
@@ -379,9 +390,9 @@ ulkoisen auditoinnin ajankohta</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:enumeration value="ei tiedossa"/>
 									<xs:enumeration value="m3/a"/>
 									<xs:enumeration value="m3/d"/>
+									<xs:enumeration value="ei tiedossa"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -1101,10 +1112,10 @@ jätteiden ja ongelmajätteiden luettelosta 1129/2001)</xs:documentation>
 			<xs:element name="tyyppi">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="ei tiedossa"/>
 						<xs:enumeration value="ongelmajäte"/>
 						<xs:enumeration value="Tavanomainen"/>
 						<xs:enumeration value="Pysyvä"/>
+						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1159,10 +1170,10 @@ jätteiden ja ongelmajätteiden luettelosta 1129/2001)</xs:documentation>
 			<xs:element name="tyyppi">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="ei tiedossa"/>
 						<xs:enumeration value="ongelmajäte"/>
 						<xs:enumeration value="Tavanomainen"/>
 						<xs:enumeration value="Pysyvä"/>
+						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1187,10 +1198,10 @@ jätteiden ja ongelmajätteiden luettelosta 1129/2001)</xs:documentation>
 			<xs:element name="tyyppi">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="ei tiedossa"/>
 						<xs:enumeration value="ongelmajäte"/>
 						<xs:enumeration value="Tavanomainen"/>
 						<xs:enumeration value="Pysyvä"/>
+						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1513,13 +1524,13 @@ kuten esimerkiksi meluntorjuntarakenteet tai suojapuusto</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="LuvanHakemisenSyyType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="ei tiedossa"/>
 			<xs:enumeration value="Muu"/>
 			<xs:enumeration value="Toiminnan aloittamislupa"/>
 			<xs:enumeration value="Lupamääräysten tarkistaminen"/>
 			<xs:enumeration value="Toiminnan muutos"/>
 			<xs:enumeration value="Olemassa oleva toiminta"/>
 			<xs:enumeration value="Uusi toiminta"/>
+			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="AineType">
@@ -1564,7 +1575,6 @@ mistä raakavesi otetaan, ryhmätunnus</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
-								<xs:enumeration value="ei tiedossa"/>
 								<xs:enumeration value="Toisen yrityksen vesilaitos"/>
 								<xs:enumeration value="Kunnan tai vastaavan yhteinen laitos"/>
 								<xs:enumeration value="Meri"/>
@@ -1572,6 +1582,7 @@ mistä raakavesi otetaan, ryhmätunnus</xs:documentation>
 								<xs:enumeration value="Joki"/>
 								<xs:enumeration value="Järvi tai lampi"/>
 								<xs:enumeration value="Pohjavedenottamo"/>
+								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -1613,7 +1624,6 @@ ja sopimus yleiseen tai toisen viemäriin liittymisestä liitetään hakemuksen 
 	</xs:complexType>
 	<xs:simpleType name="KasittelynTilaType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="ei tiedossa"/>
 			<xs:enumeration value="0 Kesken"/>
 			<xs:enumeration value="1 Vireillä"/>
 			<xs:enumeration value="2 Lupa haettu"/>
@@ -1628,6 +1638,7 @@ ja sopimus yleiseen tai toisen viemäriin liittymisestä liitetään hakemuksen 
 			<xs:enumeration value="11 Hakijan kuuleminen ja vastine"/>
 			<xs:enumeration value="12 Päätöksestä valitettu"/>
 			<xs:enumeration value="13 Päätös lainvoimainen"/>
+			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="KasittelyHistoriaType">
@@ -1653,9 +1664,9 @@ ja sopimus yleiseen tai toisen viemäriin liittymisestä liitetään hakemuksen 
 	</xs:complexType>
 	<xs:simpleType name="yksikkoType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="ei tiedossa"/>
 			<xs:enumeration value="mg/m3"/>
 			<xs:enumeration value="t/a"/>
+			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="LaitosType">
@@ -1687,6 +1698,12 @@ ja sopimus yleiseen tai toisen viemäriin liittymisestä liitetään hakemuksen 
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="henkilotyovuodet" type="xs:string" minOccurs="0"/>
+					<xs:element name="kiinttun" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Kiinteistötunnus</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rakennustunnustieto" type="yht:RakennuksenTunnusType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
