@@ -74,6 +74,14 @@ Yksittäiset skeematiedostot:
 - [Palvelut](gml/opastavattiedot/palvelut.xsd)
 - [Verkkotopologia](gml/opastavattiedot/verkkotopologia.xsd)
 
+# Poikkeamispäätös ja suunnittelutarveratkaisu
+
+- [Poikkeamispäätös ja suunnittelutarveratkaisu](gml/poikkeamispaatos_ja_suunnittelutarveratkaisu.xsd)
+
+## Rakennusvalvonta
+
+- [Rakennusvalvonta](gml/rakennusvalvonta.xsd)
+
 ## Ympäristö
 
 - [Ilmoitukset](gml/ymparisto/ilmoitukset.xsd)
