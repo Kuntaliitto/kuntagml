@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -48,17 +48,36 @@
 					<xs:documentation>Osoitenumeroväli esimerkiksi 35-37 jälikimmäinen numero</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="jakokirjain" type="xs:string" minOccurs="0">
+			<xs:element name="jakokirjain" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>numeron perään tuleva pieni kirjain</xs:documentation>
+					<xs:documentation>numeron perään tuleva pieni kirjain, yksi merkki pienaakkosin, a-ö</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[a-ö]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
-			<xs:element name="jakokirjain2" type="xs:string" minOccurs="0">
+			<xs:element name="jakokirjain2" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Jakokirjainvälin jälkimmänen osa</xs:documentation>
+					<xs:documentation>Jakokirjainvälin jälkimmäinen osa, yksi merkki pienaakkosin, a-ö</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[a-ö]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
-			<xs:element name="porras" type="xs:string" minOccurs="0"/>
+			<xs:element name="porras" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>yksi merkki suuraakkosin, A-Ö</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Ö]"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="huoneisto" type="xs:int" minOccurs="0"/>
 			<xs:element name="postinumero" type="xs:string" minOccurs="0"/>
 			<xs:element name="postitoimipaikannimi" type="xs:string" minOccurs="0"/>
@@ -90,7 +109,7 @@
 					</xs:element>
 					<xs:element name="jakokirjain2" type="xs:string" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Jakokirjainvälin jälkimmänen osa</xs:documentation>
+							<xs:documentation>Jakokirjainvälin jälkimmäinen osa</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="porras" type="xs:string" minOccurs="0"/>
@@ -235,7 +254,11 @@ tiedot</xs:documentation>
 		<xs:sequence>
 			<xs:element name="kylanimi" type="xs:string" minOccurs="0"/>
 			<xs:element name="tilannimi" type="xs:string" minOccurs="0"/>
-			<xs:element name="kiinteistotunnus" type="yht:KiinteistotunnusType"/>
+			<xs:element name="kiinteistotunnus" type="yht:KiinteistotunnusType">
+				<xs:annotation>
+					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="maaraAlaTunnus" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -306,7 +329,7 @@ tiedot</xs:documentation>
 					<xs:documentation>Kunnan antama tunnus</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="muuTunnus" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="muuTunnus" type="yht:MuuTunnusType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="VRKLupatunnus" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>VRK:n lupatunnus</xs:documentation>
@@ -555,6 +578,7 @@ tiedot</xs:documentation>
 			<xs:extension base="yht:LiiteType">
 				<xs:sequence>
 					<xs:element name="tekija" type="yht:OsapuoliType" minOccurs="0"/>
+					<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -738,15 +762,20 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
 		<xs:sequence>
-			<xs:element name="kiinttun" type="xs:string">
+			<xs:element name="kiinttun" type="yht:KiinteistotunnusType">
 				<xs:annotation>
-					<xs:documentation>Kiinteistötunnus</xs:documentation>
+					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="rakennusnro" type="xs:string">
+			<xs:element name="rakennusnro" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Rakennusnumero</xs:documentation>
+					<xs:documentation>Rakennusnumero, kolmella numerolla etunollin</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9][0-9][1-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
 			<xs:element name="aanestysalue" type="xs:string" minOccurs="0">
 				<xs:annotation>
@@ -881,16 +910,6 @@ tiedot</xs:documentation>
 						<xs:annotation>
 							<xs:documentation>Paikan sijainti suhteessa maanpintaan</xs:documentation>
 						</xs:annotation>
-					</xs:element>
-					<xs:element name="rakennusoikeudet" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Rakennusoikeus käyttötarkoituksittain (ennen luvan hakemista)</xs:documentation>
-						</xs:annotation>
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element name="kayttotarkoitus" type="yht:KayttotarkoitusType" maxOccurs="unbounded"/>
-							</xs:sequence>
-						</xs:complexType>
 					</xs:element>
 					<xs:element name="rakennusoikeusYhteensa" type="xs:decimal" minOccurs="0"/>
 					<xs:element name="uusiKytkin" type="xs:boolean" minOccurs="0">
@@ -2779,6 +2798,7 @@ tiedot</xs:documentation>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="turvakieltoKytkin" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OsapuoletType">
@@ -2891,9 +2911,12 @@ tiedot</xs:documentation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="GEO-suunnittelija"/>
 			<xs:enumeration value="LVI-suunnittelija"/>
+			<xs:enumeration value="IV-suunnittelija"/>
+			<xs:enumeration value="KVV-suunnittelija"/>
 			<xs:enumeration value="pääsuunnittelija"/>
 			<xs:enumeration value="RAK-rakennesuunnittelija"/>
 			<xs:enumeration value="ARK-rakennussuunnittelija"/>
+			<xs:enumeration value="Vaikeiden töiden suunnittelija"/>
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2913,4 +2936,17 @@ tiedot</xs:documentation>
 			<xs:element name="Toimitus" type="yht:AineistotoimituksentiedotType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="MuuTunnusType">
+		<xs:sequence>
+			<xs:element name="tunnus" type="xs:string"/>
+			<xs:element name="sovellus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ToimitustapaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sähköisesti"/>
+			<xs:enumeration value="noudetaan"/>
+			<xs:enumeration value="postitse"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

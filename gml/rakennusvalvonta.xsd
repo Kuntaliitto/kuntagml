@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.1/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
 	<!-- ================================================= -->
@@ -305,10 +305,19 @@
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="omistaja" type="rakval:RakennuksenOmistajaType" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="omistaja" minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
 							<xs:documentation>Rakennuksen omistajan tiedot</xs:documentation>
 						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="yht:OsapuoliType">
+									<xs:sequence>
+										<xs:element name="omistajalaji" type="rakval:OmistajalajiType"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
 			</xs:extension>
@@ -416,8 +425,10 @@
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
 			<xs:element name="verkostoliittymat" type="rakval:VerkostoliittymatType" minOccurs="0"/>
-			<xs:element name="energialuokka" type="xs:string" minOccurs="0"/>
-			<xs:element name="paloluokka" type="xs:string" minOccurs="0"/>
+			<xs:element name="energialuokka" type="rakval:EnergialuokkaType" minOccurs="0"/>
+			<xs:element name="energiatehokkuusluku" type="xs:string" minOccurs="0"/>
+			<xs:element name="energiatehokkuusluvunYksikko" type="rakval:EnergiatehokkuusluvunYksikkoType" minOccurs="0"/>
+			<xs:element name="paloluokka" type="rakval:PaloluokkaType" minOccurs="0"/>
 			<xs:element name="lammitystapa" type="rakval:LammitystapaType" minOccurs="0"/>
 			<xs:element name="lammonlahde" type="rakval:LammonlahdeType" minOccurs="0"/>
 			<xs:element name="varusteet" type="rakval:VarusteetType" minOccurs="0" maxOccurs="unbounded"/>
@@ -686,24 +697,7 @@
 			<xs:element name="huoneistoala" type="yht:KayttotarkoitusType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="RakennuksenOmistajaType">
-		<xs:sequence>
-			<xs:element name="nimi" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Yhteison nimi</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="henkilonimi" type="yht:HenkilonnimiType" minOccurs="0"/>
-			<xs:element name="tunnus" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Henkilötunnus tai Y-tunnus</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="osoite" type="yht:PostiosoiteType"/>
-			<xs:element name="omistajanlaji" type="rakval:OmistajanlajiType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="OmistajanlajiType">
+	<xs:complexType name="OmistajalajiType">
 		<xs:choice>
 			<xs:element name="muu" type="xs:string"/>
 			<xs:element name="omistajalaji">
@@ -722,7 +716,6 @@
 						<xs:enumeration value="valtio"/>
 						<xs:enumeration value="sosiaaliturvarahasto"/>
 						<xs:enumeration value="uskonnollinen yhteisö, säätiö, puolue tai yhdistys"/>
-						<xs:enumeration value="muu"/>
 						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
@@ -778,12 +771,12 @@
 					<xs:documentation>Luvan sisälllä juokseva numerointi. VRKta varten yksilöivä koodi</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kiinttun" type="xs:string">
+			<xs:element name="kiinttun" type="yht:KiinteistotunnusType">
 				<xs:annotation>
-					<xs:documentation>Kiinteistötunnus</xs:documentation>
+					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="rakennusnro" type="xs:string">
+			<xs:element name="rakennusnro" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Rakennusnumero</xs:documentation>
 				</xs:annotation>
@@ -892,9 +885,17 @@
 											</xs:element>
 											<xs:element name="suunnittelijanVaativuustaso" type="yht:SuunnittelijaType" minOccurs="0"/>
 											<xs:element name="tyonjohtajanVaativuustaso" type="yht:TyonjohtajaType" minOccurs="0"/>
+											<xs:element name="toimitustapa" type="yht:ToimitustapaType" minOccurs="0"/>
 										</xs:sequence>
 									</xs:complexType>
 								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="liite" type="yht:RakennusvalvontaLiiteType"/>
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
@@ -979,20 +980,35 @@
 	<xs:element name="RakennusvalvontaAsia" type="rakval:RakennusvalvontaAsiaType" substitutionGroup="gml:_Feature"/>
 	<xs:complexType name="HuoneistotunnusType">
 		<xs:sequence>
-			<xs:element name="porras" type="xs:string" minOccurs="0">
+			<xs:element name="porras" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Yksi merkki suuraakkosin</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Ö]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
-			<xs:element name="huoneistonumero" type="xs:string">
+			<xs:element name="huoneistonumero">
 				<xs:annotation>
 					<xs:documentation>Numeroilla kolmella merkillä etunollin</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9][0-9][1-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
-			<xs:element name="jakokirjain" type="xs:string" minOccurs="0">
+			<xs:element name="jakokirjain" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Yksi merkki pienaakkosin</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[a-ö]"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -1034,10 +1050,19 @@
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="omistaja" type="rakval:RakennuksenOmistajaType" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="omistaja" minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
 							<xs:documentation>Rakennuksen omistajan tiedot</xs:documentation>
 						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="yht:OsapuoliType">
+									<xs:sequence>
+										<xs:element name="omistajalaji" type="rakval:OmistajalajiType" minOccurs="0"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
 			</xs:extension>
@@ -1145,8 +1170,10 @@
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
 			<xs:element name="verkostoliittymat" type="rakval:VerkostoliittymatType" minOccurs="0"/>
-			<xs:element name="energialuokka" type="xs:string" minOccurs="0"/>
-			<xs:element name="paloluokka" type="xs:string" minOccurs="0"/>
+			<xs:element name="energialuokka" type="rakval:EnergialuokkaType" minOccurs="0"/>
+			<xs:element name="energiatehokkuusluku" type="xs:string" minOccurs="0"/>
+			<xs:element name="energiatehokkuusluvunYksikko" type="rakval:EnergiatehokkuusluvunYksikkoType" minOccurs="0"/>
+			<xs:element name="paloluokka" type="rakval:PaloluokkaType" minOccurs="0"/>
 			<xs:element name="lammitystapa" type="rakval:LammitystapaType" minOccurs="0"/>
 			<xs:element name="lammonlahde" type="rakval:LammonlahdeType" minOccurs="0"/>
 			<xs:element name="varusteet" type="rakval:VarusteetType" minOccurs="0" maxOccurs="unbounded"/>
@@ -1218,4 +1245,38 @@
 			<xs:element name="asuntojenLkm" type="xs:short" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="PaloluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="palonkestävä"/>
+			<xs:enumeration value="paloapidättävä"/>
+			<xs:enumeration value="paloahidastava"/>
+			<xs:enumeration value="lähinnä paloakestävä"/>
+			<xs:enumeration value="lähinnä paloapidättävä"/>
+			<xs:enumeration value="lähinnä paloahidastava"/>
+			<xs:enumeration value="P1"/>
+			<xs:enumeration value="P2"/>
+			<xs:enumeration value="P3"/>
+			<xs:enumeration value="P1/P2"/>
+			<xs:enumeration value="P1/P3"/>
+			<xs:enumeration value="P2/P3"/>
+			<xs:enumeration value="P1/P2/P3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnergialuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="F"/>
+			<xs:enumeration value="G"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnergiatehokkuusluvunYksikkoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="kWh/nt-m2/v"/>
+			<xs:enumeration value="kWh/br-m2/v"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
