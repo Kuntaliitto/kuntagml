@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ppst="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ppst="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.2/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> poikkeamispaatos_ja_suunnittelutarveratkaisu  -->
 	<!-- ================================================= -->
@@ -39,6 +39,7 @@
 		<xs:complexContent>
 			<xs:extension base="ppst:AbstractPoikkeamisType">
 				<xs:sequence>
+					<xs:element name="poikkeamisasianKuvaus" type="xs:string" minOccurs="0"/>
 					<xs:element name="poikkeamiset" type="yht:LiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Selostus poikkeamista ja hakijan perustelut tai erityiset syyt hakemukselle</xs:documentation>
@@ -68,6 +69,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="suunnittelutarveasianKuvaus" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -227,6 +229,15 @@
 													<xs:documentation>Selvitys omistus- ja hallintaoikeudesta</xs:documentation>
 												</xs:annotation>
 											</xs:element>
+											<xs:element name="asioimiskieli" minOccurs="0">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="suomi"/>
+														<xs:enumeration value="ruotsi"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="suoramarkkinointikieltoKytkin" type="xs:boolean" minOccurs="0"/>
 											<xs:element name="valtakirja" type="yht:LiiteType" minOccurs="0"/>
 											<xs:element name="kiinteistorekisterikartta" type="yht:LiiteType" minOccurs="0">
 												<xs:annotation>

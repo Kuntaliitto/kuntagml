@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -577,6 +577,8 @@ tiedot</xs:documentation>
 		<xs:complexContent>
 			<xs:extension base="yht:LiiteType">
 				<xs:sequence>
+					<xs:element name="metatietoNimi" type="xs:string" minOccurs="0"/>
+					<xs:element name="metatietoArvo" type="xs:string" minOccurs="0"/>
 					<xs:element name="tekija" type="yht:OsapuoliType" minOccurs="0"/>
 					<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
@@ -918,6 +920,14 @@ tiedot</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0"/>
+					<xs:element name="poikkeamislupaVRK" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="rakennuskielto"/>
+								<xs:enumeration value="muu syy"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
