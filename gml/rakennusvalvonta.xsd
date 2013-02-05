@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.3">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.2/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.3/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
 	<!-- ================================================= -->
@@ -104,6 +104,8 @@
 	</xs:complexType>
 	<xs:simpleType name="KatselmuksenLajiType">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="muu katselmus"/>
+			<xs:enumeration value="muu tarkastus"/>
 			<xs:enumeration value="aloituskokous"/>
 			<xs:enumeration value="rakennuksen paikan merkitseminen"/>
 			<xs:enumeration value="rakennuksen paikan tarkastaminen"/>
@@ -240,33 +242,6 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="LuvanTiedotType">
-		<xs:sequence>
-			<xs:element name="luvanTunnisteTiedot" type="yht:LuvanTunnisteTiedotType">
-				<xs:annotation>
-					<xs:documentation>Luvan tunnistetiedot</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="paivamaarat" type="yht:PaivamaaratType">
-				<xs:annotation>
-					<xs:documentation>Päätäkseen/lupaan liittyvät päivämäärät</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="lupaehdot" type="yht:LupamaarayksetType">
-				<xs:annotation>
-					<xs:documentation>Luvan ehdot ja määraykset</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="poikkeusLupalaji" type="xs:string"/>
-			<xs:element name="vakuus" type="rakval:VakuusType">
-				<xs:annotation>
-					<xs:documentation>Vakuuden tiedot</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="rakentamisentiedot" type="rakval:TilastotiedotType"/>
-			<xs:element name="osapuolet" type="yht:OsapuoletType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="HankkeenRakennusType">
 		<xs:complexContent>
 			<xs:extension base="rakval:AbstractRakvalKohde">
@@ -305,18 +280,24 @@
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="omistaja" minOccurs="0" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:documentation>Rakennuksen omistajan tiedot</xs:documentation>
-						</xs:annotation>
+					<xs:element name="omistajatieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
-							<xs:complexContent>
-								<xs:extension base="yht:OsapuoliType">
-									<xs:sequence>
-										<xs:element name="omistajalaji" type="rakval:OmistajalajiType"/>
-									</xs:sequence>
-								</xs:extension>
-							</xs:complexContent>
+							<xs:sequence>
+								<xs:element name="Omistaja">
+									<xs:annotation>
+										<xs:documentation>Rakennuksen omistajan tiedot</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="yht:OsapuoliType">
+												<xs:sequence>
+													<xs:element name="omistajalaji" type="rakval:OmistajalajiType"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
@@ -613,18 +594,8 @@
 							<xs:element name="kuvaus" type="xs:string"/>
 							<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
 						</xs:choice>
+						<xs:element name="perusparannusKytkin" type="xs:boolean"/>
 					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="perusparannus">
-				<xs:annotation>
-					<xs:documentation>Perusparannus, tarvitaanko tätä erikseen?</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="kuvaus" type="xs:string"/>
-						<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
-					</xs:choice>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="uudelleenrakentaminen">
@@ -633,30 +604,36 @@
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="muutosTyolaji" type="rakval:MuutosTyolajiType" minOccurs="0"/>
+						<xs:element name="muutostyonLaji" type="rakval:MuutostyonLajiType" minOccurs="0"/>
 						<xs:choice>
 							<xs:element name="kuvaus" type="xs:string"/>
 							<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
 						</xs:choice>
+						<xs:element name="perusparannusKytkin" type="xs:boolean"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="purkaminen">
 				<xs:complexType>
-					<xs:choice>
-						<xs:element name="kuvaus" type="xs:string"/>
-						<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
-					</xs:choice>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="kuvaus" type="xs:string"/>
+							<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
+						</xs:choice>
+						<xs:element name="purkamisenSyy" type="rakval:PurkamisenSyyType"/>
+						<xs:element name="poistumaPvm" type="xs:date"/>
+					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="muuMuutosTyo">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="muutosTyolaji" type="rakval:MuutosTyolajiType" minOccurs="0"/>
+						<xs:element name="muutostyonLaji" type="rakval:MuutostyonLajiType" minOccurs="0"/>
 						<xs:choice>
 							<xs:element name="kuvaus" type="xs:string"/>
 							<xs:element name="kuvausLiite" type="yht:RakennusvalvontaLiiteType"/>
 						</xs:choice>
+						<xs:element name="perusparannusKytkin" type="xs:boolean"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -735,6 +712,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="katselmuspoytakirja" type="yht:RakennusvalvontaLiiteType" minOccurs="0"/>
+			<xs:element name="tarkastuksenTaiKatselmuksenNimi" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="JaahdytysmuotoType">
@@ -806,7 +784,7 @@
 							<xs:documentation>Tässä siirrettään keskitetysti kaikki prosessissa mukana olevat henkilöiden tiedot</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="rakennuspaikkatieto" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="rakennuspaikkatieto" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element ref="rakval:Rakennuspaikka"/>
@@ -875,21 +853,6 @@
 											<xs:element name="suunnittelijanVaativuustaso" type="yht:SuunnittelijaType" minOccurs="0"/>
 											<xs:element name="tyonjohtajanVaativuustaso" type="yht:TyonjohtajaType" minOccurs="0"/>
 											<xs:element name="toimitustapa" type="yht:ToimitustapaType" minOccurs="0"/>
-											<xs:element name="asianTiedot" minOccurs="0">
-												<xs:complexType>
-													<xs:sequence>
-														<xs:element name="tieto">
-															<xs:simpleType>
-																<xs:restriction base="xs:string">
-																	<xs:enumeration value="vähäinen poikkeaminen"/>
-																	<xs:enumeration value="muu"/>
-																</xs:restriction>
-															</xs:simpleType>
-														</xs:element>
-														<xs:element name="selite" type="xs:string"/>
-													</xs:sequence>
-												</xs:complexType>
-											</xs:element>
 										</xs:sequence>
 									</xs:complexType>
 								</xs:element>
@@ -899,7 +862,7 @@
 					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="liite">
+								<xs:element name="Liite">
 									<xs:complexType>
 										<xs:complexContent>
 											<xs:extension base="yht:RakennusvalvontaLiiteType"/>
@@ -909,7 +872,21 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="kayttotapaus" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="kayttotapaus" type="xs:string" minOccurs="0"/>
+					<xs:element name="asianTiedot" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Asiantiedot">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vahainenPoikkeaminen" type="xs:string"/>
+											<xs:element name="rakennusvalvontaasianKuvaus" type="xs:string"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -946,7 +923,6 @@
 										</xs:complexType>
 									</xs:element>
 								</xs:choice>
-								<xs:element name="rakennusvalvontaAsianKuvaus" type="xs:string" minOccurs="0"/>
 							</xs:sequence>
 						</xs:extension>
 					</xs:complexContent>
@@ -1296,11 +1272,20 @@
 			<xs:enumeration value="kWh/brm2/vuosi"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="MuutosTyolajiType">
+	<xs:simpleType name="MuutostyonLajiType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="perustusten ja kantavien rakenteiden muutos- ja korjaustyöt"/>
-			<xs:enumeration value="rakentamisen pääasiallinen käyttötarkoitusmuutos"/>
+			<xs:enumeration value="rakennuksen pääasiallinen käyttötarkoitusmuutos"/>
 			<xs:enumeration value="muut muutostyöt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PurkamisenSyyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="poistaminen"/>
+			<xs:enumeration value="ränsistymisen vuoksi hylätty"/>
+			<xs:enumeration value="tuhoutunut"/>
+			<xs:enumeration value="purettu muusta syystä"/>
+			<xs:enumeration value="purettu uudisrakentamisen vuoksi"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
