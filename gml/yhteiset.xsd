@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.4">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -489,25 +489,38 @@ tiedot</xs:documentation>
 			<xs:element name="autopaikkojaUlkopuolella" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
 			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
-			<xs:element name="katselmus" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Vaadittavat katselmukset</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="muu katselmus"/>
-						<xs:enumeration value="muu tarkastus"/>
-						<xs:enumeration value="aloituskokous"/>
-						<xs:enumeration value="rakennuksen paikan merkitseminen"/>
-						<xs:enumeration value="rakennuksen paikan tarkastaminen"/>
-						<xs:enumeration value="pohjakatselmus"/>
-						<xs:enumeration value="rakennekatselmus"/>
-						<xs:enumeration value="lämpö-, vesi- ja ilmanvaihtolaitteiden katselmus"/>
-						<xs:enumeration value="osittainen loppukatselmus"/>
-						<xs:enumeration value="loppukatselmus"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
+			<xs:element name="vaaditutKatselmukset" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Katselmus">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="katselmuksenLaji">
+										<xs:annotation>
+											<xs:documentation>Vaadittavat katselmukset</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="muu katselmus"/>
+												<xs:enumeration value="muu tarkastus"/>
+												<xs:enumeration value="aloituskokous"/>
+												<xs:enumeration value="rakennuksen paikan merkitseminen"/>
+												<xs:enumeration value="rakennuksen paikan tarkastaminen"/>
+												<xs:enumeration value="pohjakatselmus"/>
+												<xs:enumeration value="rakennekatselmus"/>
+												<xs:enumeration value="lämpö-, vesi- ja ilmanvaihtolaitteiden katselmus"/>
+												<xs:enumeration value="osittainen loppukatselmus"/>
+												<xs:enumeration value="loppukatselmus"/>
+												<xs:enumeration value="ei tiedossa"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="tarkastuksenTaiKatselmuksenNimi" type="xs:string" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="maarays" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
@@ -781,6 +794,8 @@ tiedot</xs:documentation>
 					<xs:documentation>Vastuun päättymis päivämäärä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="hakemuksenSaapumisPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="tyonjohtajaHakemusKytkin" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
