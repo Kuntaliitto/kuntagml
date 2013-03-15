@@ -82,6 +82,10 @@ Yksittäiset skeematiedostot:
 
 - [Rakennusvalvonta](gml/rakennusvalvonta.xsd)
 
+## Yleisen alueen käytön lupa
+
+- [Yleisen alueen käytön lupa](gml/yleisenalueenkaytonlupahakemus.xsd)
+
 ## Ympäristö
 
 - [Ilmoitukset](gml/ymparisto/ilmoitukset.xsd)

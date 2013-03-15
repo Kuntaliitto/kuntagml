@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yak="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.0.1">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.5/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> yleisenalueenkaytonlupahakemus  -->
+	<!-- ================================================= -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> yleisenalueenkaytonlupahakemus  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Kohdejoukko: yleisenalueenkaytonlupahakemus -->
+	<xs:element name="YleisenAlueenKaytonLupahakemus" type="yak:YleisenAlueenKaytonLupahakemusType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="YleisenAlueenKaytonLupahakemusType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="hakemuksenMuutosaika" type="xs:dateTime"/>
+					<xs:element name="kayttoTarkoitus" type="yak:KayttotarkoitusType" maxOccurs="unbounded"/>
+					<xs:element name="kayttoaika">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="alkuPvm" type="xs:date"/>
+								<xs:element name="loppuPvm" type="xs:date"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="alueenSijainti" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="kiinteistotunnus" type="xs:string" minOccurs="0"/>
+								<xs:element name="sijainti" type="yht:SijaintiType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="merkinnatJaPiirrokset" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="merkinta" type="yht:MerkintaType" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element name="sijainninKuvaus" type="xs:string" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="aluekohteidenPintaala" minOccurs="0">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:double">
+									<xs:attribute name="yksikko" fixed="m^2"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="hakija" type="yht:HakijaType" maxOccurs="unbounded"/>
+					<xs:element name="tyonSuorittaja" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="yTunnus" type="xs:string"/>
+								<xs:element name="yrityksenNimi" type="xs:string"/>
+								<xs:element name="osoite" type="yht:OsoiteType"/>
+								<xs:element name="puhelinnumero" type="xs:string"/>
+								<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
+								<xs:element name="suoramarkkinointikielto" type="xs:boolean" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="vastuuhenkilo" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="sukunimi" type="xs:string"/>
+								<xs:element name="etunimi" type="xs:string"/>
+								<xs:element name="osoite" type="yht:OsoiteType"/>
+								<xs:element name="puhelinnumero" type="xs:string"/>
+								<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
+								<xs:element name="suoramarkkinointikielto" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="patevyys" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="kuvaus" type="xs:string"/>
+											<xs:element name="voimassa" type="xs:date" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="yhteyshenkilo" type="yht:YhteyshenkiloType" minOccurs="0"/>
+					<xs:element name="maksaja" type="yht:MaksajaType" minOccurs="0"/>
+					<xs:element name="lupakohtaisetLisatiedot" type="yht:Attribuutti" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="lisatiedot" type="xs:string" minOccurs="0"/>
+					<xs:element name="dokumentti" type="yht:LiiteDokumenttiType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="kasittelyTiedot" type="yht:KasittelyTiedotType" minOccurs="0"/>
+					<xs:element name="taydennyspyyntoteksti" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="KayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="kiinteistön rakentamis- ja korjaamistyöt, joiden suorittamiseksi rajataan osa kadusta tai yleisestä alueesta työmaaksi (ei kaivutöitä)"/>
+			<xs:enumeration value="kadulle pystytettävät rakennustelineet"/>
+			<xs:enumeration value="kadulta tapahtuvat nostot"/>
+			<xs:enumeration value="työmaasuojien ja muiden rakennelmien sijoittaminen yleiselle alueelle"/>
+			<xs:enumeration value="erilaiset messujen ja tapahtumien aikaiset alueiden käytöt"/>
+			<xs:enumeration value="mainoslaitteiden ja opasteviittojen sijoittaminen"/>
+			<xs:enumeration value="kaivuluvat"/>
+			<xs:enumeration value="sijoitusluvat"/>
+			<xs:enumeration value="muut yleiselle alueelle kohdistuvat tilan käytöt"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

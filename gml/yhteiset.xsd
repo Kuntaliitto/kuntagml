@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.4">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.5">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -3007,6 +3007,94 @@ tiedot</xs:documentation>
 			<xs:enumeration value="postitse"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="LiiteDokumenttiType">
+		<xs:sequence>
+			<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
+			<xs:element name="paivays" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="linkki" type="xs:string" minOccurs="0"/>
+			<xs:element name="selitysteksti" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YhteystietoType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="henkilotunnus" type="xs:string"/>
+					<xs:element name="sukunimi" type="xs:string"/>
+					<xs:element name="etunimi" type="xs:string"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="yTunnus" type="xs:string"/>
+					<xs:element name="yrityksenNimi" type="xs:string"/>
+					<xs:element name="yhteyshenkilonNimi" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="osoite" type="yht:OsoiteType"/>
+			<xs:element name="puhelinnumero" type="xs:string"/>
+			<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
+			<xs:element name="suoramarkkinointikielto" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HakijaType">
+		<xs:complexContent>
+			<xs:extension base="yht:YhteystietoType">
+				<xs:sequence>
+					<xs:element name="ammatti" type="xs:string" minOccurs="0"/>
+					<xs:element name="tyopaikka" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="nimi" type="xs:string"/>
+								<xs:element name="tyosuhteenalku" minOccurs="0">
+									<xs:complexType>
+										<xs:choice>
+											<xs:element name="paivays" type="xs:date"/>
+											<xs:element name="kkVuosi" type="xs:gYearMonth"/>
+											<xs:element name="vuosi" type="xs:gYear"/>
+										</xs:choice>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MaksajaType">
+		<xs:complexContent>
+			<xs:extension base="yht:YhteystietoType">
+				<xs:sequence>
+					<xs:element name="laskuviite" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MerkintaType">
+		<xs:complexContent>
+			<xs:extension base="yht:SijaintiType">
+				<xs:sequence>
+					<xs:element name="sijainninSelitysteksti" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Attribuutti">
+		<xs:sequence>
+			<xs:element name="selitysteksti" type="xs:string"/>
+			<xs:element name="arvo" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KasittelyTiedotType">
+		<xs:sequence>
+			<xs:element name="hakemuksenTila" type="xs:string" minOccurs="0"/>
+			<xs:element name="tilanMuutosaika" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkilo" type="xs:string" minOccurs="0"/>
+			<xs:element name="asiatunnus" type="xs:string" minOccurs="0"/>
+			<xs:element name="paivays" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="paatoslinkki" type="xs:string" minOccurs="0"/>
+			<xs:element name="paatosdokumentinpaivays" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="ViittausType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="edellinen rakennusvalvonta-asia"/>
