@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.4">
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.4/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.5">
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.7/yhteiset.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
@@ -394,14 +394,14 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="tilavuus" type="xs:string" minOccurs="0"/>
-			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
-			<xs:element name="kellarinpinta-ala" type="xs:string" minOccurs="0"/>
+			<xs:element name="tilavuus" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="kokonaisala" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="kellarinpinta-ala" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="BIM" type="yht:RakennusvalvontaLiiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0"/>
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
-			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="kerrosala" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
@@ -940,7 +940,17 @@
 			<xs:documentation>Rakennuksen tiedot ko. toimenpiteen jälkeen</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="Rakennelma" type="rakval:RakennelmaType"/>
+	<xs:element name="Rakennelma">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rakval:RakennelmaType">
+					<xs:sequence>
+						<xs:element name="kokonaisala" type="xs:decimal" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="rakennusvalvontaType">
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
@@ -1146,14 +1156,14 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="tilavuus" type="xs:string" minOccurs="0"/>
-			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
-			<xs:element name="kellarinpinta-ala" type="xs:string" minOccurs="0"/>
+			<xs:element name="tilavuus" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="kokonaisala" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="kellarinpinta-ala" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="BIM" type="yht:RakennusvalvontaLiiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0"/>
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="kerrosluku" type="xs:string" minOccurs="0"/>
-			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
+			<xs:element name="kerrosala" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>

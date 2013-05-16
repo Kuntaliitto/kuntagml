@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.6">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.7">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -171,7 +171,7 @@
 				</xs:element>
 				<xs:element name="luontitapa" type="yht:LuontiTapaType" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Sijainnin uontitapa</xs:documentation>
+						<xs:documentation>Sijainnin luontitapa</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -595,6 +595,12 @@ tiedot</xs:documentation>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="HetkijaksoType">
+		<xs:sequence>
+			<xs:element name="alkuHetki" type="xs:dateTime"/>
+			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="RakennusvalvontaLiiteType">
 		<xs:complexContent>
 			<xs:extension base="yht:LiiteType">
@@ -684,7 +690,7 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="SuunnittelijaType">
 		<xs:sequence>
-			<xs:element name="kuntaRoolikoodi" type="yht:SuunnittelijaRoolikoodiType" minOccurs="0"/>
+			<xs:element name="suunnittelijaRoolikoodi" type="yht:SuunnittelijaRoolikoodiType" minOccurs="0"/>
 			<xs:element name="VRKrooliKoodi" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Osapuolen rooli VRK luokituksessa</xs:documentation>
@@ -737,7 +743,7 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="TyonjohtajaType">
 		<xs:sequence>
-			<xs:element name="kuntaRooliKoodi" type="yht:TyonjohtajaRooliKoodiType" minOccurs="0"/>
+			<xs:element name="tyonjohtajaRooliKoodi" type="yht:TyonjohtajaRooliKoodiType" minOccurs="0"/>
 			<xs:element name="VRKrooliKoodi" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Osapuolen rooli VRK luokituksessa</xs:documentation>
@@ -829,6 +835,12 @@ tiedot</xs:documentation>
 					<xs:documentation>Voimassa oleva rakennuslupa</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PvmjaksoType">
+		<xs:sequence>
+			<xs:element name="alkuPvm" type="xs:date"/>
+			<xs:element name="loppuPvm" type="xs:date" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="HenkilonnimiType">
@@ -3007,14 +3019,6 @@ tiedot</xs:documentation>
 			<xs:enumeration value="postitse"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="LiiteDokumenttiType">
-		<xs:sequence>
-			<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
-			<xs:element name="paivays" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="linkki" type="xs:string" minOccurs="0"/>
-			<xs:element name="selitysteksti" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="YhteystietoType">
 		<xs:sequence>
 			<xs:choice>
@@ -3063,9 +3067,16 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="MerkintaType">
 		<xs:complexContent>
-			<xs:extension base="yht:SijaintiType">
+			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
 					<xs:element name="sijainninSelitysteksti" type="xs:string" minOccurs="0"/>
+					<xs:element name="sijaintitieto" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Sijainti" type="yht:SijaintiType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -3088,8 +3099,6 @@ tiedot</xs:documentation>
 			<xs:element name="kunnanYhteyshenkilo" type="xs:string" minOccurs="0"/>
 			<xs:element name="asiatunnus" type="xs:string" minOccurs="0"/>
 			<xs:element name="paivaysPvm" type="xs:date" minOccurs="0"/>
-			<xs:element name="paatoslinkki" type="xs:string" minOccurs="0"/>
-			<xs:element name="paatosdokumentinPvm" type="xs:date" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="ViittausType">
@@ -3100,20 +3109,21 @@ tiedot</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="SijoituslupaType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="mainoslaitteiden ja opasteviittojen sijoittaminen"/>
-			<xs:enumeration value="työmaasuojien ja muiden rakennelmien sijoittaminen yleiselle alueelle"/>
+			<xs:enumeration value="pysyvien maanalaisten rakenteiden sijoittaminen"/>
+			<xs:enumeration value="pysyvien maanpäällisten rakenteiden sijoittaminen"/>
 			<xs:enumeration value="muu sijoituslupa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TyolupaType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="kaivulupa"/>
-			<xs:enumeration value="katutyölupa"/>
+			<xs:enumeration value="kaivu- tai katutyölupa"/>
 			<xs:enumeration value="muu tyolupa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="KayttolupaType">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="työmaasuojien ja muiden rakennelmien sijoittaminen yleiselle alueelle"/>
+			<xs:enumeration value="mainoslaitteiden ja opasteviittojen sijoittaminen"/>
 			<xs:enumeration value="muut yleiselle alueelle kohdistuvat tilan käytöt"/>
 			<xs:enumeration value="erilaiset messujen ja tapahtumien aikaiset alueiden käytöt"/>
 			<xs:enumeration value="kadulta tapahtuvat nostot"/>
