@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.7">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.8">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -627,36 +627,30 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="LausuntoType">
 		<xs:sequence>
-			<xs:element name="pyydetty">
+			<xs:element name="viranomainen" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Taho jolta pyydetty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pyyntoPvm" type="xs:date"/>
+			<xs:element name="viranomainenLausunto" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Lausunnon antanut taho</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lausuntoPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="lausunto" type="xs:string" minOccurs="0"/>
+			<xs:element name="lausunnonliitetieto" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="viranomainen" type="xs:string">
-							<xs:annotation>
-								<xs:documentation>Taho jolta pyydetty</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="pyyntoPvm" type="xs:date"/>
+						<xs:element name="Liite" type="yht:RakennusvalvontaLiiteType"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="lausunto">
+			<xs:element name="puoltotieto" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="viranomainen" type="xs:string">
-							<xs:annotation>
-								<xs:documentation>Lausunnon antanut taho</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="lausuntoPvm" type="xs:date"/>
-						<xs:element name="lausunto" minOccurs="0">
-							<xs:complexType>
-								<xs:choice>
-									<xs:element name="lausunto" type="xs:string"/>
-									<xs:element name="liite" type="yht:RakennusvalvontaLiiteType"/>
-								</xs:choice>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="puoltotieto" minOccurs="0">
+						<xs:element name="Puolto">
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element name="puolto">
@@ -817,7 +811,7 @@ tiedot</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:pattern value="[0-9][0-9][1-9]"/>
+						<xs:pattern value="[0-9][0-9][0-9]"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -3132,4 +3126,60 @@ tiedot</xs:documentation>
 			<xs:enumeration value="muu kayttölupa"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="YmparistoOsapuoliType">
+		<xs:sequence>
+			<xs:element name="henkilo" type="yht:YhteyshenkiloType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Yhteyshenkilön nimi ja yhteystiedot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="yritys" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Jos kyseessä on yritys tvs. niin tiedot siirretään tässä elementissä</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nimi" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Nimi tai toiminimi</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="liikeJaYhteisotunnus" type="xs:string" minOccurs="0"/>
+						<xs:element name="kayntiosoite" type="yht:PostiosoiteType" minOccurs="0"/>
+						<xs:element name="kotipaikka" type="xs:string" minOccurs="0"/>
+						<xs:element name="postiosoite" type="yht:PostiosoiteType" minOccurs="0"/>
+						<xs:element name="faksinumero" type="xs:string" minOccurs="0"/>
+						<xs:element name="puhelin" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="www" type="xs:anyURI" minOccurs="0"/>
+						<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="turvakieltoKytkin" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistoLiiteType">
+		<xs:complexContent>
+			<xs:extension base="yht:LiiteType">
+				<xs:sequence>
+					<xs:element name="tekija" type="yht:YmparistoOsapuoliType" minOccurs="0"/>
+					<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
+					<xs:element name="metatietotieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="metatieto">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="metatietoArvo" type="xs:string" minOccurs="0"/>
+											<xs:element name="metatietoNimi" type="xs:string" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 </xs:schema>

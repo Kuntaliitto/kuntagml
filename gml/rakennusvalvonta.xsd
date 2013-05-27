@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.5">
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.7/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.6">
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.8/yhteiset.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
@@ -744,7 +744,7 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:pattern value="[0-9][0-9][1-9]"/>
+						<xs:pattern value="[0-9][0-9][0-9]"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -879,8 +879,8 @@
 								<xs:element name="Asiantiedot">
 									<xs:complexType>
 										<xs:sequence>
-											<xs:element name="vahainenPoikkeaminen" type="xs:string"/>
-											<xs:element name="rakennusvalvontaasianKuvaus" type="xs:string"/>
+											<xs:element name="vahainenPoikkeaminen" type="xs:string" minOccurs="0"/>
+											<xs:element name="rakennusvalvontaasianKuvaus" type="xs:string" minOccurs="0"/>
 										</xs:sequence>
 									</xs:complexType>
 								</xs:element>
@@ -1202,7 +1202,7 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:pattern value="[0-9][0-9][1-9]"/>
+						<xs:pattern value="[0-9][0-9][0-9]"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.8/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Ympäristöluvat -->
 	<!-- ================================================= -->
@@ -103,13 +103,13 @@ ja säilytys sekä kulutus ja veden käyttö (V)</xs:documentation>
 							<xs:documentation>Vedenhankinta ja viemäröinti (V)</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="ymparistoriskit" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="ymparistoriskit" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Arvio toimintaan liittyvistä ympäristöriskeistä, onnettomuuksien estämiseksi suunnitelluista
 toimista sekä toimista häiriötilanteissa</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="liikennejarjestelyt" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="liikennejarjestelyt" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Kuvataan laitoksen toiminnasta aiheutuvan liikenteen määrä</xs:documentation>
 						</xs:annotation>
@@ -312,10 +312,10 @@ osalta</xs:documentation>
 			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
 				<xs:sequence>
 					<xs:element name="sijaintitieto" type="yht:SijaintitietoType"/>
-					<xs:element name="ymparistoolosuhteet" type="yht:LiiteType" minOccurs="0"/>
-					<xs:element name="ymparistonLaatu" type="yht:LiiteType" minOccurs="0"/>
-					<xs:element name="asutus" type="yht:LiiteType" minOccurs="0"/>
-					<xs:element name="kaavoitustilanne" type="yht:LiiteType" minOccurs="0"/>
+					<xs:element name="ymparistoolosuhteet" type="yht:YmparistoLiiteType" minOccurs="0"/>
+					<xs:element name="ymparistonLaatu" type="yht:YmparistoLiiteType" minOccurs="0"/>
+					<xs:element name="asutus" type="yht:YmparistoLiiteType" minOccurs="0"/>
+					<xs:element name="kaavoitustilanne" type="yht:YmparistoLiiteType" minOccurs="0"/>
 					<xs:element name="rajanaapurit" type="ymy:RajanaapuritType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>SELVITYS TOIMINNAN SIJAINTIPAIKAN RAJANAAPUREISTA SEKÄ MUISTA MAHDOLLISISTA ASIANOSAISISTA, JOITA
@@ -449,7 +449,7 @@ toimittaminen (V)</xs:documentation>
 määrän tai niiden haitallisuuden vähentämiseksi ja jätteiden hyödyntämisestä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="bat" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="bat" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään arvio parhaan käyttökelpoisen tekniikan (Best Available Techniques, BAT) soveltamisesta.
 Parhaalla käyttökelpoisella tekniikalla tarkoitetaan mahdollisimman tehokkaita ja kehittyneitä, teknisesti
@@ -458,7 +458,7 @@ ylläpito- sekä käyttötapoja, joilla voidaan ehkäistä toiminnan aiheuttama 
 tai tehokkaimmin vähentää sitä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ristikkaisvaikutukset" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="ristikkaisvaikutukset" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Lupahakemusta laadittaessa on otettava huomioon toiminnan vaikutus ympäristöön kokonaisuutena,
 pilaantumisen ehkäisemiseksi tarkoitettujen toimien merkitys ympäristön kokonaisuuden kannalta sekä
@@ -466,7 +466,7 @@ tekniset ja taloudelliset mahdollisuudet toteuttaa nämä toimet.Tarkastelussa t
 (cross-media effects) keskinäistä merkittävyyttä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="bep" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="bep" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Ympäristön kannalta parhaalla käytännöllä (Best Environmental Practice, BEP) ymmärretään YSL:n
 mukaan pilaantumisen ehkäisemiseksi tarkoituksenmukaisia kustannustehokkaita eri toimien yhdistelmiä,
@@ -504,7 +504,7 @@ ja mille tahoille tuloksista raportoidaan</xs:documentation>
 		<xs:sequence>
 			<xs:element name="tunnistetieto" type="xs:string"/>
 			<xs:element name="kuvaus" type="xs:string" minOccurs="0"/>
-			<xs:element name="liite" type="yht:LiiteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="liite" type="yht:YmparistoLiiteType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="VakuutuksetType">
@@ -520,12 +520,12 @@ ja mille tahoille tuloksista raportoidaan</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="KaytonTehokkuusType">
 		<xs:sequence>
-			<xs:element name="saastosopimus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="saastosopimus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>tieto energiansäästösopimuksesta ja sen allekirjoitusajankohdasta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="energiakatselmustodistus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="energiakatselmustodistus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Motivan tms. energiakatselmuksen tai -analyysin tekeminen (katselmuspäivämäärä, katselmuksen
 lopputulos, johtopäätökset)</xs:documentation>
@@ -569,7 +569,7 @@ sekä energiatehokkuuden parantamistavoitteet</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="RajanaapuritType">
 		<xs:sequence>
-			<xs:element name="luettelo" type="yht:LiiteType">
+			<xs:element name="luettelo" type="yht:YmparistoLiiteType">
 				<xs:annotation>
 					<xs:documentation>luettelo rajanaapureista/muista asianosaisista osoitetietoineen on esitetty liitteessä</xs:documentation>
 				</xs:annotation>
@@ -578,22 +578,22 @@ sekä energiatehokkuuden parantamistavoitteet</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="ProsessitType">
 		<xs:sequence>
-			<xs:element name="laitteisto" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="laitteisto" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Kuvaillaan toimintaan liittyvät laitteistot</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="rakenteet" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="rakenteet" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Kuvaillaan toimintaan liittyvät rakenteet</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="paaperiaatteet" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="paaperiaatteet" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Kuvaillaan toimintaan liittyvät prosessien pääperiaatteet lyhyesti</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="prosessikaavio" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="prosessikaavio" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Prosessikaavion avulla esitetään tuotevirtojen kulkeminen kokonaistuotannossa</xs:documentation>
 				</xs:annotation>
@@ -963,7 +963,7 @@ kPa:ssa (°C)</xs:documentation>
 					<xs:documentation>asfalttiasemat 17 %.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="laskentamenetelmat" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="laskentamenetelmat" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Laskentamenetelmät esimerkkeineen liitetään hakemukseen</xs:documentation>
 				</xs:annotation>
@@ -986,18 +986,18 @@ kPa:ssa (°C)</xs:documentation>
 								<xs:documentation>Maaperän pilaantumista aiheuttaneet aineet</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="tutkimustulokset" type="yht:LiiteType" minOccurs="0">
+						<xs:element name="tutkimustulokset" type="yht:YmparistoLiiteType" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>yksityiskohtaiset tutkimustulokset maaperän ja pohjaveden pilaantuneisuuden selvittämisestä</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="puhdistustyo" type="yht:LiiteType" minOccurs="0">
+						<xs:element name="puhdistustyo" type="yht:YmparistoLiiteType" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>selvitys käytettävästä puhdistusmenetelmästä, jätteiden käsittelystä, selvitys puhdistustyön
 suorittamisesta ja työn valvonnasta</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="asemapiirros" type="yht:LiiteType" minOccurs="0">
+						<xs:element name="asemapiirros" type="yht:YmparistoLiiteType" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>kartta ja asemapiirros, joihin on merkitty asian käsittelyn kannalta merkitykselliset kohteet</xs:documentation>
 							</xs:annotation>
@@ -1052,12 +1052,12 @@ koostuvaa melua</xs:documentation>
 					<xs:documentation>Melun esiintymisen mahdolliset vaihtelut ja kestoaika</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="mittaustietoa" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="mittaustietoa" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Jos melupäästöistä on mittaustietoa, mittausraportit liitetään hakemukseen</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="suunnitelmat" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="suunnitelmat" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>esitetään lisäksi toteutetut melu- ja tärinäpäästöjen vähentämistoimet sekä mahdolliset
 suunnitelmat päästöjen vähentämiseksi</xs:documentation>
@@ -1067,7 +1067,7 @@ suunnitelmat päästöjen vähentämiseksi</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="KuivaAinepitoisuusType">
 		<xs:sequence>
-			<xs:element name="laskentaperiaate" type="yht:LiiteType">
+			<xs:element name="laskentaperiaate" type="yht:YmparistoLiiteType">
 				<xs:annotation>
 					<xs:documentation>Käytetyt muuntokertoimet ja laskentaperusteet esitetään liitteenä. Ilmoitetaan, onko määrä
 A = punnittu, B = arvioitu vai C = ainetaseesta laskettu</xs:documentation>
@@ -1077,7 +1077,7 @@ A = punnittu, B = arvioitu vai C = ainetaseesta laskettu</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="PaastojenVahentaminenType">
 		<xs:sequence>
-			<xs:element name="toimenpiteet" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="toimenpiteet" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään selvitys tehdyistä (esim. viimeisten viiden vuoden ajalta) ja suunnitelluista päästöjen vähentämistä
 ja puhdistamista koskevista toimista. Esitetään toimenpiteet vesi- ja ilmapäästöjen muodostumisen
@@ -1086,7 +1086,7 @@ ja -tehot (ns. piipunpäätekniikka). Esitetään myös teollisten jätevesien e
 ja estetään päästöt maaperään</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kaavio" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kaavio" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään kaavion avulla päästöjen kulkureitti prosessista puhdistuksen kautta päästökohtaan. Puhdistusmenetelmät
 kuvaillaan sekä ilmoitetaan niiden sijoitus ja mitoitus</xs:documentation>
@@ -1124,7 +1124,7 @@ jätteiden ja ongelmajätteiden luettelosta 1129/2001)</xs:documentation>
 					<xs:documentation>Paikka josta jäte tulee</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kaatopaikkakelpoisuus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kaatopaikkakelpoisuus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Selvitys kaatopaikalle toimitettavien jätteiden kaatopaikkakelpoisuudesta</xs:documentation>
 				</xs:annotation>
@@ -1244,22 +1244,22 @@ jätteen hyödyntämisestä tai käsittelystä</xs:documentation>
 					<xs:documentation>alueesta, jolta jätettä aiotaan ottaa hyödynnettäväksi tai käsiteltäväksi</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kuljetus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kuljetus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>hakijan järjestämästä jätteen keräyksestä ja kuljetuksesta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kaavio" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kaavio" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>jätteen hyödyntämisestä ja käsittelystä sekä kaaviopiirros hyödyntämisen tai käsittelyn kulusta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vakuus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vakuus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>selvitys vakuudesta tai tarvittaessa vakavaraisuudesta tai muusta vastaavasta järjestelystä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="asiantuntemus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="asiantuntemus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>hakijan käytettävissä olevasta alan asiantuntemuksesta</xs:documentation>
 				</xs:annotation>
@@ -1268,32 +1268,32 @@ jätteen hyödyntämisestä tai käsittelystä</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="KaatopaikkaType">
 		<xs:sequence>
-			<xs:element name="rakentaminen" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="rakentaminen" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>kaatopaikan rakentamisesta ja rakenteesta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kaytto" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kaytto" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>kaatopaikan käytöstä ja hoidosta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="valvonta" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="valvonta" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>kaatopaikan valvonnasta ja tarkkailusta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="poistaminen" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="poistaminen" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>kaatopaikan käytöstä poistamisesta ja jälkihoidosta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vahinkotilanteet" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vahinkotilanteet" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>vahinkotilanteisiin varautumisesta ja niiden hoidosta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vakuus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vakuus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Lisäksi edellytetään, että jos kaatopaikan pitäjä ei aseta vakuutta, on lupahakemuksessa esitettävä
 muu vastaava järjestely, jolla varmistetaan kaatopaikkaa koskevien vaatimusten täyttäminen sekä toiminnan
@@ -1318,38 +1318,38 @@ lopettaminen ja jälkihoidon toteuttaminen</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="VaikutuksetYmparistoonType">
 		<xs:sequence>
-			<xs:element name="vaikutusViihtyvyyteen" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutusViihtyvyyteen" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään selvitys tai arvio toiminnan tai laitoksen vaikutuksista yleiseen viihtyisyyteen sekä, miten
 vaikutukset ihmisten terveyteen ehkäistään tai rajoitetaan mahdollisimman vähäisiksi</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaikutusLuontoon" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutusLuontoon" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Selvitetään hankkeen vaikutukset luontoon ja luonnonsuojeluarvoihin sekä rakennettuun ympäristöön.
 Selvitetään vaikutukset Natura 2000 -alueisiin. Esitetään hakijan arvio siitä, onko hankkeella todennäköisesti
 merkittäviä vaikutuksia Natura 2000 -alueiden luonnonarvoihin</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaikutusVesistoon" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutusVesistoon" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>- selvitys toiminnan vaikutuksista vesien laatuun
 - selvitys toiminnan vaikutuksista kalastoon ja muihin vesieliöihin
 - selvitys päästöjen vaikutuksista kalastukseen ja muuhun vesistön käyttöön</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaikutusIlmaan" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutusIlmaan" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään selvitys ilmaan joutuvien päästöjen vaikutuksista alueen ilman laatuun ja ympäristön tilaan</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaikutusMaaperaan" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutusMaaperaan" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään selvitys laitoksen toiminnan vaikutuksista alueen maaperään ja pohjaveteen ottaen huomioon
 YSL 7 ja 8 §:ien mukaiset pilaamiskiellot</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="melutarinaVaikutus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="melutarinaVaikutus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään laitoksen toiminnasta aiheutuva melutaso ja häiritsevyys lähimmissä melulle alttiissa kohteissa.
 Hakemuksessa tulee selvittää melun tyyppi ja ominaisuudet ja melun vaikutusalueen laskennallinen
@@ -1358,7 +1358,7 @@ joiden tulokset esitetään karttapiirroksena. Siihen merkitään myös melusta
 häiriytyvät kohteet sekä arvio melulle ja tärinälle altistuvien henkilöiden määristä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ymparistovaikutus" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="ymparistovaikutus" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Jos hakemuksen mukaisesta toiminnasta on tehty ympäristövaikutusten arviointimenettelystä annetussa
 laissa (468/1994) tarkoitettu arviointi, liitetään hakemukseen arviointiselostus ja yhteysviranomaisen
@@ -1369,24 +1369,24 @@ siitä antama lausunto</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="TarkkailuJaRaportointiType">
 		<xs:sequence>
-			<xs:element name="kayttotarkkailu" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="kayttotarkkailu" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään prosessien päivittäiseen tarkkailuun liittyvät olennaiset toimenpiteet, menetelmät ja tiedon
 hallintaan liittyvät laitteet sekä puhdistuslaitteiden toimivuuden tarkkailu</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="paastotarkkailu" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="paastotarkkailu" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään päästötarkkailuun liittyvät päästökohteet, parametrit, tarkkailun tiheys ja tekijä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaikutustarkkailu" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vaikutustarkkailu" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Vaikutustarkkailusta esitetään ilmanlaadun, vesistövaikutusten, pohjavesien ja melutilanteen tarkkailu
 ja sen alueellinen ulottuvuus ja tiheys sekä tarkkailuun liittyvät menetelmät, mittaukset ja laitteet</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="mittausmenetelmat" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="mittausmenetelmat" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Esitetään päästöjen tarkkailuun liittyvien komponenttien mittaustekniikat ja -menetelmät. Kuvataan
 näytteenottokohta, mittausjärjestelmä, mittauksen kulku ja tiheys (tiedontuotantoketju: näytteenotto
@@ -1396,7 +1396,7 @@ huollosta, kalibroinneista, varajärjestelmistä ja mittausjärjestelmän tarkis
 Esitetään toiminnanharjoittajan arvio tiedontuotantoketjun luotettavuudesta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="tarkkailuohjelma" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="tarkkailuohjelma" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Voimassa oleva tarkkailuohjelma (toimivaltaisen viranomaisen hyväksymä tarkkailusuunnitelma) liitetään
 hakemukseen. Hakemukseen liitetään tarvittaessa YSA 10 §:n 7 kohdan mukainen ehdotus
@@ -1407,7 +1407,7 @@ tarkkailun järjestämiseksi</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="VahinkoToimenpiteetType">
 		<xs:sequence>
-			<xs:element name="arvioVesistoVahingoista" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="arvioVesistoVahingoista" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Jos laitos tai toiminta aiheuttaa päästöjä vesistöön, on hakemukseen liitettävä alla luetellut lisätiedot.
 Lisätiedot on esitettävä soveltuvin osin myös johdettaessa jätevesiä maahan, tai muuhun uomaan
@@ -1415,7 +1415,7 @@ Lisätiedot on esitettävä soveltuvin osin myös johdettaessa jätevesiä maaha
 vahingoista (esimerkiksi virkistyskäytön estyminen, kalatalousvahingot)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vesistoVahinkojenEhkaisy" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="vesistoVahinkojenEhkaisy" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Jos laitos tai toiminta aiheuttaa päästöjä vesistöön, on hakemukseen liitettävä alla luetellut lisätiedot.
 Lisätiedot on esitettävä soveltuvin osin myös johdettaessa jätevesiä maahan tai muuhun uomaan (esimerkiksi
@@ -1424,7 +1424,7 @@ ojaan) kuin vesistöön. YSA 11 § 1 momentin mukaiset lisätiedot:
 · arvio mahdollisuuksista estää vesistön pilaantumisesta aiheutuva korvattava vahinko toimenpiteillä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="korvausesitysVesisto" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="korvausesitysVesisto" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Jos laitos tai toiminta aiheuttaa päästöjä vesistöön, on hakemukseen liitettävä alla luetellut lisätiedot.
 Lisätiedot on esitettävä soveltuvin osin myös johdettaessa jätevesiä maahan tai muuhun uomaan (esimerkiksi
@@ -1434,7 +1434,7 @@ ojaan) kuin vesistöön. YSA 11 § 1 momentin mukaiset lisätiedot:
 esimerkiksi ammattikalastajille</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="muutKuinVesistovahingot" type="yht:LiiteType" minOccurs="0">
+			<xs:element name="muutKuinVesistovahingot" type="yht:YmparistoLiiteType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Muiden kuin vesistöpäästöjen osalta selvitetään muut toimenpiteet kuin suojatoimet päästökohteessa,
 kuten esimerkiksi meluntorjuntarakenteet tai suojapuusto</xs:documentation>
@@ -1593,7 +1593,7 @@ mistä raakavesi otetaan, ryhmätunnus</xs:documentation>
 	<xs:complexType name="LiittymissopimusType">
 		<xs:sequence>
 			<xs:element name="kuvaus" type="xs:string" minOccurs="0"/>
-			<xs:element name="sopimuksentiedot" type="yht:LiiteType" minOccurs="0"/>
+			<xs:element name="sopimuksentiedot" type="yht:YmparistoLiiteType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="KasittelypaikkaType">

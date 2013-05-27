@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.8/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Maa-ainesluvat -->
 	<!-- ================================================= -->
 	<!-- Kohdejoukko: Maa-ainesluvat -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	<!-- Class: <<FeatureType>> Opastavat-->
+	<!-- Class: <<FeatureType>> Maa-ainesluvat-->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<xs:element name="MaaAinesluvat" type="ymm:MaaAinesluvatType" substitutionGroup="gml:_Feature">
 		<xs:annotation>
@@ -31,7 +31,7 @@
 			<xs:element name="osoite" type="yht:PostiosoiteType"/>
 			<xs:element name="kunta" type="xs:string"/>
 			<xs:element name="sijainti" type="gml:PointPropertyType"/>
-			<xs:element name="liite" type="yht:LiiteType" minOccurs="0"/>
+			<xs:element name="liite" type="yht:YmparistoLiiteType" minOccurs="0"/>
 			<xs:element name="kiinteistorekisterinumero" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -45,9 +45,9 @@
 			<xs:element name="kylla">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="ei tiedossa"/>
 						<xs:enumeration value="Rahaa"/>
 						<xs:enumeration value="Pankkitakaus"/>
+						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -138,12 +138,12 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="toimintaAlueenKuvaus" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="toimintaAlueenKuvaus" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>toiminta-alueen kuvaus (suunnittelu- ja ottamisalue, kaivu- tai louhinta-alue, suoja-alueet, tukitoimintojen alueet, sivukivien läjitysalueet ja säilytettävä puusto)</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="ottamisenJarjestaminen" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="ottamisenJarjestaminen" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>ottamisen järjestäminen (kaivausten ja leikkausten syvyys ja muoto, tasot, massat, pintamaat, vaiheistus, toiminta-aika) </xs:documentation>
 						</xs:annotation>
@@ -164,12 +164,12 @@
 							<xs:documentation>vedenottamot, joihin hanke voi vaikuttaa</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="ymparistoHaittojenVahentaminen" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="ymparistoHaittojenVahentaminen" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>toimet ympäristöhaittojen vähentämiseksi (pohjavesi, pöly, melu) </xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="alueenJalkihoito" type="yht:LiiteType" minOccurs="0">
+					<xs:element name="alueenJalkihoito" type="yht:YmparistoLiiteType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>alueen jälkihoito ja alueen myöhempi käyttö</xs:documentation>
 						</xs:annotation>
@@ -179,7 +179,7 @@
 							<xs:documentation>Vakuus ottamisen aloittamiseksi ennen luvan lainvoimaa</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="valtakirja" type="yht:LiiteType" minOccurs="0"/>
+					<xs:element name="valtakirja" type="yht:YmparistoLiiteType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -202,9 +202,9 @@
 									<xs:element name="ilmoitusvuosi" minOccurs="0">
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
-												<xs:enumeration value="ei tiedossa"/>
 												<xs:enumeration value="Luvan mukainen otto päättynyt"/>
 												<xs:enumeration value="Ei ottoa ko. vuonna"/>
+												<xs:enumeration value="ei tiedossa"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -413,10 +413,10 @@
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
-												<xs:enumeration value="ei tiedossa"/>
 												<xs:enumeration value="tehty"/>
 												<xs:enumeration value="tehty osittain %"/>
 												<xs:enumeration value="tekemättä"/>
+												<xs:enumeration value="ei tiedossa"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -463,11 +463,11 @@
 					<xs:element name="kasittelynTila">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
-								<xs:enumeration value="ei tiedossa"/>
 								<xs:enumeration value="luonnos"/>
 								<xs:enumeration value="käsittelyssä"/>
 								<xs:enumeration value="päätös annettu"/>
 								<xs:enumeration value="valvonta"/>
+								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -511,9 +511,9 @@
 											<xs:element name="paatoksenToimittaminen" minOccurs="0">
 												<xs:simpleType>
 													<xs:restriction base="xs:string">
-														<xs:enumeration value="ei tiedossa"/>
 														<xs:enumeration value="Noudetaan"/>
 														<xs:enumeration value="Postitetaan"/>
+														<xs:enumeration value="ei tiedossa"/>
 													</xs:restriction>
 												</xs:simpleType>
 											</xs:element>
@@ -550,7 +550,7 @@
 					<xs:element name="paatos" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="paatoksenTiedot" type="yht:LiiteType"/>
+								<xs:element name="paatoksenTiedot" type="yht:YmparistoLiiteType"/>
 								<xs:element name="lupaehdot" minOccurs="0">
 									<xs:complexType>
 										<xs:sequence>
