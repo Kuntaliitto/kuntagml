@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yak="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.0.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yak="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.0">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.7/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.9/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> yleisenalueenkaytonlupahakemus  -->
 	<!-- ================================================= -->
@@ -13,10 +13,10 @@
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
-					<xs:element name="kasittelytiedottieto">
+					<xs:element name="kasittelytietotieto" maxOccurs="unbounded">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="Kasittelytiedot" minOccurs="0">
+								<xs:element name="Kasittelytieto">
 									<xs:complexType>
 										<xs:complexContent>
 											<xs:extension base="yht:KasittelyTiedotType">
@@ -149,7 +149,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="kayttojaksotieto" minOccurs="0">
+					<xs:element name="kayttojaksotieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
 							<xs:documentation>Toteutuneiden käyttöpäivien lukumäärä.</xs:documentation>
 						</xs:annotation>
@@ -447,44 +447,60 @@
 	</xs:complexType>
 	<xs:complexType name="LausuntoType">
 		<xs:sequence>
-			<xs:element name="viranomainen" type="xs:string"/>
-			<xs:element name="pyyntoPvm" type="xs:date"/>
-			<xs:element name="lausuntoPvm" type="xs:date"/>
-			<xs:element name="lausunto" minOccurs="0">
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="lausunto" type="xs:string"/>
-						<xs:element name="liitetieto">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="Liite" type="yak:YleisenAlueenLiiteType"/>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-					</xs:choice>
-				</xs:complexType>
+			<xs:element name="viranomainen" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Taho jolta lausunto pyydetty</xs:documentation>
+				</xs:annotation>
 			</xs:element>
-			<xs:element name="puoltotieto" minOccurs="0">
+			<xs:element name="pyyntoPvm" type="xs:date"/>
+			<xs:element name="maaraPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="lausuntotieto" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Puolto">
+						<xs:element name="Lausunto">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="puolto">
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:enumeration value="ei tiedossa"/>
-												<xs:enumeration value="ei puolla"/>
-												<xs:enumeration value="puoltaa"/>
-												<xs:enumeration value="ehdoilla"/>
-												<xs:enumeration value="jätetty pöydälle"/>
-											</xs:restriction>
-										</xs:simpleType>
+									<xs:element name="viranomainen" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Lausunnon antanut taho</xs:documentation>
+										</xs:annotation>
 									</xs:element>
-									<xs:element name="lisatietotieto" minOccurs="0">
+									<xs:element name="lausunto" type="xs:string"/>
+									<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element name="Lisatieto" type="yak:YleisenAlueenLiiteType"/>
+												<xs:element name="Liite" type="yak:YleisenAlueenLiiteType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="lausuntoPvm" type="xs:date"/>
+									<xs:element name="puoltotieto">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Puolto">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="puolto">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="ei tiedossa"/>
+																		<xs:enumeration value="ei puolla"/>
+																		<xs:enumeration value="puoltaa"/>
+																		<xs:enumeration value="ehdoilla"/>
+																		<xs:enumeration value="jätetty pöydälle"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="lisatietotieto" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Lisatieto" type="yak:YleisenAlueenLiiteType"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>

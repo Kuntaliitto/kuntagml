@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.8">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.9">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -341,6 +341,28 @@ tiedot</xs:documentation>
 				<xs:annotation>
 					<xs:documentation>VRK:n lupatunnus</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+			<xs:element name="saapumisPvm" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ilmoituspäivä</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="viittaus" type="yht:ViittausType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistoLuvanTunnusType">
+		<xs:sequence>
+			<xs:element name="kuntalupatunnus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kunnan antama tunnus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="muuTunnustieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="saapumisPvm" type="xs:date" minOccurs="0">
 				<xs:annotation>
@@ -721,6 +743,9 @@ tiedot</xs:documentation>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="patevyysvaatimusluokka" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Suunnittelijan pätevyys</xs:documentation>
+				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="C"/>
@@ -732,7 +757,22 @@ tiedot</xs:documentation>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="koulutus" type="xs:string" minOccurs="0"/>
+			<xs:element name="valmistumisvuosi" type="xs:string" minOccurs="0"/>
 			<xs:element name="liite" type="yht:LiiteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="vaadittuPatevyysluokka" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kunnan vaatima</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="C"/>
+						<xs:enumeration value="B"/>
+						<xs:enumeration value="A"/>
+						<xs:enumeration value="AA"/>
+						<xs:enumeration value="ei tiedossa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TyonjohtajaType">
@@ -783,6 +823,7 @@ tiedot</xs:documentation>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="koulutus" type="xs:string" minOccurs="0"/>
+			<xs:element name="valmistumisvuosi" type="xs:string" minOccurs="0"/>
 			<xs:element name="liite" type="yht:LiiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="alkamisPvm" type="xs:date" minOccurs="0">
 				<xs:annotation>
@@ -796,6 +837,18 @@ tiedot</xs:documentation>
 			</xs:element>
 			<xs:element name="hakemuksenSaapumisPvm" type="xs:date" minOccurs="0"/>
 			<xs:element name="tyonjohtajaHakemusKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="vaadittuPatevyysluokka" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kunnan vaatima</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ei tiedossa"/>
+						<xs:enumeration value="AA"/>
+						<xs:enumeration value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
@@ -826,9 +879,14 @@ tiedot</xs:documentation>
 		<xs:sequence>
 			<xs:element name="LupaTunnus" type="yht:RakennusLuvanTunnusType">
 				<xs:annotation>
-					<xs:documentation>Voimassa oleva rakennuslupa</xs:documentation>
+					<xs:documentation/>
 				</xs:annotation>
 			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistoLuvanTunnisteTiedotType">
+		<xs:sequence>
+			<xs:element name="LupaTunnus" type="yht:YmparistoLuvanTunnusType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PvmjaksoType">
@@ -2837,7 +2895,7 @@ tiedot</xs:documentation>
 			</xs:element>
 			<xs:element name="henkilo" type="yht:YhteyshenkiloType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Yhteyshenkilön nimi ja yhteystiedot</xs:documentation>
+					<xs:documentation>Yhteyshenkilön nimi ja yhteystiedot. Henkilö voi olla itsenäinen henkilö että yhteyshenkilö yritykselle. Rooli ratkaisee käytön.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="yritys" minOccurs="0">
@@ -2986,6 +3044,10 @@ tiedot</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="TyonjohtajaRooliKoodiType">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="KVV-työnjohtaja"/>
+			<xs:enumeration value="IV-työnjohtaja"/>
+			<xs:enumeration value="erityisalojen työnjohtaja"/>
+			<xs:enumeration value="vastaava työnjohtaja"/>
 			<xs:enumeration value="työnjohtaja"/>
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
@@ -3156,6 +3218,20 @@ tiedot</xs:documentation>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="turvakieltoKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="suoramarkkinointikieltoKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="rooliKoodi" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="vireillepanija"/>
+						<xs:enumeration value="toiminnanharjoittaja"/>
+						<xs:enumeration value="entinen toiminnanharjoittaja"/>
+						<xs:enumeration value="maksaja"/>
+						<xs:enumeration value="asiamies"/>
+						<xs:enumeration value="muu"/>
+						<xs:enumeration value="ei tiedossa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="YmparistoLiiteType">
@@ -3181,5 +3257,334 @@ tiedot</xs:documentation>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PaakayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="999 muualla luokittelemattomat rakennukset"/>
+			<xs:enumeration value="941 talousrakennukset"/>
+			<xs:enumeration value="931 saunarakennukset"/>
+			<xs:enumeration value="899 muut maa-, metsä- ja kalatalouden rakennukset"/>
+			<xs:enumeration value="893 turkistarhat"/>
+			<xs:enumeration value="892 kasvihuoneet"/>
+			<xs:enumeration value="891 viljankuivaamot ja viljan säilytysrakennukset"/>
+			<xs:enumeration value="819 eläinsuojat, ravihevostallit, maneesit yms"/>
+			<xs:enumeration value="811 navetat, sikalat, kanalat yms"/>
+			<xs:enumeration value="729 muut palo- ja pelastustoimen rakennukset"/>
+			<xs:enumeration value="722 väestönsuojat"/>
+			<xs:enumeration value="721 paloasemat"/>
+			<xs:enumeration value="719 muut varastorakennukset"/>
+			<xs:enumeration value="712 kauppavarastot"/>
+			<xs:enumeration value="711 teollisuusvarastot"/>
+			<xs:enumeration value="699 muut teollisuuden tuotantorakennukset"/>
+			<xs:enumeration value="692 teollisuus- ja pienteollisuustalot"/>
+			<xs:enumeration value="691 teollisuushallit"/>
+			<xs:enumeration value="613 yhdyskuntatekniikan rakennukset"/>
+			<xs:enumeration value="611 voimalaitosrakennukset"/>
+			<xs:enumeration value="549 muualla luokittelemattomat opetusrakennukset"/>
+			<xs:enumeration value="541 järjestöjen, liittojen, työnantajien yms opetusrakennukset"/>
+			<xs:enumeration value="532 tutkimuslaitosrakennukset"/>
+			<xs:enumeration value="531 korkeakoulurakennukset"/>
+			<xs:enumeration value="521 ammatillisten oppilaitosten rakennukset"/>
+			<xs:enumeration value="511 yleissivistävien oppilaitosten rakennukset"/>
+			<xs:enumeration value="369 muut kokoontumisrakennukset"/>
+			<xs:enumeration value="359 muut urheilu- ja kuntoilurakennukset"/>
+			<xs:enumeration value="354 monitoimihallit ja muut urheiluhallit"/>
+			<xs:enumeration value="353 tennis-, squash- ja sulkapallohallit"/>
+			<xs:enumeration value="352 uimahallit"/>
+			<xs:enumeration value="351 jäähallit"/>
+			<xs:enumeration value="349 muut uskonnollisten yhteisöjen rakennukset"/>
+			<xs:enumeration value="342 seurakuntatalot"/>
+			<xs:enumeration value="341 kirkot, kappelit, luostarit ja rukoushuoneet"/>
+			<xs:enumeration value="331 seura- ja kerhorakennukset yms"/>
+			<xs:enumeration value="324 näyttelyhallit"/>
+			<xs:enumeration value="323 museot ja taidegalleriat"/>
+			<xs:enumeration value="322 kirjastot ja arkistot"/>
+			<xs:enumeration value="312 elokuvateatterit"/>
+			<xs:enumeration value="311 teatterit, ooppera-, konsertti- ja kongressitalot"/>
+			<xs:enumeration value="241 vankilat"/>
+			<xs:enumeration value="239 muualla luokittelemattomat sosiaalitoimen rakennukset"/>
+			<xs:enumeration value="231 lasten päiväkodit"/>
+			<xs:enumeration value="229 muut huoltolaitosrakennukset"/>
+			<xs:enumeration value="223 kehitysvammaisten hoitolaitokset"/>
+			<xs:enumeration value="222 lasten- ja koulukodit"/>
+			<xs:enumeration value="221 vanhainkodit"/>
+			<xs:enumeration value="219 muut terveydenhuoltorakennukset"/>
+			<xs:enumeration value="215 terveydenhuollon erityislaitokset"/>
+			<xs:enumeration value="214 terveyskeskukset"/>
+			<xs:enumeration value="213 muut sairaalat"/>
+			<xs:enumeration value="211 keskussairaalat"/>
+			<xs:enumeration value="169 muut liikenteen rakennukset"/>
+			<xs:enumeration value="164 tietoliikenteen rakennukset"/>
+			<xs:enumeration value="163 pysäköintitalot"/>
+			<xs:enumeration value="162 kulkuneuvojen suoja- ja huoltorakennukset"/>
+			<xs:enumeration value="161 rautatie- ja linja-autoasemat, lento- ja satamaterminaalit"/>
+			<xs:enumeration value="151 toimistorakennukset"/>
+			<xs:enumeration value="141 ravintolat yms"/>
+			<xs:enumeration value="139 muut asuntolarakennukset"/>
+			<xs:enumeration value="131 asuntolat yms"/>
+			<xs:enumeration value="129 muut majoitusliikerakennukset"/>
+			<xs:enumeration value="124 vuokrattavat lomamökit ja -osakkeet"/>
+			<xs:enumeration value="123 loma-, lepo- ja virkistyskodit"/>
+			<xs:enumeration value="121 hotellit yms"/>
+			<xs:enumeration value="119 muut myymälärakennukset"/>
+			<xs:enumeration value="112 liike- ja tavaratalot, kauppakeskukset"/>
+			<xs:enumeration value="111 myymälähallit"/>
+			<xs:enumeration value="041 vapaa-ajan asuinrakennukset"/>
+			<xs:enumeration value="039 muut asuinkerrostalot"/>
+			<xs:enumeration value="032 luhtitalot"/>
+			<xs:enumeration value="022 ketjutalot"/>
+			<xs:enumeration value="021 rivitalot"/>
+			<xs:enumeration value="013 muut erilliset talot"/>
+			<xs:enumeration value="012 kahden asunnon talot"/>
+			<xs:enumeration value="011 yhden asunnon talot"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LausuntoRvPType">
+		<xs:annotation>
+			<xs:documentation>Tarkoitettu rakennusvalvonnan ja poikkeamispaatos ja suunnittelutarveratkaisu skeemoille</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="viranomainen" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Taho jolta lausunto pyydetty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pyyntoPvm" type="xs:date"/>
+			<xs:element name="maaraPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="lausuntotieto" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Lausunto">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="viranomainen" type="xs:string" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Lausunnon antanut taho</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="lausunto" type="xs:string"/>
+									<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Liite" type="yht:RakennusvalvontaLiiteType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="lausuntoPvm" type="xs:date"/>
+									<xs:element name="puoltotieto">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Puolto">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="puolto">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="ei tiedossa"/>
+																		<xs:enumeration value="ei puolla"/>
+																		<xs:enumeration value="puoltaa"/>
+																		<xs:enumeration value="ehdoilla"/>
+																		<xs:enumeration value="jätetty pöydälle"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="lisatietotieto" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Lisatieto" type="yht:RakennusvalvontaLiiteType"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LausuntoYmpType">
+		<xs:annotation>
+			<xs:documentation>Tarkoitettu ympäristöpuolen skeemoille</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="viranomainen" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Taho jolta lausunto pyydetty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pyyntoPvm" type="xs:date"/>
+			<xs:element name="maaraPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="lausuntotieto" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Lausunto">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="viranomainen" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Lausunnon antanut taho</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="lausunto" type="xs:string"/>
+									<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="lausuntoPvm" type="xs:date"/>
+									<xs:element name="puoltotieto">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Puolto">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="puolto">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="ei tiedossa"/>
+																		<xs:enumeration value="ei puolla"/>
+																		<xs:enumeration value="puoltaa"/>
+																		<xs:enumeration value="ehdoilla"/>
+																		<xs:enumeration value="jätetty pöydälle"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="lisatietotieto" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Lisatieto" type="yht:YmparistoLiiteType"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistoPaatosType">
+		<xs:sequence>
+			<xs:element name="takuuaikaPaivat" type="xs:int"/>
+			<xs:element name="lupaehdotJaMaaraykset" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="paatoslinkki" type="xs:string" minOccurs="0"/>
+			<xs:element name="paatosdokumentinPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KasittelyTapahtumatType">
+		<xs:sequence>
+			<xs:element name="kasittelytiedottieto">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Kasittelytiedot" minOccurs="0">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="yht:KasittelyTiedotType">
+										<xs:sequence>
+											<xs:element name="kasittelija" type="yht:YmparistoOsapuoliType" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="paatostieto">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Paatos" type="yht:YmparistoPaatosType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValvontatapahtumaType">
+		<xs:sequence>
+			<xs:element name="aikajaksotieto">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Aikajakso" type="yht:PvmjaksoType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="mitaValvotaan" type="xs:string"/>
+			<xs:element name="valvonnanSuorittaja">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="toiminnanharjoittaja"/>
+						<xs:enumeration value="kunta"/>
+						<xs:enumeration value="ELY-keskus"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="huomiot" type="xs:string" minOccurs="0"/>
+			<xs:element name="liitetieto" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KasittelyTietoType">
+		<xs:sequence>
+			<xs:element name="muutosHetki" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Hakemuksen muutosaika</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hakemuksenTila" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="0 Kesken"/>
+						<xs:enumeration value="1 Vireillä"/>
+						<xs:enumeration value="2 Lupa haettu"/>
+						<xs:enumeration value="3 Lupa myönnetty"/>
+						<xs:enumeration value="4 Lupa rauennut"/>
+						<xs:enumeration value="5 Jatkolupa"/>
+						<xs:enumeration value="6 Lupakohteen tarkastus"/>
+						<xs:enumeration value="7 Lupahakemuksesta tiedottaminen"/>
+						<xs:enumeration value="8 Lausunnon pyytäminen"/>
+						<xs:enumeration value="9 Lausunto"/>
+						<xs:enumeration value="10 Muistutus"/>
+						<xs:enumeration value="11 Hakijan kuuleminen ja vastine"/>
+						<xs:enumeration value="12 Päätöksestä valitettu"/>
+						<xs:enumeration value="13 Päätös lainvoimainen"/>
+						<xs:enumeration value="ei tiedossa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="tilanMuutosHetki" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkilo" type="xs:string" minOccurs="0"/>
+			<xs:element name="asiatunnus" type="xs:string" minOccurs="0"/>
+			<xs:element name="paivaysPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="kasittelija" type="yht:YmparistoOsapuoliType" minOccurs="0"/>
+		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

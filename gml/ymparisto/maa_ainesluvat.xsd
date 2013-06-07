@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.8/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.9/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Maa-ainesluvat -->
 	<!-- ================================================= -->
@@ -460,16 +460,27 @@
 		<xs:complexContent>
 			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
 				<xs:sequence>
-					<xs:element name="kasittelynTila">
-						<xs:simpleType>
-							<xs:restriction base="xs:string">
-								<xs:enumeration value="luonnos"/>
-								<xs:enumeration value="käsittelyssä"/>
-								<xs:enumeration value="päätös annettu"/>
-								<xs:enumeration value="valvonta"/>
-								<xs:enumeration value="ei tiedossa"/>
-							</xs:restriction>
-						</xs:simpleType>
+					<xs:element name="kasittelytietotieto" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="KasittelyTieto" type="yht:KasittelyTietoType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="luvanTunnistetiedot" type="yht:YmparistoLuvanTunnisteTiedotType" minOccurs="0"/>
+					<xs:element name="lausuntotieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Lausunto" type="yht:LausuntoYmpType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="paatostieto" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Paatos" type="yht:YmparistoPaatosType"/>
+							</xs:sequence>
+						</xs:complexType>
 					</xs:element>
 					<xs:element name="hakemustieto" minOccurs="0">
 						<xs:complexType>
@@ -547,43 +558,17 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="paatos" minOccurs="0">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element name="paatoksenTiedot" type="yht:YmparistoLiiteType"/>
-								<xs:element name="lupaehdot" minOccurs="0">
-									<xs:complexType>
-										<xs:sequence>
-											<xs:element name="MyontamisPvm" type="xs:date">
-												<xs:annotation>
-													<xs:documentation>Luvan myöntämispäivämäärä</xs:documentation>
-												</xs:annotation>
-											</xs:element>
-											<xs:element name="PaattymisPvm" type="xs:date">
-												<xs:annotation>
-													<xs:documentation>Luvan päättymispäivämäärä</xs:documentation>
-												</xs:annotation>
-											</xs:element>
-											<xs:element name="voimassaoloaika" type="xs:string">
-												<xs:annotation>
-													<xs:documentation>Luvan voimassaoloaika vuosina</xs:documentation>
-												</xs:annotation>
-											</xs:element>
-											<xs:element name="otettavaKokonaismaara" type="xs:string">
-												<xs:annotation>
-													<xs:documentation>Luvan mukainen otettava kokonaismäärä k-m3</xs:documentation>
-												</xs:annotation>
-											</xs:element>
-										</xs:sequence>
-									</xs:complexType>
-								</xs:element>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
 					<xs:element name="valvontakohdetieto" type="ymm:ValvontakohteetType" minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
 							<xs:documentation>Maa-ainesluvan aikaiset valvontakohteet</xs:documentation>
 						</xs:annotation>
+					</xs:element>
+					<xs:element name="valvontatapahtumattieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Valvontatapahtuma" type="yht:ValvontatapahtumaType"/>
+							</xs:sequence>
+						</xs:complexType>
 					</xs:element>
 					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
 				</xs:sequence>
