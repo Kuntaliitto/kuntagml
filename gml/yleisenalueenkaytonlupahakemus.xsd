@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yak="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yak="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleisenalueenkaytonlupahakemus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.0.9/yhteiset.xsd"/>
 	<!-- ================================================= -->
@@ -111,6 +111,14 @@
 														</xs:element>
 													</xs:sequence>
 												</xs:complexType>
+											</xs:element>
+											<xs:element name="rooliKoodi" minOccurs="0">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="lupaehdoista/työmaasta vastaava henkilö"/>
+														<xs:enumeration value="hankkeen vastuuhenkilö"/>
+													</xs:restriction>
+												</xs:simpleType>
 											</xs:element>
 										</xs:sequence>
 									</xs:complexType>
@@ -416,6 +424,7 @@
 			<xs:element name="rooliKoodi" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
+						<xs:enumeration value="maksaja"/>
 						<xs:enumeration value="muu"/>
 						<xs:enumeration value="yhteyshenkilö"/>
 						<xs:enumeration value="työnsuorittaja"/>
