@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0.9">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.0">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -452,44 +452,40 @@ tiedot</xs:documentation>
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="myönnetty"/>
 						<xs:enumeration value="hyväksytty"/>
+						<xs:enumeration value="evätty"/>
 						<xs:enumeration value="osittain myönnetty"/>
-						<xs:enumeration value="pysytti osittain myönnettynä (luvat)"/>
-						<xs:enumeration value="Myönnetty aloitusoikeudella"/>
+						<xs:enumeration value="pysytti osittain myönnettynä"/>
+						<xs:enumeration value="myönnetty aloitusoikeudella "/>
 						<xs:enumeration value="ehdollinen"/>
-						<xs:enumeration value="ei tutkittu (oik.vaatimus/lupa pysyy puollettuna)"/>
+						<xs:enumeration value="ei tutkittu (oikaisuvaatimusvaatimus tai lupa pysyy puollettuna)"/>
+						<xs:enumeration value="ei tutkittu (oikaisuvaatimus tai lupa pysyy evättynä)"/>
 						<xs:enumeration value="työhön liittyy ehto"/>
 						<xs:enumeration value="tehty hallintopakkopäätös (asetettu velvoite)"/>
-						<xs:enumeration value="pysytti määräyksen"/>
-						<xs:enumeration value="annettu lausunto (rlk)"/>
-						<xs:enumeration value="valituks.luovuttu (oik.vaatimus/lupa pysyy puoll.)"/>
-						<xs:enumeration value="muutti myönnetyksi (luvat/vak/rak.v/rasite/mak/ym)"/>
-						<xs:enumeration value="pysytti määräyksen/päätöksen (määr/kats.p/loppuk)"/>
-						<xs:enumeration value="pysytti myönnettynä (luvat/vak/rak.v/rasite/mak/ym"/>
-						<xs:enumeration value="puollettu"/>
-						<xs:enumeration value="annettu lausunto (ent. selitys)"/>
-						<xs:enumeration value="siirretty maaoikeudelle"/>
-						<xs:enumeration value="tehty uhkasakkopäätös"/>
-						<xs:enumeration value="suunnitelmat tarkastettu"/>
-						<xs:enumeration value="evätty"/>
-						<xs:enumeration value="ei tutkittu (oik.vaatimus/lupa pysyy evättynä)"/>
 						<xs:enumeration value="tehty hallintopakkopäätös (ei velvoitetta)"/>
-						<xs:enumeration value="määräys peruutettu (määräys/kats.p/loppukats.p.)"/>
-						<xs:enumeration value="valituks.luovuttu (oik.vaatimus/lupa pysyy evätt.)"/>
-						<xs:enumeration value="muutti evätyksi (luvat/vak/rak.v/rasite/mak/ym)"/>
-						<xs:enumeration value="muutti määräystä/päätöstä (määr/kats.p/loppuk)"/>
-						<xs:enumeration value="pysytti evättynä (luvat/vak/rak.v/rasite/mak/ym)"/>
+						<xs:enumeration value="tehty uhkasakkopäätös"/>
+						<xs:enumeration value="hallintopakon tai uhkasakkoasian käsittely lopetettu"/>
+						<xs:enumeration value="pysytti määräyksen tai päätöksen"/>
+						<xs:enumeration value="muutti määräystä tai päätöstä"/>
+						<xs:enumeration value="määräys peruutettu"/>
+						<xs:enumeration value="valituksesta on luovuttu (oikaisuvaatimus tai lupa pysyy puollettuna)"/>
+						<xs:enumeration value="valituksesta on luovuttu (oikaisuvaatimus tai lupa pysyy evättynä)"/>
+						<xs:enumeration value="muutti myönnetyksi"/>
+						<xs:enumeration value="pysytti myönnettynä"/>
+						<xs:enumeration value="muutti evätyksi"/>
+						<xs:enumeration value="pysytti evättynä"/>
+						<xs:enumeration value="puollettu"/>
 						<xs:enumeration value="ei puollettu"/>
-						<xs:enumeration value="muutettu toimenpideluvaksi (konverssio)"/>
+						<xs:enumeration value="annettu lausunto"/>
 						<xs:enumeration value="ei lausuntoa"/>
+						<xs:enumeration value="siirretty maaoikeudelle"/>
+						<xs:enumeration value="suunnitelmat tarkastettu"/>
+						<xs:enumeration value="muutettu toimenpideluvaksi (konversio)"/>
+						<xs:enumeration value="peruutettu"/>
 						<xs:enumeration value="ei tutkittu"/>
-						<xs:enumeration value="lausunto"/>
-						<xs:enumeration value="lausunto/päätös (muu kuin rlk)"/>
-						<xs:enumeration value="Hallintopakko/uhkasakkoasian käsittely lopetettu."/>
-						<xs:enumeration value="Ltk palauttanut asian uudelleen valmisteltavaksi."/>
-						<xs:enumeration value="Peruutettu"/>
+						<xs:enumeration value="asia palautettu uudelleen valmisteltavaksi"/>
 						<xs:enumeration value="asiakirjat palautettu korjauskehotuksin"/>
-						<xs:enumeration value="Ltk poistanut asian esityslistalta."/>
-						<xs:enumeration value="Ltk:n kokouksessa pöydälle pantu asia."/>
+						<xs:enumeration value="asia poistettu esityslistalta"/>
+						<xs:enumeration value="asia pantu pöydälle kokouksessa"/>
 						<xs:enumeration value="ilmoitus merkitty tiedoksi"/>
 						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
@@ -3152,7 +3148,8 @@ tiedot</xs:documentation>
 			</xs:element>
 			<xs:element name="hakemuksenTila" type="xs:string" minOccurs="0"/>
 			<xs:element name="tilanMuutosHetki" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="kunnanYhteyshenkilo" type="xs:string" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkiloEtunimi" type="xs:string" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkiloSukunimi" type="xs:string" minOccurs="0"/>
 			<xs:element name="asiatunnus" type="xs:string" minOccurs="0"/>
 			<xs:element name="paivaysPvm" type="xs:date" minOccurs="0"/>
 		</xs:sequence>
@@ -3482,7 +3479,7 @@ tiedot</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="YmparistoPaatosType">
 		<xs:sequence>
-			<xs:element name="takuuaikaPaivat" type="xs:int"/>
+			<xs:element name="takuuaikaPaivat" type="xs:int" minOccurs="0"/>
 			<xs:element name="lupaehdotJaMaaraykset" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="paatoslinkki" type="xs:string" minOccurs="0"/>
 			<xs:element name="paatosdokumentinPvm" type="xs:date" minOccurs="0"/>
@@ -3581,7 +3578,8 @@ tiedot</xs:documentation>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="tilanMuutosHetki" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="kunnanYhteyshenkilo" type="xs:string" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkiloEtunimi" type="xs:string" minOccurs="0"/>
+			<xs:element name="kunnanYhteyshenkiloSukunimi" type="xs:string" minOccurs="0"/>
 			<xs:element name="asiatunnus" type="xs:string" minOccurs="0"/>
 			<xs:element name="paivaysPvm" type="xs:date" minOccurs="0"/>
 			<xs:element name="kasittelija" type="yht:YmparistoOsapuoliType" minOccurs="0"/>
