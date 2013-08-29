@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymi="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymi="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.0/yhteiset.xsd"/>
 	<!-- ================================================= -->
@@ -66,6 +66,14 @@
 							<xs:documentation>Aineisto ja arviointimenetelmät, joihin tiedot perustuvat</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -85,6 +93,14 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -95,8 +111,15 @@
 				<xs:sequence>
 					<xs:element name="kuvaus" type="xs:string" minOccurs="0"/>
 					<xs:element name="jakso" type="ymi:JaksoType" minOccurs="0"/>
-					<xs:element name="liite" type="yht:YmparistoLiiteType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -129,6 +152,14 @@
 						<xs:annotation>
 							<xs:documentation>TARVITTAESSA HAKEMUKSEEN LIITETÄÄN:</xs:documentation>
 						</xs:annotation>
+					</xs:element>
+					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
 			</xs:extension>

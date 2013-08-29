@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymy="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ymparistoluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.0/yhteiset.xsd"/>
 	<!-- ================================================= -->
@@ -156,6 +156,14 @@ toimista sekä toimista häiriötilanteissa</xs:documentation>
 						</xs:complexType>
 					</xs:element>
 					<xs:element name="referenssiPiste" type="gml:PointPropertyType" minOccurs="0"/>
+					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:YmparistoLiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
