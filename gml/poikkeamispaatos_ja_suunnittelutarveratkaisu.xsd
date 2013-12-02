@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ppst="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ppst="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/poikkeamispaatos_ja_suunnittelutarveratkaisu" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.3">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.1/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> poikkeamispaatos_ja_suunnittelutarveratkaisu  -->
 	<!-- ================================================= -->
@@ -143,15 +143,25 @@
 																<xs:documentation>Luvan sisälllä juokseva numerointi. VRKta varten yksilöivä koodi</xs:documentation>
 															</xs:annotation>
 														</xs:element>
-														<xs:element name="kiinttun" type="xs:string">
+														<xs:element name="kiinttun">
 															<xs:annotation>
-																<xs:documentation>Kiinteistötunnus</xs:documentation>
+																<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja.</xs:documentation>
 															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:pattern value="(([0-9]{3}){2}([0-9]{4}){2})"/>
+																</xs:restriction>
+															</xs:simpleType>
 														</xs:element>
-														<xs:element name="rakennusnro" type="xs:string">
+														<xs:element name="rakennusnro" minOccurs="0">
 															<xs:annotation>
-																<xs:documentation>Rakennusnumero</xs:documentation>
+																<xs:documentation>Rakennusnumero, kolmella numerolla etunollin</xs:documentation>
 															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:pattern value="[0-9][0-9][0-9]"/>
+																</xs:restriction>
+															</xs:simpleType>
 														</xs:element>
 														<xs:element name="aanestysalue" type="xs:string" minOccurs="0">
 															<xs:annotation>
@@ -213,22 +223,10 @@
 																	<xs:element name="asuinhuoneistojenLkm" type="xs:int" minOccurs="0"/>
 																	<xs:element name="rakennuksenKerrosluku" type="xs:int" minOccurs="0"/>
 																	<xs:element name="kokonaisala" type="xs:decimal" minOccurs="0"/>
-																	<xs:element name="kerrosalatieto" minOccurs="0" maxOccurs="unbounded">
+																	<xs:element name="kerrosala" type="xs:int" minOccurs="0" maxOccurs="unbounded">
 																		<xs:annotation>
 																			<xs:documentation>Tähän mennessä käytetty kerrosala m2 ja rakennustyyppi</xs:documentation>
 																		</xs:annotation>
-																		<xs:complexType>
-																			<xs:sequence>
-																				<xs:element name="kerrosala">
-																					<xs:complexType>
-																						<xs:sequence>
-																							<xs:element name="pintaAla" type="xs:decimal"/>
-																							<xs:element name="paakayttotarkoitusKoodi" type="yht:PaakayttotarkoitusType"/>
-																						</xs:sequence>
-																					</xs:complexType>
-																				</xs:element>
-																			</xs:sequence>
-																		</xs:complexType>
 																	</xs:element>
 																</xs:sequence>
 															</xs:complexType>
@@ -267,7 +265,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="lisatietotieto" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="lisatietotieto" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element name="Lisatieto">
