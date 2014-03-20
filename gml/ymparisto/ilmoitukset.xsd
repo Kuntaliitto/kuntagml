@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymi="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymi="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/ilmoitukset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.3/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Ilmoitukset -->
 	<!-- ================================================= -->
@@ -171,33 +171,19 @@
 			<xs:element name="Kunta" type="xs:string" minOccurs="0"/>
 			<xs:element name="Sijainti" type="yht:SijaintiType"/>
 			<xs:element name="Liite" type="yht:YmparistoLiiteType" minOccurs="0"/>
-			<xs:element name="Kiinteistorekisterinumero" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ToiminnanharjoittajaType">
-		<xs:sequence>
-			<xs:element name="nimi" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Nimi tai toiminimi</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="postiosoite" type="yht:PostiosoiteType"/>
-			<xs:element name="kayntiosoite" type="yht:PostiosoiteType" minOccurs="0"/>
-			<xs:element name="sahkopostiosoite" type="xs:string" minOccurs="0"/>
-			<xs:element name="faksinumero" type="xs:string" minOccurs="0"/>
-			<xs:element name="yhteyshenkilo" type="yht:YhteyshenkiloType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Yhteyshenkilön nimi ja yhteystiedot</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="liikeJaYhteisotunnus" type="xs:string" minOccurs="0"/>
-			<xs:element name="kotipaikka" type="xs:string" minOccurs="0"/>
+			<xs:element name="Kiinteistorekisterinumero" type="yht:KiinteistotunnusType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="JaksoType">
 		<xs:sequence>
-			<xs:element name="alkuHetki" type="xs:dateTime"/>
-			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="alkuPvm" type="xs:date"/>
+			<xs:element name="loppuPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="arkiAlkuAika" type="xs:time" minOccurs="0"/>
+			<xs:element name="arkiLoppuAika" type="xs:time" minOccurs="0"/>
+			<xs:element name="lauantaiAlkuAika" type="xs:time" minOccurs="0"/>
+			<xs:element name="lauantaiLoppuAika" type="xs:time" minOccurs="0"/>
+			<xs:element name="sunnuntaiAlkuAika" type="xs:time" minOccurs="0"/>
+			<xs:element name="sunnuntaiLoppuAika" type="xs:time" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AbstractIlmoitusKohde">
@@ -207,7 +193,7 @@
 					<xs:element name="kasittelytietotieto" maxOccurs="unbounded">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="KasittelyTieto" type="yht:KasittelyTietoType"/>
+								<xs:element name="Kasittelytieto" type="yht:KasittelyTietoType"/>
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
@@ -219,13 +205,20 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="ilmoittaja" type="ymi:ToiminnanharjoittajaType" minOccurs="0"/>
-					<xs:element name="toiminnanSijainti" type="ymi:ToiminnanSijaintiType" minOccurs="0"/>
+					<xs:element name="toiminnanSijaintitieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ToiminnanSijainti" type="ymi:ToiminnanSijaintiType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ilmoittaja" type="yht:YhteystietoType" minOccurs="0"/>
 					<xs:element name="jatkoIlmoitusKytkin" type="xs:boolean" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Onko kyseessä olemassaolevaanilmoitukseen liittyvä jatkoilmoitus</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="asianKuvaus" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -438,12 +431,6 @@
 	<xs:complexType name="LisatiedotType">
 		<xs:sequence>
 			<xs:element name="Lisatiedot" type="yht:YmparistoLiiteType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="NimiType">
-		<xs:sequence>
-			<xs:element name="etunimi" type="xs:string"/>
-			<xs:element name="sukunimi" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IlmoituksetType">

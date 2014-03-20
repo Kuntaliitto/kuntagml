@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymm="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/maa_ainesluvat" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.0/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.3/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Maa-ainesluvat -->
 	<!-- ================================================= -->
@@ -14,18 +14,6 @@
 			<xs:documentation>Skeeman juurielementti</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:complexType name="NimiType">
-		<xs:sequence>
-			<xs:element name="etunimi" type="xs:string"/>
-			<xs:element name="sukunimi" type="xs:string"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="JaksoType">
-		<xs:sequence>
-			<xs:element name="alkuHetki" type="xs:dateTime"/>
-			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ToiminnanSijaintiType">
 		<xs:sequence>
 			<xs:element name="osoite" type="yht:PostiosoiteType"/>
@@ -54,15 +42,6 @@
 			<xs:element name="ei" type="xs:string"/>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="HakijaType">
-		<xs:sequence>
-			<xs:element name="nimi" type="ymm:NimiType"/>
-			<xs:element name="ammatti" type="xs:string"/>
-			<xs:element name="osoite" type="yht:PostiosoiteType"/>
-			<xs:element name="puhelin" type="xs:string" maxOccurs="unbounded"/>
-			<xs:element name="osoitetoimipaikka" type="yht:PostiosoiteType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="OttamismaaraType">
 		<xs:sequence>
 			<xs:element name="kokonaismaara" type="xs:string">
@@ -80,12 +59,6 @@
 					<xs:documentation>Ottamisaika, vuotta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ViranomaismaksujenSuorittajaType">
-		<xs:sequence>
-			<xs:element name="nimi" type="ymm:NimiType"/>
-			<xs:element name="osoite" type="yht:PostiosoiteType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OttamissuunnitelmaType">
@@ -467,6 +440,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="kiinteistotunnus" type="yht:KiinteistotunnusType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="luvanTunnistetiedot" type="yht:YmparistoLuvanTunnisteTiedotType" minOccurs="0"/>
 					<xs:element name="lausuntotieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
@@ -488,10 +462,10 @@
 								<xs:element name="Hakemus" minOccurs="0">
 									<xs:complexType>
 										<xs:sequence>
-											<xs:element name="hakija">
+											<xs:element name="hakija" maxOccurs="unbounded">
 												<xs:complexType>
 													<xs:complexContent>
-														<xs:extension base="yht:YhteyshenkiloType">
+														<xs:extension base="yht:YhteystietoType">
 															<xs:sequence>
 																<xs:element name="ammatti" type="xs:string" minOccurs="0"/>
 															</xs:sequence>
@@ -509,7 +483,7 @@
 													<xs:documentation>Maa-ainesten ottamistoiminnan yhteyshenkilö</xs:documentation>
 												</xs:annotation>
 											</xs:element>
-											<xs:element name="alueenKiinteistonSijainti" type="yht:SijaintitietoType" minOccurs="0">
+											<xs:element name="alueenKiinteistonSijainti" type="yht:SijaintitietoType" minOccurs="0" maxOccurs="unbounded">
 												<xs:annotation>
 													<xs:documentation>Ottamisalueen sisältävän kiinteistön sijaintitiedot</xs:documentation>
 												</xs:annotation>
@@ -558,6 +532,24 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="osapuolitieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Osapuoli" type="yht:OsapuoliType">
+									<xs:annotation>
+										<xs:documentation>Hankkeessa mukana olevien tahojen tiedot pl. Suunnittelijat ja työnjohtajat</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maksajatieto" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Maksaja" type="yht:MaksajaType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 					<xs:element name="valvontakohdetieto" type="ymm:ValvontakohteetType" minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
 							<xs:documentation>Maa-ainesluvan aikaiset valvontakohteet</xs:documentation>
@@ -570,7 +562,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0"/>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="koontiKentta" type="xs:string" minOccurs="0"/>
 					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
@@ -579,6 +571,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="asianKuvaus" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -593,8 +586,16 @@
 		<xs:complexContent>
 			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
 				<xs:sequence>
-					<xs:element name="ilmoittaja" type="yht:YhteyshenkiloType" minOccurs="0"/>
-					<xs:element name="sijaintitieto" type="yht:SijaintitietoType"/>
+					<xs:element name="kiinteistotunnus" type="yht:KiinteistotunnusType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="ilmoittaja" type="yht:YhteystietoType" maxOccurs="unbounded"/>
+					<xs:element name="maksajatieto" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Maksaja" type="yht:MaksajaType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="kesto" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
@@ -647,6 +648,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="asianKuvaus" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
