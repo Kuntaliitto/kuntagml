@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.5">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -41,7 +41,10 @@
 	<xs:complexType name="PostiosoiteType">
 		<xs:sequence>
 			<xs:element name="kunta" type="xs:string" minOccurs="0"/>
+			<xs:element name="valtioSuomeksi" type="xs:string" minOccurs="0"/>
+			<xs:element name="valtioKansainvalinen" type="xs:string" minOccurs="0"/>
 			<xs:element name="osoitenimi" type="yht:NimiType"/>
+			<xs:element name="ulkomainenLahiosoite" type="xs:string" minOccurs="0"/>
 			<xs:element name="osoitenumero" type="xs:int" minOccurs="0"/>
 			<xs:element name="osoitenumero2" type="xs:int" minOccurs="0">
 				<xs:annotation>
@@ -87,6 +90,7 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="postitoimipaikannimi" type="xs:string" minOccurs="0"/>
+			<xs:element name="ulkomainenPostitoimipaikka" type="xs:string" minOccurs="0"/>
 			<xs:element name="jarjestysnumero" type="xs:int" minOccurs="0"/>
 			<xs:element name="pistesijainti" type="gml:PointPropertyType" minOccurs="0"/>
 			<xs:element name="aluesijainti" type="gml:SurfacePropertyType" minOccurs="0"/>
@@ -178,6 +182,26 @@
 				<xs:element name="luontitapa" type="yht:LuontiTapaType" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Sijainnin luontitapa</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="nimi" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kohteen nimi</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="kuvaus" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kohteen kuvaus</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="korkeusTaiSyvyys" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kohteen mahdollinen korkeus/syvyys metreissä</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="pintaAla" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Pinta-ala m2</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -552,11 +576,12 @@ tiedot</xs:documentation>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="vaadittuErityissuunnitelma" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="maarays" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="sisalto" type="xs:string" minOccurs="0"/>
-						<xs:element name="maaraysaika" type="xs:date" minOccurs="0"/>
+						<xs:element name="maaraysPvm" type="xs:date" minOccurs="0"/>
 						<xs:element name="toteutusHetki" type="xs:date" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
@@ -745,39 +770,38 @@ tiedot</xs:documentation>
 					<xs:documentation>Jos kyseessä on yritys tvs. niin tiedot siirretään tässä elementissä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="patevyysvaatimusluokka" minOccurs="0">
+			<xs:element name="patevyysvaatimusluokka" type="yht:PatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Suunnittelijan pätevyys</xs:documentation>
+					<xs:documentation>Suunnittelijan pätevyys:
+AA poikkeuksellisen vaativa
+A vaativa
+B tavanomainen
+C vähäinen
+</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="C"/>
-						<xs:enumeration value="B"/>
-						<xs:enumeration value="A"/>
-						<xs:enumeration value="AA"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 			<xs:element name="koulutus" type="xs:string" minOccurs="0"/>
 			<xs:element name="valmistumisvuosi" type="xs:string" minOccurs="0"/>
 			<xs:element name="liite" type="yht:LiiteType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="vaadittuPatevyysluokka" minOccurs="0">
+			<xs:element name="vaadittuPatevyysluokka" type="yht:PatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Kunnan vaatima</xs:documentation>
+					<xs:documentation>Kunnan vaatima.
+
+AA poikkeuksellisen vaativa
+A vaativa
+B tavanomainen
+C vähäinen
+</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="C"/>
-						<xs:enumeration value="B"/>
-						<xs:enumeration value="A"/>
-						<xs:enumeration value="AA"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 			<xs:element name="toiminutVastaavissaTehtavissaKytkin" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="kokemusvuodet" type="xs:string" minOccurs="0"/>
+			<xs:element name="paatosPvm" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Koska osapuolelle on tehty päätös</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paatostyyppi" type="yht:PaatostyyppiType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TyonjohtajaType">
@@ -801,33 +825,27 @@ tiedot</xs:documentation>
 					<xs:documentation>Jos kyseessä on yritys tvs. niin tiedot siirretään tässä elementissä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="patevyysvaatimusluokka" minOccurs="0">
+			<xs:element name="patevyysvaatimusluokka" type="yht:PatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Työnjohtajan pätevyys</xs:documentation>
+					<xs:documentation>Työnjohtajan pätevyys
+
+AA poikkeuksellisen vaativa
+A vaativa
+B tavanomainen
+C vähäinen
+</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="C"/>
-						<xs:enumeration value="B"/>
-						<xs:enumeration value="A"/>
-						<xs:enumeration value="AA"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
-			<xs:element name="vaadittuPatevyysluokka" minOccurs="0">
+			<xs:element name="vaadittuPatevyysluokka" type="yht:PatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Kunnan vaatima</xs:documentation>
+					<xs:documentation>Kunnan vaatima
+
+AA poikkeuksellisen vaativa
+A vaativa
+B tavanomainen
+C vähäinen
+</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="C"/>
-						<xs:enumeration value="B"/>
-						<xs:enumeration value="A"/>
-						<xs:enumeration value="AA"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 			<xs:element name="koulutus" type="xs:string" minOccurs="0"/>
 			<xs:element name="valmistumisvuosi" type="xs:string" minOccurs="0"/>
@@ -869,6 +887,17 @@ tiedot</xs:documentation>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="sijaistettavaHlo" type="xs:string" minOccurs="0"/>
+			<xs:element name="vainTamaHankeKytkin" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Onko kyseessä vain tähän hankkeeseen hyväksytty työnjohtaja</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paatosPvm" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Koska osapuolelle on tehty päätös</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paatostyyppi" type="yht:PaatostyyppiType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
@@ -3211,6 +3240,9 @@ tiedot</xs:documentation>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="ViittausType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="edellinen rakennusvalvonta-asia"/>
 			<xs:enumeration value="seuraava rakennusvalvonta-asia"/>
@@ -3397,6 +3429,15 @@ tiedot</xs:documentation>
 																		<xs:enumeration value="puoltaa"/>
 																		<xs:enumeration value="ehdoilla"/>
 																		<xs:enumeration value="jätetty pöydälle"/>
+																		<xs:enumeration value="ei huomautettavaa"/>
+																		<xs:enumeration value="ehdollinen"/>
+																		<xs:enumeration value="puollettu"/>
+																		<xs:enumeration value="ei puollettu"/>
+																		<xs:enumeration value="ei lausuntoa"/>
+																		<xs:enumeration value="lausunto"/>
+																		<xs:enumeration value="kielteinen"/>
+																		<xs:enumeration value="palautettu"/>
+																		<xs:enumeration value="pöydälle"/>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
@@ -3662,4 +3703,28 @@ tiedot</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="PatevyysluokkaType">
+		<xs:annotation>
+			<xs:documentation>Pätevyys:
+AA poikkeuksellisen vaativa 
+A vaativa 
+B tavanomainen 
+C vähäinen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AA"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaatostyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="hyväksytty"/>
+			<xs:enumeration value="hylätty"/>
+			<xs:enumeration value="hakemusvaiheessa"/>
+			<xs:enumeration value="ilmoitus hyväksytty"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
