@@ -67,6 +67,14 @@ Yksittäiset skeematiedostot:
 - [Vesiverkko](gml/kantakartta/vesiverkko.xsd)
 - [Viemariverkko](gml/kantakartta/viemariverkko.xsd)
 
+## Kunnan kiinteistötoimitus
+
+- [Kunnan kiinteistötoimitus](gml/kiinteistotoimitus.xsd)
+
+## Maankäytön muutos (kaavan ja tonttijaon hakeminen)
+
+- [Maankäytön muutos (kaavan ja tonttijaon hakeminen)](gml/maankaytonmuutos.xsd)
+
 ## Opastavat tiedot
 
 - [Opaskartta](gml/opastavattiedot/opaskartta.xsd)
