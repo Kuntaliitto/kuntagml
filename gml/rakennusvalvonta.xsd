@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.8">
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.5/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.0">
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.6/yhteiset.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
@@ -400,6 +400,7 @@
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
@@ -669,6 +670,7 @@
 		<xs:sequence>
 			<xs:element name="tilavuus" type="xs:string" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
 			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
 			<xs:element name="huoneistoala" type="yht:KayttotarkoitusType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -739,8 +741,18 @@
 					<xs:documentation>Katselmuksessa annetut huomatukset/velvoitteet</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="katselmuspoytakirja" type="yht:RakennusvalvontaLiiteType" minOccurs="0"/>
-			<xs:element name="tarkastuksenTaiKatselmuksenNimi" type="xs:string"/>
+			<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Liite" type="yht:RakennusvalvontaLiiteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="tarkastuksenTaiKatselmuksenNimi" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Tarkastuksen tai katselmuksen nimi, joka tarkentaa katselmuksenLaji tietoa.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="lasnaolijat" type="xs:string" minOccurs="0"/>
 			<xs:element name="poikkeamat" type="xs:string" minOccurs="0"/>
 			<xs:element name="verottajanTvLlKytkin" type="xs:boolean" minOccurs="0">
@@ -799,6 +811,18 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="kayttoonottoKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="muuTunnustieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="rakennuksenSelite" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voi saada arvoja esim. "Talo A", "Talo B"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ValmiitRakennuksetType">
@@ -939,11 +963,28 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="hankkeenVaativuus" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>AA Poikkeuksellisen vaativa, A Vaativa, B Tavanomainen, C Vähäinen</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="AA"/>
+								<xs:enumeration value="A"/>
+								<xs:enumeration value="B"/>
+								<xs:enumeration value="C"/>
+								<xs:enumeration value="ei tiedossa"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="ToimenpideType">
+		<xs:annotation>
+			<xs:documentation>Rakentamistoimenpide. Yksi rakennus voi olla vain kerran RakennusvalvontaAsia:ssa ja siihen saa kohdistua vain yksi toimenpide.</xs:documentation>
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="rakval:RakentamistoimenpideType"/>
 		</xs:complexContent>
@@ -952,7 +993,7 @@
 		<xs:sequence>
 			<xs:element name="Toimenpide">
 				<xs:annotation>
-					<xs:documentation>Rakentamistoimenpide</xs:documentation>
+					<xs:documentation>Rakentamistoimenpide. Yksi rakennus voi olla vain kerran RakennusvalvontaAsia:ssa ja siihen saa kohdistua vain yksi toimenpide.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:complexContent>
@@ -998,6 +1039,7 @@
 				<xs:extension base="rakval:RakennelmaType">
 					<xs:sequence>
 						<xs:element name="kokonaisala" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="kayttotarkoitus" type="rakval:RakennelmanKayttotarkoitusType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
@@ -1216,6 +1258,7 @@
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
@@ -1355,6 +1398,78 @@
 			<xs:enumeration value="tuhoutunut"/>
 			<xs:enumeration value="purettu muusta syystä"/>
 			<xs:enumeration value="purettu uudisrakentamisen vuoksi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RakennelmanKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Aallonmurtaja"/>
+			<xs:enumeration value="Aita"/>
+			<xs:enumeration value="Antenni"/>
+			<xs:enumeration value="Asuntovaunu"/>
+			<xs:enumeration value="Autosuoja"/>
+			<xs:enumeration value="Autotalli"/>
+			<xs:enumeration value="Ei tiedossa"/>
+			<xs:enumeration value="Hyppyrimäki"/>
+			<xs:enumeration value="Ikkuna"/>
+			<xs:enumeration value="Infotaulu (jalankulkuopastaulu)"/>
+			<xs:enumeration value="Jakokaappi"/>
+			<xs:enumeration value="Jalasmökki"/>
+			<xs:enumeration value="Jätekatos tai -aitaus"/>
+			<xs:enumeration value="Jätevesijärjestelmä"/>
+			<xs:enumeration value="Kasvihuone"/>
+			<xs:enumeration value="Katos/pergola"/>
+			<xs:enumeration value="Katsomo"/>
+			<xs:enumeration value="Katumainostaulu"/>
+			<xs:enumeration value="Kelluva rakennelma"/>
+			<xs:enumeration value="Kierrätyspiste"/>
+			<xs:enumeration value="Kioski"/>
+			<xs:enumeration value="Kolmiopilari"/>
+			<xs:enumeration value="Laituri"/>
+			<xs:enumeration value="Lastauslaituri"/>
+			<xs:enumeration value="Liikuteltava grillikioski"/>
+			<xs:enumeration value="Lipputankoryhmä"/>
+			<xs:enumeration value="Maakellari"/>
+			<xs:enumeration value="Maalämpöpumppujärjestelmä"/>
+			<xs:enumeration value="Mainoslaite"/>
+			<xs:enumeration value="Markiisi"/>
+			<xs:enumeration value="Masto"/>
+			<xs:enumeration value="Muu käyttö"/>
+			<xs:enumeration value="Muu rakennelma"/>
+			<xs:enumeration value="Muu toimenpide"/>
+			<xs:enumeration value="Muu vesirajalaite"/>
+			<xs:enumeration value="Muuntamo"/>
+			<xs:enumeration value="Muuri"/>
+			<xs:enumeration value="Näkötorni"/>
+			<xs:enumeration value="Odotuskatos"/>
+			<xs:enumeration value="Opaste"/>
+			<xs:enumeration value="Ovi"/>
+			<xs:enumeration value="Parvekelasitus"/>
+			<xs:enumeration value="Pihajärjestely"/>
+			<xs:enumeration value="Piippu"/>
+			<xs:enumeration value="Portti"/>
+			<xs:enumeration value="Puhelinkioski"/>
+			<xs:enumeration value="Pylväsbanderolli"/>
+			<xs:enumeration value="Pylvästaulu"/>
+			<xs:enumeration value="Pysäkkikatos"/>
+			<xs:enumeration value="Pysäköintialue"/>
+			<xs:enumeration value="Pyöreä mainospilari"/>
+			<xs:enumeration value="Rantamuuri"/>
+			<xs:enumeration value="Savupiippu"/>
+			<xs:enumeration value="Siirtopuutarhamökki"/>
+			<xs:enumeration value="Suurtaulu, sisältä valaistu"/>
+			<xs:enumeration value="Suurtaulu, ulkoa valaistu"/>
+			<xs:enumeration value="Taideteos"/>
+			<xs:enumeration value="Taksikatos"/>
+			<xs:enumeration value="Tuulivoimala"/>
+			<xs:enumeration value="Ulkomainoslaite"/>
+			<xs:enumeration value="Ulkotarjoilualue"/>
+			<xs:enumeration value="Vaja"/>
+			<xs:enumeration value="Valaisinpylväs"/>
+			<xs:enumeration value="Varasto"/>
+			<xs:enumeration value="Varastointialue"/>
+			<xs:enumeration value="Viestintätorni"/>
+			<xs:enumeration value="Yleisöteltta"/>
+			<xs:enumeration value="Yleisö-WC"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
