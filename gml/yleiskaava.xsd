@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ykaava="www.kuntatietopalvelu.fi/yleiskaava" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="www.kuntatietopalvelu.fi/yleiskaava" elementFormDefault="qualified" version="1.0.0">
+<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.6/yhteiset.xsd"/>
+	<xs:element name="Yleiskaava" type="gml:FeatureCollectionType" substitutionGroup="gml:_FeatureCollection">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="_Merkinta" type="ykaava:AbstractMerkintaType" abstract="true" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="AbstractMerkintaType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="maaraysOhjeellinenKytkin" type="xs:boolean"/>
+					<xs:element name="sijaintiOhjeellinenKytkin" type="xs:boolean"/>
+					<xs:element name="merkintaaKoskevaMaarays" type="xs:string"/>
+					<xs:element name="kaavamerkinta" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractMerkintaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:_Merkinta"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="_MerkintaAlue" type="ykaava:AbstractMerkintaAlueType" abstract="true" substitutionGroup="ykaava:_Merkinta"/>
+	<xs:complexType name="AbstractMerkintaAlueType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:SurfacePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractMerkintaAluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:_MerkintaAlue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="_MerkintaPiste" type="ykaava:AbstractMerkintaPisteType" abstract="true" substitutionGroup="ykaava:_Merkinta"/>
+	<xs:complexType name="AbstractMerkintaPisteType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaType">
+				<xs:sequence>
+					<xs:element name="sijainti" type="gml:PointPropertyType"/>
+					<xs:element name="vaikutusalue" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Vaikutusalue (buffer, säde)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractMerkintaPistePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:_MerkintaPiste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="_MerkintaViiva" type="ykaava:AbstractMerkintaViivaType" abstract="true" substitutionGroup="ykaava:_Merkinta"/>
+	<xs:complexType name="AbstractMerkintaViivaType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaType">
+				<xs:sequence>
+					<xs:element name="sijainti">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="gml:LineStringSegment"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="vaikutusalue" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Vaikutusalue (buffer, etäisyys referenssilinjasta)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractMerkintaViivaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:_MerkintaViiva"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Erityisalue" type="ykaava:ErityisalueType" substitutionGroup="ykaava:_MerkintaAlue"/>
+	<xs:complexType name="ErityisalueType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaAlueType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:ErityismerkintaAlueelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ErityisaluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Erityisalue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Erityisviiva" type="ykaava:ErityisviivaType" substitutionGroup="ykaava:_MerkintaViiva"/>
+	<xs:complexType name="ErityisviivaType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaViivaType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:ErityismerkintaViivalleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ErityisviivaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Erityisviiva"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Erityisviivapiste" type="ykaava:ErityisviivapisteType" substitutionGroup="ykaava:_MerkintaPiste"/>
+	<xs:complexType name="ErityisviivapisteType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaPisteType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:ErityismerkintaPisteelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ErityisviivapistePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Erityisviivapiste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kayttotarkoitusalue" type="ykaava:KayttotarkoitusalueType" substitutionGroup="ykaava:_MerkintaAlue"/>
+	<xs:complexType name="KayttotarkoitusalueType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaAlueType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KayttotarkoitusmerkintaAlueelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KayttotarkoitusaluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kayttotarkoitusalue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kayttotarkoituspiste" type="ykaava:KayttotarkoituspisteType" substitutionGroup="ykaava:_MerkintaPiste"/>
+	<xs:complexType name="KayttotarkoituspisteType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaPisteType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KayttotarkoitusmerkintaPisteelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KayttotarkoituspistePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kayttotarkoituspiste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kayttotarkoitusviiva" type="ykaava:KayttotarkoitusviivaType" substitutionGroup="ykaava:_MerkintaViiva"/>
+	<xs:complexType name="KayttotarkoitusviivaType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaViivaType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KayttotarkoitusmerkintaViivalleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KayttotarkoitusviivaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kayttotarkoitusviiva"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kehittamistavoitealue" type="ykaava:KehittamistavoitealueType" substitutionGroup="ykaava:_MerkintaAlue"/>
+	<xs:complexType name="KehittamistavoitealueType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaAlueType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KehittamistavoitemerkintaAlueelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KehittamistavoitealuePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kehittamistavoitealue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kehittamistavoitepiste" type="ykaava:KehittamistavoitepisteType" substitutionGroup="ykaava:_MerkintaPiste"/>
+	<xs:complexType name="KehittamistavoitepisteType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaPisteType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KehittamistavoitemerkintaPisteelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KehittamistavoitepistePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kehittamistavoitepiste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kehittamistavoiteviiva" type="ykaava:KehittamistavoiteviivaType" substitutionGroup="ykaava:_MerkintaViiva"/>
+	<xs:complexType name="KehittamistavoiteviivaType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaViivaType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:KehittamistavoitemerkintaViivalleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KehittamistavoiteviivaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Kehittamistavoiteviiva"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Muualue" type="ykaava:MuualueType" substitutionGroup="ykaava:_MerkintaAlue"/>
+	<xs:complexType name="MuualueType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaAlueType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:MuumerkintaAlueelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MuualuePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Muualue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="YleiskaavaAlue" type="ykaava:YleiskaavaAlueType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Tämä on kaava-alue</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="YleiskaavaAlueType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Liite" type="yht:LiiteType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="maarays" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="tyyppi" type="ykaava:YleiskaavanTyyppiType"/>
+					<xs:element name="kaavatunnus" type="xs:string"/>
+					<xs:element name="kunta" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="tullutOsittainVoimaan" type="xs:boolean"/>
+					<xs:element name="hyvaksymisPvm" type="xs:date"/>
+					<xs:element name="vireilletuloPvm" type="xs:date"/>
+					<xs:element name="hyvaksyja" type="xs:string"/>
+					<xs:element name="laatija" type="xs:string"/>
+					<xs:element name="nimi" type="xs:string"/>
+					<xs:element name="sijainti" type="gml:SurfacePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="YleiskaavaAluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:YleiskaavaAlue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Ymparistomuutosalue" type="ykaava:YmparistomuutosalueType" substitutionGroup="ykaava:_MerkintaAlue"/>
+	<xs:complexType name="YmparistomuutosalueType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaAlueType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:YmparistomuutosmerkintaAlueelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="YmparistomuutosaluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Ymparistomuutosalue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Ymparistomuutospiste" type="ykaava:YmparistomuutospisteType" substitutionGroup="ykaava:_MerkintaPiste"/>
+	<xs:complexType name="YmparistomuutospisteType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaPisteType">
+				<xs:sequence>
+					<xs:element name="merkinta" type="ykaava:YmparistomuutosmerkintaPisteelleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="YmparistomuutospistePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Ymparistomuutospiste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Ymparistomuutosviiva" type="ykaava:YmparistomuutosviivaType" substitutionGroup="ykaava:_MerkintaViiva"/>
+	<xs:complexType name="YmparistomuutosviivaType">
+		<xs:complexContent>
+			<xs:extension base="ykaava:AbstractMerkintaViivaType">
+				<xs:sequence>
+					<xs:element name="merkinta">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="ykaava:Ymparistomuutosviiva"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="YmparistomuutosviivaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="ykaava:Ymparistomuutosviiva"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ErityismerkintaAlueelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu eritysominaisuutta ilmaiseva merkintä"/>
+			<xs:enumeration value="Suunnittelutarvealue"/>
+			<xs:enumeration value="Kehittämisalue"/>
+			<xs:enumeration value="Suojavyöhyke"/>
+			<xs:enumeration value="Vaara-alue"/>
+			<xs:enumeration value="Melualue"/>
+			<xs:enumeration value="Kansallinen kaupunkipuisto"/>
+			<xs:enumeration value="Unescon maailmanperintökohde"/>
+			<xs:enumeration value="Luonnon monimuotoisuuden kannalta erityisen tärkeä alue"/>
+			<xs:enumeration value="Natura 2000 -verkostoon kuuluva tai siihen ehdotettu alue"/>
+			<xs:enumeration value="Tärkeä (I) tai vedenhankintaan soveltuva (II) pohjavesialue"/>
+			<xs:enumeration value="Arvokas harjualue tai muu geologinen muodostuma"/>
+			<xs:enumeration value="Alue, jolla on säilytettäviä ympäristöarvoja"/>
+			<xs:enumeration value="Kaupunki- tai kyläkuvallisesti arvokas alue"/>
+			<xs:enumeration value="Maisemallisesti arvokas alue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErityismerkintaPisteelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu eritysominaisuutta ilmaiseva merkintä"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErityismerkintaViivalleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu eritysominaisuutta ilmaiseva merkintä"/>
+			<xs:enumeration value="Suunnittelutarvealue"/>
+			<xs:enumeration value="Kehittämisalue"/>
+			<xs:enumeration value="Suojavyöhyke"/>
+			<xs:enumeration value="Vaara-alue"/>
+			<xs:enumeration value="Puhdistettava/kunnostettava maa-alue"/>
+			<xs:enumeration value="Puhdistettava/kunnostettava maa-alue"/>
+			<xs:enumeration value="Melualue"/>
+			<xs:enumeration value="Kansallinen kaupunkipuisto"/>
+			<xs:enumeration value="Unescon maailmanperintökohde"/>
+			<xs:enumeration value="Luonnon monimuotoisuuden kannalta erityisen tärkeä alue"/>
+			<xs:enumeration value="Natura 2000 -verkostoon kuuluva tai siihen ehdotettu alue"/>
+			<xs:enumeration value="Tärkeä (I) tai vedenhankintaan soveltuva (II) pohjavesialue"/>
+			<xs:enumeration value="Arvokas harjualue tai muu geologinen muodostuma"/>
+			<xs:enumeration value="Kaupunki- tai kyläkuvallisesti arvokas alue"/>
+			<xs:enumeration value="Maisemallisesti arvokas alue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KayttotarkoitusmerkintaAlueelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu käyttötarkoitus"/>
+			<xs:enumeration value="Tuulivoimaloiden alue"/>
+			<xs:enumeration value="Vesialue (W)"/>
+			<xs:enumeration value="Maa- ja metsätalousvaltainen alue, jolla on erityisiä ympäristöarvoja (MY)"/>
+			<xs:enumeration value="Maa- ja metsätalousvaltainen alue, jolla on erityistä ulkoilun ohjaamistarvetta (MU)"/>
+			<xs:enumeration value="Maisemallisesti arvokas peltoalue (MA)"/>
+			<xs:enumeration value="Kotieläintalouden suuryksikön alue (ME)"/>
+			<xs:enumeration value="Maatalousalue (MT)"/>
+			<xs:enumeration value="Maa- ja metsätalousvaltainen alue (M)"/>
+			<xs:enumeration value="Alue, jolla ympäristö säilytetään (/s)"/>
+			<xs:enumeration value="Rakennussuojelulain nojalla suojeltu alue (SRS)"/>
+			<xs:enumeration value="Rakennuslainsäädännön nojalla suojeltava alue (SR)"/>
+			<xs:enumeration value="Muinaismuistoalue (SM)"/>
+			<xs:enumeration value="Luonnonsuojelualue (SL)"/>
+			<xs:enumeration value="Suojelualue (S)"/>
+			<xs:enumeration value="Suojaviheralue (EV)"/>
+			<xs:enumeration value="Hautausmaa-alue (EH)"/>
+			<xs:enumeration value="Puolustusvoimien alue (EP)"/>
+			<xs:enumeration value="Ampumarata-alue (EA)"/>
+			<xs:enumeration value="Kaivosalue (EK)"/>
+			<xs:enumeration value="Maa-ainesten ottoalue (EO)"/>
+			<xs:enumeration value="Jätteenkäsittelyalue (EJ)"/>
+			<xs:enumeration value="Energiahuollon alue (EN)"/>
+			<xs:enumeration value="Yhdyskuntateknisen huollon alue (ET)"/>
+			<xs:enumeration value="Erityisalue (E)"/>
+			<xs:enumeration value="Satama-alue (LS)"/>
+			<xs:enumeration value="Lentoliikenteen alue (LL)"/>
+			<xs:enumeration value="Rautatieliikenteen alue (LR)"/>
+			<xs:enumeration value="Huoltoasema-alue (LH)"/>
+			<xs:enumeration value="Tavaraliikenteen terminaalialue (LTA)"/>
+			<xs:enumeration value="Henkilöliikenteen terminaalialue (LHA)"/>
+			<xs:enumeration value="Katualue"/>
+			<xs:enumeration value="Yleisen tien alue (LT)"/>
+			<xs:enumeration value="Liikennealue (L)"/>
+			<xs:enumeration value="Siirtolapuutarha- tai palstaviljelyalue (RP)"/>
+			<xs:enumeration value="Asuntovaunualue (RV)"/>
+			<xs:enumeration value="Leirintäalue (RL)"/>
+			<xs:enumeration value="Matkailupalvelujen alue (RM)"/>
+			<xs:enumeration value="Loma-asuntoalue (RA)"/>
+			<xs:enumeration value="Loma- ja matkailualue (R)"/>
+			<xs:enumeration value="Retkeily- ja ulkoilualue (VR)"/>
+			<xs:enumeration value="Urheilu- ja virkistyspalvelujen alue (VU)"/>
+			<xs:enumeration value="Lähivirkistysalue (VL)"/>
+			<xs:enumeration value="Virkistysalue (V)"/>
+			<xs:enumeration value="Teollisuus- ja varastoalue, jolla on/jolle saa sijoittaa merkittävän, vaarallisia kemikaaleja valmistavan tai varastoivan laitoksen (T/kem)"/>
+			<xs:enumeration value="Varastoalue (TV)"/>
+			<xs:enumeration value="Teollisuusalue, jolla ympäristö asettaa toiminnan laadulle erityisiä vaatimuksia (TY)"/>
+			<xs:enumeration value="Ympäristövaikutuksiltaan merkittävien teollisuustoimintojen alue (TT)"/>
+			<xs:enumeration value="Teollisuus ja varastoalue (T)"/>
+			<xs:enumeration value="Työpaikka-alue (TP)"/>
+			<xs:enumeration value="Julkisten palvelujen ja hallinnon alue (PY)"/>
+			<xs:enumeration value="Lähipalvelujen alue (PL)"/>
+			<xs:enumeration value="Palvelujen ja hallinnon alue (P)"/>
+			<xs:enumeration value="Kaupallisten palvelujen alue, jolle saa sijoittaa vähittäiskaupan suuryksikön (KM)"/>
+			<xs:enumeration value="Keskustatoimintojen alue (C)"/>
+			<xs:enumeration value="Kyläkeskuksen alue (AT)"/>
+			<xs:enumeration value="Pientalovaltainen asuntoalue (AP)"/>
+			<xs:enumeration value="Asuinkerrostalojen alue (AK)"/>
+			<xs:enumeration value="Asuntoalue (A)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KayttotarkoitusmerkintaPisteelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu käyttötarkoitus"/>
+			<xs:enumeration value="Eritasoristeys ilman liittymää"/>
+			<xs:enumeration value="Suuntaisliittymä"/>
+			<xs:enumeration value="Eritasoliittymä"/>
+			<xs:enumeration value="Liittymä"/>
+			<xs:enumeration value="Venesatama/venevalkama"/>
+			<xs:enumeration value="Rautatieasema"/>
+			<xs:enumeration value="Linja-autoasema/julkisen liikenteen vaihtopaikka/matkakeskus"/>
+			<xs:enumeration value="Muinaismuistokohde"/>
+			<xs:enumeration value="Suojelukohde"/>
+			<xs:enumeration value="Uimaranta"/>
+			<xs:enumeration value="Virkistys-/matkailukohde"/>
+			<xs:enumeration value="Lähipalvelujen alue (pl)"/>
+			<xs:enumeration value="Keskustatoimintojen alue (ca)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KayttotarkoitusmerkintaViivalleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu käyttötarkoitus"/>
+			<xs:enumeration value="Tuulivoimaloiden alue"/>
+			<xs:enumeration value="Johto tai linja"/>
+			<xs:enumeration value="Veneväylä"/>
+			<xs:enumeration value="Laivaväylä"/>
+			<xs:enumeration value="Yhdysrata/sivurata/kaupunkirata"/>
+			<xs:enumeration value="Päärata"/>
+			<xs:enumeration value="Moottorikelkkailureitti"/>
+			<xs:enumeration value="Kevyen liikenteen reitti"/>
+			<xs:enumeration value="Ulkoilureitti"/>
+			<xs:enumeration value="Liikennetunneli"/>
+			<xs:enumeration value="Joukkoliikenteelle varattu tie tai katu"/>
+			<xs:enumeration value="Yhdystie/kokoojakatu"/>
+			<xs:enumeration value="Seututie/pääkatu"/>
+			<xs:enumeration value="Valtatie/kantatie"/>
+			<xs:enumeration value="Kaksiajoratainen päätie/-katu"/>
+			<xs:enumeration value="Moottori- tai moottoriliikennetie"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KehittamistavoitemerkintaAlueelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu kehittämistarve"/>
+			<xs:enumeration value="Meluntorjuntatarve"/>
+			<xs:enumeration value="Alueen eheyttämis- tai tiivistämistarve"/>
+			<xs:enumeration value="Yhdyskuntarakenteen mahdollinen laajenemisalue"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KehittamistavoitemerkintaPisteelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu kehittämistarve"/>
+			<xs:enumeration value="Terveyshaitan poistamistarve"/>
+			<xs:enumeration value="Ympäristö- tai maisemavaurion korjaustarve"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KehittamistavoitemerkintaViivalleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu kehittämistarve"/>
+			<xs:enumeration value="Meluntorjuntatarve"/>
+			<xs:enumeration value="Viheryhteystarve"/>
+			<xs:enumeration value="Kevyen liikenteen yhteystarve"/>
+			<xs:enumeration value="Joukkoliikenteen kehittämiskäytävä tai yhteystarve"/>
+			<xs:enumeration value="Tieliikenteen yhteystarve"/>
+			<xs:enumeration value="Ohjeellinen tai vaihtoehtoinen tielinjaus"/>
+			<xs:enumeration value="Yhdyskuntarakenteen mahdollinen laajenemisalue"/>
+			<xs:enumeration value="Yhdyskuntarakenteen laajenemissuunta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MuumerkintaAlueelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Kunnan raja"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YleiskaavanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Tuulivoimayleiskaava"/>
+			<xs:enumeration value="Kyläyleiskaava"/>
+			<xs:enumeration value="Rantayleiskaava"/>
+			<xs:enumeration value="Yleiskaava">
+				<xs:annotation>
+					<xs:documentation>Eka arvo ja toinen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YmparistomuutosmerkintaAlueelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu muutos"/>
+			<xs:enumeration value="Uudet ja olennaisesti muuttuvat alueet"/>
+			<xs:enumeration value="Pienin toimenpitein kehitettävät alueet"/>
+			<xs:enumeration value="Nykyisellään säilyvät alueet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YmparistomuutosmerkintaPisteelleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu muutos"/>
+			<xs:enumeration value="Kohde, uusi"/>
+			<xs:enumeration value="Kohde, nykyinen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YmparistomuutosmerkintaViivalleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Muu muutos"/>
+			<xs:enumeration value="Uudet tiet ja linjat"/>
+			<xs:enumeration value="Merkittävästi parannettava tieosuus"/>
+			<xs:enumeration value="Nykyiset tiet ja linjat"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
