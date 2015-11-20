@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kiito="http://www.kuntatietopalvelu.fi/gml/kiinteistotoimitus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kiinteistotoimitus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kiito="http://www.kuntatietopalvelu.fi/gml/kiinteistotoimitus" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/kiinteistotoimitus" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.3">
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.6/yhteiset.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<!-- ================================================= -->
@@ -154,10 +154,11 @@
 					<xs:element name="liitetieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="Liite" type="yht:LiiteType"/>
+								<xs:element name="Liite" type="kiito:KiinteistotoimitusLiiteType"/>
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="kayttotapaus" type="xs:string" minOccurs="0"/>
 					<xs:element name="kiinteistotieto" minOccurs="0" maxOccurs="unbounded">
 						<xs:complexType>
 							<xs:sequence>
@@ -711,4 +712,28 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="toimitustieto" type="kiito:ToimitustietoType" substitutionGroup="gml:featureMember"/>
+	<xs:complexType name="KiinteistotoimitusLiiteType">
+		<xs:complexContent>
+			<xs:extension base="yht:LiiteType">
+				<xs:sequence>
+					<xs:element name="tekija" type="yht:OsapuoliType" minOccurs="0"/>
+					<xs:element name="tyyppi" type="xs:string" minOccurs="0"/>
+					<xs:element name="metatietotieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="metatieto">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="metatietoArvo" type="xs:string" minOccurs="0"/>
+											<xs:element name="metatietoNimi" type="xs:string" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 </xs:schema>
