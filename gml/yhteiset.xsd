@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.6">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.7">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<!-- ================================================= -->
@@ -543,7 +543,7 @@ tiedot</xs:documentation>
 			<xs:element name="autopaikkojaUlkopuolella" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
 			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
-			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="vaaditutKatselmukset" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
@@ -575,6 +575,13 @@ tiedot</xs:documentation>
 											<xs:documentation>Tarkastuksen tai katselmuksen nimi, joka tarkentaa katselmuksenLaji tietoa.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="muuTunnustieto">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -599,7 +606,14 @@ tiedot</xs:documentation>
 			<xs:element name="vaadittuErityissuunnitelmatieto" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="vaadittuErityissuunnitelma" type="xs:string"/>
+						<xs:element name="VaadittuErityissuunnitelma">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="vaadittuErityissuunnitelma" type="xs:string"/>
+									<xs:element name="toteutumisHetki" type="xs:dateTime" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -891,6 +905,8 @@ C vähäinen
 			<xs:element name="paatostyyppi" type="yht:PaatostyyppiType" minOccurs="0"/>
 			<xs:element name="FISEpatevyyskortti" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="FISEkelpoisuus" type="yht:FiseKelpoisuusType" minOccurs="0"/>
+			<xs:element name="muuSuunnittelijaRooli" type="xs:string" minOccurs="0"/>
+			<xs:element name="postitetaanKytkin" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TyonjohtajaType">
@@ -1083,7 +1099,7 @@ C vähäinen
 			<xs:documentation>Määrittelee tyypin, jolla voidaan esittää käyttötarkoituksittain pinta-alat</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="pintaAla" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="pintaAla" type="xs:int" minOccurs="0"/>
 			<xs:element name="kayttotarkoitusKoodi" type="yht:KayttotarkoitusKoodiType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1182,7 +1198,7 @@ C vähäinen
 							<xs:documentation>Voisiko poistaa, koska siirto myös rakennusoikeuksittain?</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
+					<xs:element name="rakennusoikeudellinenKerrosala" type="xs:decimal" minOccurs="0"/>
 					<xs:element name="tasosijainti" type="yht:TasosijaintiType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Paikan sijainti suhteessa maanpintaan</xs:documentation>
@@ -3087,6 +3103,8 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="selite" type="xs:string" minOccurs="0"/>
+			<xs:element name="postitetaanKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="laskuviite" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OsapuoletType">
@@ -3224,6 +3242,7 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 			<xs:enumeration value="kiinteistön vesi- ja viemäröintilaitteiston suunnittelija"/>
 			<xs:enumeration value="rakennusfysikaalinen suunnittelija"/>
 			<xs:enumeration value="kosteusvaurion korjaustyön suunnittelija"/>
+			<xs:enumeration value="muu"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TyonjohtajaRooliKoodiType">
@@ -3916,4 +3935,10 @@ C vähäinen</xs:documentation>
 			<xs:enumeration value="poikkeuksellisen vaativa kosteusvaurion korjaussuunnittelu"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="AvainArvoType">
+		<xs:sequence>
+			<xs:element name="avain" type="xs:string"/>
+			<xs:element name="arvo" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
