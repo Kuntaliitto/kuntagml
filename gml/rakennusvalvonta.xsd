@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.0">
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.6/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.1">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.7/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
 	<!-- ================================================= -->
@@ -400,7 +400,7 @@
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
-			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:int" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
@@ -650,6 +650,7 @@
 						<xs:element name="valmistumisPvm" type="xs:date" minOccurs="0"/>
 						<xs:element name="raukeamisPvm" type="xs:date" minOccurs="0"/>
 						<xs:element name="jatkoaikaPvm" type="xs:date" minOccurs="0"/>
+						<xs:element name="rakennustietojaEimuutetaKytkin" type="xs:boolean" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -668,10 +669,10 @@
 	</xs:complexType>
 	<xs:complexType name="LaajennuksentiedotType">
 		<xs:sequence>
-			<xs:element name="tilavuus" type="xs:string" minOccurs="0"/>
-			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
-			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
-			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
+			<xs:element name="tilavuus" type="xs:int" minOccurs="0"/>
+			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:int" minOccurs="0"/>
+			<xs:element name="kokonaisala" type="xs:int" minOccurs="0"/>
 			<xs:element name="huoneistoala" type="yht:KayttotarkoitusType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -929,6 +930,20 @@
 											<xs:element name="suunnittelijanVaativuustaso" type="yht:SuunnittelijaType" minOccurs="0"/>
 											<xs:element name="tyonjohtajanVaativuustaso" type="yht:TyonjohtajaType" minOccurs="0"/>
 											<xs:element name="toimitustapa" type="yht:ToimitustapaType" minOccurs="0"/>
+											<xs:element name="haettuAloitusoikeuttatieto" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="HaettuAloitusoikeutta">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="haettuAloitusoikeuttaKytkin" type="xs:boolean"/>
+																	<xs:element name="perustelu" type="xs:string" minOccurs="0"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
 										</xs:sequence>
 									</xs:complexType>
 								</xs:element>
@@ -976,6 +991,25 @@
 								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
+					</xs:element>
+					<xs:element name="avainsanaTieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Avainsana" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="menettelyTOS" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TOS =  tiedonohjaussuunnitelma</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="avainArvoTieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AvainArvoPari" type="yht:AvainArvoType"/>
+							</xs:sequence>
+						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
 			</xs:extension>
@@ -1258,7 +1292,7 @@
 			<xs:element name="rinnakkaisosoite" type="yht:PostiosoiteType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="kerrosluku" type="xs:int" minOccurs="0"/>
 			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
-			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:string" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:int" minOccurs="0"/>
 			<xs:element name="rakentamistapa" type="rakval:RakentamistapaType" minOccurs="0"/>
 			<xs:element name="kantavaRakennusaine" type="rakval:KantavaRakennusaineType" minOccurs="0"/>
 			<xs:element name="julkisivu" type="rakval:JulkisivuType" minOccurs="0"/>
@@ -1470,6 +1504,8 @@
 			<xs:enumeration value="Viestintätorni"/>
 			<xs:enumeration value="Yleisöteltta"/>
 			<xs:enumeration value="Yleisö-WC"/>
+			<xs:enumeration value="Varastointisäiliö"/>
+			<xs:enumeration value="Aurinkopaneeli"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

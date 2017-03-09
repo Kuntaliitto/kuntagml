@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:akaava="http://www.kuntatietopalvelu.fi/gml/asemakaava" xmlns:gml="http://www.opengis.net/gml" xmlns:tilastot="http://www.ymparisto.fi" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/asemakaava" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.1">
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.6/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:akaava="http://www.kuntatietopalvelu.fi/gml/asemakaava" xmlns:gml="http://www.opengis.net/gml" xmlns:tilastot="http://www.ymparisto.fi" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/asemakaava" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.2">
 	<xs:import namespace="http://www.ymparisto.fi" schemaLocation="KatseDetailPlan.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.7/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Asemakaava  -->
 	<!-- ================================================= -->
@@ -2457,6 +2457,8 @@ Osoittaa että halutaanko kohteen jokin ominaisuus näyttää tekstinä kohteen 
 					<xs:element name="lisatieto" type="xs:string" minOccurs="0"/>
 					<xs:element name="kayttotarkoitus" type="xs:string" minOccurs="0"/>
 					<xs:element name="osoite" type="yht:OsoiteType" minOccurs="0"/>
+					<xs:element name="korotettuKiinteistoveroalkuPvm" type="xs:date" minOccurs="0"/>
+					<xs:element name="korotettuKiinteistoveroloppuPvm " type="xs:date" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
