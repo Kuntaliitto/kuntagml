@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.7">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.8">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Yhteiset tietotyypit -->
 	<!-- ================================================= -->
@@ -141,6 +141,7 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="tila" type="yht:OsoiteTilaType" minOccurs="0"/>
+					<xs:element name="kohteenLaji" type="yht:OsoitteistetunKohteenLajiType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -491,7 +492,7 @@ tiedot</xs:documentation>
 						<xs:enumeration value="evätty"/>
 						<xs:enumeration value="osittain myönnetty"/>
 						<xs:enumeration value="pysytti osittain myönnettynä"/>
-						<xs:enumeration value="myönnetty aloitusoikeudella "/>
+						<xs:enumeration value="myönnetty aloitusoikeudella"/>
 						<xs:enumeration value="ehdollinen"/>
 						<xs:enumeration value="ei tutkittu (oikaisuvaatimusvaatimus tai lupa pysyy puollettuna)"/>
 						<xs:enumeration value="ei tutkittu (oikaisuvaatimus tai lupa pysyy evättynä)"/>
@@ -541,9 +542,9 @@ tiedot</xs:documentation>
 			<xs:element name="autopaikkojaRakennettu" type="xs:int" minOccurs="0"/>
 			<xs:element name="autopaikkojaKiinteistolla" type="xs:int" minOccurs="0"/>
 			<xs:element name="autopaikkojaUlkopuolella" type="xs:int" minOccurs="0"/>
-			<xs:element name="kerrosala" type="xs:string" minOccurs="0"/>
-			<xs:element name="kokonaisala" type="xs:string" minOccurs="0"/>
-			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="kerrosala" type="xs:int" minOccurs="0"/>
+			<xs:element name="kokonaisala" type="xs:int" minOccurs="0"/>
+			<xs:element name="rakennusoikeudellinenKerrosala" type="xs:int" minOccurs="0"/>
 			<xs:element name="vaaditutKatselmukset" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
@@ -575,7 +576,7 @@ tiedot</xs:documentation>
 											<xs:documentation>Tarkastuksen tai katselmuksen nimi, joka tarkentaa katselmuksenLaji tietoa.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="muuTunnustieto">
+									<xs:element name="muuTunnustieto" minOccurs="0">
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
@@ -610,7 +611,7 @@ tiedot</xs:documentation>
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element name="vaadittuErityissuunnitelma" type="xs:string"/>
-									<xs:element name="toteutumisHetki" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="toteutumisPvm" type="xs:date" minOccurs="0"/>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -1193,18 +1194,18 @@ C vähäinen
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="kerrosala" type="xs:string" minOccurs="0">
+					<xs:element name="kerrosala" type="xs:int" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Voisiko poistaa, koska siirto myös rakennusoikeuksittain?</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="rakennusoikeudellinenKerrosala" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="rakennusoikeudellinenKerrosala" type="xs:int" minOccurs="0"/>
 					<xs:element name="tasosijainti" type="yht:TasosijaintiType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Paikan sijainti suhteessa maanpintaan</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="rakennusoikeusYhteensa" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="rakennusoikeusYhteensa" type="xs:int" minOccurs="0"/>
 					<xs:element name="uusiKytkin" type="xs:boolean" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Onko kyseessa uusi rakennuspaikka</xs:documentation>
@@ -3941,4 +3942,22 @@ C vähäinen</xs:documentation>
 			<xs:element name="arvo" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OsoitteistetunKohteenLajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="kaavayksikkö"/>
+			<xs:enumeration value="luonnonsuojelualue"/>
+			<xs:enumeration value="matkailukohde"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="muu rakentamaton kiinteistö"/>
+			<xs:enumeration value="puisto tai kenttä"/>
+			<xs:enumeration value="rakennus"/>
+			<xs:enumeration value="saari"/>
+			<xs:enumeration value="satama"/>
+			<xs:enumeration value="siirtolapuutarha tai mökkikylä"/>
+			<xs:enumeration value="tontti"/>
+			<xs:enumeration value="tori tai aukio"/>
+			<xs:enumeration value="uimaranta"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

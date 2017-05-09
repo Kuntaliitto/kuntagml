@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mkos="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/osoitteet" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/opastavattiedot/osoitteet" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.7/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.8/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Osoitteet -->
 	<!-- ================================================= -->
@@ -9,54 +9,21 @@
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<!-- Class: <<FeatureType>> Osoitteet-->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	<xs:element name="Osoitteet" type="mkos:OsoitteetType" substitutionGroup="gml:_Feature">
-		<xs:annotation>
-			<xs:documentation>Skeeman juurielementti	</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:complexType name="OsoitteetType">
-		<xs:annotation>
-			<xs:documentation>Opaskartta elementin sisällön määrittely</xs:documentation>
-		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="gml:AbstractFeatureType">
+			<xs:extension base="gml:AbstractFeatureCollectionType">
 				<xs:sequence>
-					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType">
-						<xs:annotation>
-							<xs:documentation>Siirron tiedot</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="osoitetieto" minOccurs="0" maxOccurs="unbounded">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element ref="mkos:Osoite">
-									<xs:annotation>
-										<xs:documentation>Osoitetieto. Kunnan osoiterekisterin tiedot</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
-					<xs:element name="osoitteenliittymatieto" minOccurs="0" maxOccurs="unbounded">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element ref="mkos:OsoitteenLiittyma"/>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
-					<xs:element name="kayntiosoitetieto" minOccurs="0" maxOccurs="unbounded">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element ref="mkos:KayntiOsoite"/>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
-					<xs:element name="kuvaus" type="xs:string" minOccurs="0"/>
+					<xs:element name="toimituksentiedot" type="yht:AineistotoimitusType"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="AjoOsoiteType">
+	<xs:element name="Osoitteet" type="mkos:OsoitteetType" substitutionGroup="gml:_FeatureCollection">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="KulkuOsoiteType">
 		<xs:complexContent>
 			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
 				<xs:sequence>
@@ -81,11 +48,22 @@
 							</xs:complexType>
 						</xs:element>
 					</xs:choice>
-					<xs:element name="sijainti" type="gml:PointPropertyType">
+					<xs:element name="sijaintipiste" type="gml:PointPropertyType">
 						<xs:annotation>
 							<xs:documentation>Liittymäpisteen sijainti väylällä</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="sijainti" type="gml:LineStringPropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reitti(viivakohde) liittymäpisteestä sisäänkäyntiin.
+Viivakohde:
+1) Sisältää minimissään liityntäpiste - sisäänkäyntipiste - eli suora viiva liittymästä sisäänkäyntiin.
+
+2) Suositeltavaa: On tallettaa reitti(murtoviiva) liityntäpisteeltä sisäänkäyntipisteeseen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kulkuyhteydenLaatu" type="mkos:KulkuyhteydenLaatuType"/>
+					<xs:element name="tarkkaReittiKytkin" type="xs:boolean"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -138,7 +116,7 @@
 			<xs:documentation>Osoitetieto. Kunnan osoiterekisterin tiedot ?</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="OsoitteenLiittyma" type="mkos:AjoOsoiteType" substitutionGroup="gml:_Feature">
+	<xs:element name="Kulkuosoite" type="mkos:KulkuOsoiteType" substitutionGroup="gml:_Feature">
 		<xs:annotation>
 			<xs:documentation>Kyseisen osoitteen liiittymäpiste väylältä</xs:documentation>
 		</xs:annotation>
@@ -148,4 +126,13 @@
 			<xs:documentation>Osoitteen käyntiosoitetieto</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:simpleType name="KulkuyhteydenLaatuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jalankulku"/>
+			<xs:enumeration value="esteetön jalankulku"/>
+			<xs:enumeration value="henkilöauto"/>
+			<xs:enumeration value="pakettiauto"/>
+			<xs:enumeration value="kuorma-auto"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
