@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:ykaava="http://www.kuntatietopalvelu.fi/gml/yleiskaava" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleiskaava" elementFormDefault="qualified" version="1.0.4">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:ykaava="http://www.kuntatietopalvelu.fi/gml/yleiskaava" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yleiskaava" elementFormDefault="qualified" version="1.0.5">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.8/yhteiset.xsd"/>
 	<xs:element name="Yleiskaava" substitutionGroup="gml:_FeatureCollection">
@@ -10,7 +10,7 @@
 			<xs:complexContent>
 				<xs:extension base="gml:FeatureCollectionType">
 					<xs:sequence>
-						<xs:element ref="ykaava:toimituksenTiedottieto" minOccurs="0"/>
+						<xs:element ref="ykaava:toimituksenTiedottieto"/>
 					</xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
@@ -21,8 +21,8 @@
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
-					<xs:element name="maaraysOhjeellinenKytkin" type="xs:boolean"/>
-					<xs:element name="sijaintiOhjeellinenKytkin" type="xs:boolean"/>
+					<xs:element name="maaraysOhjeellinenKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="sijaintiOhjeellinenKytkin" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="merkintaaKoskevaMaarays" type="xs:string"/>
 					<xs:element name="kaavamerkinta" type="xs:string"/>
 					<xs:element name="labelTieto" type="ykaava:LabelPropertyType" minOccurs="0" maxOccurs="unbounded"/>
@@ -369,9 +369,9 @@
 					<xs:documentation>Label-tekstin suunta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="kohta" type="xs:string" minOccurs="0">
+			<xs:element name="kohta" type="gml:PointPropertyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Viiteviivan päätepiste suhteessa kohteeseen. Mikäli siirtymäsijainti puuttuu, sijoitetaan teksti tähän kohtaan</xs:documentation>
+					<xs:documentation>Viiteviivan päätepiste suhteessa kohteeseen. Mikäli siirtymäsijainti puuttuu, käytetään tätä pistettä.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="siirtymasijainti" type="gml:PointPropertyType" minOccurs="0">
