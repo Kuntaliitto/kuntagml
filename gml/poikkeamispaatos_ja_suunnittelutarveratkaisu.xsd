@@ -96,11 +96,24 @@
 						</xs:complexType>
 					</xs:element>
 					<xs:element name="kayttotapaus" type="xs:string" minOccurs="0"/>
-					<xs:element name="avainSana" type="xs:string" minOccurs="0"/>
+					<xs:element name="avainsanaTieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Avainsana" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
 					<xs:element name="menettelyTOS" type="xs:string" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>TOS =  tiedonohjaussuunnitelma</xs:documentation>
 						</xs:annotation>
+					</xs:element>
+					<xs:element name="avainArvoTieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AvainArvoPari" type="yht:AvainArvoType"/>
+							</xs:sequence>
+						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
 			</xs:extension>
