@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.8">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.9">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
 	<!-- ================================================= -->
@@ -576,12 +576,19 @@ tiedot</xs:documentation>
 											<xs:documentation>Tarkastuksen tai katselmuksen nimi, joka tarkentaa katselmuksenLaji tietoa.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="muuTunnustieto" minOccurs="0">
+									<xs:element name="muuTunnustieto">
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
 											</xs:sequence>
 										</xs:complexType>
+									</xs:element>
+									<xs:element name="paatos" type="xs:string" minOccurs="0"/>
+									<xs:element name="paatoksenPerustelut" type="xs:string" minOccurs="0"/>
+									<xs:element name="katselmuksenTarkenne" type="xs:string" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>esim. osittainen käyttöönotto, kerrokset 1 ja 2</xs:documentation>
+										</xs:annotation>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -631,6 +638,7 @@ tiedot</xs:documentation>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="kokoontumistilanHenkilomaara" type="xs:int" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PaatosType">
@@ -1010,6 +1018,15 @@ C vähäinen
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="paatostyyppi" type="yht:PaatostyyppiType" minOccurs="0"/>
+			<xs:element name="paatoksentekija" type="xs:string" minOccurs="0"/>
+			<xs:element name="pykala" type="xs:int" minOccurs="0"/>
+			<xs:element name="tyonjohtajaPaatosLiitetieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Liite" type="yht:RakennusvalvontaLiiteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
@@ -1076,6 +1093,7 @@ C vähäinen
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:element name="ulkomainenHenkilotunnus" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="VRKRooliKoodiType">
@@ -1152,6 +1170,7 @@ C vähäinen
 														<xs:enumeration value="oma"/>
 														<xs:enumeration value="vuokra"/>
 														<xs:enumeration value="ei tiedossa"/>
+														<xs:enumeration value="muu oikeus"/>
 													</xs:restriction>
 												</xs:simpleType>
 											</xs:element>
@@ -1255,6 +1274,7 @@ C vähäinen
 			<xs:enumeration value="Ilmoituksen tekijä"/>
 			<xs:enumeration value="Kehotuksen saaja"/>
 			<xs:enumeration value="Hakijan asiamies"/>
+			<xs:enumeration value="Rakennuksen laajarunkoisen osan arvioija"/>
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3290,6 +3310,7 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
+					<xs:element name="ulkomainenHenkilotunnus" type="xs:string" minOccurs="0"/>
 					<xs:element name="sukunimi" type="xs:string"/>
 					<xs:element name="etunimi" type="xs:string"/>
 				</xs:sequence>
@@ -3822,6 +3843,7 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="yhdistysRekisterinumero" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="VerkkolaskutusTypeType">

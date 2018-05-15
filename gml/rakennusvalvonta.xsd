@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.3">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.8/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.9/yhteiset.xsd"/>
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
 	<!-- ================================================= -->
@@ -28,6 +28,9 @@
 							<xs:documentation>vastaava kuin rakennustunnus</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="kokoontumistilanHenkilomaara" type="xs:int" minOccurs="0"/>
+					<xs:element name="tilapainenRakennelmaKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="tilapainenRakennelmavoimassaPvm" type="xs:date" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -298,6 +301,9 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="kokoontumistilanHenkilomaara" type="xs:int" minOccurs="0"/>
+					<xs:element name="tilapainenRakennusKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="tilapainenRakennusvoimassaPvm" type="xs:date" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -1034,7 +1040,6 @@
 					<xs:complexContent>
 						<xs:extension base="rakval:ToimenpideType">
 							<xs:sequence>
-								<xs:element name="katselmustieto" type="rakval:KatselmuksetType" minOccurs="0" maxOccurs="unbounded"/>
 								<xs:choice>
 									<xs:element name="rakennustieto">
 										<xs:complexType>
@@ -1191,6 +1196,7 @@
 							</xs:complexContent>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="kokoontumistilanHenkilomaara" type="xs:int" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -1393,6 +1399,7 @@
 			<xs:enumeration value="lähinnä paloakestävä"/>
 			<xs:enumeration value="lähinnä paloapidättävä"/>
 			<xs:enumeration value="lähinnä paloahidastava"/>
+			<xs:enumeration value="P0"/>
 			<xs:enumeration value="P1"/>
 			<xs:enumeration value="P2"/>
 			<xs:enumeration value="P3"/>
