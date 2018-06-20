@@ -1,0 +1,3454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:infrao="www.kuntatietopalvelu.fi/gml/infrao" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="www.kuntatietopalvelu.fi/gml/infrao" elementFormDefault="qualified" version="1.0.2">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.9/yhteiset.xsd"/>
+	<xs:complexType name="InfraoKohteetType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureCollectionType">
+				<xs:sequence>
+					<xs:element name="toimituksentiedot" type="yht:AineistotoimitusType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InfraoKohteet" type="infrao:InfraoKohteetType" substitutionGroup="gml:_FeatureCollection">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti	</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AbstractInfraomaisuusKohde" type="infrao:AbstractInfraomaisuusKohdeType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="AbstractInfraomaisuusKohdeType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractInfraomaisuusKohdePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:AbstractInfraomaisuusKohde"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AbstractKasvillisuus" type="infrao:AbstractKasvillisuusType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="AbstractKasvillisuusType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="kuuluu" type="infrao:ViheralueenOsaPropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:sisaltaa</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
+					<xs:element name="kuuluuKatualueenOsaan" type="infrao:KatualueenOsaPropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:sisaltaaKasvillisuus</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractKasvillisuusPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:AbstractKasvillisuus"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AbstractPaikkatietopalveluKohde" type="yht:AbstractPaikkatietopalveluKohde" abstract="true" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Kohde josta periytetään kaikki kohteet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AbstractVaruste" type="infrao:AbstractVarusteType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="AbstractVarusteType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="tarkkaSijaintieto" type="infrao:SijaintiPropertyType" minOccurs="0"/>
+					<xs:element name="malli" type="xs:string" minOccurs="0"/>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="suunta" type="xs:double" minOccurs="0"/>
+					<xs:element name="valmistaja" type="xs:string" minOccurs="0"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="kuuluuViheralueenOsaan" type="infrao:ViheralueenOsaPropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:sisaltaaVaruste</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kuuluuKatualueenOsaan" type="infrao:KatualueenOsaPropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:sisaltaaVaruste</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="viitteellinenSijaintitieto" type="infrao:SijaintiPropertyType" minOccurs="0"/>
+					<xs:element name="materiaali" type="infrao:VarustemateriaaliType" minOccurs="0"/>
+					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractVarustePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:AbstractVaruste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Ajoratamerkinta" type="infrao:AjoratamerkintaType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="AjoratamerkintaType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="jyrsittyPintaKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="tyyppi" type="infrao:AjoratamerkinnanTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AjoratamerkintaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Ajoratamerkinta"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Hulevesi" type="infrao:HulevesiType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="HulevesiType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="hulevesi" type="infrao:HulevesiTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HulevesiPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Hulevesi"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Jate" type="infrao:JateType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="JateType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="koko" type="xs:string" minOccurs="0"/>
+					<xs:element name="putkikeraysjarjestelmaKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="sijaintiMaanPinnallaKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="vaarallistenJateastiaKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="jate" type="infrao:JateTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="JatePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Jate"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kaluste" type="infrao:KalusteType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="KalusteType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="kaluste" type="infrao:KalusteTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KalustePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Kaluste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Katualue" type="infrao:KatualueType" substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
+	<xs:complexType name="KatualueType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
+				<xs:sequence>
+					<xs:element name="koostuu" type="infrao:KatualueenOsaPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KatualuePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Katualue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="KatualueenOsa" type="infrao:KatualueenOsaType" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="KatualueenOsaType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="paatostieto" type="infrao:PaatosPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="kunnossapito" type="xs:string" minOccurs="0"/>
+					<xs:element name="leveys" type="xs:double" minOccurs="0"/>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="pintaAla" type="xs:double" minOccurs="0"/>
+					<xs:element name="pituus" type="xs:double" minOccurs="0"/>
+					<xs:element name="puhtaanapito" type="xs:string" minOccurs="0"/>
+					<xs:element name="talvikunnossapito" type="xs:string" minOccurs="0"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="kuuluu" type="infrao:KatualuePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:koostuu</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sisaltaa" type="infrao:KeskilinjaPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="luokka" type="infrao:ToiminnallinenLuokkaType" minOccurs="0"/>
+					<xs:element name="laji" type="infrao:KatuosanLajiType" minOccurs="0"/>
+					<xs:element name="sisaltaaVaruste" type="infrao:AbstractVarustePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluuKatualueenOsaan</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pintamateriaali" type="infrao:PintamateriaaliType" minOccurs="0"/>
+					<xs:element name="kunnossapitoluokka" type="infrao:KunnossapitoluokkaType" minOccurs="0"/>
+					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
+					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="viheralueenLaji" type="infrao:ViherosanLajiType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType" minOccurs="0"/>
+					<xs:element name="sisaltaaKasvillisuus" type="infrao:AbstractKasvillisuusPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluuKatualueenOsaan</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KatualueenOsaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:KatualueenOsa"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Keskilinja" type="infrao:KeskilinjaType" substitutionGroup="gml:_Feature"/>
+	<xs:complexType name="KeskilinjaType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="DigiroadID" type="xs:string" minOccurs="0"/>
+					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KeskilinjaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Keskilinja"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Leikkivaline" type="infrao:LeikkivalineType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="LeikkivalineType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="toiminnallinenTarkastusPvm" type="xs:date" minOccurs="0"/>
+					<xs:element name="vuositarkastusPvm" type="xs:date" minOccurs="0"/>
+					<xs:element name="leikkivaline" type="infrao:LeikkivalineTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LeikkivalinePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Leikkivaline"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Liikennemerkki" type="infrao:LiikennemerkkiType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="LiikennemerkkiType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LiikennemerkkiPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Liikennemerkki"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Liikennevalo" type="infrao:LiikennevaloType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="LiikennevaloType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LiikennevaloPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Liikennevalo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Liikunta" type="infrao:LiikuntaType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="LiikuntaType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="liikunta" type="infrao:LiikuntaTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LiikuntaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Liikunta"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Liite" type="yht:LiiteType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="LiitePropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Liite"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Melu" type="infrao:MeluType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="MeluType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="melu" type="infrao:MelutyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MeluPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Melu"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MuuKasvi" type="infrao:MuuKasviType" substitutionGroup="infrao:AbstractKasvillisuus"/>
+	<xs:complexType name="MuuKasviType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractKasvillisuusType">
+				<xs:sequence>
+					<xs:element name="kasviryhma" type="infrao:KasviryhmaTyyppiType" minOccurs="0"/>
+					<xs:element name="kasvilaji" type="infrao:KasvilajitType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MuuKasviPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:MuuKasvi"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MuuVaruste" type="infrao:MuuVarusteType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="MuuVarusteType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="varustetyyppi" type="infrao:MuuVarusteTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MuuVarustePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:MuuVaruste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Opaste" type="infrao:OpasteType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="OpasteType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="opaste" type="infrao:OpasteTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OpastePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Opaste"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Osoite" type="yht:OsoiteType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="OsoitePropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Osoite"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Paatos" type="infrao:PaatosType" substitutionGroup="gml:_Object">
+		<xs:annotation>
+			<xs:documentation>Päätöksen tiedot</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PaatosType">
+		<xs:sequence>
+			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="kuvaus" type="xs:string"/>
+			<xs:element name="paivamaaraPvm" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaatosPropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Paatos"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Puu" type="infrao:PuuType" substitutionGroup="infrao:AbstractKasvillisuus"/>
+	<xs:complexType name="PuuType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractKasvillisuusType">
+				<xs:sequence>
+					<xs:element name="korkeusMitta" type="xs:double" minOccurs="0"/>
+					<xs:element name="ymparysMitta" type="xs:double" minOccurs="0"/>
+					<xs:element name="puutyyppi" type="infrao:PuutyyppiType" minOccurs="0"/>
+					<xs:element name="puulajit" type="infrao:PuulajitType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PuuPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Puu"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Pysakointiruutu" type="infrao:PysakointiruutuType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="PysakointiruutuType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="latauspisteKytkin" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PysakointiruutuPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Pysakointiruutu"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Rakenne" type="infrao:RakenneType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="RakenneType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="rakenne" type="infrao:RakenneTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RakennePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Rakenne"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Sijainti" type="yht:SijaintiType" substitutionGroup="gml:_Object">
+		<xs:annotation>
+			<xs:documentation>Sijaintielementin sisällön määrittely. Sijaintielementtiä käytetää niissä kohteissa, joissa kohteen geometriantyyppi(piste,viiva tai alue) voi vaihdella kohteesta toiseen</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SijaintiPropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Sijainti"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Suunnitelma" type="infrao:SuunnitelmaType" substitutionGroup="gml:_Object">
+		<xs:annotation>
+			<xs:documentation>Päätöksen tiedot</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SuunnitelmaType">
+		<xs:sequence>
+			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="kuvaus" type="xs:string"/>
+			<xs:element name="paivamaaraPvm" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuunnitelmaPropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Suunnitelma"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Suunnitelmalinkki" type="infrao:SuunnitelmalinkkiType" substitutionGroup="gml:_Object"/>
+	<xs:complexType name="SuunnitelmalinkkiType">
+		<xs:sequence>
+			<xs:element name="suunnitelmakohdeId" type="xs:string"/>
+			<xs:element name="liitetieto" type="infrao:LiitePropertyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuunnitelmalinkkiPropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Suunnitelmalinkki"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Valaistus" type="infrao:ValaistusType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="ValaistusType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ValaistusPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Valaistus"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Viheralue" type="infrao:ViheralueType" substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
+	<xs:complexType name="ViheralueType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
+				<xs:sequence>
+					<xs:element name="koostuu" type="infrao:ViheralueenOsaPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ViheraluePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Viheralue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ViheralueenOsa" type="infrao:ViheralueenOsaType" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="ViheralueenOsaType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
+					<xs:element name="kuuluu" type="infrao:ViheraluePropertyType" minOccurs="0">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:koostuu</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sisaltaa" type="infrao:AbstractKasvillisuusPropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sisaltaaVaruste" type="infrao:AbstractVarustePropertyType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo>
+								<gml:reversePropertyName>infrao:kuuluuViheralueenOsaan</gml:reversePropertyName>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="kayttotarkoitus" type="infrao:ViheralueenKayttotarkoitusType" minOccurs="0"/>
+					<xs:element name="laji" type="infrao:ViherosanLajiType" minOccurs="0"/>
+					<xs:element name="hoitoluokka" type="infrao:HoitoluokkaType" minOccurs="0"/>
+					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
+					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="katualueenLaji" type="infrao:KatuosanLajiType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ViheralueenOsaPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:ViheralueenOsa"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Ymparistotaide" type="infrao:YmparistotaideType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:complexType name="YmparistotaideType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractVarusteType">
+				<xs:sequence>
+					<xs:element name="ymparistotaide" type="infrao:YmparistotaideTyyppiType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="YmparistotaidePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:Ymparistotaide"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AjoratamerkinnanTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="katkoviiva"/>
+			<xs:enumeration value="sulkuviiva"/>
+			<xs:enumeration value="suojatie"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoitoluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A1 edustusviheralue"/>
+			<xs:enumeration value="A2 käyttöviheralue"/>
+			<xs:enumeration value="A3 käyttö- ja suojaviheralue"/>
+			<xs:enumeration value="B1 maisemapelto"/>
+			<xs:enumeration value="B2 käyttöniitty"/>
+			<xs:enumeration value="B3 maisemaniitty ja laidunalue"/>
+			<xs:enumeration value="B4 avoin alue ja näkymät"/>
+			<xs:enumeration value="B5 arvoniitty"/>
+			<xs:enumeration value="C1 lähimetsä"/>
+			<xs:enumeration value="C2 ulkoilu- ja virkistysmetsä"/>
+			<xs:enumeration value="C3 suojametsä"/>
+			<xs:enumeration value="C4 talousmetsä"/>
+			<xs:enumeration value="C5 arvometsä"/>
+			<xs:enumeration value="E erityisalue"/>
+			<xs:enumeration value="ei hoidossa"/>
+			<xs:enumeration value="U urheilualue"/>
+			<xs:enumeration value="ajoradat, luokka I"/>
+			<xs:enumeration value="ajoradat, luokka Il"/>
+			<xs:enumeration value="ajoradat, luokka Ill"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka l"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka ll"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka l"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka ll"/>
+			<xs:enumeration value="jalkakäytävä, luokka l"/>
+			<xs:enumeration value="jalkakäytävä, luokka ll"/>
+			<xs:enumeration value="torit ja aukiot, luokka l"/>
+			<xs:enumeration value="torit ja aukiot, luokka ll"/>
+			<xs:enumeration value="kiinteistön kunnossapitovastuu"/>
+			<xs:enumeration value="ei kunnossapitoa"/>
+			<xs:enumeration value="ei talvikunnossapitoa"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HulevesiTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="avo-oja"/>
+			<xs:enumeration value="avopainanne"/>
+			<xs:enumeration value="avouoma"/>
+			<xs:enumeration value="hulevesiallas"/>
+			<xs:enumeration value="hulevesikaivo"/>
+			<xs:enumeration value="hulevesikosteikko"/>
+			<xs:enumeration value="imeytyskaivanto"/>
+			<xs:enumeration value="imeytyskenttä"/>
+			<xs:enumeration value="imeytyspainanne"/>
+			<xs:enumeration value="noro"/>
+			<xs:enumeration value="patorakenne"/>
+			<xs:enumeration value="pidätysallas"/>
+			<xs:enumeration value="puro"/>
+			<xs:enumeration value="purkukaivo"/>
+			<xs:enumeration value="rumpu"/>
+			<xs:enumeration value="sulkukaivo"/>
+			<xs:enumeration value="säätökaivo"/>
+			<xs:enumeration value="säätöpato"/>
+			<xs:enumeration value="tarkastuskaivo"/>
+			<xs:enumeration value="tarkastusputki"/>
+			<xs:enumeration value="tulvauoma"/>
+			<xs:enumeration value="vesikouru"/>
+			<xs:enumeration value="viivytysallas"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JateTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jäteastia"/>
+			<xs:enumeration value="koiranroska-astia"/>
+			<xs:enumeration value="roskakori"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KalusteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="irtopenkki"/>
+			<xs:enumeration value="istuin muu"/>
+			<xs:enumeration value="kalusteryhmä"/>
+			<xs:enumeration value="kiintopenkki"/>
+			<xs:enumeration value="pöytä"/>
+			<xs:enumeration value="pöytä-penkkiyhdistelmä"/>
+			<xs:enumeration value="yhdenistuttava penkki"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KasvilajitType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Acanthopanax senticosus"/>
+			<xs:enumeration value="Acer campestre"/>
+			<xs:enumeration value="Acer ginnala"/>
+			<xs:enumeration value="Acer spicatum"/>
+			<xs:enumeration value="Acer tataricum"/>
+			<xs:enumeration value="Acer"/>
+			<xs:enumeration value="Achillea filipendulina"/>
+			<xs:enumeration value="Achillea millefolium"/>
+			<xs:enumeration value="Achillea ptarmica 'Flore pleno"/>
+			<xs:enumeration value="Achillea ptarmica"/>
+			<xs:enumeration value="Aconitum henryi"/>
+			<xs:enumeration value="Aconitum lycoctonum ssp septentrionale"/>
+			<xs:enumeration value="Aconitum lycoctonum ssp.lycoctonum"/>
+			<xs:enumeration value="Aconitum lycoctonum ssp.neapolitanum"/>
+			<xs:enumeration value="Aconitum napellus album"/>
+			<xs:enumeration value="Aconitum napellus ssp. lusitanicum 'Newry Blue'"/>
+			<xs:enumeration value="Aconitum napellus ssp. lusitanicum"/>
+			<xs:enumeration value="Aconitum x stoerkianum 'Bicolor'"/>
+			<xs:enumeration value="Aconitum"/>
+			<xs:enumeration value="Aconitun x stoerkianum"/>
+			<xs:enumeration value="Aconogonon alpinum"/>
+			<xs:enumeration value="Aconogonon divaricatum"/>
+			<xs:enumeration value="Aconogonon polystachyum"/>
+			<xs:enumeration value="Aconogonon weyrichii"/>
+			<xs:enumeration value="Acorus calamus"/>
+			<xs:enumeration value="Actaea erythrocarpa"/>
+			<xs:enumeration value="Actinidia kolomikta"/>
+			<xs:enumeration value="Adonis vernalis"/>
+			<xs:enumeration value="Aegopodium podagraria"/>
+			<xs:enumeration value="Agapanthus campanulatus 'Blue Giant'"/>
+			<xs:enumeration value="Agastache foeniculum"/>
+			<xs:enumeration value="Aguilegia x hybr. 'McKana'"/>
+			<xs:enumeration value="Ajuga pyramidalis"/>
+			<xs:enumeration value="Ajuga reptans 'Atropurpurea'"/>
+			<xs:enumeration value="Ajuga reptans"/>
+			<xs:enumeration value="Alcea rosea"/>
+			<xs:enumeration value="Alchemilla alpina"/>
+			<xs:enumeration value="Alchemilla mollis"/>
+			<xs:enumeration value="Alisma plantago-aquatica"/>
+			<xs:enumeration value="Allium aflatunense"/>
+			<xs:enumeration value="Allium atropurpureum"/>
+			<xs:enumeration value="Allium caeruleum"/>
+			<xs:enumeration value="Allium carinatum subsp. pulchellum"/>
+			<xs:enumeration value="Allium cernuum"/>
+			<xs:enumeration value="Allium christophii"/>
+			<xs:enumeration value="Allium cyaneum"/>
+			<xs:enumeration value="Allium fistulosum"/>
+			<xs:enumeration value="Allium giganteum"/>
+			<xs:enumeration value="Allium karataviense"/>
+			<xs:enumeration value="Allium moly"/>
+			<xs:enumeration value="Allium narcissiflorum"/>
+			<xs:enumeration value="Allium nigrum"/>
+			<xs:enumeration value="Allium porrum"/>
+			<xs:enumeration value="Allium rosenbachianum"/>
+			<xs:enumeration value="Allium sativum"/>
+			<xs:enumeration value="Allium schoeneprasum"/>
+			<xs:enumeration value="Allium sphaerocephalum"/>
+			<xs:enumeration value="Allium tuberosum"/>
+			<xs:enumeration value="Allium ursinum"/>
+			<xs:enumeration value="Alnus viridis"/>
+			<xs:enumeration value="Alopecurus pratensis"/>
+			<xs:enumeration value="Amelanchier alnifolia"/>
+			<xs:enumeration value="Amelanchier laevis"/>
+			<xs:enumeration value="Amelanchier lamarckii"/>
+			<xs:enumeration value="Amelanchier spicata"/>
+			<xs:enumeration value="Amelanchier"/>
+			<xs:enumeration value="Anaphalis margaritacea"/>
+			<xs:enumeration value="Anaphalis triplinervis"/>
+			<xs:enumeration value="Anchusa angustissima"/>
+			<xs:enumeration value="Anchusa azurea"/>
+			<xs:enumeration value="Andromeda polifolia"/>
+			<xs:enumeration value="Anemone canadensis"/>
+			<xs:enumeration value="Anemone hupehensis var. japonica"/>
+			<xs:enumeration value="Anemone multifida"/>
+			<xs:enumeration value="Anemone narcissiflora"/>
+			<xs:enumeration value="Anemone nemorosa"/>
+			<xs:enumeration value="Anemone rivularis"/>
+			<xs:enumeration value="Anemone sylvestris"/>
+			<xs:enumeration value="Anemone tomentosa"/>
+			<xs:enumeration value="Anemone x fulgens"/>
+			<xs:enumeration value="Anemone x lesseri"/>
+			<xs:enumeration value="Anethum graveolens"/>
+			<xs:enumeration value="Angelica archangelica"/>
+			<xs:enumeration value="Antchriscus cerefolium"/>
+			<xs:enumeration value="Antemis marchalliana"/>
+			<xs:enumeration value="Antennaria dioica 'Rubra'"/>
+			<xs:enumeration value="Antennaria dioica"/>
+			<xs:enumeration value="Antennaria parvifolia"/>
+			<xs:enumeration value="Antennaria plantaginifolia"/>
+			<xs:enumeration value="Anthemis carpatica"/>
+			<xs:enumeration value="Anthemis tinctoria"/>
+			<xs:enumeration value="Anthericum liliago"/>
+			<xs:enumeration value="Anthericum ramosum"/>
+			<xs:enumeration value="Anthyllis vulneraria"/>
+			<xs:enumeration value="Apium var. dulce"/>
+			<xs:enumeration value="Aquilegia alpina"/>
+			<xs:enumeration value="Aquilegia chrysantha"/>
+			<xs:enumeration value="Aquilegia flabellata"/>
+			<xs:enumeration value="Aquilegia formosa"/>
+			<xs:enumeration value="Aquilegia glandulosa var. jucunda"/>
+			<xs:enumeration value="Aquilegia skinneri"/>
+			<xs:enumeration value="Aquilegia vulgaris 'Alba'"/>
+			<xs:enumeration value="Aquilegia vulgaris 'Altrosa'"/>
+			<xs:enumeration value="Aquilegia vulgaris 'Rosea'"/>
+			<xs:enumeration value="Aquilegia vulgaris"/>
+			<xs:enumeration value="Aquilegia x hybr. 'Blue Star'"/>
+			<xs:enumeration value="Aquilegia x hybr. 'Crimson Star'"/>
+			<xs:enumeration value="Aquilegia x hybr. 'Snow Queen'"/>
+			<xs:enumeration value="Aquilegia x hybr."/>
+			<xs:enumeration value="Arabis blepharophylla"/>
+			<xs:enumeration value="Arabis caucasica"/>
+			<xs:enumeration value="Arabis ferdinandi-coburgi"/>
+			<xs:enumeration value="Arabis x arendsii"/>
+			<xs:enumeration value="Arctostaphylos uva-ursi"/>
+			<xs:enumeration value="Arenaria balearica"/>
+			<xs:enumeration value="Arenaria montana"/>
+			<xs:enumeration value="Arenaria tetraquerta"/>
+			<xs:enumeration value="Aristolochia macrophylla"/>
+			<xs:enumeration value="Aristolochia"/>
+			<xs:enumeration value="Armeria juniperifolia"/>
+			<xs:enumeration value="Armeria maritima"/>
+			<xs:enumeration value="Arnica montana"/>
+			<xs:enumeration value="Arnica sachalinensis"/>
+			<xs:enumeration value="Aronia arbutifolia"/>
+			<xs:enumeration value="Aronia melanocarpa 'Glorie'"/>
+			<xs:enumeration value="Aronia melanocarpa"/>
+			<xs:enumeration value="Aronia mitschurinii 'Viking'"/>
+			<xs:enumeration value="Aronia mitschurinii"/>
+			<xs:enumeration value="Aronia x prunifolia"/>
+			<xs:enumeration value="Aronia"/>
+			<xs:enumeration value="Artemisia absinthium"/>
+			<xs:enumeration value="Artemisia arbotanum"/>
+			<xs:enumeration value="Artemisia dracunculus"/>
+			<xs:enumeration value="Artemisia lactiflora"/>
+			<xs:enumeration value="Artemisia ludoviciana"/>
+			<xs:enumeration value="Artemisia maritima"/>
+			<xs:enumeration value="Artemisia schmidtiana 'Nana'"/>
+			<xs:enumeration value="Artemisia schmidtiana"/>
+			<xs:enumeration value="Artemisia"/>
+			<xs:enumeration value="Arum italicum"/>
+			<xs:enumeration value="Arum maculatum"/>
+			<xs:enumeration value="Aruncus aethusifolius"/>
+			<xs:enumeration value="Aruncus dioicus"/>
+			<xs:enumeration value="Aruncus"/>
+			<xs:enumeration value="Asarum canadense"/>
+			<xs:enumeration value="Asarum europaeum"/>
+			<xs:enumeration value="Asparagus officinalis"/>
+			<xs:enumeration value="Asperula orientalis"/>
+			<xs:enumeration value="Aster alpinus 'Abendschein'"/>
+			<xs:enumeration value="Aster alpinus 'Albus'"/>
+			<xs:enumeration value="Aster alpinus 'Blue Star'"/>
+			<xs:enumeration value="Aster alpinus"/>
+			<xs:enumeration value="Aster amellus 'Blue King'"/>
+			<xs:enumeration value="Aster amellus 'Danzig'"/>
+			<xs:enumeration value="Aster amellus 'King George'"/>
+			<xs:enumeration value="Aster amellus 'Rudolf Goethe'"/>
+			<xs:enumeration value="Aster amellus 'Sonia'"/>
+			<xs:enumeration value="Aster amellus"/>
+			<xs:enumeration value="Aster dumosus 'Starlight'"/>
+			<xs:enumeration value="Aster dumosus 'Waldenberg'"/>
+			<xs:enumeration value="Aster novi-belgii 'Dauerblau'"/>
+			<xs:enumeration value="Aster novi-belgii 'Eventide'"/>
+			<xs:enumeration value="Aster novi-belgii 'Red Sunset'"/>
+			<xs:enumeration value="Aster novi-belgii 'White Ladies'"/>
+			<xs:enumeration value="Aster novi-belgii 'Winston Churchill'"/>
+			<xs:enumeration value="Aster x alpellus"/>
+			<xs:enumeration value="Astilbe Arendsii -hybr. 'Federsee'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Amethyst'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Bonn'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Brautschleier'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Bremen'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Cattleya'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Deutschland'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Erika'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Etna'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Europa'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Fanal'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Feuer'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Gladstone'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Gloria Purpurea'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Gloria'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Glut'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Hyasinth'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Irrlicht'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Montgomery'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Peach Blossom'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Red Sentinel'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Rheinland'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Spinelli'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Straussenf.'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr. 'Weisse Gloria'"/>
+			<xs:enumeration value="Astilbe Arendsii-hybr."/>
+			<xs:enumeration value="Astilbe chinensis 'Finale'"/>
+			<xs:enumeration value="Astilbe chinensis 'Pumila'"/>
+			<xs:enumeration value="Astilbe chinensis"/>
+			<xs:enumeration value="Astilbe Japonica-ryhmä"/>
+			<xs:enumeration value="Astilbe"/>
+			<xs:enumeration value="Astilboides tabularis"/>
+			<xs:enumeration value="Astrantia major"/>
+			<xs:enumeration value="Athyrium filix-femina"/>
+			<xs:enumeration value="Athyrium niponicum"/>
+			<xs:enumeration value="Aubrieta deltoidea"/>
+			<xs:enumeration value="Aubrieta x cultorum"/>
+			<xs:enumeration value="Azalea mollis"/>
+			<xs:enumeration value="Bellis perennis 'Purpurmandel'"/>
+			<xs:enumeration value="Bellis perennis 'Rosa'"/>
+			<xs:enumeration value="Bellis perennis"/>
+			<xs:enumeration value="Berberis thunbergii 'Admiration'"/>
+			<xs:enumeration value="Berberis thunbergii 'Atropurpurea nana'"/>
+			<xs:enumeration value="Berberis thunbergii 'Atropurpurea'"/>
+			<xs:enumeration value="Berberis thunbergii"/>
+			<xs:enumeration value="Berberis vulgaris 'Atropurpurea'"/>
+			<xs:enumeration value="Berberis vulgaris"/>
+			<xs:enumeration value="Berberis x ottawensis 'Superba'"/>
+			<xs:enumeration value="Berberis"/>
+			<xs:enumeration value="Bergenia cordifolia 'Rotblom'"/>
+			<xs:enumeration value="Bergenia cordifolia"/>
+			<xs:enumeration value="Bergenia crassifolia"/>
+			<xs:enumeration value="Bergenia"/>
+			<xs:enumeration value="Bistorta affinis"/>
+			<xs:enumeration value="Bistorta major 'Superba'"/>
+			<xs:enumeration value="Bistorta major"/>
+			<xs:enumeration value="Borago officinalis"/>
+			<xs:enumeration value="Brunnera macrophylla"/>
+			<xs:enumeration value="Butomus umbellatus"/>
+			<xs:enumeration value="Calamagrostis epigejos"/>
+			<xs:enumeration value="Calendula officinalis"/>
+			<xs:enumeration value="Calla palustris"/>
+			<xs:enumeration value="Calluna vulgaris"/>
+			<xs:enumeration value="Caltha palustris"/>
+			<xs:enumeration value="Campanula carpatica 'Blaue Clips'"/>
+			<xs:enumeration value="Campanula carpatica 'Weisse Clips'"/>
+			<xs:enumeration value="Campanula carpatica"/>
+			<xs:enumeration value="Campanula glomerata"/>
+			<xs:enumeration value="Campanula latifolia"/>
+			<xs:enumeration value="Campanula patula"/>
+			<xs:enumeration value="Campanula persicifolia"/>
+			<xs:enumeration value="Campanula portenschlagiana"/>
+			<xs:enumeration value="Campanula rapunculoides"/>
+			<xs:enumeration value="Campanula rotundifolia"/>
+			<xs:enumeration value="Caragana arborescens 'Lorbergii Pendula'"/>
+			<xs:enumeration value="Caragana arborescens 'Lorbergii'"/>
+			<xs:enumeration value="Caragana arborescens 'Walker'"/>
+			<xs:enumeration value="Caragana arborescens"/>
+			<xs:enumeration value="Caragana frutex"/>
+			<xs:enumeration value="Caragana"/>
+			<xs:enumeration value="Carex acuta"/>
+			<xs:enumeration value="Carex brunnea"/>
+			<xs:enumeration value="Carex nigra"/>
+			<xs:enumeration value="Carex ovalis"/>
+			<xs:enumeration value="Carex pseudocyperus"/>
+			<xs:enumeration value="Carex rhynchophysa"/>
+			<xs:enumeration value="Carex rostrata"/>
+			<xs:enumeration value="Carex vesicaria"/>
+			<xs:enumeration value="Carum carvi"/>
+			<xs:enumeration value="Celastrus orbiculatus"/>
+			<xs:enumeration value="Celastrus scandens 'Autumn Revolution'"/>
+			<xs:enumeration value="Centaurea cyanus"/>
+			<xs:enumeration value="Centaurea montana"/>
+			<xs:enumeration value="Centaurea"/>
+			<xs:enumeration value="Centranthus ruber"/>
+			<xs:enumeration value="Cerastium tomentosum 'Columnae'"/>
+			<xs:enumeration value="Cerastium tomentosum"/>
+			<xs:enumeration value="Cercidiphyllum japonicum"/>
+			<xs:enumeration value="Chaenomeles japonica"/>
+			<xs:enumeration value="Chamaecyparis lawsoniana 'Alumii'"/>
+			<xs:enumeration value="Chamaecyparis pisifera"/>
+			<xs:enumeration value="Chelone obliqua"/>
+			<xs:enumeration value="Chiastophyllum oppositifolium"/>
+			<xs:enumeration value="Chimaphila umbellata"/>
+			<xs:enumeration value="Chrysanthemum leucanthemum 'Maikönigin'"/>
+			<xs:enumeration value="Chrysanthemum"/>
+			<xs:enumeration value="Cimicifuga racemosa var. cordifolia"/>
+			<xs:enumeration value="Claytonia sibirica"/>
+			<xs:enumeration value="Clematis alpina"/>
+			<xs:enumeration value="Clematis integrif. 'Blue Panno'"/>
+			<xs:enumeration value="Clematis 'Nadezda'"/>
+			<xs:enumeration value="Clematis 'Niobe'"/>
+			<xs:enumeration value="Clematis 'Paul Farges'"/>
+			<xs:enumeration value="Clematis recta"/>
+			<xs:enumeration value="Clematis sibirica"/>
+			<xs:enumeration value="Clematis tangutica"/>
+			<xs:enumeration value="Clematis viticella"/>
+			<xs:enumeration value="Clematis x jackmanii"/>
+			<xs:enumeration value="Colchicum autumnale"/>
+			<xs:enumeration value="Colchicum bommuelleri"/>
+			<xs:enumeration value="Colchicum cilicicum"/>
+			<xs:enumeration value="Colchicum hybridum"/>
+			<xs:enumeration value="Colchicum speciosum"/>
+			<xs:enumeration value="Comarum palustre"/>
+			<xs:enumeration value="Convallaria majalis"/>
+			<xs:enumeration value="Coreopsis grandiflora"/>
+			<xs:enumeration value="Coreopsis verticillata"/>
+			<xs:enumeration value="Coriandrum sativum"/>
+			<xs:enumeration value="Cornus alba 'Argenteomarginata'"/>
+			<xs:enumeration value="Cornus alba 'Gouchaultii'"/>
+			<xs:enumeration value="Cornus alba 'Kesselringii'"/>
+			<xs:enumeration value="Cornus alba 'Sibirica Variegata'"/>
+			<xs:enumeration value="Cornus alba 'Sibirica'"/>
+			<xs:enumeration value="Cornus alba ssp.alba"/>
+			<xs:enumeration value="Cornus alba ssp.stolonifera 'Flaviramea'"/>
+			<xs:enumeration value="Cornus alba stolonifera 'Kelsey's Dwarf"/>
+			<xs:enumeration value="Cornus sanguinea"/>
+			<xs:enumeration value="Cornus sericea 'Bailadeline'"/>
+			<xs:enumeration value="Cornus"/>
+			<xs:enumeration value="Coronilla varia"/>
+			<xs:enumeration value="Corydalis lutea"/>
+			<xs:enumeration value="Corydalis nobilis"/>
+			<xs:enumeration value="Corydalis solida"/>
+			<xs:enumeration value="Corylus avellana 'Contorta'"/>
+			<xs:enumeration value="Corylus avellana"/>
+			<xs:enumeration value="Cotoneaster dammerii"/>
+			<xs:enumeration value="Cotoneaster integerrimus"/>
+			<xs:enumeration value="Cotoneaster lucidus"/>
+			<xs:enumeration value="Cotoneaster 'Skogsholm'"/>
+			<xs:enumeration value="Cotoneaster"/>
+			<xs:enumeration value="Crataegus douglasii"/>
+			<xs:enumeration value="Crataegus grayana"/>
+			<xs:enumeration value="Crataegus intricata"/>
+			<xs:enumeration value="Crataegus laevigata"/>
+			<xs:enumeration value="Crataegus monogyna"/>
+			<xs:enumeration value="Crataegus sp."/>
+			<xs:enumeration value="Crataegus submollis"/>
+			<xs:enumeration value="Crataegus x media 'Paul's Scarlet'"/>
+			<xs:enumeration value="Crataegus x mordenensis 'Toba'"/>
+			<xs:enumeration value="Crocus ancyrensis"/>
+			<xs:enumeration value="Crocus angustifolius"/>
+			<xs:enumeration value="Crocus chrysanthus"/>
+			<xs:enumeration value="Crocus corsicus"/>
+			<xs:enumeration value="Crocus etruscus"/>
+			<xs:enumeration value="Crocus laevigatus"/>
+			<xs:enumeration value="Crocus speciosus"/>
+			<xs:enumeration value="Crocus tommasinianus"/>
+			<xs:enumeration value="Crocus vernus"/>
+			<xs:enumeration value="Cymbalaria muralis"/>
+			<xs:enumeration value="Cytisus decumbens"/>
+			<xs:enumeration value="Cytisus glaber"/>
+			<xs:enumeration value="Cytisus purpureus"/>
+			<xs:enumeration value="Daphne mezereum"/>
+			<xs:enumeration value="Darmera peltata"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Abbotswood'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Elizabeth'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Floppy Disk'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Fridhem'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Goldfinger'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Goldteppic'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Hacemann'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Jackman'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Kobold'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Longacre'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Lovely Pink'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Mount Everest'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Månelys'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Primrose Beauty'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Princess'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Red Ace'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Sandved'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Snow Flake'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Tervola'"/>
+			<xs:enumeration value="Dasiphora fruticosa 'Tilford Cream'"/>
+			<xs:enumeration value="Dasiphora fruticosa"/>
+			<xs:enumeration value="Delphinium 'Astolat'"/>
+			<xs:enumeration value="Delphinium 'Black Knight'"/>
+			<xs:enumeration value="Delphinium 'Blue Beauty'"/>
+			<xs:enumeration value="Delphinium 'Blue Bird'"/>
+			<xs:enumeration value="Delphinium 'Galahad'"/>
+			<xs:enumeration value="Delphinium 'King Arthur'"/>
+			<xs:enumeration value="Deschampsia flexuosa"/>
+			<xs:enumeration value="Dianthus barbatus"/>
+			<xs:enumeration value="Dianthus deltoides"/>
+			<xs:enumeration value="Dianthus gratianopolitanus"/>
+			<xs:enumeration value="Dianthus plumarius"/>
+			<xs:enumeration value="Dicentra formosa 'Alba'"/>
+			<xs:enumeration value="Dicentra formosa 'Luxuriant'"/>
+			<xs:enumeration value="Dicentra formosa"/>
+			<xs:enumeration value="Dicentra spectabilis"/>
+			<xs:enumeration value="Dictamnus albus"/>
+			<xs:enumeration value="Diervilla lonicera 'Helo'"/>
+			<xs:enumeration value="Diervilla lonicera"/>
+			<xs:enumeration value="Diervilla sessilifolia 'Cool Splash'"/>
+			<xs:enumeration value="Diervilla sessilifolia 'Kajo'"/>
+			<xs:enumeration value="Diervilla sessilifolia 'Rusko'"/>
+			<xs:enumeration value="Diervilla sessilifolia"/>
+			<xs:enumeration value="Diervilla x splendens"/>
+			<xs:enumeration value="Digitalis grandiflora"/>
+			<xs:enumeration value="Digitalis purpurea"/>
+			<xs:enumeration value="Doronicum orientale 'Finesse'"/>
+			<xs:enumeration value="Doronicum orientale"/>
+			<xs:enumeration value="Doronicum plantagineum"/>
+			<xs:enumeration value="Doronicum"/>
+			<xs:enumeration value="Dracokephalum sibiricum"/>
+			<xs:enumeration value="Dryas octopetala"/>
+			<xs:enumeration value="Dryopteris carthusiana"/>
+			<xs:enumeration value="Dryopteris filix-mas"/>
+			<xs:enumeration value="Dryoptreris filix-mas"/>
+			<xs:enumeration value="Echinacea purpurea 'Magnus'"/>
+			<xs:enumeration value="Echinacea purpurea"/>
+			<xs:enumeration value="Echinops bannaticus"/>
+			<xs:enumeration value="Empetrum nigrum"/>
+			<xs:enumeration value="Epimedium x rubrum"/>
+			<xs:enumeration value="Epimedium x youngianum 'Niveum'"/>
+			<xs:enumeration value="Eremurus robustus"/>
+			<xs:enumeration value="Erigeron 'Adria'"/>
+			<xs:enumeration value="Erigeron aurantiacus"/>
+			<xs:enumeration value="Erigeron 'Azurfee'"/>
+			<xs:enumeration value="Erigeron 'Grandiflorus'"/>
+			<xs:enumeration value="Erigeron 'Schöne Blau'"/>
+			<xs:enumeration value="Erigeron speciosus"/>
+			<xs:enumeration value="Erigeron"/>
+			<xs:enumeration value="Eryngium alpinum 'Amethyst'"/>
+			<xs:enumeration value="Eryngium alpinum 'James Ivory'"/>
+			<xs:enumeration value="Eryngium alpinum"/>
+			<xs:enumeration value="Eryngium planum"/>
+			<xs:enumeration value="Euonymus europaeus"/>
+			<xs:enumeration value="Euonymus nanus var. turkestanicus"/>
+			<xs:enumeration value="Eupatorium cannabinum"/>
+			<xs:enumeration value="Eupatorium purpureum"/>
+			<xs:enumeration value="Eupatorium"/>
+			<xs:enumeration value="Euphorbia cyparissias"/>
+			<xs:enumeration value="Euphorbia palustris"/>
+			<xs:enumeration value="Euphorbia polychroma"/>
+			<xs:enumeration value="Fallopia jabonica var. compacta"/>
+			<xs:enumeration value="Fallopia japonica var. compacta"/>
+			<xs:enumeration value="Fallopia japonica"/>
+			<xs:enumeration value="Fallopia sachalinensis"/>
+			<xs:enumeration value="Festuca cinerea"/>
+			<xs:enumeration value="Festuca gautieri"/>
+			<xs:enumeration value="Filipendula rubra"/>
+			<xs:enumeration value="Filipendula ulmaria"/>
+			<xs:enumeration value="Filipendula vulgaris 'Plena'"/>
+			<xs:enumeration value="Filipendula vulgaris 'Rosea'"/>
+			<xs:enumeration value="Filipendula vulgaris"/>
+			<xs:enumeration value="Foeniculum vulgare var. dulce"/>
+			<xs:enumeration value="Forsythia 'Northern Gold'"/>
+			<xs:enumeration value="Forsythia ovata"/>
+			<xs:enumeration value="Forsythia"/>
+			<xs:enumeration value="Fothergilla major 'Velho'"/>
+			<xs:enumeration value="Fothergilla major"/>
+			<xs:enumeration value="Fritillaria imperialis"/>
+			<xs:enumeration value="Fritillaria meleagris"/>
+			<xs:enumeration value="Galanthus elwesii"/>
+			<xs:enumeration value="Galanthus nivalis"/>
+			<xs:enumeration value="Galium odoratum"/>
+			<xs:enumeration value="Galium verum"/>
+			<xs:enumeration value="Genista tinctoria"/>
+			<xs:enumeration value="Gentiana cruciata"/>
+			<xs:enumeration value="Gentiana septemfida"/>
+			<xs:enumeration value="Gentiana sino-ornata"/>
+			<xs:enumeration value="Geranium himalayense 'Derrick Cook'"/>
+			<xs:enumeration value="Geranium himalayense 'Gravetye'"/>
+			<xs:enumeration value="Geranium himalayense"/>
+			<xs:enumeration value="Geranium ibericum"/>
+			<xs:enumeration value="Geranium 'Johnson's Blue'"/>
+			<xs:enumeration value="Geranium macrorrhizum 'Purple Red'"/>
+			<xs:enumeration value="Geranium macrorrhizum 'Purpurrot'"/>
+			<xs:enumeration value="Geranium macrorrhizum"/>
+			<xs:enumeration value="Geranium nepalense"/>
+			<xs:enumeration value="Geranium palustre"/>
+			<xs:enumeration value="Geranium pratense"/>
+			<xs:enumeration value="Geranium sanguineum 'Elke'"/>
+			<xs:enumeration value="Geranium sanguineum 'Max Frei'"/>
+			<xs:enumeration value="Geranium sanguineum"/>
+			<xs:enumeration value="Geranium sylvaticum"/>
+			<xs:enumeration value="Geranium x cantabrigiense 'Biokovo'"/>
+			<xs:enumeration value="Geranium x cantabrigiense 'Cambridge'"/>
+			<xs:enumeration value="Geranium x cantabrigiense 'Karmina'"/>
+			<xs:enumeration value="Geranium x cantabrigiense"/>
+			<xs:enumeration value="Geranium x magnificum"/>
+			<xs:enumeration value="Geum coccineum 'Borisii'"/>
+			<xs:enumeration value="Geum coccineum"/>
+			<xs:enumeration value="Gillenia trifoliata"/>
+			<xs:enumeration value="Gladioulus imbricatus"/>
+			<xs:enumeration value="Glechoma hederacea"/>
+			<xs:enumeration value="Glyceria maxima"/>
+			<xs:enumeration value="Gymnocarpium dryopteris"/>
+			<xs:enumeration value="Gypsophila paniculata"/>
+			<xs:enumeration value="Gypsophilla repens"/>
+			<xs:enumeration value="Hedera helix"/>
+			<xs:enumeration value="Helenium 'Grimson Beauty'"/>
+			<xs:enumeration value="Helenium hoopesii"/>
+			<xs:enumeration value="Helenium hybrida"/>
+			<xs:enumeration value="Helenium 'The Bishop'"/>
+			<xs:enumeration value="Helenium 'Wesergold'"/>
+			<xs:enumeration value="Heliopsis helianthoides v.sca. 'Goldball"/>
+			<xs:enumeration value="Heliopsis helianthoides v.sca.'Goldfiede"/>
+			<xs:enumeration value="Heliopsis helianthoides v.scabra 'Patula"/>
+			<xs:enumeration value="Hemerocallis 'Aino'"/>
+			<xs:enumeration value="Hemerocallis 'Apricot'"/>
+			<xs:enumeration value="Hemerocallis 'Atlas'"/>
+			<xs:enumeration value="Hemerocallis 'Carminea'"/>
+			<xs:enumeration value="Hemerocallis citrina"/>
+			<xs:enumeration value="Hemerocallis 'Corky'"/>
+			<xs:enumeration value="Hemerocallis 'Elegant Candy'"/>
+			<xs:enumeration value="Hemerocallis 'Entrapment'"/>
+			<xs:enumeration value="Hemerocallis 'Flaming Sword'"/>
+			<xs:enumeration value="Hemerocallis 'Frans Hals"/>
+			<xs:enumeration value="Hemerocallis 'Free Wheelin'"/>
+			<xs:enumeration value="Hemerocallis fulva 'Europa'"/>
+			<xs:enumeration value="Hemerocallis fulva"/>
+			<xs:enumeration value="Hemerocallis 'Golden Seapter'"/>
+			<xs:enumeration value="Hemerocallis 'Indian Sky'"/>
+			<xs:enumeration value="Hemerocallis 'Joan Senior'"/>
+			<xs:enumeration value="Hemerocallis 'Kantarelli'"/>
+			<xs:enumeration value="Hemerocallis 'Kurt'"/>
+			<xs:enumeration value="Hemerocallis lilio-asphodelus"/>
+			<xs:enumeration value="Hemerocallis 'Little Girl'"/>
+			<xs:enumeration value="Hemerocallis 'Margaret Perry'"/>
+			<xs:enumeration value="Hemerocallis middendorffii"/>
+			<xs:enumeration value="Hemerocallis minor"/>
+			<xs:enumeration value="Hemerocallis 'Pink Damask'"/>
+			<xs:enumeration value="Hemerocallis 'Radiant'"/>
+			<xs:enumeration value="Hemerocallis 'Rocket City'"/>
+			<xs:enumeration value="Hemerocallis 'Sammy Russel'"/>
+			<xs:enumeration value="Hemerocallis 'Sirkku'"/>
+			<xs:enumeration value="Hemerocallis 'Stella D'oro'"/>
+			<xs:enumeration value="Hemerocallis 'Tejas'"/>
+			<xs:enumeration value="Hemerocallis 'Valliant'"/>
+			<xs:enumeration value="Hemerocallis 'Watchyl Wild Indian'"/>
+			<xs:enumeration value="Hemerocallis 'Violet Hour'"/>
+			<xs:enumeration value="Hemerocallis"/>
+			<xs:enumeration value="Hepatica nobilis"/>
+			<xs:enumeration value="Heracleum mantegazzianum"/>
+			<xs:enumeration value="Hesperis matronalis"/>
+			<xs:enumeration value="Heuchera micrantha 'Palace Purple'"/>
+			<xs:enumeration value="Heuchera sanguinea"/>
+			<xs:enumeration value="Heucherella tiarelloides"/>
+			<xs:enumeration value="Hippophae rhamnoides 'Raisa'"/>
+			<xs:enumeration value="Hippophae rhamnoides 'Rudolf'"/>
+			<xs:enumeration value="Hippophaë rhamnoides"/>
+			<xs:enumeration value="Holodiscus discolor"/>
+			<xs:enumeration value="Hosta 'Color Festival'"/>
+			<xs:enumeration value="Hosta crispula"/>
+			<xs:enumeration value="Hosta Fortunei 'Albopicta'"/>
+			<xs:enumeration value="Hosta Fortunei 'Aurea'"/>
+			<xs:enumeration value="Hosta Fortunei 'Francee'"/>
+			<xs:enumeration value="Hosta Fortunei 'Patriot'"/>
+			<xs:enumeration value="Hosta Fortunei"/>
+			<xs:enumeration value="Hosta lancifolia"/>
+			<xs:enumeration value="Hosta 'Orange Marmalade'"/>
+			<xs:enumeration value="Hosta plantaginea 'Grandiflora'"/>
+			<xs:enumeration value="Hosta plantaginea"/>
+			<xs:enumeration value="Hosta rectifolia 'Tallboy'"/>
+			<xs:enumeration value="Hosta rectifolia"/>
+			<xs:enumeration value="Hosta sieboldiana 'Elegans'"/>
+			<xs:enumeration value="Hosta sieboldiana 'Reykjavik'"/>
+			<xs:enumeration value="Hosta sieboldiana"/>
+			<xs:enumeration value="Hosta sieboldii 'Alba'"/>
+			<xs:enumeration value="Hosta sieboldii"/>
+			<xs:enumeration value="Hosta undulata 'Albomarginata'"/>
+			<xs:enumeration value="Hosta undulata 'Crispum'"/>
+			<xs:enumeration value="Hosta undulata 'Erromena'"/>
+			<xs:enumeration value="Hosta undulata 'Mediovariegata'"/>
+			<xs:enumeration value="Hosta undulata"/>
+			<xs:enumeration value="Hosta ventricosa 'Aureomaculata'"/>
+			<xs:enumeration value="Hosta ventricosa 'Variegata'"/>
+			<xs:enumeration value="Hosta ventricosa"/>
+			<xs:enumeration value="Hosta"/>
+			<xs:enumeration value="Humulus lupulus"/>
+			<xs:enumeration value="Hyacinthus orientalis"/>
+			<xs:enumeration value="Hydrangea anomala ssp. petiolaris"/>
+			<xs:enumeration value="Hydrangea arborescens 'Annabelle'"/>
+			<xs:enumeration value="Hydrangea arborescens 'Grandiflora'"/>
+			<xs:enumeration value="Hydrangea heteromalla"/>
+			<xs:enumeration value="Hydrangea paniculata 'Early Sensation'"/>
+			<xs:enumeration value="Hydrangea paniculata 'Grandiflora'"/>
+			<xs:enumeration value="Hydrangea paniculata 'Mustila'"/>
+			<xs:enumeration value="Hydrangea paniculata 'Praecox'"/>
+			<xs:enumeration value="Hydrangea paniculata"/>
+			<xs:enumeration value="Hyssopus officinalis"/>
+			<xs:enumeration value="Iberis semperfirens"/>
+			<xs:enumeration value="Incarvillea mairei"/>
+			<xs:enumeration value="Inula ensifolia"/>
+			<xs:enumeration value="Inula helenium"/>
+			<xs:enumeration value="Iris 'Azurea'"/>
+			<xs:enumeration value="Iris barbata elatior 'Joanna'"/>
+			<xs:enumeration value="Iris Barbata-hybrida ´Pastel Charme´"/>
+			<xs:enumeration value="Iris Barbata-hybrida"/>
+			<xs:enumeration value="Iris 'Cyanea'"/>
+			<xs:enumeration value="Iris 'Eleanor Roosevelt'"/>
+			<xs:enumeration value="Iris 'Empress of India'"/>
+			<xs:enumeration value="Iris ensata 'Higo Stain'"/>
+			<xs:enumeration value="Iris ensata 'Nippon'"/>
+			<xs:enumeration value="Iris 'Espada'"/>
+			<xs:enumeration value="Iris germanica 'Helge'"/>
+			<xs:enumeration value="Iris germanica 'Snow Queen'"/>
+			<xs:enumeration value="Iris germanica"/>
+			<xs:enumeration value="Iris orentalis"/>
+			<xs:enumeration value="Iris orientalis 'Aloa'"/>
+			<xs:enumeration value="Iris pseudacorus"/>
+			<xs:enumeration value="Iris pumila"/>
+			<xs:enumeration value="Iris reticulata"/>
+			<xs:enumeration value="Iris 'Romance'"/>
+			<xs:enumeration value="Iris setosa"/>
+			<xs:enumeration value="Iris sibirica alba"/>
+			<xs:enumeration value="Iris sibirica 'Blue King'"/>
+			<xs:enumeration value="Iris sibirica 'Blue Moon'"/>
+			<xs:enumeration value="Iris sibirica 'Ceasar's Brother'"/>
+			<xs:enumeration value="Iris sibirica 'Heavenly Blue'"/>
+			<xs:enumeration value="Iris sibirica 'Julius'"/>
+			<xs:enumeration value="Iris sibirica 'Marja-Leena'"/>
+			<xs:enumeration value="Iris sibirica 'Perry Blue'"/>
+			<xs:enumeration value="Iris sibirica 'Ruffled Velvet'"/>
+			<xs:enumeration value="Iris sibirica 'Snow Queen'"/>
+			<xs:enumeration value="Iris sibirica 'Thunkhannock'"/>
+			<xs:enumeration value="Iris sibirica"/>
+			<xs:enumeration value="Iris 'Terry'"/>
+			<xs:enumeration value="Iris 'White Knight'"/>
+			<xs:enumeration value="Juncus conglomeratus"/>
+			<xs:enumeration value="Juncus effusus"/>
+			<xs:enumeration value="Juniperus chinensis 'Mint Julep'"/>
+			<xs:enumeration value="Juniperus chinensis 'Pfitzeriana Compact"/>
+			<xs:enumeration value="Juniperus communis 'Hongisto 13'"/>
+			<xs:enumeration value="Juniperus communis 'Jääkäri'"/>
+			<xs:enumeration value="Juniperus communis 'Norrback'"/>
+			<xs:enumeration value="Juniperus communis 'Repanda'"/>
+			<xs:enumeration value="Juniperus communis 'Sisu'"/>
+			<xs:enumeration value="Juniperus communis 'Suecica'"/>
+			<xs:enumeration value="Juniperus communis"/>
+			<xs:enumeration value="Juniperus horizontalis 'Glauca'"/>
+			<xs:enumeration value="Juniperus sabina 'Tamarischifolia'"/>
+			<xs:enumeration value="Juniperus sabina"/>
+			<xs:enumeration value="Juniperus squamata 'Meyeri'"/>
+			<xs:enumeration value="Juniperus virginiana 'Sky Rocket'"/>
+			<xs:enumeration value="Kalmia angustifolia"/>
+			<xs:enumeration value="Kalmia latifolia 'Peppermint'"/>
+			<xs:enumeration value="Kalmia polifolia"/>
+			<xs:enumeration value="Kolkwitzia amabilis"/>
+			<xs:enumeration value="Laburnum alpinum"/>
+			<xs:enumeration value="Lamiastrum galeobdolon"/>
+			<xs:enumeration value="Lathyrus latifolius"/>
+			<xs:enumeration value="Lavandula angustifolia"/>
+			<xs:enumeration value="Lavatera thuringiaca"/>
+			<xs:enumeration value="Ledum palustre"/>
+			<xs:enumeration value="Leontopodium alpinum"/>
+			<xs:enumeration value="Leucanthemum x superbum"/>
+			<xs:enumeration value="Leucathemum vulgare"/>
+			<xs:enumeration value="Levisticum officinale"/>
+			<xs:enumeration value="Leymus arenarius"/>
+			<xs:enumeration value="Liatris spicata 'Floristan Weiss'"/>
+			<xs:enumeration value="Liatris spicata 'Kobold'"/>
+			<xs:enumeration value="Liatris spicata"/>
+			<xs:enumeration value="Liatris"/>
+			<xs:enumeration value="Ligularia dentata 'Desdemona'"/>
+			<xs:enumeration value="Ligularia dentata 'Orange Queen'"/>
+			<xs:enumeration value="Ligularia dentata 'Othello'"/>
+			<xs:enumeration value="Ligularia dentata"/>
+			<xs:enumeration value="Ligularia fischeri"/>
+			<xs:enumeration value="Ligularia 'Hietala'"/>
+			<xs:enumeration value="Ligularia japonica"/>
+			<xs:enumeration value="Ligularia macrophylla 'New Star'"/>
+			<xs:enumeration value="Ligularia przewalskii 'Romeo'"/>
+			<xs:enumeration value="Ligularia przewalskii"/>
+			<xs:enumeration value="Ligularia sibirica"/>
+			<xs:enumeration value="Ligularia tangutica"/>
+			<xs:enumeration value="Ligularia veitchiana"/>
+			<xs:enumeration value="Ligularia wilsoniana 'Hiisi'"/>
+			<xs:enumeration value="Ligularia wilsoniana"/>
+			<xs:enumeration value="Ligularia x hessei 'Greynok Gold'"/>
+			<xs:enumeration value="Ligularia x hessei"/>
+			<xs:enumeration value="Ligularia x palmatiloba"/>
+			<xs:enumeration value="Ligularia"/>
+			<xs:enumeration value="Ligustrum vulgare"/>
+			<xs:enumeration value="Lilium bulbiferum"/>
+			<xs:enumeration value="Lilium candidum"/>
+			<xs:enumeration value="Lilium lancifolium"/>
+			<xs:enumeration value="Lilium martagon 'Album'"/>
+			<xs:enumeration value="Lilium martagon"/>
+			<xs:enumeration value="Lilium regale"/>
+			<xs:enumeration value="Lilium"/>
+			<xs:enumeration value="Linaria vulgaris"/>
+			<xs:enumeration value="Linnea borealis"/>
+			<xs:enumeration value="Linum usitatissimum"/>
+			<xs:enumeration value="Lonicera alpigena"/>
+			<xs:enumeration value="Lonicera caerulea ' Jörgen'"/>
+			<xs:enumeration value="Lonicera caerulea"/>
+			<xs:enumeration value="Lonicera caprifolium"/>
+			<xs:enumeration value="Lonicera caucasica"/>
+			<xs:enumeration value="Lonicera chrysantha"/>
+			<xs:enumeration value="Lonicera involucrata"/>
+			<xs:enumeration value="Lonicera morrowii"/>
+			<xs:enumeration value="Lonicera nigra"/>
+			<xs:enumeration value="Lonicera periclymenum"/>
+			<xs:enumeration value="Lonicera tatarica 'Rosea'"/>
+			<xs:enumeration value="Lonicera tatarica 'Sanna'"/>
+			<xs:enumeration value="Lonicera tatarica"/>
+			<xs:enumeration value="Lonicera x amoena"/>
+			<xs:enumeration value="Lonicera x bella 'Dropmore'"/>
+			<xs:enumeration value="Lonicera x bella 'Sakura'"/>
+			<xs:enumeration value="Lonicera x bella 'Zabelii'"/>
+			<xs:enumeration value="Lonicera x bella"/>
+			<xs:enumeration value="Lonicera x xylosteoides 'Clavey's Dwarf'"/>
+			<xs:enumeration value="Lonicera xylosteum"/>
+			<xs:enumeration value="Lonicera"/>
+			<xs:enumeration value="Lotus corniculatus"/>
+			<xs:enumeration value="Lupinus polyphyllus"/>
+			<xs:enumeration value="Luzula nivea"/>
+			<xs:enumeration value="Luzula pilosa"/>
+			<xs:enumeration value="Lychnis alpina"/>
+			<xs:enumeration value="Lychnis chalcedonica"/>
+			<xs:enumeration value="Lychnis coronaria"/>
+			<xs:enumeration value="Lychnis viscaria"/>
+			<xs:enumeration value="Lysimachia clethroides"/>
+			<xs:enumeration value="Lysimachia nummularia"/>
+			<xs:enumeration value="Lysimachia punctata"/>
+			<xs:enumeration value="Lysimachia thyrsiflora"/>
+			<xs:enumeration value="Lysimachia vulgaris"/>
+			<xs:enumeration value="Lythrum salicaria 'Robert'"/>
+			<xs:enumeration value="Lythrum salicaria"/>
+			<xs:enumeration value="Macleya cordata"/>
+			<xs:enumeration value="Magnolia sieboldii"/>
+			<xs:enumeration value="Magnolia stellata"/>
+			<xs:enumeration value="Magnolia x soulangiana"/>
+			<xs:enumeration value="Mahonia aquifolium"/>
+			<xs:enumeration value="Malus toringo var. sargentii"/>
+			<xs:enumeration value="Malva alcea"/>
+			<xs:enumeration value="Malva moscata"/>
+			<xs:enumeration value="Matricaria retutita"/>
+			<xs:enumeration value="Matteuccia struthiopteris"/>
+			<xs:enumeration value="Matteuchia struthiopteris"/>
+			<xs:enumeration value="Mecanopsis betonicifolia"/>
+			<xs:enumeration value="Melica nutans"/>
+			<xs:enumeration value="Melissa officinalis"/>
+			<xs:enumeration value="Menispermum canadense"/>
+			<xs:enumeration value="Menispermum dauricum"/>
+			<xs:enumeration value="Mentha spicata var. crispa"/>
+			<xs:enumeration value="Mentha spicata"/>
+			<xs:enumeration value="Mentha x piperita"/>
+			<xs:enumeration value="Menyanthes trifoliata"/>
+			<xs:enumeration value="Meum athamanticum"/>
+			<xs:enumeration value="Microbiota decussata"/>
+			<xs:enumeration value="Milium effusum"/>
+			<xs:enumeration value="Miscanthus sacchariflorus"/>
+			<xs:enumeration value="Miscanthus sinensis"/>
+			<xs:enumeration value="Molinia caerulea var. arundinacea"/>
+			<xs:enumeration value="Molinia caerulea"/>
+			<xs:enumeration value="Monarda didyma 'Purpurea'"/>
+			<xs:enumeration value="Monarda didyma 'Sarlakka'"/>
+			<xs:enumeration value="Monarda didyma 'Syklaami'"/>
+			<xs:enumeration value="Monarda didyma"/>
+			<xs:enumeration value="Muscari armeniacum"/>
+			<xs:enumeration value="Muscari azureum"/>
+			<xs:enumeration value="Muscari botryoides"/>
+			<xs:enumeration value="Muscari comosum"/>
+			<xs:enumeration value="Muscari neglectum"/>
+			<xs:enumeration value="Myosotis scorpioides"/>
+			<xs:enumeration value="Myosotis sylvatica"/>
+			<xs:enumeration value="Myrica gale"/>
+			<xs:enumeration value="Myrica germanica"/>
+			<xs:enumeration value="Myricaria germanica"/>
+			<xs:enumeration value="Narcissus asturiensis"/>
+			<xs:enumeration value="Narcissus bulbocodium"/>
+			<xs:enumeration value="Narcissus cyclamineus"/>
+			<xs:enumeration value="Narcissus jonquilla"/>
+			<xs:enumeration value="Narcissus poëticus"/>
+			<xs:enumeration value="Narcissus pseudonarcissus"/>
+			<xs:enumeration value="Narcissus tazetta"/>
+			<xs:enumeration value="Narcissus triandrus"/>
+			<xs:enumeration value="Narcissus x incomparabilis"/>
+			<xs:enumeration value="Narcissus x medioluteus"/>
+			<xs:enumeration value="Nepeta x faassenii"/>
+			<xs:enumeration value="Nymphaea alba"/>
+			<xs:enumeration value="Nymphaea candida"/>
+			<xs:enumeration value="Nymphaea tetragona"/>
+			<xs:enumeration value="Ocimum basilicum"/>
+			<xs:enumeration value="Oenothera missouriensis"/>
+			<xs:enumeration value="Oenothera tetragona"/>
+			<xs:enumeration value="Omphalodes verna"/>
+			<xs:enumeration value="Oplopanax horridus"/>
+			<xs:enumeration value="Origanum majorana"/>
+			<xs:enumeration value="Origanum vulgare"/>
+			<xs:enumeration value="Oxalis fontana 'Rufa'"/>
+			<xs:enumeration value="Pachysandra terminalis"/>
+			<xs:enumeration value="Paeonia Lactiflora-hybr."/>
+			<xs:enumeration value="Paeonia officinalis"/>
+			<xs:enumeration value="Paeonia"/>
+			<xs:enumeration value="Papaver croceum"/>
+			<xs:enumeration value="Papaver pseudo-orientale 'Allergo'"/>
+			<xs:enumeration value="Papaver pseudo-orientale 'Border Beauty'"/>
+			<xs:enumeration value="Papaver pseudo-orientale 'Peter Pan'"/>
+			<xs:enumeration value="Papaver pseudo-orientale"/>
+			<xs:enumeration value="Parthenocissus inserta"/>
+			<xs:enumeration value="Parthenocissus quinquefolia 'Engelmannii"/>
+			<xs:enumeration value="Penstemon barbatus"/>
+			<xs:enumeration value="Penstemon hirsutus"/>
+			<xs:enumeration value="Petasites hybridus"/>
+			<xs:enumeration value="Petasites japonicus"/>
+			<xs:enumeration value="Petasites"/>
+			<xs:enumeration value="Petroselinum crispum"/>
+			<xs:enumeration value="Phalaris arundinacea 'Picta'"/>
+			<xs:enumeration value="Phalaris arundinacea"/>
+			<xs:enumeration value="Philadelphus coronarius"/>
+			<xs:enumeration value="Philadelphus inodorus var. grandiflorus"/>
+			<xs:enumeration value="Philadelphus lewisii var. gordonianus"/>
+			<xs:enumeration value="Philadelphus lewisii var. lew.'Waterton'"/>
+			<xs:enumeration value="Philadelphus Lewisii-hybr. 'Tähtisilmä'"/>
+			<xs:enumeration value="Philadelphus pubescens"/>
+			<xs:enumeration value="Philadelphus x lemoinei"/>
+			<xs:enumeration value="Philadelphus x virginalis"/>
+			<xs:enumeration value="Philadelphus"/>
+			<xs:enumeration value="Phlox carolina"/>
+			<xs:enumeration value="Phlox paniculata 'Aida'"/>
+			<xs:enumeration value="Phlox paniculata 'Amethyst'"/>
+			<xs:enumeration value="Phlox paniculata 'Bor der Gem'"/>
+			<xs:enumeration value="Phlox paniculata 'Jules Sandeau'"/>
+			<xs:enumeration value="Phlox paniculata 'Kirchenfürst'"/>
+			<xs:enumeration value="Phlox paniculata 'Lassberg'"/>
+			<xs:enumeration value="Phlox paniculata 'Mia Ruys'"/>
+			<xs:enumeration value="Phlox paniculata 'Orange Perfection'"/>
+			<xs:enumeration value="Phlox paniculata 'Pax'"/>
+			<xs:enumeration value="Phlox paniculata 'Rheinländer'"/>
+			<xs:enumeration value="Phlox paniculata 'Spitfire'"/>
+			<xs:enumeration value="Phlox paniculata 'Starfire'"/>
+			<xs:enumeration value="Phlox paniculata 'Wilhelm Kesselring'"/>
+			<xs:enumeration value="Phlox paniculata"/>
+			<xs:enumeration value="Phlox stolonifera"/>
+			<xs:enumeration value="Phlox subulata 'Atropurpurea'"/>
+			<xs:enumeration value="Phlox subulata 'Betty'"/>
+			<xs:enumeration value="Phlox subulata 'Mai'"/>
+			<xs:enumeration value="Phlox subulata 'Moerheimii'"/>
+			<xs:enumeration value="Phlox subulata 'Rosea'"/>
+			<xs:enumeration value="Phlox subulata 'Temiscaming'"/>
+			<xs:enumeration value="Phlox subulata"/>
+			<xs:enumeration value="Phragmites australis"/>
+			<xs:enumeration value="Physalis alkekengi"/>
+			<xs:enumeration value="Physocarpus opulifolius 'Diablo'"/>
+			<xs:enumeration value="Physocarpus opulifolius"/>
+			<xs:enumeration value="Physocarpus"/>
+			<xs:enumeration value="Picea abies 'Echiniformis'"/>
+			<xs:enumeration value="Picea abies 'Globosa'"/>
+			<xs:enumeration value="Picea abies 'Kartio'"/>
+			<xs:enumeration value="Picea abies 'Nana'"/>
+			<xs:enumeration value="Picea abies 'Nidiformis'"/>
+			<xs:enumeration value="Picea abies 'Tabuliformis'"/>
+			<xs:enumeration value="Picea glauca 'Conica'"/>
+			<xs:enumeration value="Pieris floribunda"/>
+			<xs:enumeration value="Pimpinella anisum"/>
+			<xs:enumeration value="Pinus mugo 'Gnom'"/>
+			<xs:enumeration value="Pinus mugo 'Pumilio'"/>
+			<xs:enumeration value="Pinus mugo ssp. mugo"/>
+			<xs:enumeration value="Pinus pumila"/>
+			<xs:enumeration value="Pinus pumila'Glauca'"/>
+			<xs:enumeration value="Pinus sylvestris 'Nana'"/>
+			<xs:enumeration value="Platycodon grandiflorus"/>
+			<xs:enumeration value="Polemonium caeruleum"/>
+			<xs:enumeration value="Polygonatum multiflorum"/>
+			<xs:enumeration value="Polygonatum odoratum"/>
+			<xs:enumeration value="Polygonatum x hybridum"/>
+			<xs:enumeration value="Polypodium vulgare"/>
+			<xs:enumeration value="Portulaca oleracea ssp. sativa"/>
+			<xs:enumeration value="Potentilla anserina"/>
+			<xs:enumeration value="Potentilla atrosanguinea"/>
+			<xs:enumeration value="Potentilla aurea"/>
+			<xs:enumeration value="Potentilla nepalensis"/>
+			<xs:enumeration value="Potentilla tridentata 'Nuuk'"/>
+			<xs:enumeration value="Potentilla"/>
+			<xs:enumeration value="Primula Auricula -hybr."/>
+			<xs:enumeration value="Primula denticulata"/>
+			<xs:enumeration value="Primula florindae"/>
+			<xs:enumeration value="Primula rosea 'Gigas'"/>
+			<xs:enumeration value="Primula vulgaris"/>
+			<xs:enumeration value="Prunella grandiflora"/>
+			<xs:enumeration value="Prunus cerasus"/>
+			<xs:enumeration value="Prunus padus"/>
+			<xs:enumeration value="Prunus pumila var. depressa"/>
+			<xs:enumeration value="Prunus sp."/>
+			<xs:enumeration value="Prunus tenella"/>
+			<xs:enumeration value="Prunus virginiana 'Shubert'"/>
+			<xs:enumeration value="Pteridium aquilinum"/>
+			<xs:enumeration value="Pulmonaria saccharata"/>
+			<xs:enumeration value="Pulmonaria"/>
+			<xs:enumeration value="Pulsatilla vulgaris"/>
+			<xs:enumeration value="Puschkinia scilloides var. libanotica"/>
+			<xs:enumeration value="Ranunculus ficaria"/>
+			<xs:enumeration value="Rhamnus cathartica"/>
+			<xs:enumeration value="Rheum palmatum subsp. tanguticum"/>
+			<xs:enumeration value="Rhodiola kirilowii"/>
+			<xs:enumeration value="Rhodiola rosea"/>
+			<xs:enumeration value="Rhododendron canadense"/>
+			<xs:enumeration value="Rhododendron catawbiense 'Grandiflorum'"/>
+			<xs:enumeration value="Rhododendron 'Cunninghams's White'"/>
+			<xs:enumeration value="Rhododendron ferrugineum"/>
+			<xs:enumeration value="Rhododendron Forrestii-hybr. 'Elviira'"/>
+			<xs:enumeration value="Rhododendron Ghent-Ryhmä 'Aamurusko'"/>
+			<xs:enumeration value="Rhododendron japonicum"/>
+			<xs:enumeration value="Rhododendron 'Kullervo'"/>
+			<xs:enumeration value="Rhododendron Lights-Ryhmä 'Orchid Lights'"/>
+			<xs:enumeration value="Rhododendron luteum"/>
+			<xs:enumeration value="Rhododendron 'Nova Zembla'"/>
+			<xs:enumeration value="Rhododendron 'P.M.A. Tigerstedt'"/>
+			<xs:enumeration value="Rhododendron 'Pohjanatsalea'"/>
+			<xs:enumeration value="Rhododendron 'Pohjolan Tytär'"/>
+			<xs:enumeration value="Rhododendron smirnowii 'Hellikki'"/>
+			<xs:enumeration value="Rhododendron 'St.Micchel'"/>
+			<xs:enumeration value="Rhododendron Tigerst.-hybr. 'Helsinki Un"/>
+			<xs:enumeration value="Rhododendron Tigerstedii-hybr. 'Haaga'"/>
+			<xs:enumeration value="Rhododendron x fraseri"/>
+			<xs:enumeration value="Rhododendron"/>
+			<xs:enumeration value="Rhus aromatica 'Gro-Low'"/>
+			<xs:enumeration value="Ribes alpinum 'Pumilum'"/>
+			<xs:enumeration value="Ribes alpinum"/>
+			<xs:enumeration value="Ribes aureum"/>
+			<xs:enumeration value="Ribes glandulosum"/>
+			<xs:enumeration value="Ribes 'Hinnonmäen Keltainen'"/>
+			<xs:enumeration value="Ribes 'Jonkheer van Tets'"/>
+			<xs:enumeration value="Ribes 'Lepaan Punainen'"/>
+			<xs:enumeration value="Ribes nigrum 'Melalahti'"/>
+			<xs:enumeration value="Ribes nigrum 'Mortti'"/>
+			<xs:enumeration value="Ribes nigrum 'Vertti'"/>
+			<xs:enumeration value="Ribes nigrum 'Öjebyn'"/>
+			<xs:enumeration value="Ribes nigrum"/>
+			<xs:enumeration value="Ribes 'Punainen Hollantilainen'"/>
+			<xs:enumeration value="Ribes 'Rondom'"/>
+			<xs:enumeration value="Ribes 'Rotes Wunder Katri'"/>
+			<xs:enumeration value="Ribes rubrum 'Aili'"/>
+			<xs:enumeration value="Ribes rubrum 'Katri'"/>
+			<xs:enumeration value="Ribes rubrum"/>
+			<xs:enumeration value="Ribes Rubrum-ryhmä"/>
+			<xs:enumeration value="Ribes sanguineum"/>
+			<xs:enumeration value="Ribes uva-crispa 'Hinnonmäen keltainen'"/>
+			<xs:enumeration value="Ribes uva-crispa"/>
+			<xs:enumeration value="Ribes 'Valkea Jüterborger'"/>
+			<xs:enumeration value="Ribes 'Valkoinen Hollantilainen'"/>
+			<xs:enumeration value="Ribes 'Valkoinen suomalainen'"/>
+			<xs:enumeration value="Ribes"/>
+			<xs:enumeration value="Rodgersia aesculifolia"/>
+			<xs:enumeration value="Rodgersia pinnata"/>
+			<xs:enumeration value="Rosa ' Hein Mück'"/>
+			<xs:enumeration value="Rosa 'Abigaile'"/>
+			<xs:enumeration value="Rosa acicularis 'Dornröschen'"/>
+			<xs:enumeration value="Rosa acicularis"/>
+			<xs:enumeration value="Rosa 'Alain'"/>
+			<xs:enumeration value="Rosa alba 'Celestial'"/>
+			<xs:enumeration value="Rosa alba"/>
+			<xs:enumeration value="Rosa 'Alchymist'"/>
+			<xs:enumeration value="Rosa 'Allgold'"/>
+			<xs:enumeration value="Rosa 'Allotria'"/>
+			<xs:enumeration value="Rosa 'Amber Queen'"/>
+			<xs:enumeration value="Rosa amblyotis"/>
+			<xs:enumeration value="Rosa 'Anabell'"/>
+			<xs:enumeration value="Rosa 'Andalusien'"/>
+			<xs:enumeration value="Rosa 'Angela'"/>
+			<xs:enumeration value="Rosa 'Armsterdam'"/>
+			<xs:enumeration value="Rosa 'Australian Gold'"/>
+			<xs:enumeration value="Rosa 'Bad Füssing'"/>
+			<xs:enumeration value="Rosa 'Ballet'"/>
+			<xs:enumeration value="Rosa 'Barkarole'"/>
+			<xs:enumeration value="Rosa 'Bassino' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'Bassino'"/>
+			<xs:enumeration value="Rosa 'Bella Rosa'"/>
+			<xs:enumeration value="Rosa 'Bella Weiss'"/>
+			<xs:enumeration value="Rosa 'Bengali'"/>
+			<xs:enumeration value="Rosa 'Bernina'"/>
+			<xs:enumeration value="Rosa 'Bernstein-Rose'"/>
+			<xs:enumeration value="Rosa 'Black Lady'"/>
+			<xs:enumeration value="Rosa blanda"/>
+			<xs:enumeration value="Rosa 'Blue Parfym'"/>
+			<xs:enumeration value="Rosa 'Bonica'"/>
+			<xs:enumeration value="Rosa 'Buismans Triumph'"/>
+			<xs:enumeration value="Rosa canina"/>
+			<xs:enumeration value="Rosa canina'General Jaquemonot'"/>
+			<xs:enumeration value="Rosa carolina"/>
+			<xs:enumeration value="Rosa centifolia muscosa 'Nuits de Young'"/>
+			<xs:enumeration value="Rosa 'Champagner'"/>
+			<xs:enumeration value="Rosa 'Champs Elysees'"/>
+			<xs:enumeration value="Rosa 'Chinatown'"/>
+			<xs:enumeration value="Rosa 'Chorus'"/>
+			<xs:enumeration value="Rosa 'Dalli Dalli'"/>
+			<xs:enumeration value="Rosa 'Deutsche Welle'"/>
+			<xs:enumeration value="Rosa 'Dolly Parton'"/>
+			<xs:enumeration value="Rosa 'Dorola'"/>
+			<xs:enumeration value="Rosa 'Duftrauch'"/>
+			<xs:enumeration value="Rosa 'Duftwolke'"/>
+			<xs:enumeration value="Rosa 'Duftzauber'"/>
+			<xs:enumeration value="Rosa dumalis"/>
+			<xs:enumeration value="Rosa 'Dwarf Pavement'"/>
+			<xs:enumeration value="Rosa 'Edelweiss'"/>
+			<xs:enumeration value="Rosa 'Elisabeth of Glamis'"/>
+			<xs:enumeration value="Rosa 'Elmshorn'"/>
+			<xs:enumeration value="Rosa 'Erna Grootendorst'"/>
+			<xs:enumeration value="Rosa 'Erna Harkness'"/>
+			<xs:enumeration value="Rosa 'Erotica'"/>
+			<xs:enumeration value="Rosa 'Europeana'"/>
+			<xs:enumeration value="Rosa 'F. J. Grootendorst'"/>
+			<xs:enumeration value="Rosa 'Fair Play'"/>
+			<xs:enumeration value="Rosa 'Fairy Dance'"/>
+			<xs:enumeration value="Rosa 'Fiona'"/>
+			<xs:enumeration value="Rosa 'Flammentanz'"/>
+			<xs:enumeration value="Rosa foetida 'Bicolor'"/>
+			<xs:enumeration value="Rosa foetida 'Persian Yellow'"/>
+			<xs:enumeration value="Rosa 'Foxi Pavement'"/>
+			<xs:enumeration value="Rosa 'Francofort'"/>
+			<xs:enumeration value="Rosa 'Frau Astrid Späth'"/>
+			<xs:enumeration value="Rosa 'Fresco'"/>
+			<xs:enumeration value="Rosa 'Friesia' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'Friesia'"/>
+			<xs:enumeration value="Rosa 'Friz Nobis'"/>
+			<xs:enumeration value="Rosa 'Frühlingsduft'"/>
+			<xs:enumeration value="Rosa 'Fuggerstad Augsburg'"/>
+			<xs:enumeration value="Rosa gallica 'Merveille'"/>
+			<xs:enumeration value="Rosa gallica 'Splendens'"/>
+			<xs:enumeration value="Rosa 'Gartenzauber 84'"/>
+			<xs:enumeration value="Rosa 'Gisselfeldt'"/>
+			<xs:enumeration value="Rosa glabrifolia"/>
+			<xs:enumeration value="Rosa glauca"/>
+			<xs:enumeration value="Rosa 'Golden Holstein'"/>
+			<xs:enumeration value="Rosa 'Goldmarie 82'"/>
+			<xs:enumeration value="Rosa 'Goldmarie'"/>
+			<xs:enumeration value="Rosa 'Goldquelle'"/>
+			<xs:enumeration value="Rosa 'Graham Thomas'"/>
+			<xs:enumeration value="Rosa 'Gruss an Bayern'"/>
+			<xs:enumeration value="Rosa 'Hanne'"/>
+			<xs:enumeration value="Rosa 'Hansa'"/>
+			<xs:enumeration value="Rosa 'Hanseat'"/>
+			<xs:enumeration value="Rosa 'Heckenfeuer'"/>
+			<xs:enumeration value="Rosa 'Heidekind'"/>
+			<xs:enumeration value="Rosa 'Heidekönigin'"/>
+			<xs:enumeration value="Rosa 'Heidesommer' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'Heinz Erhard'"/>
+			<xs:enumeration value="Rosa 'Heinzelmännchen'"/>
+			<xs:enumeration value="Rosa 'Helga'"/>
+			<xs:enumeration value="Rosa 'Helsingör'"/>
+			<xs:enumeration value="Rosa 'Herzog von Windsor'"/>
+			<xs:enumeration value="Rosa 'Holstein 87'"/>
+			<xs:enumeration value="Rosa 'Iced Ginger'"/>
+			<xs:enumeration value="Rosa 'Ingrid Bergman'"/>
+			<xs:enumeration value="Rosa 'Ingrid Weibull'"/>
+			<xs:enumeration value="Rosa 'Insel Mainau'"/>
+			<xs:enumeration value="Rosa 'Interrama'"/>
+			<xs:enumeration value="Rosa 'Irene af Danmark'"/>
+			<xs:enumeration value="Rosa 'Jan Spek'"/>
+			<xs:enumeration value="Rosa 'Joseph Guy'"/>
+			<xs:enumeration value="Rosa 'Juhannusmorsian'"/>
+			<xs:enumeration value="Rosa 'Kaarina'"/>
+			<xs:enumeration value="Rosa 'Karen Blixen'"/>
+			<xs:enumeration value="Rosa 'Kimono'"/>
+			<xs:enumeration value="Rosa 'King's Ransom'"/>
+			<xs:enumeration value="Rosa 'Kordes Brilliant'"/>
+			<xs:enumeration value="Rosa 'Korona'"/>
+			<xs:enumeration value="Rosa 'Kotiliesi'"/>
+			<xs:enumeration value="Rosa 'Königin Beatrix'"/>
+			<xs:enumeration value="Rosa 'Königin der Rosen'"/>
+			<xs:enumeration value="Rosa 'La Paloma 85'"/>
+			<xs:enumeration value="Rosa 'Lady Rose'"/>
+			<xs:enumeration value="Rosa 'Landora'"/>
+			<xs:enumeration value="Rosa 'Lapponia'"/>
+			<xs:enumeration value="Rosa 'Lavaglut'"/>
+			<xs:enumeration value="Rosa 'Lavender Dream'"/>
+			<xs:enumeration value="Rosa 'Lili Marleen'"/>
+			<xs:enumeration value="Rosa 'Little Lemmy'"/>
+			<xs:enumeration value="Rosa 'Lolita'"/>
+			<xs:enumeration value="Rosa 'Ludvigshafen am Rhein'"/>
+			<xs:enumeration value="Rosa 'Lübecker Rotspon'"/>
+			<xs:enumeration value="Rosa 'Maiden's Blush'"/>
+			<xs:enumeration value="Rosa 'Maigold'"/>
+			<xs:enumeration value="Rosa 'Mainzer Fastnacht'"/>
+			<xs:enumeration value="Rosa majalis 'Foecundissima'"/>
+			<xs:enumeration value="Rosa majalis 'Tornedal'"/>
+			<xs:enumeration value="Rosa majalis"/>
+			<xs:enumeration value="Rosa 'Maria Mathilda'"/>
+			<xs:enumeration value="Rosa 'Mariandel'"/>
+			<xs:enumeration value="Rosa 'Marietta'"/>
+			<xs:enumeration value="Rosa 'Marlena'"/>
+			<xs:enumeration value="Rosa 'Marselisborg'"/>
+			<xs:enumeration value="Rosa 'Meteor'"/>
+			<xs:enumeration value="Rosa 'Michelle'"/>
+			<xs:enumeration value="Rosa 'Mildred Scheel'"/>
+			<xs:enumeration value="Rosa 'Minette'"/>
+			<xs:enumeration value="Rosa 'Moje"/>
+			<xs:enumeration value="Rosa 'Monica'"/>
+			<xs:enumeration value="Rosa 'Montana'"/>
+			<xs:enumeration value="Rosa 'Moyesii'"/>
+			<xs:enumeration value="Rosa 'Nevada'"/>
+			<xs:enumeration value="Rosa 'Nicole'"/>
+			<xs:enumeration value="Rosa 'Nina Weibull'"/>
+			<xs:enumeration value="Rosa nitida"/>
+			<xs:enumeration value="Rosa omaiensis f. pteracantha"/>
+			<xs:enumeration value="Rosa 'Onni'"/>
+			<xs:enumeration value="Rosa 'Orange Meillandina'"/>
+			<xs:enumeration value="Rosa 'Orange Sensation'"/>
+			<xs:enumeration value="Rosa 'Orange Triumph'"/>
+			<xs:enumeration value="Rosa 'Osiana'"/>
+			<xs:enumeration value="Rosa 'Papula'"/>
+			<xs:enumeration value="Rosa 'Pascali'"/>
+			<xs:enumeration value="Rosa 'Peace'"/>
+			<xs:enumeration value="Rosa pendulina"/>
+			<xs:enumeration value="Rosa 'Pernille Poulsen'"/>
+			<xs:enumeration value="Rosa 'Pfälzer Gold'"/>
+			<xs:enumeration value="Rosa 'Piccadilly"/>
+			<xs:enumeration value="Rosa 'Piccolo'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Aicha'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Frulingsduft'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Frühlingsgold'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Grandiflora'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Maigold'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Plena'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Stanwell Perpetual'"/>
+			<xs:enumeration value="Rosa pimpinellifolia 'Tove Jansson'"/>
+			<xs:enumeration value="Rosa pimpinellifolia"/>
+			<xs:enumeration value="Rosa pimpinellifolia'Fruhlingsduft'"/>
+			<xs:enumeration value="Rosa pimpinellifolia'Prarie Dawn'"/>
+			<xs:enumeration value="Rosa 'Pink Grootendorst'"/>
+			<xs:enumeration value="Rosa 'Pink Minimo'"/>
+			<xs:enumeration value="Rosa 'Pink Pavement'"/>
+			<xs:enumeration value="Rosa 'Pink Robusta'"/>
+			<xs:enumeration value="Rosa 'Pohjantähti'"/>
+			<xs:enumeration value="Rosa 'Poppet'"/>
+			<xs:enumeration value="Rosa 'Poppius'"/>
+			<xs:enumeration value="Rosa 'President Kekkonen'"/>
+			<xs:enumeration value="Rosa 'Prins Claus'"/>
+			<xs:enumeration value="Rosa 'Prominent'"/>
+			<xs:enumeration value="Rosa 'Pussta'"/>
+			<xs:enumeration value="Rosa 'Queen Elisabeth'"/>
+			<xs:enumeration value="Rosa 'Red Minimo'"/>
+			<xs:enumeration value="Rosa 'Red Peace'"/>
+			<xs:enumeration value="Rosa 'Regensberg'"/>
+			<xs:enumeration value="Rosa 'Rheinaupark'"/>
+			<xs:enumeration value="Rosa 'Robusta'"/>
+			<xs:enumeration value="Rosa 'Rosali'"/>
+			<xs:enumeration value="Rosa 'Rosamunde'"/>
+			<xs:enumeration value="Rosa 'Rosenfee'"/>
+			<xs:enumeration value="Rosa 'Rosenstadt Zweibrücken'"/>
+			<xs:enumeration value="Rosa 'Roseromantic'"/>
+			<xs:enumeration value="Rosa 'Rosy Carpet'"/>
+			<xs:enumeration value="Rosa rubiginosa 'Magnifiga'"/>
+			<xs:enumeration value="Rosa rubiginosa"/>
+			<xs:enumeration value="Rosa 'Rubina'"/>
+			<xs:enumeration value="Rosa rugosa f. alba"/>
+			<xs:enumeration value="Rosa rugosa 'Fru Dagmar Hastrup'"/>
+			<xs:enumeration value="Rosa rugosa 'Max Graf'"/>
+			<xs:enumeration value="Rosa rugosa 'Pink Robusta'"/>
+			<xs:enumeration value="Rosa rugosa 'Pohjolan Kuningatar'"/>
+			<xs:enumeration value="Rosa rugosa 'Rote Max Graf'"/>
+			<xs:enumeration value="Rosa rugosa 'Scabrosa'"/>
+			<xs:enumeration value="Rosa rugosa 'Schneezwerg'"/>
+			<xs:enumeration value="Rosa rugosa 'Signe Relander'"/>
+			<xs:enumeration value="Rosa rugosa"/>
+			<xs:enumeration value="Rosa 'Rumba'"/>
+			<xs:enumeration value="Rosa 'Ruskeala'"/>
+			<xs:enumeration value="Rosa 'Samba'"/>
+			<xs:enumeration value="Rosa 'Scarlet Pavement'"/>
+			<xs:enumeration value="Rosa 'Schloss Mannheim'"/>
+			<xs:enumeration value="Rosa 'Schneekönigin'"/>
+			<xs:enumeration value="Rosa 'Schneewitchen'"/>
+			<xs:enumeration value="Rosa 'Schwarze Madonna'"/>
+			<xs:enumeration value="Rosa 'Schweizergrüss'"/>
+			<xs:enumeration value="Rosa 'Shalom'"/>
+			<xs:enumeration value="Rosa 'Sipi'"/>
+			<xs:enumeration value="Rosa 'Smarty'"/>
+			<xs:enumeration value="Rosa 'Snow Ballet'"/>
+			<xs:enumeration value="Rosa 'Sommerwind' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'Sommerwind'"/>
+			<xs:enumeration value="Rosa 'Sonnenröschen'"/>
+			<xs:enumeration value="Rosa 'Southampton'"/>
+			<xs:enumeration value="Rosa 'Souvenir de Christophe Cochet'"/>
+			<xs:enumeration value="Rosa 'Souvenir de la Malmaison'"/>
+			<xs:enumeration value="Rosa 'Splendens'"/>
+			<xs:enumeration value="Rosa 'Staffa'"/>
+			<xs:enumeration value="Rosa 'Summer Holiday'"/>
+			<xs:enumeration value="Rosa 'Sunflare'"/>
+			<xs:enumeration value="Rosa 'Super Star'"/>
+			<xs:enumeration value="Rosa 'Swany'"/>
+			<xs:enumeration value="Rosa 'The Fairy' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'The Fairy'"/>
+			<xs:enumeration value="Rosa 'Thérèse Bugnet'"/>
+			<xs:enumeration value="Rosa 'Tip Top'"/>
+			<xs:enumeration value="Rosa 'Tom Tom'"/>
+			<xs:enumeration value="Rosa 'Topsi'"/>
+			<xs:enumeration value="Rosa 'Tornado'"/>
+			<xs:enumeration value="Rosa 'Traumerei' -runkoruusu"/>
+			<xs:enumeration value="Rosa 'Traumerei'"/>
+			<xs:enumeration value="Rosa 'Traumland'"/>
+			<xs:enumeration value="Rosa 'Trier'"/>
+			<xs:enumeration value="Rosa 'Troika'"/>
+			<xs:enumeration value="Rosa 'Uncle Walter'"/>
+			<xs:enumeration value="Rosa 'Uwe Seeler'"/>
+			<xs:enumeration value="Rosa 'Weibull'"/>
+			<xs:enumeration value="Rosa 'Western Sun'"/>
+			<xs:enumeration value="Rosa 'Whisky'"/>
+			<xs:enumeration value="Rosa villosa"/>
+			<xs:enumeration value="Rosa virginiana"/>
+			<xs:enumeration value="Rosa x harisonii 'Harison's Yellow'"/>
+			<xs:enumeration value="Rosa x harisonii"/>
+			<xs:enumeration value="Rosa x malyi 'Kempeleen Kaunotar'"/>
+			<xs:enumeration value="Rosa x mariae-graebneriae"/>
+			<xs:enumeration value="Rosa x rugotida 'Dart's Defender'"/>
+			<xs:enumeration value="Rosa x rugotida"/>
+			<xs:enumeration value="Rosa x spaethiana"/>
+			<xs:enumeration value="Rosa 'Yellow Meillandina'"/>
+			<xs:enumeration value="Rosa 'Yesterday'"/>
+			<xs:enumeration value="Rosa 'Zonta-Rose'"/>
+			<xs:enumeration value="Rosa"/>
+			<xs:enumeration value="Rosmarinus officinalis"/>
+			<xs:enumeration value="Rubus alleghaniensis"/>
+			<xs:enumeration value="Rubus articus x idaeus 'Heisa'"/>
+			<xs:enumeration value="Rubus caesius"/>
+			<xs:enumeration value="Rubus deliciosus"/>
+			<xs:enumeration value="Rubus idaeus 'Muskoka'"/>
+			<xs:enumeration value="Rubus idaeus"/>
+			<xs:enumeration value="Rubus odoratus"/>
+			<xs:enumeration value="Rubus saxatilis"/>
+			<xs:enumeration value="Rudbeckia fulgida var. speciosa"/>
+			<xs:enumeration value="Rudbeckia fulgida var. sullivantii"/>
+			<xs:enumeration value="Rudbeckia laciniata 'Goldball'"/>
+			<xs:enumeration value="Salix alba"/>
+			<xs:enumeration value="Salix aurita"/>
+			<xs:enumeration value="Salix caprea"/>
+			<xs:enumeration value="Salix cinerea"/>
+			<xs:enumeration value="Salix daphnoides acutifolia"/>
+			<xs:enumeration value="Salix daphnoides"/>
+			<xs:enumeration value="Salix dasyclados"/>
+			<xs:enumeration value="Salix fragilis 'Bullata'"/>
+			<xs:enumeration value="Salix gl.callicarpaea 'Haltia"/>
+			<xs:enumeration value="Salix glauca"/>
+			<xs:enumeration value="Salix lanata"/>
+			<xs:enumeration value="Salix lapponum"/>
+			<xs:enumeration value="Salix myrsinifolia"/>
+			<xs:enumeration value="Salix myrtilloides"/>
+			<xs:enumeration value="Salix pentandra"/>
+			<xs:enumeration value="Salix phylicifolia"/>
+			<xs:enumeration value="Salix purpurea 'Nana'"/>
+			<xs:enumeration value="Salix purpurea x rosmarinifolia"/>
+			<xs:enumeration value="Salix purpurea"/>
+			<xs:enumeration value="Salix pyrolifolia"/>
+			<xs:enumeration value="Salix repens arenaria"/>
+			<xs:enumeration value="Salix repens 'Saret'"/>
+			<xs:enumeration value="Salix repens"/>
+			<xs:enumeration value="Salix rosmarinifolia"/>
+			<xs:enumeration value="Salix 'Sibirica'"/>
+			<xs:enumeration value="Salix starkeana"/>
+			<xs:enumeration value="Salix triandra"/>
+			<xs:enumeration value="Salix viminalis"/>
+			<xs:enumeration value="Salix 'Vitellina Tristis'"/>
+			<xs:enumeration value="Salix 'Vitellina'"/>
+			<xs:enumeration value="Salix x aurora 'Tuhkimo'"/>
+			<xs:enumeration value="Salix x dasyclados"/>
+			<xs:enumeration value="Salix x mollissima"/>
+			<xs:enumeration value="Salix x rubens"/>
+			<xs:enumeration value="Salix"/>
+			<xs:enumeration value="Salvia nemorosa"/>
+			<xs:enumeration value="Salvia officinalis"/>
+			<xs:enumeration value="Salvia x sylvestris 'Blaukönigin'"/>
+			<xs:enumeration value="Salvia x sylvestris 'Rosakönigin'"/>
+			<xs:enumeration value="Salvia x sylvestris"/>
+			<xs:enumeration value="Sambucus canadensis ´Maxima´"/>
+			<xs:enumeration value="Sambucus racemosa"/>
+			<xs:enumeration value="Sanguisorba officinalis"/>
+			<xs:enumeration value="Saponaria officinalis 'Alba Plena'"/>
+			<xs:enumeration value="Saponaria officinalis 'Rubra Plena'"/>
+			<xs:enumeration value="Saponaria officinalis"/>
+			<xs:enumeration value="Satureja hortensis"/>
+			<xs:enumeration value="Saxifraga Arendsii-hybr."/>
+			<xs:enumeration value="Saxifraga hostii"/>
+			<xs:enumeration value="Saxifraga paniculata"/>
+			<xs:enumeration value="Saxifraga 'Purpurteppich'"/>
+			<xs:enumeration value="Saxifraga rotundifolia"/>
+			<xs:enumeration value="Saxifraga 'Schneeteppich'"/>
+			<xs:enumeration value="Schisandra chinensis"/>
+			<xs:enumeration value="Scirpus sylvaticus"/>
+			<xs:enumeration value="Sedum acre"/>
+			<xs:enumeration value="Sedum aizoon"/>
+			<xs:enumeration value="Sedum album"/>
+			<xs:enumeration value="Sedum 'Common Red'"/>
+			<xs:enumeration value="Sedum ewersii"/>
+			<xs:enumeration value="Sedum floriferum 'Weihenstephaner Gold'"/>
+			<xs:enumeration value="Sedum 'Herbstfreude'"/>
+			<xs:enumeration value="Sedum pachyclados"/>
+			<xs:enumeration value="Sedum spathulifolium 'Purpureum'"/>
+			<xs:enumeration value="Sedum spathulifolium"/>
+			<xs:enumeration value="Sedum spectabile"/>
+			<xs:enumeration value="Sedum spurium 'Rosea'"/>
+			<xs:enumeration value="Sedum spurium"/>
+			<xs:enumeration value="Sedum 'Stewed Rhubarb Mountain'"/>
+			<xs:enumeration value="Sedum telephium 'Munstead Dark Red'"/>
+			<xs:enumeration value="Sedum telephium subsp. maximum"/>
+			<xs:enumeration value="Sedum"/>
+			<xs:enumeration value="Sempervivum tectorum"/>
+			<xs:enumeration value="Sinapsis alba"/>
+			<xs:enumeration value="Solidago canadensis 'Goldking'"/>
+			<xs:enumeration value="Solidago canadensis"/>
+			<xs:enumeration value="Solidago virgaurea"/>
+			<xs:enumeration value="Solidago x hybr. 'Golden Mosa'"/>
+			<xs:enumeration value="Solidago x hybr. 'Goldstar'"/>
+			<xs:enumeration value="Solidago x hybr. 'Leraft'"/>
+			<xs:enumeration value="Solidago x hybr."/>
+			<xs:enumeration value="Solidago"/>
+			<xs:enumeration value="Sorbaria sorbifolia"/>
+			<xs:enumeration value="Sorbus aucuparia"/>
+			<xs:enumeration value="Spiraea alba 'Allikko'"/>
+			<xs:enumeration value="Spiraea alba var. latifolia"/>
+			<xs:enumeration value="Spiraea alba"/>
+			<xs:enumeration value="Spiraea 'Arguta'"/>
+			<xs:enumeration value="Spiraea beauverdiana 'Lumikki'"/>
+			<xs:enumeration value="Spiraea beauverdiana"/>
+			<xs:enumeration value="Spiraea betulifolia `Thor´"/>
+			<xs:enumeration value="Spiraea betulifolia 'Island'"/>
+			<xs:enumeration value="Spiraea betulifolia 'Renko'"/>
+			<xs:enumeration value="Spiraea betulifolia var. 'Aemiliana'"/>
+			<xs:enumeration value="Spiraea betulifolia var. lucida"/>
+			<xs:enumeration value="Spiraea betulifolia"/>
+			<xs:enumeration value="Spiraea Billiardii-hybr."/>
+			<xs:enumeration value="Spiraea cana"/>
+			<xs:enumeration value="Spiraea chamaedryfolia 'Martti'"/>
+			<xs:enumeration value="Spiraea chamaedryfolia var. ulmifolia"/>
+			<xs:enumeration value="Spiraea chamaedryfolia"/>
+			<xs:enumeration value="Spiraea decumbens"/>
+			<xs:enumeration value="Spiraea densiflora"/>
+			<xs:enumeration value="Spiraea douglasii"/>
+			<xs:enumeration value="Spiraea fritschiana"/>
+			<xs:enumeration value="Spiraea 'Grefsheim'"/>
+			<xs:enumeration value="Spiraea hypericifolia"/>
+			<xs:enumeration value="Spiraea japonica 'Albiflora'"/>
+			<xs:enumeration value="Spiraea japonica 'Anthony Waterer'"/>
+			<xs:enumeration value="Spiraea japonica 'Arnold'"/>
+			<xs:enumeration value="Spiraea japonica 'Firelight'"/>
+			<xs:enumeration value="Spiraea japonica 'Froebelii'"/>
+			<xs:enumeration value="Spiraea japonica 'Golden Princess'"/>
+			<xs:enumeration value="Spiraea japonica 'Goldflame'"/>
+			<xs:enumeration value="Spiraea japonica 'Goldmound'"/>
+			<xs:enumeration value="Spiraea japonica 'Lilly'"/>
+			<xs:enumeration value="Spiraea japonica 'Little Princess'"/>
+			<xs:enumeration value="Spiraea japonica 'Manon'"/>
+			<xs:enumeration value="Spiraea japonica 'Nana'"/>
+			<xs:enumeration value="Spiraea japonica 'Neon Flash'"/>
+			<xs:enumeration value="Spiraea japonica 'Odensala'"/>
+			<xs:enumeration value="Spiraea japonica 'Shirobana'"/>
+			<xs:enumeration value="Spiraea japonica 'walbuma Magic Carpet'"/>
+			<xs:enumeration value="Spiraea japonica"/>
+			<xs:enumeration value="Spiraea 'Margaritae'"/>
+			<xs:enumeration value="Spiraea media"/>
+			<xs:enumeration value="Spiraea nipponica 'Halwards Silwer'"/>
+			<xs:enumeration value="Spiraea nipponica 'June Bride'"/>
+			<xs:enumeration value="Spiraea nipponica"/>
+			<xs:enumeration value="Spiraea rubella"/>
+			<xs:enumeration value="Spiraea salicifolia"/>
+			<xs:enumeration value="Spiraea stevenii"/>
+			<xs:enumeration value="Spiraea 'Summersnow'"/>
+			<xs:enumeration value="Spiraea trichocarpa"/>
+			<xs:enumeration value="Spiraea trilobata"/>
+			<xs:enumeration value="Spiraea x bumalda 'Denistar'"/>
+			<xs:enumeration value="Spiraea x bumalda 'Superstar'"/>
+			<xs:enumeration value="Spiraea x cinerea"/>
+			<xs:enumeration value="Spiraea x rosalba"/>
+			<xs:enumeration value="Spiraea x sanssouciana"/>
+			<xs:enumeration value="Spiraea x vanhouttei"/>
+			<xs:enumeration value="Spiraea x watsoniana 'Kruunu'"/>
+			<xs:enumeration value="Spiraea x watsoniana"/>
+			<xs:enumeration value="Spiraea"/>
+			<xs:enumeration value="Stachys byzantina"/>
+			<xs:enumeration value="Stachys macrantha 'Superba'"/>
+			<xs:enumeration value="Stachys macrantha"/>
+			<xs:enumeration value="Stephanandra incisa 'Crispa'"/>
+			<xs:enumeration value="Stephnandra incisa 'Crispa'"/>
+			<xs:enumeration value="Symphoricarpos albus var. laevigatus"/>
+			<xs:enumeration value="Syringa josikaea"/>
+			<xs:enumeration value="Syringa patula"/>
+			<xs:enumeration value="Syringa Preston-hybr. 'Coral'"/>
+			<xs:enumeration value="Syringa Preston-hybr. 'Elinor'"/>
+			<xs:enumeration value="Syringa Preston-hybr. 'Holger'"/>
+			<xs:enumeration value="Syringa Preston-hybr. 'James MacFarlane'"/>
+			<xs:enumeration value="Syringa Preston-hybr. 'Royalty'"/>
+			<xs:enumeration value="Syringa reflexa"/>
+			<xs:enumeration value="Syringa reticulata"/>
+			<xs:enumeration value="Syringa vulgaris 'Alba'"/>
+			<xs:enumeration value="Syringa vulgaris 'Amoena'"/>
+			<xs:enumeration value="Syringa vulgaris 'Andenken an Ludvig Späth'"/>
+			<xs:enumeration value="Syringa vulgaris 'Charles Joly'"/>
+			<xs:enumeration value="Syringa vulgaris hybr."/>
+			<xs:enumeration value="Syringa vulgaris 'Katherine Havemayer'"/>
+			<xs:enumeration value="Syringa vulgaris 'Michel Buchner'"/>
+			<xs:enumeration value="Syringa vulgaris 'Mme Lemoine'"/>
+			<xs:enumeration value="Syringa vulgaris 'Moskovan kaunotar'"/>
+			<xs:enumeration value="Syringa vulgaris 'Sensation'"/>
+			<xs:enumeration value="Syringa vulgaris"/>
+			<xs:enumeration value="Syringa x chinensis 'Bicolor'"/>
+			<xs:enumeration value="Syringa x chinensis 'Saugeana'"/>
+			<xs:enumeration value="Syringa x chinensis"/>
+			<xs:enumeration value="Syringa x henryi 'Tammelan Kaunotar'"/>
+			<xs:enumeration value="Syringa x henryi 'Tapaninsyreeni'"/>
+			<xs:enumeration value="Syringa x henryi"/>
+			<xs:enumeration value="Syringa x josiflexa ' Veera'"/>
+			<xs:enumeration value="Syringa x josiflexa"/>
+			<xs:enumeration value="Syringa"/>
+			<xs:enumeration value="Tanacetum coccineum"/>
+			<xs:enumeration value="Tanacetum vulgare"/>
+			<xs:enumeration value="Taxus baccata"/>
+			<xs:enumeration value="Taxus cuspidata 'Nana'"/>
+			<xs:enumeration value="Taxus cuspidata"/>
+			<xs:enumeration value="Taxus x media 'Hicksii'"/>
+			<xs:enumeration value="Taxus"/>
+			<xs:enumeration value="Telekia speciosa"/>
+			<xs:enumeration value="Tellima grandiflora"/>
+			<xs:enumeration value="Thalictrum aquilegiifolium"/>
+			<xs:enumeration value="Thalictrum delavayi"/>
+			<xs:enumeration value="Thalictrum flavum"/>
+			<xs:enumeration value="Thelypteris phegopteris"/>
+			<xs:enumeration value="Thuja koraiensis"/>
+			<xs:enumeration value="Thuja occidentalis 'Brabant'"/>
+			<xs:enumeration value="Thuja occidentalis 'Columna'"/>
+			<xs:enumeration value="Thuja occidentalis 'Fastigiata'"/>
+			<xs:enumeration value="Thuja occidentalis 'Globosa'"/>
+			<xs:enumeration value="Thuja occidentalis 'Holmstrup'"/>
+			<xs:enumeration value="Thuja occidentalis 'Hoveyi'"/>
+			<xs:enumeration value="Thuja occidentalis 'Smaragd'"/>
+			<xs:enumeration value="Thuja occidentalis 'Sunkist'"/>
+			<xs:enumeration value="Thuja occidentalis 'Woodwardii'"/>
+			<xs:enumeration value="Thuja occidentalis"/>
+			<xs:enumeration value="Thujopsis dolabrata"/>
+			<xs:enumeration value="Thymus citriodorus"/>
+			<xs:enumeration value="Thymus serphyllum"/>
+			<xs:enumeration value="Thymus vulgaris"/>
+			<xs:enumeration value="Tiarella cordifolia"/>
+			<xs:enumeration value="Tiarella wherryi"/>
+			<xs:enumeration value="Tiarella"/>
+			<xs:enumeration value="Trientalis europaea"/>
+			<xs:enumeration value="Trifolium repens"/>
+			<xs:enumeration value="Trollius chinensis 'Goldkönigin'"/>
+			<xs:enumeration value="Trollius chinensis"/>
+			<xs:enumeration value="Trollius europaeus"/>
+			<xs:enumeration value="Trollius-hybr. 'Orange Globe'"/>
+			<xs:enumeration value="Trollius-hybr. 'Orange Princess'"/>
+			<xs:enumeration value="Trollius-hybr."/>
+			<xs:enumeration value="Tsuga canadensis"/>
+			<xs:enumeration value="Tsuga diversifolia"/>
+			<xs:enumeration value="Tsuga heterophylla"/>
+			<xs:enumeration value="Tsuga mertensiana"/>
+			<xs:enumeration value="Tulipa armena"/>
+			<xs:enumeration value="Tulipa biflora"/>
+			<xs:enumeration value="Tulipa celsiana"/>
+			<xs:enumeration value="Tulipa clusiana"/>
+			<xs:enumeration value="Tulipa fosteriana"/>
+			<xs:enumeration value="Tulipa greigii"/>
+			<xs:enumeration value="Tulipa humilis"/>
+			<xs:enumeration value="Tulipa kaufmanniana"/>
+			<xs:enumeration value="Tulipa lanata"/>
+			<xs:enumeration value="Tulipa linifolia"/>
+			<xs:enumeration value="Tulipa marjoletti"/>
+			<xs:enumeration value="Tulipa ostrowskiana"/>
+			<xs:enumeration value="Tulipa sylvestris"/>
+			<xs:enumeration value="Tulipa tarda"/>
+			<xs:enumeration value="Typha angustifolia"/>
+			<xs:enumeration value="Typha latifolia"/>
+			<xs:enumeration value="Vaccinium 'Aron'"/>
+			<xs:enumeration value="Vaccinium corymbosum 'Aino'"/>
+			<xs:enumeration value="Vaccinium corymbosum 'North Blue'"/>
+			<xs:enumeration value="Vaccinium corymbosum"/>
+			<xs:enumeration value="Vaccinium microcarpum"/>
+			<xs:enumeration value="Vaccinium myrtilus"/>
+			<xs:enumeration value="Vaccinium oxycoccos"/>
+			<xs:enumeration value="Vaccinium uliginosum"/>
+			<xs:enumeration value="Vaccinium vitis-idaea"/>
+			<xs:enumeration value="Waldsteinia ternata"/>
+			<xs:enumeration value="Weigela florida 'Minuet'"/>
+			<xs:enumeration value="Weigela hybrida"/>
+			<xs:enumeration value="Weigela middendorffiana"/>
+			<xs:enumeration value="Weigela praecox"/>
+			<xs:enumeration value="Verbascum nigrum"/>
+			<xs:enumeration value="Verbascum olympicum"/>
+			<xs:enumeration value="Verbascum thapsus"/>
+			<xs:enumeration value="Veronica austriaca 'Royal Blue'"/>
+			<xs:enumeration value="Veronica austriaca"/>
+			<xs:enumeration value="Veronica longifolia"/>
+			<xs:enumeration value="Veronica officinalis"/>
+			<xs:enumeration value="Veronica prostrata"/>
+			<xs:enumeration value="Veronica spicata nana 'Blauteppich'"/>
+			<xs:enumeration value="Veronica spicata"/>
+			<xs:enumeration value="Veronica"/>
+			<xs:enumeration value="Viburnum dentatum var. lucidum"/>
+			<xs:enumeration value="Viburnum lantana"/>
+			<xs:enumeration value="Viburnum lentago 'Jenkki'"/>
+			<xs:enumeration value="Viburnum opulus f. roseum"/>
+			<xs:enumeration value="Viburnum opulus 'Kallion Pallo'"/>
+			<xs:enumeration value="Viburnum opulus 'Nanum'"/>
+			<xs:enumeration value="Viburnum opulus 'Nordplant'"/>
+			<xs:enumeration value="Viburnum opulus 'Pohjan Neito'"/>
+			<xs:enumeration value="Viburnum opulus ssp. opulus"/>
+			<xs:enumeration value="Viburnum opulus ssp. trilobum"/>
+			<xs:enumeration value="Viburnum opulus"/>
+			<xs:enumeration value="Viburnum sargentii 'Blue Muffin'"/>
+			<xs:enumeration value="Viburnum sargentii 'Onondaga'"/>
+			<xs:enumeration value="Viburnum"/>
+			<xs:enumeration value="Vinca minor 'Argenteovariegata'"/>
+			<xs:enumeration value="Vinca minor"/>
+			<xs:enumeration value="Viola 'Ella'"/>
+			<xs:enumeration value="Viola odorata"/>
+			<xs:enumeration value="Vitis labrusca"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KasviryhmaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="havupensas"/>
+			<xs:enumeration value="köynnös"/>
+			<xs:enumeration value="köynnösruusu"/>
+			<xs:enumeration value="lehtipensas"/>
+			<xs:enumeration value="maustekasvi"/>
+			<xs:enumeration value="perenna"/>
+			<xs:enumeration value="varpu"/>
+			<xs:enumeration value="ryhmäruusu"/>
+			<xs:enumeration value="yksivuotinen kasvi"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KatuosanLajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ajorata"/>
+			<xs:enumeration value="alikulkukäytävä"/>
+			<xs:enumeration value="jalkakäytävä"/>
+			<xs:enumeration value="kävelytie"/>
+			<xs:enumeration value="luiska"/>
+			<xs:enumeration value="portaat"/>
+			<xs:enumeration value="pyöräilykaista"/>
+			<xs:enumeration value="pyörätie"/>
+			<xs:enumeration value="raitiotie"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="tasoristeys"/>
+			<xs:enumeration value="tonttiliittymä"/>
+			<xs:enumeration value="tunneli"/>
+			<xs:enumeration value="viheralue"/>
+			<xs:enumeration value="välikaista"/>
+			<xs:enumeration value="yhdistetty kevyen liikenteen väylä"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KunnossapitoluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ajoradat, luokka I"/>
+			<xs:enumeration value="ajoradat, luokka II"/>
+			<xs:enumeration value="ajoradat, luokka III"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka I"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka II"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka I"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka II"/>
+			<xs:enumeration value="jalkakäytävä, luokka I"/>
+			<xs:enumeration value="jalkakäytävä, luokka II"/>
+			<xs:enumeration value="torit ja aukiot, luokka I"/>
+			<xs:enumeration value="torit ja aukiot, luokka II"/>
+			<xs:enumeration value="kiinteistön kunnossapitovastuu"/>
+			<xs:enumeration value="ei kunnossapitoa"/>
+			<xs:enumeration value="ei talvikunnosspitoa"/>
+			<xs:enumeration value="A1 edustusviheralue"/>
+			<xs:enumeration value="A2 käyttöviheralue"/>
+			<xs:enumeration value="A3 käyttö- ja suojaviheralue"/>
+			<xs:enumeration value="B1 maisemapelto"/>
+			<xs:enumeration value="B2 käyttöniitty"/>
+			<xs:enumeration value="B3 maisemaniitty ja laidunalue"/>
+			<xs:enumeration value="B4 avoin alue ja näkymät"/>
+			<xs:enumeration value="B5 arvoniitty"/>
+			<xs:enumeration value="C1 lähimetsä"/>
+			<xs:enumeration value="C2 ulkoilu- ja virkistysmetsä"/>
+			<xs:enumeration value="C3 suojametsä"/>
+			<xs:enumeration value="C4 talousmetsä"/>
+			<xs:enumeration value="C5 arvometsä"/>
+			<xs:enumeration value="E erityisalue"/>
+			<xs:enumeration value="ei hoidossa"/>
+			<xs:enumeration value="U urheilualue"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LeikkivalineTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aita"/>
+			<xs:enumeration value="hiekkalaatikko"/>
+			<xs:enumeration value="jousilelu"/>
+			<xs:enumeration value="karuselli"/>
+			<xs:enumeration value="katos"/>
+			<xs:enumeration value="keinulauta"/>
+			<xs:enumeration value="keinumisvälineet"/>
+			<xs:enumeration value="keinut"/>
+			<xs:enumeration value="kiipeilyteline"/>
+			<xs:enumeration value="köysirata"/>
+			<xs:enumeration value="leikkimökki"/>
+			<xs:enumeration value="liukumäki"/>
+			<xs:enumeration value="monitoimiväline"/>
+			<xs:enumeration value="patsas"/>
+			<xs:enumeration value="tasapainoiluväline"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LiikennemerkkityyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="111. Mutka oikealle"/>
+			<xs:enumeration value="112. Mutka vasemmalle"/>
+			<xs:enumeration value="113. Mutkia, joista ensimmäinen oikealle"/>
+			<xs:enumeration value="114. Mutkia, joista ensimmäinen vasemmalle"/>
+			<xs:enumeration value="115. Jyrkkä alamäki"/>
+			<xs:enumeration value="116. Jyrkkä ylämäki"/>
+			<xs:enumeration value="121. Kapeneva tie"/>
+			<xs:enumeration value="122. Kaksisuuntainen liikenne"/>
+			<xs:enumeration value="131. Avattava silta"/>
+			<xs:enumeration value="132. Lautta, laituri tai ranta"/>
+			<xs:enumeration value="133. Liikenneruuhka"/>
+			<xs:enumeration value="141. Epätasainen tie"/>
+			<xs:enumeration value="141 a. Töyssyjä"/>
+			<xs:enumeration value="142. Tietyö"/>
+			<xs:enumeration value="143. Irtokiviä"/>
+			<xs:enumeration value="144. Liukas ajorata"/>
+			<xs:enumeration value="147. Vaarallinen tien reuna"/>
+			<xs:enumeration value="151. Suojatien ennakkovaroitus"/>
+			<xs:enumeration value="152. Lapsia"/>
+			<xs:enumeration value="153. Pyöräilijöitä"/>
+			<xs:enumeration value="154. Hiihtolatu"/>
+			<xs:enumeration value="155. Hirvieläimiä"/>
+			<xs:enumeration value="156. Poroja"/>
+			<xs:enumeration value="161. Tienristeys"/>
+			<xs:enumeration value="162. Sivutien risteys"/>
+			<xs:enumeration value="163. Sivutien risteys"/>
+			<xs:enumeration value="164. Sivutien risteys"/>
+			<xs:enumeration value="165. Liikennevalot"/>
+			<xs:enumeration value="166. Liikenneympyrä"/>
+			<xs:enumeration value="167. Raitiotie"/>
+			<xs:enumeration value="171. Rautatien tasoristeys ilman puomeja"/>
+			<xs:enumeration value="172. Rautatien tasoristeys, jossa on puomit"/>
+			<xs:enumeration value="173. 174. 175. Rautatien tasoristeyksen lähestymismerkit"/>
+			<xs:enumeration value="176. Yksiraiteisen rautatien tasoristeys"/>
+			<xs:enumeration value="177. Kaksi- tai useampiraiteisen rautatien tasoristeys"/>
+			<xs:enumeration value="181. Putoavia kiviä"/>
+			<xs:enumeration value="182. Matalalla lentäviä lentokoneita"/>
+			<xs:enumeration value="183. Sivutuuli"/>
+			<xs:enumeration value="189. Muu vaara"/>
+			<xs:enumeration value="211. Etuajo-oikeutettu tie"/>
+			<xs:enumeration value="212. Etuajo-oikeuden päättyminen"/>
+			<xs:enumeration value="221. Etuajo-oikeus kohdattaessa"/>
+			<xs:enumeration value="222. Väistämisvelvollisuus kohdattaessa"/>
+			<xs:enumeration value="231. Väistämisvelvollisuus risteyksessä"/>
+			<xs:enumeration value="232. Pakollinen pysäyttäminen"/>
+			<xs:enumeration value="311. Ajoneuvolla ajo kielletty"/>
+			<xs:enumeration value="312. Moottorikäyttöisellä ajoneuvolla ajo kielletty"/>
+			<xs:enumeration value="313. Kuorma- ja pakettiautolla ajo kielletty"/>
+			<xs:enumeration value="314. Ajoneuvoyhdistelmällä ajo kielletty"/>
+			<xs:enumeration value="315. Traktorilla ajo kielletty"/>
+			<xs:enumeration value="316. Moottoripyörällä ajo kielletty"/>
+			<xs:enumeration value="317. Moottorikelkalla ajo kielletty"/>
+			<xs:enumeration value="318. Vaarallisten aineiden kuljetus kielletty"/>
+			<xs:enumeration value="319. Linja-autolla ajo kielletty"/>
+			<xs:enumeration value="321. Mopolla ajo kielletty"/>
+			<xs:enumeration value="322. Polkupyörällä ja mopolla ajo kielletty"/>
+			<xs:enumeration value="323. Jalankulku kielletty"/>
+			<xs:enumeration value="324. Jalankulku sekä polkupyörällä ja mopolla ajo kielletty"/>
+			<xs:enumeration value="325. Ratsastus kielletty"/>
+			<xs:enumeration value="331. Kielletty ajosuunta"/>
+			<xs:enumeration value="332. Vasemmalle kääntyminen kielletty"/>
+			<xs:enumeration value="333. Oikealle kääntyminen kielletty"/>
+			<xs:enumeration value="334. U-käännös kielletty"/>
+			<xs:enumeration value="341. Ajoneuvon suurin sallittu leveys"/>
+			<xs:enumeration value="342. Ajoneuvon suurin sallittu korkeus"/>
+			<xs:enumeration value="343. Ajoneuvon tai ajoneuvoyhdistelmän suurin sallittu pituus"/>
+			<xs:enumeration value="344. Ajoneuvon suurin sallittu massa"/>
+			<xs:enumeration value="345. Ajoneuvoyhdistelmän suurin sallittu massa"/>
+			<xs:enumeration value="346. Ajoneuvon suurin sallittu akselille kohdistuva massa"/>
+			<xs:enumeration value="347. Ajoneuvon suurin sallittu telille kohdistuva massa"/>
+			<xs:enumeration value="351. Ohituskielto"/>
+			<xs:enumeration value="352. Ohituskielto päättyy"/>
+			<xs:enumeration value="353. Ohituskielto kuorma-autolla"/>
+			<xs:enumeration value="354. Ohituskielto kuorma-autolla päättyy"/>
+			<xs:enumeration value="361. Nopeusrajoitus"/>
+			<xs:enumeration value="362. Nopeusrajoitus päättyy"/>
+			<xs:enumeration value="363. Nopeusrajoitusalue"/>
+			<xs:enumeration value="364. Nopeusrajoitusalue päättyy"/>
+			<xs:enumeration value="365. Ajokaistakohtainen kielto tai rajoitus"/>
+			<xs:enumeration value="371. Pysäyttäminen kielletty"/>
+			<xs:enumeration value="372. Pysäköinti kielletty"/>
+			<xs:enumeration value="373. Pysäköintikieltoalue"/>
+			<xs:enumeration value="374. Pysäköintikieltoalue päättyy"/>
+			<xs:enumeration value="375. Taksiasema-alue"/>
+			<xs:enumeration value="376. Taksin pysäyttämispaikka"/>
+			<xs:enumeration value="381. Vuoropysäköinti"/>
+			<xs:enumeration value="382. Vuoropysäköinti"/>
+			<xs:enumeration value="391. Pakollinen pysäyttäminen tullitarkastusta varten"/>
+			<xs:enumeration value="392. Pakollinen pysäyttäminen tarkastusta varten"/>
+			<xs:enumeration value="393. Moottorikäyttöisten ajoneuvojen vähimmäisetäisyys"/>
+			<xs:enumeration value="411. Pakollinen ajosuunta"/>
+			<xs:enumeration value="412. Pakollinen ajosuunta"/>
+			<xs:enumeration value="413. Pakollinen ajosuunta"/>
+			<xs:enumeration value="414. Pakollinen ajosuunta"/>
+			<xs:enumeration value="415. Pakollinen ajosuunta"/>
+			<xs:enumeration value="416. Pakollinen kiertosuunta"/>
+			<xs:enumeration value="417. Liikenteen jakaja"/>
+			<xs:enumeration value="418. Liikenteen jakaja"/>
+			<xs:enumeration value="421. Jalkakäytävä"/>
+			<xs:enumeration value="422. Pyörätie"/>
+			<xs:enumeration value="423. Yhdistetty pyörätie ja jalkakäytävä"/>
+			<xs:enumeration value="424. Pyörätie ja jalkakäytävä rinnakkain"/>
+			<xs:enumeration value="425. Pyörätie ja jalkakäytävä rinnakkain"/>
+			<xs:enumeration value="426. Moottorikelkkailureitti"/>
+			<xs:enumeration value="427. Ratsastustie"/>
+			<xs:enumeration value="511. Suojatie"/>
+			<xs:enumeration value="520. Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="521. Pysäköintipaikka"/>
+			<xs:enumeration value="521 a. Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="521 b. Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="521 c. Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="522. Kohtaamispaikka"/>
+			<xs:enumeration value="531. Paikallisliikenteen linja-auton pysäkki"/>
+			<xs:enumeration value="532. Kaukoliikenteen linja-auton pysäkki"/>
+			<xs:enumeration value="533. Raitiovaunun pysäkki"/>
+			<xs:enumeration value="534. Taksiasema"/>
+			<xs:enumeration value="541 a. Linja-autokaista"/>
+			<xs:enumeration value="541 b. Linja-autokaista"/>
+			<xs:enumeration value="542 a. Linja-autokaista päättyy"/>
+			<xs:enumeration value="542 b. Linja-autokaista päättyy"/>
+			<xs:enumeration value="543 a. Raitiovaunukaista"/>
+			<xs:enumeration value="543 b. Raitiovaunukaista"/>
+			<xs:enumeration value="544 a. Raitiovaunukaista päättyy"/>
+			<xs:enumeration value="544 b. Raitiovaunukaista päättyy"/>
+			<xs:enumeration value="551. Yksisuuntainen tie"/>
+			<xs:enumeration value="561. Moottoritie"/>
+			<xs:enumeration value="562. Moottoritie päättyy"/>
+			<xs:enumeration value="563. Moottoriliikennetie"/>
+			<xs:enumeration value="564. Moottoriliikennetie päättyy"/>
+			<xs:enumeration value="565. Tunneli"/>
+			<xs:enumeration value="566. Tunneli päättyy"/>
+			<xs:enumeration value="567. Hätäpysäyttämispaikka"/>
+			<xs:enumeration value="571. Taajama"/>
+			<xs:enumeration value="572. Taajama päättyy"/>
+			<xs:enumeration value="573. Pihakatu"/>
+			<xs:enumeration value="574. Pihakatu päättyy"/>
+			<xs:enumeration value="575. Kävelykatu"/>
+			<xs:enumeration value="576. Kävelykatu päättyy"/>
+			<xs:enumeration value="611. Suunnistustaulu"/>
+			<xs:enumeration value="612. Suunnistustaulu"/>
+			<xs:enumeration value="613. Kiertotien suunnistustaulu"/>
+			<xs:enumeration value="614. Kiertotien suunnistustaulu"/>
+			<xs:enumeration value="615. Kiertotieopastus"/>
+			<xs:enumeration value="616. Ajoreittiopastus"/>
+			<xs:enumeration value="621. Ajokaistaopastus"/>
+			<xs:enumeration value="622. Ajokaistaopastus"/>
+			<xs:enumeration value="623. Ajokaistan päättyminen"/>
+			<xs:enumeration value="631. Ajokaistan yläpuolinen viitta"/>
+			<xs:enumeration value="632. Ajokaistan yläpuolinen viitta"/>
+			<xs:enumeration value="633. Ajokaistan yläpuolinen erkanemisviitta"/>
+			<xs:enumeration value="641. Tienviitta"/>
+			<xs:enumeration value="642. Erkanemisviitta"/>
+			<xs:enumeration value="643. Yksityisen tien viitta"/>
+			<xs:enumeration value="644. Osoiteviitta"/>
+			<xs:enumeration value="644 a. Osoiteviittan ennakkomerkki"/>
+			<xs:enumeration value="645. Kevyen liikenteen viitta"/>
+			<xs:enumeration value="646. Kiertotien viitta"/>
+			<xs:enumeration value="647. Kiertotien viitta"/>
+			<xs:enumeration value="648. Paikalliskohteen viitta"/>
+			<xs:enumeration value="649. Moottori- ja moottoriliikennetien viitta"/>
+			<xs:enumeration value="650. Liityntäpysäköintiviitta"/>
+			<xs:enumeration value="651. Umpitie"/>
+			<xs:enumeration value="652. Umpitie"/>
+			<xs:enumeration value="653. Enimmäisnopeussuositus"/>
+			<xs:enumeration value="661. Etäisyystaulu"/>
+			<xs:enumeration value="662. Paikannimi"/>
+			<xs:enumeration value="663. Kansainvälisen pääliikenneväylän numero"/>
+			<xs:enumeration value="664. Valtatien numero"/>
+			<xs:enumeration value="665. Kantatien numero"/>
+			<xs:enumeration value="665 a. Seututien numero"/>
+			<xs:enumeration value="666. Muun yleisen tien numero"/>
+			<xs:enumeration value="667. Opastus numeron tarkoittamalle tielle"/>
+			<xs:enumeration value="671. Moottoritien tunnus"/>
+			<xs:enumeration value="672. Moottoriliikennetien tunnus"/>
+			<xs:enumeration value="673. Lentoasema"/>
+			<xs:enumeration value="674. Autolautta"/>
+			<xs:enumeration value="675. Tavarasatama"/>
+			<xs:enumeration value="676. Teollisuusalue"/>
+			<xs:enumeration value="677. Pysäköinti"/>
+			<xs:enumeration value="677 a. Katettu pysäköinti"/>
+			<xs:enumeration value="678. Rautatieasema"/>
+			<xs:enumeration value="679. Linja-autoasema"/>
+			<xs:enumeration value="681. Tietyille ajoneuvoille tai ajoneuvoyhdistelmille tarkoitettu reitti"/>
+			<xs:enumeration value="682. Jalankulkijoille tarkoitettu reitti"/>
+			<xs:enumeration value="683. Vammaisille tarkoitettu reitti"/>
+			<xs:enumeration value="684. Vaarallisten aineiden kuljetuksille tarkoitettu reitti"/>
+			<xs:enumeration value="685. Reitti, jolla on portaat"/>
+			<xs:enumeration value="686. Reitti ilman portaita"/>
+			<xs:enumeration value="690. Hätäuloskäynti"/>
+			<xs:enumeration value="691. Poistumisreitti"/>
+			<xs:enumeration value="701. Palvelukohteen opastustaulu"/>
+			<xs:enumeration value="702. Palvelukohteen opastustaulu"/>
+			<xs:enumeration value="703. Palvelukohteen erkanemisviitta"/>
+			<xs:enumeration value="704. Palvelukohteen osoiteviitta"/>
+			<xs:enumeration value="704 a. Palvelukohteen osoiteviittan ennakkomerkki"/>
+			<xs:enumeration value="710. Radioaseman taajuus"/>
+			<xs:enumeration value="711. Opastuspiste"/>
+			<xs:enumeration value="712. Opastustoimisto"/>
+			<xs:enumeration value="715. Ensiapu"/>
+			<xs:enumeration value="721. Autokorjaamo"/>
+			<xs:enumeration value="722. Huoltoasema"/>
+			<xs:enumeration value="723. Hotelli tai motelli"/>
+			<xs:enumeration value="724. Ruokailupaikka"/>
+			<xs:enumeration value="725. Kahvila tai pikaruokapaikka"/>
+			<xs:enumeration value="726. Käymälä"/>
+			<xs:enumeration value="731. Retkeilymaja"/>
+			<xs:enumeration value="733. Leirintäalue"/>
+			<xs:enumeration value="734. Matkailuajoneuvoalue"/>
+			<xs:enumeration value="741. Levähdysalue"/>
+			<xs:enumeration value="742. Ulkoilualue"/>
+			<xs:enumeration value="791. Hätäpuhelin"/>
+			<xs:enumeration value="792. Sammutin"/>
+			<xs:enumeration value="771 a. Matkailutie"/>
+			<xs:enumeration value="771 b. Matkailutie"/>
+			<xs:enumeration value="772 a. Museo tai historiallinen rakennus"/>
+			<xs:enumeration value="772 b. Maailmanperintökohde"/>
+			<xs:enumeration value="772 c. Luontokohde"/>
+			<xs:enumeration value="772 d. Näköalapaikka"/>
+			<xs:enumeration value="772 e. Eläintarha tai -puisto"/>
+			<xs:enumeration value="772 f. Muu nähtävyys"/>
+			<xs:enumeration value="773 a. Uintipaikka"/>
+			<xs:enumeration value="773 b. Kalastuspaikka"/>
+			<xs:enumeration value="773 c. Hiihtohissi"/>
+			<xs:enumeration value="773 d. Golfkenttä"/>
+			<xs:enumeration value="773 e. Huvi- tai teemapuisto"/>
+			<xs:enumeration value="774 a. Mökkimajoitus"/>
+			<xs:enumeration value="774 b. Aamiaismajoitus"/>
+			<xs:enumeration value="774 c. Suoramyyntipaikka"/>
+			<xs:enumeration value="774 d. Käsityöpaja"/>
+			<xs:enumeration value="774 e. Kotieläinpiha"/>
+			<xs:enumeration value="774 f. Ratsastuspaikka"/>
+			<xs:enumeration value="811. Kohde risteävällä tiellä"/>
+			<xs:enumeration value="812. Kohde nuolen suunnassa"/>
+			<xs:enumeration value="813. Kohde nuolen suunnassa"/>
+			<xs:enumeration value="814. Vaikutusalueen pituus"/>
+			<xs:enumeration value="815. Etäisyys kohteeseen"/>
+			<xs:enumeration value="816. Etäisyys pakolliseen pysäyttämiseen"/>
+			<xs:enumeration value="821. Vapaa leveys"/>
+			<xs:enumeration value="822. Vapaa korkeus"/>
+			<xs:enumeration value="823. Sähköjohdon korkeus"/>
+			<xs:enumeration value="824. Vaikutusalue molempiin suuntiin"/>
+			<xs:enumeration value="825. Vaikutusalue molempiin suuntiin"/>
+			<xs:enumeration value="826. Vaikutusalue nuolen suuntaan"/>
+			<xs:enumeration value="827. Vaikutusalue alkaa"/>
+			<xs:enumeration value="828. Vaikutusalue päättyy"/>
+			<xs:enumeration value="831. Henkilöauto"/>
+			<xs:enumeration value="832. Linja-auto"/>
+			<xs:enumeration value="833. Kuorma-auto"/>
+			<xs:enumeration value="834. Pakettiauto"/>
+			<xs:enumeration value="835. Matkailuajoneuvo"/>
+			<xs:enumeration value="836. Invalidin ajoneuvo"/>
+			<xs:enumeration value="841. Moottoripyörä"/>
+			<xs:enumeration value="842. Mopo"/>
+			<xs:enumeration value="843. Polkupyörä"/>
+			<xs:enumeration value="844. Pysäköintitapa"/>
+			<xs:enumeration value="845. Pysäköintitapa"/>
+			<xs:enumeration value="848. Kielto ryhmän A vaarallisten aineiden kuljetukselle"/>
+			<xs:enumeration value="849. Läpiajokielto ryhmän B vaarallisten aineiden kuljetukselle"/>
+			<xs:enumeration value="851. Voimassaoloaika"/>
+			<xs:enumeration value="852. Voimassaoloaika"/>
+			<xs:enumeration value="853. Voimassaoloaika"/>
+			<xs:enumeration value="854. Aikarajoitus"/>
+			<xs:enumeration value="855 a. Maksullinen pysäköinti"/>
+			<xs:enumeration value="855 b. Maksullinen pysäköinti"/>
+			<xs:enumeration value="856 a. Pysäköintikiekon käyttövelvollisuus"/>
+			<xs:enumeration value="856 b. Pysäköintikiekon käyttövelvollisuus"/>
+			<xs:enumeration value="861 a. Etuajo-oikeutetun liikenteen suunta"/>
+			<xs:enumeration value="861 b. Etuajo-oikeutetun liikenteen suunta"/>
+			<xs:enumeration value="862. Tukkitie"/>
+			<xs:enumeration value="863. Kaksisuuntainen pyörätie"/>
+			<xs:enumeration value="871. Tekstillinen lisäkilpi"/>
+			<xs:enumeration value="872. Tekstillinen lisäkilpi Huoltoajo sallittu"/>
+			<xs:enumeration value="880. Hätäpuhelin ja sammutin"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LiikuntaTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jalkapallomaali"/>
+			<xs:enumeration value="jääkiekkomaali"/>
+			<xs:enumeration value="koripalloteline"/>
+			<xs:enumeration value="kuntoilutelineet"/>
+			<xs:enumeration value="lentopallotolppa"/>
+			<xs:enumeration value="luistinkoppi"/>
+			<xs:enumeration value="palloseinä"/>
+			<xs:enumeration value="skeittiramppi"/>
+			<xs:enumeration value="sählymaali"/>
+			<xs:enumeration value="talviliukumäki(siirrettävä)"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LuontiTapaType">
+		<xs:annotation>
+			<xs:documentation>Kertoo miten kohde on luotu tietokantaan</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="digitointi"/>
+			<xs:enumeration value="kiinteistötoimitus"/>
+			<xs:enumeration value="kuvamittaus"/>
+			<xs:enumeration value="laserkeilattu"/>
+			<xs:enumeration value="maastomittaus"/>
+			<xs:enumeration value="skannattu"/>
+			<xs:enumeration value="tuntematon"/>
+			<xs:enumeration value="muu"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MelutyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="meluaita"/>
+			<xs:enumeration value="melueste"/>
+			<xs:enumeration value="melumuuri"/>
+			<xs:enumeration value="meluvalli"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MuuVarusteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="irtovaruste"/>
+			<xs:enumeration value="jakokaappi"/>
+			<xs:enumeration value="kastelulaite"/>
+			<xs:enumeration value="kelkkamäki"/>
+			<xs:enumeration value="kuivikeastia"/>
+			<xs:enumeration value="pelastusväline"/>
+			<xs:enumeration value="rungonsuojus"/>
+			<xs:enumeration value="suihku"/>
+			<xs:enumeration value="sähköauton latauspiste"/>
+			<xs:enumeration value="sähkökaapeli"/>
+			<xs:enumeration value="valaisin"/>
+			<xs:enumeration value="verkkoaita"/>
+			<xs:enumeration value="vesijohto"/>
+			<xs:enumeration value="vesipiste"/>
+			<xs:enumeration value="WC"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OpasteTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="invapaikka"/>
+			<xs:enumeration value="koiraparkki"/>
+			<xs:enumeration value="opastaulut ja -kyltit"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PintamateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="asfalttipäällyste"/>
+			<xs:enumeration value="asfalttibetoni"/>
+			<xs:enumeration value="betonilaatta"/>
+			<xs:enumeration value="betonikivi- ja -laattapäällyste"/>
+			<xs:enumeration value="betonipäällyste (valettavat)"/>
+			<xs:enumeration value="emulsiopintaus (LP)"/>
+			<xs:enumeration value="kenttäkivetys"/>
+			<xs:enumeration value="liuskekivetys"/>
+			<xs:enumeration value="luonnonkivilaatoitus"/>
+			<xs:enumeration value="metallirakenne"/>
+			<xs:enumeration value="murskepäällyste"/>
+			<xs:enumeration value="noppakivetys"/>
+			<xs:enumeration value="nupukivetys"/>
+			<xs:enumeration value="puupäällyste"/>
+			<xs:enumeration value="sirotepintaus (SIP)"/>
+			<xs:enumeration value="sorapäällyste"/>
+			<xs:enumeration value="soratien pintaus (SOP)"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PuulajitType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Abies amabilis"/>
+			<xs:enumeration value="Abies balsamea"/>
+			<xs:enumeration value="Abies concolor"/>
+			<xs:enumeration value="Abies fraseri"/>
+			<xs:enumeration value="Abies grandis"/>
+			<xs:enumeration value="Abies holophylla"/>
+			<xs:enumeration value="Abies homolepis"/>
+			<xs:enumeration value="Abies koreana"/>
+			<xs:enumeration value="Abies lasiocarpa"/>
+			<xs:enumeration value="Abies lasiocarpa var. arizonica"/>
+			<xs:enumeration value="Abies mariesii"/>
+			<xs:enumeration value="Abies nephrolepis"/>
+			<xs:enumeration value="Abies nordmanniana"/>
+			<xs:enumeration value="Abies procera"/>
+			<xs:enumeration value="Abies sachalinensis"/>
+			<xs:enumeration value="Abies sibirica"/>
+			<xs:enumeration value="Abies sp"/>
+			<xs:enumeration value="Abies veitchii"/>
+			<xs:enumeration value="Acanthopanax senticosus"/>
+			<xs:enumeration value="Acer barbinerve"/>
+			<xs:enumeration value="Acer campestre"/>
+			<xs:enumeration value="Acer circinatum"/>
+			<xs:enumeration value="Acer japonicum"/>
+			<xs:enumeration value="Acer mono"/>
+			<xs:enumeration value="Acer negundo"/>
+			<xs:enumeration value="Acer palmatum"/>
+			<xs:enumeration value="Acer pensylvanicum"/>
+			<xs:enumeration value="Acer platanoides"/>
+			<xs:enumeration value="Acer platanoides 'Reitenbachii'"/>
+			<xs:enumeration value="Acer platanoides 'Schwedleri'"/>
+			<xs:enumeration value="Acer pseudoplatanus"/>
+			<xs:enumeration value="Acer pseudosieboldianum"/>
+			<xs:enumeration value="Acer rubrum"/>
+			<xs:enumeration value="Acer saccharinum"/>
+			<xs:enumeration value="Acer saccharum"/>
+			<xs:enumeration value="Acer sieboldianum"/>
+			<xs:enumeration value="Acer sp"/>
+			<xs:enumeration value="Acer spicatum"/>
+			<xs:enumeration value="Acer tataricum"/>
+			<xs:enumeration value="Acer tataricum subsp. ginnala"/>
+			<xs:enumeration value="Acer tataricum subsp. semenowii"/>
+			<xs:enumeration value="Acer tataricum subsp. tataricum"/>
+			<xs:enumeration value="Acer tegmentosum"/>
+			<xs:enumeration value="Acer triflorum"/>
+			<xs:enumeration value="Acer ukurunduense"/>
+			<xs:enumeration value="Actinidia arguta"/>
+			<xs:enumeration value="Actinidia kolomikta"/>
+			<xs:enumeration value="Aesculus hippocastanum"/>
+			<xs:enumeration value="Aesculus octandra"/>
+			<xs:enumeration value="Alnus glutinosa"/>
+			<xs:enumeration value="Alnus glutinosa f. quercifolia"/>
+			<xs:enumeration value="Alnus incana"/>
+			<xs:enumeration value="Alnus incana f. gibberosa"/>
+			<xs:enumeration value="Alnus incana f. laciniata"/>
+			<xs:enumeration value="Alnus incana subsp. kolaënsis"/>
+			<xs:enumeration value="Alnus mandshurica"/>
+			<xs:enumeration value="Alnus sp"/>
+			<xs:enumeration value="Alnus viridis"/>
+			<xs:enumeration value="Amelanchier alnifolia"/>
+			<xs:enumeration value="Amelanchier laevis"/>
+			<xs:enumeration value="Amelanchier lamarckii"/>
+			<xs:enumeration value="Amelanchier sp"/>
+			<xs:enumeration value="Amelanchier spicata"/>
+			<xs:enumeration value="Andromeda polifolia"/>
+			<xs:enumeration value="Aralia elata"/>
+			<xs:enumeration value="Arctostaphylos alpinus"/>
+			<xs:enumeration value="Arctostaphylos uva-ursi"/>
+			<xs:enumeration value="Aristolochia macrophylla"/>
+			<xs:enumeration value="Aronia ×prunifolia"/>
+			<xs:enumeration value="Aronia arbutifolia"/>
+			<xs:enumeration value="Aronia melanocarpa"/>
+			<xs:enumeration value="Aronia sp"/>
+			<xs:enumeration value="Artemisia abronatum"/>
+			<xs:enumeration value="Berberis koreana"/>
+			<xs:enumeration value="Berberis sp"/>
+			<xs:enumeration value="Berberis thunbergii"/>
+			<xs:enumeration value="Berberis vulgaris"/>
+			<xs:enumeration value="Betula alleghaniensis"/>
+			<xs:enumeration value="Betula ermanii"/>
+			<xs:enumeration value="Betula fruticosa"/>
+			<xs:enumeration value="Betula lenta"/>
+			<xs:enumeration value="Betula nana"/>
+			<xs:enumeration value="Betula papyrifera"/>
+			<xs:enumeration value="Betula pendula"/>
+			<xs:enumeration value="Betula pendula 'Dalecarlica'"/>
+			<xs:enumeration value="Betula pendula f. bircalensis"/>
+			<xs:enumeration value="Betula pendula f. crispa"/>
+			<xs:enumeration value="Betula pendula f. palmeri"/>
+			<xs:enumeration value="Betula pendula f. tristis"/>
+			<xs:enumeration value="Betula pendula var. carelica"/>
+			<xs:enumeration value="Betula pendula 'Youngii'"/>
+			<xs:enumeration value="Betula pubescens"/>
+			<xs:enumeration value="Betula pubescens f. aurea"/>
+			<xs:enumeration value="Betula pubescens f. rubra"/>
+			<xs:enumeration value="Betula pubescens subsp. czerepanovii"/>
+			<xs:enumeration value="Betula sp"/>
+			<xs:enumeration value="Buddleja davidii"/>
+			<xs:enumeration value="Buxus sempervirens"/>
+			<xs:enumeration value="Calluna vulgaris"/>
+			<xs:enumeration value="Caragana arborescens"/>
+			<xs:enumeration value="Caragana aurantiaca"/>
+			<xs:enumeration value="Caragana frutex"/>
+			<xs:enumeration value="Carpinus betulus"/>
+			<xs:enumeration value="Cassiope hypnoides"/>
+			<xs:enumeration value="Cassiope tetragona"/>
+			<xs:enumeration value="Celastrus orbiculatus"/>
+			<xs:enumeration value="Celastrus scandens"/>
+			<xs:enumeration value="Cercidiphyllum japonicum"/>
+			<xs:enumeration value="Cercidiphyllum magnificum"/>
+			<xs:enumeration value="Chaenomeles japonica"/>
+			<xs:enumeration value="Chamaecyparis lawsoniana"/>
+			<xs:enumeration value="Chamaecyparis nootkatensis"/>
+			<xs:enumeration value="Chamaecyparis pisifera"/>
+			<xs:enumeration value="Chamaecyparis sp"/>
+			<xs:enumeration value="Chamaedaphne calyculata"/>
+			<xs:enumeration value="Chimaphila umbellata"/>
+			<xs:enumeration value="Cladrastis kentukea"/>
+			<xs:enumeration value="Clematis alpina"/>
+			<xs:enumeration value="Clematis ochotensis"/>
+			<xs:enumeration value="Clematis sibirica"/>
+			<xs:enumeration value="Clematis sp"/>
+			<xs:enumeration value="Clematis tangutica"/>
+			<xs:enumeration value="Clematis vitalba"/>
+			<xs:enumeration value="Clematis viticella"/>
+			<xs:enumeration value="Colutea arborescens"/>
+			<xs:enumeration value="Cornus alba"/>
+			<xs:enumeration value="Cornus alba 'Sibirica'"/>
+			<xs:enumeration value="Cornus alba subsp. alba"/>
+			<xs:enumeration value="Cornus alba subsp. stolonifera"/>
+			<xs:enumeration value="Cornus mas"/>
+			<xs:enumeration value="Cornus sanguinea"/>
+			<xs:enumeration value="Cornus sp"/>
+			<xs:enumeration value="Corylus avellana"/>
+			<xs:enumeration value="Corylus colurna"/>
+			<xs:enumeration value="Corylus cornuta"/>
+			<xs:enumeration value="Corylus maxima 'Purpurea'"/>
+			<xs:enumeration value="Corylus sp"/>
+			<xs:enumeration value="Cotoneaster dammeri "/>
+			<xs:enumeration value="Cotoneaster dammeri var. radicans"/>
+			<xs:enumeration value="Cotoneaster divaricatus"/>
+			<xs:enumeration value="Cotoneaster horizontalis"/>
+			<xs:enumeration value="Cotoneaster integerrimus"/>
+			<xs:enumeration value="Cotoneaster lucidus"/>
+			<xs:enumeration value="Cotoneaster nanshan"/>
+			<xs:enumeration value="Cotoneaster niger"/>
+			<xs:enumeration value="Cotoneaster 'Skogholm'"/>
+			<xs:enumeration value="Cotoneaster sp"/>
+			<xs:enumeration value="Crataegus ×mordenensis"/>
+			<xs:enumeration value="Crataegus chlorosarca"/>
+			<xs:enumeration value="Crataegus douglasii"/>
+			<xs:enumeration value="Crataegus flabellata"/>
+			<xs:enumeration value="Crataegus grayana"/>
+			<xs:enumeration value="Crataegus intricata"/>
+			<xs:enumeration value="Crataegus korolkovii"/>
+			<xs:enumeration value="Crataegus laevigata"/>
+			<xs:enumeration value="Crataegus macracantha"/>
+			<xs:enumeration value="Crataegus monogyna"/>
+			<xs:enumeration value="Crataegus nigra"/>
+			<xs:enumeration value="Crataegus rhipidophylla"/>
+			<xs:enumeration value="Crataegus sanguinea"/>
+			<xs:enumeration value="Crataegus sp"/>
+			<xs:enumeration value="Crataegus submollis"/>
+			<xs:enumeration value="Cytisus ×versicolor"/>
+			<xs:enumeration value="Cytisus decumbens"/>
+			<xs:enumeration value="Cytisus glaber"/>
+			<xs:enumeration value="Cytisus purpureus"/>
+			<xs:enumeration value="Cytisus scoparius"/>
+			<xs:enumeration value="Cytisus sp"/>
+			<xs:enumeration value="Daphne blagayana"/>
+			<xs:enumeration value="Daphne cneorum"/>
+			<xs:enumeration value="Daphne mezereum"/>
+			<xs:enumeration value="Daphne sp"/>
+			<xs:enumeration value="Deutzia amurensis"/>
+			<xs:enumeration value="Deutzia scabra"/>
+			<xs:enumeration value="Diapensia lapponica"/>
+			<xs:enumeration value="Diervilla lonicera"/>
+			<xs:enumeration value="Diervilla sessilifolia"/>
+			<xs:enumeration value="Dryas octopetala"/>
+			<xs:enumeration value="Elaeagnus commutata"/>
+			<xs:enumeration value="Empetrum nigrum"/>
+			<xs:enumeration value="Erica herbacea"/>
+			<xs:enumeration value="Erica tetralix"/>
+			<xs:enumeration value="Euonymus alatus"/>
+			<xs:enumeration value="Euonymus europaeus"/>
+			<xs:enumeration value="Euonymus fortunei"/>
+			<xs:enumeration value="Euonymus hamiltonianus"/>
+			<xs:enumeration value="Euonymus nanus"/>
+			<xs:enumeration value="Euonymus planipes"/>
+			<xs:enumeration value="Euonymus sp"/>
+			<xs:enumeration value="Exochorda racemosa"/>
+			<xs:enumeration value="Fagus grandifolia"/>
+			<xs:enumeration value="Fagus sp"/>
+			<xs:enumeration value="Fagus sylvatica"/>
+			<xs:enumeration value="Fagus sylvatica f. purpurea"/>
+			<xs:enumeration value="Forsythia ovata"/>
+			<xs:enumeration value="Fothergilla major"/>
+			<xs:enumeration value="Fraxinus americana"/>
+			<xs:enumeration value="Fraxinus excelsior"/>
+			<xs:enumeration value="Fraxinus mandshurica"/>
+			<xs:enumeration value="Fraxinus nigra"/>
+			<xs:enumeration value="Fraxinus pennsylvanica"/>
+			<xs:enumeration value="Fraxinus sp"/>
+			<xs:enumeration value="Genista tinctoria"/>
+			<xs:enumeration value="Ginkgo biloba"/>
+			<xs:enumeration value="Gleditsia triacanthos"/>
+			<xs:enumeration value="Halesia carolina"/>
+			<xs:enumeration value="Hamamelis virginiana"/>
+			<xs:enumeration value="Hedera helix"/>
+			<xs:enumeration value="Hippophaë rhamnoides"/>
+			<xs:enumeration value="Holodiscus discolor"/>
+			<xs:enumeration value="Hydrangea anomala"/>
+			<xs:enumeration value="Hydrangea anomala subsp. petiolaris"/>
+			<xs:enumeration value="Hydrangea arborescens"/>
+			<xs:enumeration value="Hydrangea heteromalla 'Bretschneideri'"/>
+			<xs:enumeration value="Hydrangea paniculata 'Grandiflora'"/>
+			<xs:enumeration value="Hydrangea sp"/>
+			<xs:enumeration value="Ilex verticillata"/>
+			<xs:enumeration value="Jamesia americana"/>
+			<xs:enumeration value="Juglans ailanthifolia"/>
+			<xs:enumeration value="Juglans cinerea"/>
+			<xs:enumeration value="Juglans mandshurica"/>
+			<xs:enumeration value="Juglans nigra"/>
+			<xs:enumeration value="Juglans sp"/>
+			<xs:enumeration value="Juniperus chinensis"/>
+			<xs:enumeration value="Juniperus communis"/>
+			<xs:enumeration value="Juniperus communis subsp. alpina"/>
+			<xs:enumeration value="Juniperus horizontalis"/>
+			<xs:enumeration value="Juniperus sabina"/>
+			<xs:enumeration value="Juniperus sp"/>
+			<xs:enumeration value="Juniperus squamata"/>
+			<xs:enumeration value="Juniperus virginiana"/>
+			<xs:enumeration value="Kalmia angustifolia"/>
+			<xs:enumeration value="Kalmia latifolia"/>
+			<xs:enumeration value="Kalmia polifolia"/>
+			<xs:enumeration value="Kalmia sp"/>
+			<xs:enumeration value="Kerria japonica"/>
+			<xs:enumeration value="Kolkwitzia amabilis"/>
+			<xs:enumeration value="Laburnum ×watereri"/>
+			<xs:enumeration value="Laburnum alpinum"/>
+			<xs:enumeration value="Larix ×marschlinsii"/>
+			<xs:enumeration value="Larix decidua"/>
+			<xs:enumeration value="Larix decidua subsp. polonica"/>
+			<xs:enumeration value="Larix gmelinii"/>
+			<xs:enumeration value="Larix gmelinii var. gmelinii"/>
+			<xs:enumeration value="Larix gmelinii var. japonica"/>
+			<xs:enumeration value="Larix gmelinii var. olgensis"/>
+			<xs:enumeration value="Larix gmelinii var. principis-rupprechtii"/>
+			<xs:enumeration value="Larix kaempferi"/>
+			<xs:enumeration value="Larix laricina"/>
+			<xs:enumeration value="Larix lyallii"/>
+			<xs:enumeration value="Larix occidentalis"/>
+			<xs:enumeration value="Larix sibirica"/>
+			<xs:enumeration value="Larix sp"/>
+			<xs:enumeration value="Ledum palustre"/>
+			<xs:enumeration value="Ligustrum vulgare"/>
+			<xs:enumeration value="Linnaea borealis"/>
+			<xs:enumeration value="Liquidambar  styraciflua"/>
+			<xs:enumeration value="Liriodendron tulipifera"/>
+			<xs:enumeration value="Loiseleuria procumbens"/>
+			<xs:enumeration value="Lonicera ×bella"/>
+			<xs:enumeration value="Lonicera ×brownii"/>
+			<xs:enumeration value="Lonicera ×notha"/>
+			<xs:enumeration value="Lonicera ×xylosteoides"/>
+			<xs:enumeration value="Lonicera albertii"/>
+			<xs:enumeration value="Lonicera alpigena"/>
+			<xs:enumeration value="Lonicera caerulea"/>
+			<xs:enumeration value="Lonicera caprifolium"/>
+			<xs:enumeration value="Lonicera caucasica"/>
+			<xs:enumeration value="Lonicera chrysantha"/>
+			<xs:enumeration value="Lonicera involucrata"/>
+			<xs:enumeration value="Lonicera maackii"/>
+			<xs:enumeration value="Lonicera nigra"/>
+			<xs:enumeration value="Lonicera periclymenum"/>
+			<xs:enumeration value="Lonicera sp"/>
+			<xs:enumeration value="Lonicera tatarica"/>
+			<xs:enumeration value="Lonicera xylosteum"/>
+			<xs:enumeration value="Maackia amurensis"/>
+			<xs:enumeration value="Magnolia acuminata"/>
+			<xs:enumeration value="Magnolia kobus"/>
+			<xs:enumeration value="Magnolia sieboldii"/>
+			<xs:enumeration value="Magnolia sp"/>
+			<xs:enumeration value="Mahonia aquifolium"/>
+			<xs:enumeration value="Malus baccata"/>
+			<xs:enumeration value="Malus domestica"/>
+			<xs:enumeration value="Malus prunifolia"/>
+			<xs:enumeration value="Malus sp"/>
+			<xs:enumeration value="Malus sylvestris"/>
+			<xs:enumeration value="Malus toringo"/>
+			<xs:enumeration value="Malus toringo var. sargentii"/>
+			<xs:enumeration value="Menispermum canadense"/>
+			<xs:enumeration value="Menispermum dauricum"/>
+			<xs:enumeration value="Metasequoia glyptostroboides"/>
+			<xs:enumeration value="Microbiota decussata"/>
+			<xs:enumeration value="Myrica gale"/>
+			<xs:enumeration value="Myricaria germanica"/>
+			<xs:enumeration value="Oplopanax horridus"/>
+			<xs:enumeration value="Ostrya carpinifolia"/>
+			<xs:enumeration value="Pachysandra terminalis"/>
+			<xs:enumeration value="Parthenocissus inserta"/>
+			<xs:enumeration value="Parthenocissus quinquefolia"/>
+			<xs:enumeration value="Paxistima myrtifolia"/>
+			<xs:enumeration value="Phellodendron amurense"/>
+			<xs:enumeration value="Philadelphus ×lemoinei"/>
+			<xs:enumeration value="Philadelphus ×virginalis"/>
+			<xs:enumeration value="Philadelphus coronarius"/>
+			<xs:enumeration value="Philadelphus lewisii"/>
+			<xs:enumeration value="Philadelphus lewisii var. gordonianus"/>
+			<xs:enumeration value="Philadelphus pubescens"/>
+			<xs:enumeration value="Philadelphus sp"/>
+			<xs:enumeration value="Phyllodoce caerulea"/>
+			<xs:enumeration value="Physocarpus opulifolius"/>
+			<xs:enumeration value="Picea ×lutzii"/>
+			<xs:enumeration value="Picea abies"/>
+			<xs:enumeration value="Picea abies f. aurea"/>
+			<xs:enumeration value="Picea abies f. condensata"/>
+			<xs:enumeration value="Picea abies f. cruenta"/>
+			<xs:enumeration value="Picea abies f. globosa"/>
+			<xs:enumeration value="Picea abies f. nana"/>
+			<xs:enumeration value="Picea abies f. nidiformis"/>
+			<xs:enumeration value="Picea abies f. pendula"/>
+			<xs:enumeration value="Picea abies f. tabulaeformis"/>
+			<xs:enumeration value="Picea abies f. variegata"/>
+			<xs:enumeration value="Picea abies f. viminalis"/>
+			<xs:enumeration value="Picea abies f. virgata"/>
+			<xs:enumeration value="Picea abies subsp. abies"/>
+			<xs:enumeration value="Picea abies subsp. obovata"/>
+			<xs:enumeration value="Picea asperata"/>
+			<xs:enumeration value="Picea engelmannii"/>
+			<xs:enumeration value="Picea glauca"/>
+			<xs:enumeration value="Picea glauca var. albertiana"/>
+			<xs:enumeration value="Picea glehnii"/>
+			<xs:enumeration value="Picea jezoënsis"/>
+			<xs:enumeration value="Picea koraiensis"/>
+			<xs:enumeration value="Picea likiangensis"/>
+			<xs:enumeration value="Picea mariana"/>
+			<xs:enumeration value="Picea omorika"/>
+			<xs:enumeration value="Picea pungens"/>
+			<xs:enumeration value="Picea retroflexa"/>
+			<xs:enumeration value="Picea rubens"/>
+			<xs:enumeration value="Picea schrenkiana"/>
+			<xs:enumeration value="Picea sitchensis"/>
+			<xs:enumeration value="Picea sp"/>
+			<xs:enumeration value="Pieris floribunda"/>
+			<xs:enumeration value="Pinus banksiana "/>
+			<xs:enumeration value="Pinus cembra"/>
+			<xs:enumeration value="Pinus cembra subsp. cembra"/>
+			<xs:enumeration value="Pinus cembra subsp. sibirica"/>
+			<xs:enumeration value="Pinus contorta"/>
+			<xs:enumeration value="Pinus contorta var. contorta"/>
+			<xs:enumeration value="Pinus contorta var. latifolia"/>
+			<xs:enumeration value="Pinus koraiensis"/>
+			<xs:enumeration value="Pinus monticola"/>
+			<xs:enumeration value="Pinus mugo"/>
+			<xs:enumeration value="Pinus mugo subsp. uncinata"/>
+			<xs:enumeration value="Pinus nigra"/>
+			<xs:enumeration value="Pinus peuce"/>
+			<xs:enumeration value="Pinus ponderosa"/>
+			<xs:enumeration value="Pinus pumila"/>
+			<xs:enumeration value="Pinus resinosa"/>
+			<xs:enumeration value="Pinus sp"/>
+			<xs:enumeration value="Pinus strobus"/>
+			<xs:enumeration value="Pinus sylvestris"/>
+			<xs:enumeration value="Pinus sylvestris f. aurea"/>
+			<xs:enumeration value="Pinus sylvestris f. condensata"/>
+			<xs:enumeration value="Pinus sylvestris f. globosa"/>
+			<xs:enumeration value="Pinus sylvestris f. virgata"/>
+			<xs:enumeration value="Pinus sylvestris 'Globosa'"/>
+			<xs:enumeration value="Populus ×canadensis"/>
+			<xs:enumeration value="Populus ×jackii 'Gileadensis'"/>
+			<xs:enumeration value="Populus ×wettsteinii"/>
+			<xs:enumeration value="Populus alba"/>
+			<xs:enumeration value="Populus balsamifera"/>
+			<xs:enumeration value="Populus balsamifera 'Tristis'"/>
+			<xs:enumeration value="Populus canescens"/>
+			<xs:enumeration value="Populus deltoides"/>
+			<xs:enumeration value="Populus koreana"/>
+			<xs:enumeration value="Populus laurifolia"/>
+			<xs:enumeration value="Populus nigra"/>
+			<xs:enumeration value="Populus 'Rasumowskiana'"/>
+			<xs:enumeration value="Populus simonii"/>
+			<xs:enumeration value="Populus sp"/>
+			<xs:enumeration value="Populus suaveolens"/>
+			<xs:enumeration value="Populus tremula"/>
+			<xs:enumeration value="Populus tremuloides"/>
+			<xs:enumeration value="Populus trichocarpa"/>
+			<xs:enumeration value="Populus wilsonii"/>
+			<xs:enumeration value="Potentilla fruticosa"/>
+			<xs:enumeration value="Prunus avium"/>
+			<xs:enumeration value="Prunus cerasifera"/>
+			<xs:enumeration value="Prunus cerasus"/>
+			<xs:enumeration value="Prunus domestica"/>
+			<xs:enumeration value="Prunus domestica subsp. domestica"/>
+			<xs:enumeration value="Prunus domestica subsp. insititia"/>
+			<xs:enumeration value="Prunus laurocerasus"/>
+			<xs:enumeration value="Prunus maackii"/>
+			<xs:enumeration value="Prunus maximowiczii"/>
+			<xs:enumeration value="Prunus padus"/>
+			<xs:enumeration value="Prunus pensylvanica"/>
+			<xs:enumeration value="Prunus prostrata"/>
+			<xs:enumeration value="Prunus pumila"/>
+			<xs:enumeration value="Prunus sargentii"/>
+			<xs:enumeration value="Prunus serotina"/>
+			<xs:enumeration value="Prunus sp"/>
+			<xs:enumeration value="Prunus spinosa"/>
+			<xs:enumeration value="Prunus tenella"/>
+			<xs:enumeration value="Prunus tomentosa"/>
+			<xs:enumeration value="Prunus triloba"/>
+			<xs:enumeration value="Prunus virginiana"/>
+			<xs:enumeration value="Pseudolarix amabilis"/>
+			<xs:enumeration value="Pseudotsuga menziesii"/>
+			<xs:enumeration value="Pseudotsuga menziesii var. glauca"/>
+			<xs:enumeration value="Pterocarya pterocarpa"/>
+			<xs:enumeration value="Pterocarya rhoifolia"/>
+			<xs:enumeration value="Pyrus communis"/>
+			<xs:enumeration value="Pyrus ussuriensis"/>
+			<xs:enumeration value="Quercus coccinea"/>
+			<xs:enumeration value="Quercus petraea"/>
+			<xs:enumeration value="Quercus robur"/>
+			<xs:enumeration value="Quercus rubra"/>
+			<xs:enumeration value="Rhamnus cathartica"/>
+			<xs:enumeration value="Rhamnus frangula"/>
+			<xs:enumeration value="Rhododendron ×fraseri"/>
+			<xs:enumeration value="Rhododendron aureum"/>
+			<xs:enumeration value="Rhododendron brachycarpum"/>
+			<xs:enumeration value="Rhododendron brachycarpum subsp. tigerstedtii"/>
+			<xs:enumeration value="Rhododendron canadense"/>
+			<xs:enumeration value="Rhododendron Catawbiense -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Rhododendron 'Cunningham's White'"/>
+			<xs:enumeration value="Rhododendron dauricum"/>
+			<xs:enumeration value="Rhododendron ferrugineum"/>
+			<xs:enumeration value="Rhododendron Kosterianum -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Rhododendron lapponicum"/>
+			<xs:enumeration value="Rhododendron luteum"/>
+			<xs:enumeration value="Rhododendron molle"/>
+			<xs:enumeration value="Rhododendron molle subsp. japonicum"/>
+			<xs:enumeration value="Rhododendron schlippenbachii"/>
+			<xs:enumeration value="Rhododendron smirnowii"/>
+			<xs:enumeration value="Rhododendron sp"/>
+			<xs:enumeration value="Rhododendron Tigerstedtii -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Rhus hirta"/>
+			<xs:enumeration value="Ribes alpinum"/>
+			<xs:enumeration value="Ribes nigrum"/>
+			<xs:enumeration value="Ribes rubrum"/>
+			<xs:enumeration value="Ribes spicatum"/>
+			<xs:enumeration value="Ribes uva-crispa"/>
+			<xs:enumeration value="Robinia pseudoacacia"/>
+			<xs:enumeration value="Rosa acicularis"/>
+			<xs:enumeration value="Rosa canina"/>
+			<xs:enumeration value="Rosa dumalis"/>
+			<xs:enumeration value="Rosa majalis"/>
+			<xs:enumeration value="Rosa mollis"/>
+			<xs:enumeration value="Rosa pimpinellifolia"/>
+			<xs:enumeration value="Rosa rugosa"/>
+			<xs:enumeration value="Rosa sherardii"/>
+			<xs:enumeration value="Rosa sp"/>
+			<xs:enumeration value="Rubus caesius"/>
+			<xs:enumeration value="Rubus idaeus"/>
+			<xs:enumeration value="Rubus odoratus"/>
+			<xs:enumeration value="Rubus parviflorus"/>
+			<xs:enumeration value="Rubus pruinosus"/>
+			<xs:enumeration value="Rubus sp"/>
+			<xs:enumeration value="Salix alba"/>
+			<xs:enumeration value="Salix arbutifolia"/>
+			<xs:enumeration value="Salix aurita"/>
+			<xs:enumeration value="Salix borealis"/>
+			<xs:enumeration value="Salix caprea"/>
+			<xs:enumeration value="Salix cinerea"/>
+			<xs:enumeration value="Salix daphnoides"/>
+			<xs:enumeration value="Salix daphnoides subsp. acutifolia"/>
+			<xs:enumeration value="Salix daphnoides subsp. daphnoides"/>
+			<xs:enumeration value="Salix fragilis"/>
+			<xs:enumeration value="Salix fragilis 'Bullata'"/>
+			<xs:enumeration value="Salix glauca"/>
+			<xs:enumeration value="Salix hastata"/>
+			<xs:enumeration value="Salix herbacea"/>
+			<xs:enumeration value="Salix lanata"/>
+			<xs:enumeration value="Salix lapponum"/>
+			<xs:enumeration value="Salix lucida"/>
+			<xs:enumeration value="Salix myrsinifolia"/>
+			<xs:enumeration value="Salix myrsinites"/>
+			<xs:enumeration value="Salix myrtilloides"/>
+			<xs:enumeration value="Salix pentandra"/>
+			<xs:enumeration value="Salix phylicifolia"/>
+			<xs:enumeration value="Salix polaris"/>
+			<xs:enumeration value="Salix purpurea"/>
+			<xs:enumeration value="Salix pyrolifolia"/>
+			<xs:enumeration value="Salix repens"/>
+			<xs:enumeration value="Salix reticulata"/>
+			<xs:enumeration value="Salix rosmarinifolia"/>
+			<xs:enumeration value="Salix 'Sibirica'"/>
+			<xs:enumeration value="Salix sp"/>
+			<xs:enumeration value="Salix starkeana"/>
+			<xs:enumeration value="Salix triandra"/>
+			<xs:enumeration value="Salix viminalis"/>
+			<xs:enumeration value="Sambucus canadensis"/>
+			<xs:enumeration value="Sambucus nigra"/>
+			<xs:enumeration value="Sambucus racemosa"/>
+			<xs:enumeration value="Sambucus sp"/>
+			<xs:enumeration value="Schisandra chinensis"/>
+			<xs:enumeration value="Sequoia sempervirens"/>
+			<xs:enumeration value="Sequoiadendron giganteum"/>
+			<xs:enumeration value="Solanum dulcamara"/>
+			<xs:enumeration value="Sorbaria grandiflora"/>
+			<xs:enumeration value="Sorbaria sorbifolia"/>
+			<xs:enumeration value="Sorbaria sp"/>
+			<xs:enumeration value="Sorbus ×thuringiaca 'Fastigiata'"/>
+			<xs:enumeration value="Sorbus alnifolia"/>
+			<xs:enumeration value="Sorbus americana"/>
+			<xs:enumeration value="Sorbus aria"/>
+			<xs:enumeration value="Sorbus aucuparia"/>
+			<xs:enumeration value="Sorbus commixta"/>
+			<xs:enumeration value="Sorbus hybrida"/>
+			<xs:enumeration value="Sorbus intermedia"/>
+			<xs:enumeration value="Sorbus koehneana"/>
+			<xs:enumeration value="Sorbus prattii"/>
+			<xs:enumeration value="Sorbus scopulina"/>
+			<xs:enumeration value="Sorbus sp"/>
+			<xs:enumeration value="Sorbus teodori"/>
+			<xs:enumeration value="Sorbus torminalis"/>
+			<xs:enumeration value="Spiraea ×cinerea"/>
+			<xs:enumeration value="Spiraea ×multiflora"/>
+			<xs:enumeration value="Spiraea ×rosalba"/>
+			<xs:enumeration value="Spiraea ×sanssouciana"/>
+			<xs:enumeration value="Spiraea ×vanhouttei"/>
+			<xs:enumeration value="Spiraea alba"/>
+			<xs:enumeration value="Spiraea 'Arguta'"/>
+			<xs:enumeration value="Spiraea betulifolia"/>
+			<xs:enumeration value="Spiraea Billiardii -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Spiraea cana"/>
+			<xs:enumeration value="Spiraea chamaedryfolia"/>
+			<xs:enumeration value="Spiraea douglasii"/>
+			<xs:enumeration value="Spiraea fritschiana"/>
+			<xs:enumeration value="Spiraea 'Grefsheim'"/>
+			<xs:enumeration value="Spiraea hypericifolia"/>
+			<xs:enumeration value="Spiraea japonica"/>
+			<xs:enumeration value="Spiraea 'Margaritae'"/>
+			<xs:enumeration value="Spiraea media"/>
+			<xs:enumeration value="Spiraea nipponica"/>
+			<xs:enumeration value="Spiraea rosthornii"/>
+			<xs:enumeration value="Spiraea salicifolia "/>
+			<xs:enumeration value="Spiraea sp"/>
+			<xs:enumeration value="Spiraea tomentosa"/>
+			<xs:enumeration value="Spiraea trichocarpa"/>
+			<xs:enumeration value="Spiraea trilobata"/>
+			<xs:enumeration value="Stephanandra incisa"/>
+			<xs:enumeration value="Symphoricarpos albus"/>
+			<xs:enumeration value="Symphoricarpos albus var. laevigatus"/>
+			<xs:enumeration value="Syringa ×chinensis"/>
+			<xs:enumeration value="Syringa ×henryi"/>
+			<xs:enumeration value="Syringa ×josiflexa"/>
+			<xs:enumeration value="Syringa ×nanceana"/>
+			<xs:enumeration value="Syringa ×swegiflexa"/>
+			<xs:enumeration value="Syringa josikaea"/>
+			<xs:enumeration value="Syringa Preston -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Syringa reflexa"/>
+			<xs:enumeration value="Syringa reticulata"/>
+			<xs:enumeration value="Syringa sp"/>
+			<xs:enumeration value="Syringa sweginowii"/>
+			<xs:enumeration value="Syringa tigerstedtii"/>
+			<xs:enumeration value="Syringa tomentella"/>
+			<xs:enumeration value="Syringa villosa"/>
+			<xs:enumeration value="Syringa wolfii"/>
+			<xs:enumeration value="Syringa vulgaris"/>
+			<xs:enumeration value="Tamarix pentandra"/>
+			<xs:enumeration value="Taxus ×media"/>
+			<xs:enumeration value="Taxus baccata"/>
+			<xs:enumeration value="Taxus brevifolia"/>
+			<xs:enumeration value="Taxus cuspidata"/>
+			<xs:enumeration value="Taxus sp"/>
+			<xs:enumeration value="Thuja koraiensis"/>
+			<xs:enumeration value="Thuja occidentalis"/>
+			<xs:enumeration value="Thuja plicata"/>
+			<xs:enumeration value="Thuja sp"/>
+			<xs:enumeration value="Thuja standishii"/>
+			<xs:enumeration value="Thujopsis dolabrata"/>
+			<xs:enumeration value="Tilia ×moltkei"/>
+			<xs:enumeration value="Tilia ×vulgaris"/>
+			<xs:enumeration value="Tilia americana"/>
+			<xs:enumeration value="Tilia cordata"/>
+			<xs:enumeration value="Tilia euchlora"/>
+			<xs:enumeration value="Tilia japonica"/>
+			<xs:enumeration value="Tilia mongolica"/>
+			<xs:enumeration value="Tilia platyphyllos"/>
+			<xs:enumeration value="Tilia sp"/>
+			<xs:enumeration value="Tilia tomentosa"/>
+			<xs:enumeration value="Tripterygium regelii"/>
+			<xs:enumeration value="Tsuga canadensis"/>
+			<xs:enumeration value="Tsuga caroliniana"/>
+			<xs:enumeration value="Tsuga diversifolia"/>
+			<xs:enumeration value="Tsuga heterophylla"/>
+			<xs:enumeration value="Tsuga mertensiana"/>
+			<xs:enumeration value="Tsuga sp"/>
+			<xs:enumeration value="Ulmus americana"/>
+			<xs:enumeration value="Ulmus glabra"/>
+			<xs:enumeration value="Ulmus laevis"/>
+			<xs:enumeration value="Ulmus minor"/>
+			<xs:enumeration value="Ulmus pumila "/>
+			<xs:enumeration value="Ulmus sp"/>
+			<xs:enumeration value="Vaccinium corymbosum"/>
+			<xs:enumeration value="Vaccinium microcarpum"/>
+			<xs:enumeration value="Vaccinium myrtillus"/>
+			<xs:enumeration value="Vaccinium oxycoccos"/>
+			<xs:enumeration value="Vaccinium sp"/>
+			<xs:enumeration value="Vaccinium uliginosum"/>
+			<xs:enumeration value="Vaccinium vitis-idaea"/>
+			<xs:enumeration value="Weigela Florida -ryhmä/gruppen/group"/>
+			<xs:enumeration value="Weigela middendorffiana"/>
+			<xs:enumeration value="Weigela praecox"/>
+			<xs:enumeration value="Weigela sp"/>
+			<xs:enumeration value="Viburnum carlesii"/>
+			<xs:enumeration value="Viburnum cassinoides"/>
+			<xs:enumeration value="Viburnum dentatum"/>
+			<xs:enumeration value="Viburnum dentatum var. lucidum"/>
+			<xs:enumeration value="Viburnum lantana"/>
+			<xs:enumeration value="Viburnum lentago"/>
+			<xs:enumeration value="Viburnum opulus"/>
+			<xs:enumeration value="Viburnum rafinesquianum"/>
+			<xs:enumeration value="Viburnum sargentii"/>
+			<xs:enumeration value="Viburnum sp"/>
+			<xs:enumeration value="Vinca minor"/>
+			<xs:enumeration value="Vitis amurensis"/>
+			<xs:enumeration value="Vitis riparia"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PuutyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="havupuu"/>
+			<xs:enumeration value="lehtipuu"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RakenneTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aita"/>
+			<xs:enumeration value="esteettömyysramppi"/>
+			<xs:enumeration value="istutuslaatikko"/>
+			<xs:enumeration value="kaide"/>
+			<xs:enumeration value="katos"/>
+			<xs:enumeration value="kahluuallas"/>
+			<xs:enumeration value="katsomo ja lava"/>
+			<xs:enumeration value="kesäkukkalaatikko"/>
+			<xs:enumeration value="kivijalka"/>
+			<xs:enumeration value="koristeallas"/>
+			<xs:enumeration value="koristemuuri"/>
+			<xs:enumeration value="kulkuesteet (pollarit, puomit)"/>
+			<xs:enumeration value="laituri, aallonmurtaja"/>
+			<xs:enumeration value="lintu- ja näköalatorni"/>
+			<xs:enumeration value="lipputanko"/>
+			<xs:enumeration value="luistinkoppi"/>
+			<xs:enumeration value="mankeli"/>
+			<xs:enumeration value="matonpesuallas"/>
+			<xs:enumeration value="muovireunus"/>
+			<xs:enumeration value="muuri"/>
+			<xs:enumeration value="pergola, huvimaja"/>
+			<xs:enumeration value="pitkospuut"/>
+			<xs:enumeration value="pollari"/>
+			<xs:enumeration value="portti"/>
+			<xs:enumeration value="puureunukset"/>
+			<xs:enumeration value="pysäkki ilman katosta"/>
+			<xs:enumeration value="pysäkkikatos"/>
+			<xs:enumeration value="pysäköintilippuautomaatti"/>
+			<xs:enumeration value="pyöräteline"/>
+			<xs:enumeration value="rantamuuri"/>
+			<xs:enumeration value="reunatuki"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="skeittiramppi"/>
+			<xs:enumeration value="sosiaalitila"/>
+			<xs:enumeration value="suihkulähde"/>
+			<xs:enumeration value="terassi"/>
+			<xs:enumeration value="tukimuuri"/>
+			<xs:enumeration value="uima-allas"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TalvihoidonLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A - kiireellisyysluokka"/>
+			<xs:enumeration value="B - kiireellisyysluokka"/>
+			<xs:enumeration value="C - kiireellisyysluokka"/>
+			<xs:enumeration value="Ei kiireellisyysluokkaa"/>
+			<xs:enumeration value="Ei talvikunnossapitoa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ToiminnallinenLuokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aukio"/>
+			<xs:enumeration value="asuntokatu"/>
+			<xs:enumeration value="hidaskatu"/>
+			<xs:enumeration value="kevyen liikenteen väylä"/>
+			<xs:enumeration value="kokoojakatu"/>
+			<xs:enumeration value="kävelykatu"/>
+			<xs:enumeration value="pihakatu"/>
+			<xs:enumeration value="pysäköintialue"/>
+			<xs:enumeration value="pääkatu"/>
+			<xs:enumeration value="tori"/>
+			<xs:enumeration value="yksityistie"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VarustemateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="betoni"/>
+			<xs:enumeration value="elementtiverkko"/>
+			<xs:enumeration value="kaksipuolinen teräspalkki"/>
+			<xs:enumeration value="kivi"/>
+			<xs:enumeration value="metalli"/>
+			<xs:enumeration value="muovi"/>
+			<xs:enumeration value="panssariverkko"/>
+			<xs:enumeration value="putkipalkki"/>
+			<xs:enumeration value="puu"/>
+			<xs:enumeration value="teräs"/>
+			<xs:enumeration value="teräspalkki"/>
+			<xs:enumeration value="teräsverkko"/>
+			<xs:enumeration value="vaijeri"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ViheralueenKayttotarkoitusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="erityisalue"/>
+			<xs:enumeration value="koirapuisto"/>
+			<xs:enumeration value="leikkipaikka"/>
+			<xs:enumeration value="liikenneviheralue"/>
+			<xs:enumeration value="liikuntapaikka"/>
+			<xs:enumeration value="lumenvastaanottopaikka"/>
+			<xs:enumeration value="puisto"/>
+			<xs:enumeration value="siirtolapuutarha"/>
+			<xs:enumeration value="suojelualue"/>
+			<xs:enumeration value="talousmetsa"/>
+			<xs:enumeration value="ulkoilu- ja retkeilyalue"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ViherosanLajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="alikulkukäytävä"/>
+			<xs:enumeration value="beach volley -kenttä"/>
+			<xs:enumeration value="hautausmaa"/>
+			<xs:enumeration value="istutusallas"/>
+			<xs:enumeration value="joki/puro"/>
+			<xs:enumeration value="joutomaa"/>
+			<xs:enumeration value="juoksurata"/>
+			<xs:enumeration value="jättömaa"/>
+			<xs:enumeration value="kallio"/>
+			<xs:enumeration value="kanoottilaituri"/>
+			<xs:enumeration value="katsomo"/>
+			<xs:enumeration value="kenttä"/>
+			<xs:enumeration value="kesäkukkamaa"/>
+			<xs:enumeration value="kesäteatteri"/>
+			<xs:enumeration value="kitumaa"/>
+			<xs:enumeration value="koira-aitaus"/>
+			<xs:enumeration value="koripallokenttä"/>
+			<xs:enumeration value="kosteikko"/>
+			<xs:enumeration value="kuntoilualue"/>
+			<xs:enumeration value="käytävä"/>
+			<xs:enumeration value="laidun"/>
+			<xs:enumeration value="laituri"/>
+			<xs:enumeration value="lampi"/>
+			<xs:enumeration value="lastenallas"/>
+			<xs:enumeration value="leikkialue"/>
+			<xs:enumeration value="leikkikenttä"/>
+			<xs:enumeration value="luonnonsuojelualue"/>
+			<xs:enumeration value="matonpesupaikka"/>
+			<xs:enumeration value="metsitysalue"/>
+			<xs:enumeration value="metsä"/>
+			<xs:enumeration value="monitoimikenttä"/>
+			<xs:enumeration value="muu urheilukenttä"/>
+			<xs:enumeration value="niitty"/>
+			<xs:enumeration value="nurmikko"/>
+			<xs:enumeration value="oja"/>
+			<xs:enumeration value="oleskelualue"/>
+			<xs:enumeration value="paikoitusalue"/>
+			<xs:enumeration value="pallokenttä"/>
+			<xs:enumeration value="pelikenttä"/>
+			<xs:enumeration value="pelto"/>
+			<xs:enumeration value="perennamaa"/>
+			<xs:enumeration value="petankkikenttä"/>
+			<xs:enumeration value="portaat"/>
+			<xs:enumeration value="pukusuoja"/>
+			<xs:enumeration value="pulkkamäki"/>
+			<xs:enumeration value="ranta"/>
+			<xs:enumeration value="ratsastuskenttä"/>
+			<xs:enumeration value="rullaluistelurata"/>
+			<xs:enumeration value="silta"/>
+			<xs:enumeration value="skeittikenttä"/>
+			<xs:enumeration value="suo"/>
+			<xs:enumeration value="tenniskenttä"/>
+			<xs:enumeration value="uimala"/>
+			<xs:enumeration value="ulkoilureitti"/>
+			<xs:enumeration value="ulkoliikunta-alue"/>
+			<xs:enumeration value="uimaranta"/>
+			<xs:enumeration value="venesatama"/>
+			<xs:enumeration value="vesialue"/>
+			<xs:enumeration value="viheralue"/>
+			<xs:enumeration value="viljelyspalsta"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YmparistotaideTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="kivi"/>
+			<xs:enumeration value="maakivet"/>
+			<xs:enumeration value="paasikivi"/>
+			<xs:enumeration value="patsas/muistomerkki"/>
+			<xs:enumeration value="puistoveistokset"/>
+			<xs:enumeration value="rantakiveys"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

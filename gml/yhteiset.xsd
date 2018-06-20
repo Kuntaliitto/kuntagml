@@ -3220,6 +3220,7 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 			<xs:enumeration value="lupa vanhentunut"/>
 			<xs:enumeration value="lopullinen loppukatselmus tehty"/>
 			<xs:enumeration value="luvalla ei loppukatselmusehtoa, lupa valmis"/>
+			<xs:enumeration value="yksi tai useampia luvan rakennuksista on käyttöönotettu"/>
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3409,6 +3410,7 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="edellinen rakennusvalvonta-asia"/>
 			<xs:enumeration value="seuraava rakennusvalvonta-asia"/>
+			<xs:enumeration value="edellinen poikkeamisasia"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="YmparistoOsapuoliType">
@@ -3980,6 +3982,108 @@ C vähäinen</xs:documentation>
 			<xs:enumeration value="tontti"/>
 			<xs:enumeration value="tori tai aukio"/>
 			<xs:enumeration value="uimaranta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RakennusluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0110 omakotitalot"/>
+			<xs:enumeration value="0111 paritalot"/>
+			<xs:enumeration value="0112 rivitalot"/>
+			<xs:enumeration value="0120 pienkerrostalot"/>
+			<xs:enumeration value="0121 asuinkerrostalot"/>
+			<xs:enumeration value="0130 asuntolarakennukset"/>
+			<xs:enumeration value="0140 erityisryhmien asuinrakennukset"/>
+			<xs:enumeration value="0210 ympärivuotiseen käyttöön soveltuvat vapaa-ajan asuinrakennukset"/>
+			<xs:enumeration value="0211 osavuotiseen käyttöön soveltuvat vapaa-ajan asuinrakennukset"/>
+			<xs:enumeration value="0310 tukku- ja vähittäiskaupan myymälähallit"/>
+			<xs:enumeration value="0311 kauppakeskukset ja liike- ja tavaratalot"/>
+			<xs:enumeration value="0319 muut myymälärakennukset"/>
+			<xs:enumeration value="0320 hotellit"/>
+			<xs:enumeration value="0321 motellit, hostellit ja vastaavat majoitusliikerakennukset"/>
+			<xs:enumeration value="0322 loma-, lepo- ja virkistyskodit"/>
+			<xs:enumeration value="0329 muut majoitusliikerakennukset"/>
+			<xs:enumeration value="0330 ravintolarakennukset ja vastaavat liikerakennukset"/>
+			<xs:enumeration value="0400 toimistorakennukset"/>
+			<xs:enumeration value="0510 asemarakennukset ja terminaalit"/>
+			<xs:enumeration value="0511 ammattiliikenteen kaluston suojarakennukset"/>
+			<xs:enumeration value="0512 ammattiliikenteen kaluston huoltorakennukset"/>
+			<xs:enumeration value="0513 pysäköintitalot ja -hallit"/>
+			<xs:enumeration value="0514 kulkuneuvojen katokset"/>
+			<xs:enumeration value="0520 datakeskukset ja laitetilat"/>
+			<xs:enumeration value="0521 tietoliikenteen rakennukset"/>
+			<xs:enumeration value="0590 muut liikenteen rakennukset"/>
+			<xs:enumeration value="0610 terveys- ja hyvinvointikeskukset"/>
+			<xs:enumeration value="0611 keskussairaalat"/>
+			<xs:enumeration value="0612 erikoissairaalat ja laboratoriorakennukset"/>
+			<xs:enumeration value="0613 muut sairaalat"/>
+			<xs:enumeration value="0614 kuntoutuslaitokset"/>
+			<xs:enumeration value="0619 muut terveydenhuoltorakennukset"/>
+			<xs:enumeration value="0620 laitospalvelujen rakennukset"/>
+			<xs:enumeration value="0621 avopalvelujen rakennukset"/>
+			<xs:enumeration value="0630 vankilarakennukset"/>
+			<xs:enumeration value="0710 teatterit, musiikki- ja kongressitalot"/>
+			<xs:enumeration value="0711 elokuvateatterit"/>
+			<xs:enumeration value="0712 kirjastot ja arkistot"/>
+			<xs:enumeration value="0713 museot ja taidegalleriat"/>
+			<xs:enumeration value="0714 näyttely- ja messuhallit"/>
+			<xs:enumeration value="0720 seura- ja kerhorakennukset"/>
+			<xs:enumeration value="0730 uskonnonharjoittamisrakennukset"/>
+			<xs:enumeration value="0731 seurakuntatalot"/>
+			<xs:enumeration value="0739 muut uskonnollisten yhteisöjen rakennukset"/>
+			<xs:enumeration value="0740 jäähallit"/>
+			<xs:enumeration value="0741 uimahallit"/>
+			<xs:enumeration value="0742 monitoimihallit"/>
+			<xs:enumeration value="0743 urheilu- ja palloiluhallit"/>
+			<xs:enumeration value="0744 stadion- ja katsomorakennukset"/>
+			<xs:enumeration value="0749 muut urheilu- ja liikuntarakennukset"/>
+			<xs:enumeration value="0790 muut kokoontumisrakennukset"/>
+			<xs:enumeration value="0810 lasten päiväkodit"/>
+			<xs:enumeration value="0820 yleissivistävien oppilaitosten rakennukset"/>
+			<xs:enumeration value="0830 ammatillisten oppilaitosten rakennukset"/>
+			<xs:enumeration value="0840 korkeakoulurakennukset"/>
+			<xs:enumeration value="0841 tutkimuslaitosrakennukset"/>
+			<xs:enumeration value="0890 vapaan sivistystyön opetusrakennukset"/>
+			<xs:enumeration value="0891 järjestöjen, liittojen, työnantajien ja vastaavien opetusrakennukset"/>
+			<xs:enumeration value="0910 yleiskäyttöiset teollisuushallit"/>
+			<xs:enumeration value="0911 raskaan teollisuuden tehdasrakennukset"/>
+			<xs:enumeration value="0912 elintarviketeollisuuden tuotantorakennukset"/>
+			<xs:enumeration value="0919 muut teollisuuden tuotantorakennukset"/>
+			<xs:enumeration value="0920 teollisuus- ja pienteollisuustalot"/>
+			<xs:enumeration value="0930 metallimalmien käsittelyrakennukset"/>
+			<xs:enumeration value="0939 muut kaivannaistoiminnan rakennukset"/>
+			<xs:enumeration value="1010 sähköenergian tuotantorakennukset"/>
+			<xs:enumeration value="1011 lämpö- ja kylmäenergian tuotantorakennukset"/>
+			<xs:enumeration value="1090 energiansiirtorakennukset"/>
+			<xs:enumeration value="1091 energianvarastointirakennukset"/>
+			<xs:enumeration value="1110 vedenotto-, vedenpuhdistus- ja vedenjakelurakennukset"/>
+			<xs:enumeration value="1120 jätteenkeruu-, jätteenkäsittely- ja jätteenvarastointirakennukset"/>
+			<xs:enumeration value="1130 materiaalien kierrätysrakennukset"/>
+			<xs:enumeration value="1210 lämmittämättömät varastot"/>
+			<xs:enumeration value="1211 lämpimät varastot"/>
+			<xs:enumeration value="1212 kylmä- ja pakastevarastot"/>
+			<xs:enumeration value="1213 muut olosuhteiltaan säädellyt varastot"/>
+			<xs:enumeration value="1214 logistiikkakeskukset ja muut monikäyttöiset varastorakennukset"/>
+			<xs:enumeration value="1215 varastokatokset"/>
+			<xs:enumeration value="1310 paloasemat"/>
+			<xs:enumeration value="1311 väestönsuojat"/>
+			<xs:enumeration value="1319 muut pelastustoimen rakennukset"/>
+			<xs:enumeration value="1410 lypsykarjarakennukset"/>
+			<xs:enumeration value="1411 lihakarjarakennukset"/>
+			<xs:enumeration value="1412 sikalat"/>
+			<xs:enumeration value="1413 lampolat ja vuohinavetat"/>
+			<xs:enumeration value="1414 hevostallit"/>
+			<xs:enumeration value="1415 siipikarjarakennukset"/>
+			<xs:enumeration value="1416 turkiseläinrakennukset"/>
+			<xs:enumeration value="1419 muut eläinsuojat"/>
+			<xs:enumeration value="1490 kasvihuoneet"/>
+			<xs:enumeration value="1491 viljankuivaamot ja viljansäilytysrakennukset"/>
+			<xs:enumeration value="1492 maatalouden varastorakennukset"/>
+			<xs:enumeration value="1493 lantalat"/>
+			<xs:enumeration value="1499 muut maa-, metsä- ja kalatalouden rakennukset"/>
+			<xs:enumeration value="1910 saunarakennukset"/>
+			<xs:enumeration value="1911 talousrakennukset"/>
+			<xs:enumeration value="1912 majat ja tuvat"/>
+			<xs:enumeration value="1919 muualla luokittelemattomat rakennukset"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
