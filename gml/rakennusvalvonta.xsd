@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.4">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.9/yhteiset.xsd"/>
 	<!-- ================================================= -->
@@ -425,6 +425,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="liitettyJatevesijarjestelmaanKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="rakennusluokka" type="yht:RakennusluokkaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AsuinhuoneistotType">
@@ -462,6 +463,7 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="huoneistotunnus" type="rakval:HuoneistotunnusType" minOccurs="0"/>
+			<xs:element name="valtakunnallinenHuoneistotunnus" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="KantavaRakennusaineType">
@@ -765,6 +767,13 @@
 			<xs:element name="verottajanTvLlKytkin" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Verottajan tiedonantovelvollisuuden laiminlyönti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paatos" type="xs:string" minOccurs="0"/>
+			<xs:element name="paatoksenPerustelut" type="xs:string" minOccurs="0"/>
+			<xs:element name="katselmuksenTarkenne" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>esim. osittainen käyttöönotto, kerrokset 1 ja 2</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1197,6 +1206,8 @@
 						</xs:complexType>
 					</xs:element>
 					<xs:element name="kokoontumistilanHenkilomaara" type="xs:int" minOccurs="0"/>
+					<xs:element name="tilapainenRakennusKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="tilapainenRakennusvoimassaPvm" type="xs:date" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -1319,6 +1330,7 @@
 			</xs:element>
 			<xs:element name="perusparannusPvm" type="xs:date" minOccurs="0"/>
 			<xs:element name="liitettyJatevesijarjestelmaanKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="rakennusluokka" type="yht:RakennusluokkaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ValmisRakennustunnusType">
@@ -1381,6 +1393,7 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="huoneistotunnus" type="rakval:HuoneistotunnusType" minOccurs="0"/>
+			<xs:element name="valtakunnallinenHuoneistotunnus" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ValmisAsuinhuoneistotType">
