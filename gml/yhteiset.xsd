@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Nosto Consulting Oy, Pasi Lappalainen, tel. +358 400 858101, http://www.nostoconsulting.fi -->
-<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Tero Pietila (IT-Pie Oy) -->
 <!-- KuntaGML -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.9">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" xmlns:gml="http://www.opengis.net/gml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.10">
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
@@ -530,7 +529,6 @@ tiedot</xs:documentation>
 						<xs:enumeration value="asia poistettu esityslistalta"/>
 						<xs:enumeration value="asia pantu pöydälle kokouksessa"/>
 						<xs:enumeration value="ilmoitus merkitty tiedoksi"/>
-						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -573,7 +571,6 @@ tiedot</xs:documentation>
 												<xs:enumeration value="lämpö-, vesi- ja ilmanvaihtolaitteiden katselmus"/>
 												<xs:enumeration value="osittainen loppukatselmus"/>
 												<xs:enumeration value="loppukatselmus"/>
-												<xs:enumeration value="ei tiedossa"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -611,6 +608,17 @@ tiedot</xs:documentation>
 									<xs:element name="sisalto" type="xs:string" minOccurs="0"/>
 									<xs:element name="maaraysPvm" type="xs:date" minOccurs="0"/>
 									<xs:element name="toteutusHetki" type="xs:date" minOccurs="0"/>
+									<xs:element name="toteaja" type="xs:string" minOccurs="0"/>
+									<xs:element name="toiminta" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Määräaikainen ja tilapäinen toiminta</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Toiminta" type="yht:ToimintaType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -680,7 +688,6 @@ tiedot</xs:documentation>
 			<xs:enumeration value="maan alla"/>
 			<xs:enumeration value="maan tasalla"/>
 			<xs:enumeration value="maan yllä"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="RakennusvalvontaSijaintiType">
@@ -712,63 +719,6 @@ tiedot</xs:documentation>
 		<xs:sequence>
 			<xs:element name="alkuHetki" type="xs:dateTime"/>
 			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RakennustunnusType">
-		<xs:sequence>
-			<xs:element name="valtakunnallinenNumero" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Valtakunnallinen numero tulossa</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:pattern value="(([1][0-9]{8})[0-9ABCDEFHJKLMNPRSTUVWXY])"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="kunnanSisainenPysyvaRakennusnumero" type="xs:string" minOccurs="0"/>
-			<xs:element name="jarjestysnumero" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Luvan sisälllä juokseva numerointi. VRKta varten yksilöivä koodi</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="kiinttun" type="yht:KiinteistotunnusType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="rakennusnro" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Rakennusnumero, kolmella numerolla etunollin</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:pattern value="[0-9][0-9][0-9]"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="aanestysalue" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Äänestysalue</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="katselmusOsittainen" minOccurs="0">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="osittainen"/>
-						<xs:enumeration value="lopullinen"/>
-						<xs:enumeration value="pidetty"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="kayttoonottoKytkin" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="muuTunnus" type="xs:string" minOccurs="0"/>
-			<xs:element name="rakennuksenSelite" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Voi saada arvoja esim. "Talo A", "Talo B"</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennusvalvontaLiiteType">
@@ -884,7 +834,9 @@ tiedot</xs:documentation>
 				<xs:annotation>
 					<xs:documentation>Suunnittelijan pätevyys:
 AA poikkeuksellisen vaativa
+A+ vaativa+
 A vaativa
+B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
@@ -904,7 +856,9 @@ C vähäinen
 					<xs:documentation>Kunnan vaatima.
 
 AA poikkeuksellisen vaativa
+A+ vaativa+
 A vaativa
+B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
@@ -922,6 +876,9 @@ C vähäinen
 			<xs:element name="FISEkelpoisuus" type="yht:FiseKelpoisuusType" minOccurs="0"/>
 			<xs:element name="muuSuunnittelijaRooli" type="xs:string" minOccurs="0"/>
 			<xs:element name="postitetaanKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="vastuunAlkuPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="vastuunLoppuPvm" type="xs:date" minOccurs="0"/>
+			<xs:element name="turvakieltoKytkin" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TyonjohtajaType">
@@ -945,23 +902,24 @@ C vähäinen
 					<xs:documentation>Jos kyseessä on yritys tvs. niin tiedot siirretään tässä elementissä</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="patevyysvaatimusluokka" type="yht:PatevyysluokkaType" minOccurs="0">
+			<xs:element name="patevyysvaatimusluokka" type="yht:TyonjohtajaPatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Työnjohtajan pätevyys
-
 AA poikkeuksellisen vaativa
 A vaativa
+B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="vaadittuPatevyysluokka" type="yht:PatevyysluokkaType" minOccurs="0">
+			<xs:element name="vaadittuPatevyysluokka" type="yht:TyonjohtajaPatevyysluokkaType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Kunnan vaatima
 
 AA poikkeuksellisen vaativa
 A vaativa
+B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
@@ -1033,6 +991,9 @@ C vähäinen
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="turvakieltoKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="FISEpatevyyskortti" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="FISEkelpoisuus" type="yht:FiseKelpoisuusTyonjohtajaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTunnusType">
@@ -1116,7 +1077,6 @@ C vähäinen
 			<xs:enumeration value="erityissuunnittelija"/>
 			<xs:enumeration value="työnjohtaja"/>
 			<xs:enumeration value="muu osapuoli"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="KayttotarkoitusType">
@@ -1139,7 +1099,6 @@ C vähäinen
 			<xs:enumeration value="tuotantotilaa(teollisuus)"/>
 			<xs:enumeration value="varastotilaa"/>
 			<xs:enumeration value="muuta huoneistoalaan kuuluvaa tilaa"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="RakennuspaikkaType">
@@ -1175,7 +1134,6 @@ C vähäinen
 													<xs:restriction base="xs:string">
 														<xs:enumeration value="oma"/>
 														<xs:enumeration value="vuokra"/>
-														<xs:enumeration value="ei tiedossa"/>
 														<xs:enumeration value="muu oikeus"/>
 													</xs:restriction>
 												</xs:simpleType>
@@ -1215,7 +1173,6 @@ C vähäinen
 								<xs:enumeration value="rakennus"/>
 								<xs:enumeration value="yleis"/>
 								<xs:enumeration value="ei kaavaa"/>
-								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -1281,7 +1238,6 @@ C vähäinen
 			<xs:enumeration value="Kehotuksen saaja"/>
 			<xs:enumeration value="Hakijan asiamies"/>
 			<xs:enumeration value="Rakennuksen laajarunkoisen osan arvioija"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ToimialaType">
@@ -3254,22 +3210,23 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="SuunnittelijaRoolikoodiType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="GEO-suunnittelija"/>
+			<xs:enumeration value="pohjarakennesuunnittelija"/>
 			<xs:enumeration value="LVI-suunnittelija"/>
 			<xs:enumeration value="IV-suunnittelija"/>
 			<xs:enumeration value="KVV-suunnittelija"/>
 			<xs:enumeration value="pääsuunnittelija"/>
-			<xs:enumeration value="RAK-rakennesuunnittelija"/>
-			<xs:enumeration value="ARK-rakennussuunnittelija"/>
-			<xs:enumeration value="Vaikeiden töiden suunnittelija"/>
-			<xs:enumeration value="ei tiedossa"/>
+			<xs:enumeration value="rakennesuunnittelija"/>
 			<xs:enumeration value="rakennussuunnittelija"/>
+			<xs:enumeration value="Vaikeiden töiden suunnittelija"/>
 			<xs:enumeration value="kantavien rakenteiden suunnittelija"/>
-			<xs:enumeration value="pohjarakenteiden suunnittelija"/>
 			<xs:enumeration value="ilmanvaihdon suunnittelija"/>
 			<xs:enumeration value="kiinteistön vesi- ja viemäröintilaitteiston suunnittelija"/>
 			<xs:enumeration value="rakennusfysikaalinen suunnittelija"/>
 			<xs:enumeration value="kosteusvaurion korjaustyön suunnittelija"/>
+			<xs:enumeration value="energiatodistuksen laatija"/>
+			<xs:enumeration value="vastaava rakennesuunnittelija"/>
+			<xs:enumeration value="kosteudenhallintakoordinaattori"/>
+			<xs:enumeration value="palotekninen suunnittelija"/>
 			<xs:enumeration value="muu"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3879,16 +3836,19 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 		<xs:annotation>
 			<xs:documentation>Pätevyys:
 AA poikkeuksellisen vaativa 
+A+ vaativa +
 A vaativa 
+B+ tavanomainen +
 B tavanomainen 
 C vähäinen</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="AA"/>
+			<xs:enumeration value="A+"/>
 			<xs:enumeration value="A"/>
+			<xs:enumeration value="B+"/>
 			<xs:enumeration value="B"/>
 			<xs:enumeration value="C"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PaatostyyppiType">
@@ -4092,4 +4052,189 @@ C vähäinen</xs:documentation>
 			<xs:enumeration value="1919 muualla luokittelemattomat rakennukset"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="ToiminnanlajiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="tilapäinen"/>
+			<xs:enumeration value="määräaikainen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RakennustunnusType">
+		<xs:sequence>
+			<xs:element name="valtakunnallinenNumero" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valtakunnallinen numero tulossa</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="(([1][0-9]{8})[0-9ABCDEFHJKLMNPRSTUVWXY])"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="kunnanSisainenPysyvaRakennusnumero" type="xs:string" minOccurs="0"/>
+			<xs:element name="jarjestysnumero" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Luvan sisälllä juokseva numerointi. VRKta varten yksilöivä koodi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kiinttun" type="yht:KiinteistotunnusType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rakennusnro" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Rakennusnumero, kolmella numerolla etunollin</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9][0-9][0-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="aanestysalue" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Äänestysalue</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="katselmusOsittainen" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="osittainen"/>
+						<xs:enumeration value="lopullinen"/>
+						<xs:enumeration value="pidetty"/>
+						<xs:enumeration value="ei tiedossa"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="kayttoonottoKytkin" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="muuTunnustieto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="rakennuksenSelite" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voi saada arvoja esim. "Talo A", "Talo B"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huoneistoKayttoonotto" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="HuoneistoKayttoonotto" type="yht:HuoneistoKayttoonottoType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HuoneistoKayttoonottoType">
+		<xs:sequence>
+			<xs:element name="valtakunnallinenHuoneistotunnus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TyonjohtajaPatevyysluokkaType">
+		<xs:annotation>
+			<xs:documentation>Pätevyys:
+AA poikkeuksellisen vaativa 
+A vaativa 
+B+ tavanomainen +
+B tavanomainen 
+C vähäinen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AA"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="B+"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FiseKelpoisuusTyonjohtajaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="tavanomainen betonielementtien asennustyönjohtaminen"/>
+			<xs:enumeration value="vaativa betonielementtien asennustyönjohtajaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa betonielementtien asennustyönjohtajaminen"/>
+			<xs:enumeration value="vaativa betonielementtitehtaan betonityönjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa betonielementtitehtaan betonityönjohtaminen"/>
+			<xs:enumeration value="betonijulkisivutyönjohtaminen"/>
+			<xs:enumeration value="betonilaborantti"/>
+			<xs:enumeration value="betonilattiapinnoitustyönjohtaminen"/>
+			<xs:enumeration value="betonirakenteiden korjaustyönjohtaminen (materiaalitekninen korjaus)"/>
+			<xs:enumeration value="tavanomainen betonirakenteiden työnjohtaminen"/>
+			<xs:enumeration value="vaativa betonirakenteiden työnjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa betonirakenteiden työnjohtaminen"/>
+			<xs:enumeration value="tavanomainen ilmanvaihtolaitteiston (iv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="tavanomainen + ilmanvaihtolaitteiston (iv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="vaativa ilmanvaihtolaitteiston (iv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa ilmanvaihtolaitteiston (iv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="tavanomainen ilmanvaihtolaitteiston (iv) rakentamisesta vastaavan työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="tavanomainen + ilmanvaihtolaitteiston (iv) rakentamisesta vastaavan työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="vaativa ilmanvaihtolaitteiston (iv) rakentamisesta vastaavan työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa ilmanvaihtolaitteiston (iv) rakentamisesta vastaavan työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="tavanomainen kalliorakenteiden työnjohto"/>
+			<xs:enumeration value="vaativa kalliorakenteiden työnjohto"/>
+			<xs:enumeration value="poikkeuksellisen vaativa kalliorakenteiden työnjohto"/>
+			<xs:enumeration value="tavanomainen kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="tavanomainen + kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="vaativa kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="tavanomainen kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="tavanomainen + kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="vaativa kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa kiinteistön vesi- ja viemärilaitteiston (kvv) rakentamisesta vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="tavanomainen kosteusvaurion korjaustyönjohtaminen"/>
+			<xs:enumeration value="vaativa kosteusvaurion korjaustyönjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa kosteusvaurion korjaustyönjohtaminen"/>
+			<xs:enumeration value="tavanomainen pohjarakenteiden työnjohtaminen"/>
+			<xs:enumeration value="vaativa pohjarakenteiden työnjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa pohjarakenteiden työnjohtaminen"/>
+			<xs:enumeration value="tavanomainen puurakenteiden työnjohtaminen"/>
+			<xs:enumeration value="vaativa puurakenteiden työnjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa puurakenteiden työnjohtaminen"/>
+			<xs:enumeration value="valmistusluokka 1 teräsrakennetehtaan työnjohtaminen"/>
+			<xs:enumeration value="valmistusluokka 2 teräsrakennetehtaan työnjohtaminen"/>
+			<xs:enumeration value="tavanomainen teräsrakenteiden asennustyönjohtaminen"/>
+			<xs:enumeration value="vaativa teräsrakenteiden asennustyönjohtaminen"/>
+			<xs:enumeration value="poikkeuksellisen vaativa teräsrakenteiden asennustyönjohtaminen"/>
+			<xs:enumeration value="työmaainsinööri"/>
+			<xs:enumeration value="työpäällikkö"/>
+			<xs:enumeration value="valmisbetonityönjohtaminen"/>
+			<xs:enumeration value="tavanomainen vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="vaativa vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa vastaava työnjohtaminen(uudisrakentaminen)"/>
+			<xs:enumeration value="tavanomainen vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="vaativa vastaava työnjohtaminen(korjausrakentaminen)"/>
+			<xs:enumeration value="poikkeuksellisen vaativa vastaava työnjohtaminen(korjausrakentaminen)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ToimintaType">
+		<xs:sequence>
+			<xs:element name="toimija" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>esim. Päiväkoti mennikäinen Oy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="toiminnanlaji" type="yht:ToiminnanlajiType"/>
+			<xs:element name="toiminnanRakennustieto" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ToiminnanRakennus">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="yht:RakennustunnusType">
+										<xs:sequence>
+											<xs:element name="purku" type="xs:boolean" minOccurs="0"/>
+											<xs:element name="toteaja" type="xs:string" minOccurs="0"/>
+											<xs:element name="toteamisPvm" type="xs:date" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

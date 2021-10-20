@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.4">
+<!-- Nosto Consulting Oy, Pasi Lappalainen, tel. +358 400 858101, http://www.nostoconsulting.fi -->
+<!-- KuntaGML -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rakval="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.5">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.9/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.10/yhteiset.xsd"/>
+<!--	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="yhteiset.xsd"/>-->
 	<!-- ================================================= -->
 	<!-- Package: <<XSDschema>> Rakennusvalvonta -->
 	<!-- ================================================= -->
@@ -23,7 +26,7 @@
 							</xs:choice>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="tunnus" type="rakval:RakennustunnusType" minOccurs="0">
+					<xs:element name="tunnus" type="yht:RakennustunnusType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>vastaava kuin rakennustunnus</xs:documentation>
 						</xs:annotation>
@@ -277,7 +280,6 @@
 							<xs:restriction base="xs:string">
 								<xs:enumeration value="liiketaloudellinen"/>
 								<xs:enumeration value="muu"/>
-								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -310,7 +312,7 @@
 	</xs:complexType>
 	<xs:complexType name="RakennuksenTiedotType">
 		<xs:sequence>
-			<xs:element name="rakennustunnus" type="rakval:RakennustunnusType" minOccurs="0"/>
+			<xs:element name="rakennustunnus" type="yht:RakennustunnusType" minOccurs="0"/>
 			<xs:element name="kayttotarkoitus" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Pääasiallinen käyttötarkoitus(toimenpiteen jälkeen) linkki: http://www.tilastokeskus.fi/meta/luokitukset/rakennus/001-1994/koko_luokitus.html</xs:documentation>
@@ -394,7 +396,6 @@
 						<xs:enumeration value="013 muut erilliset talot"/>
 						<xs:enumeration value="012 kahden asunnon talot"/>
 						<xs:enumeration value="011 yhden asunnon talot"/>
-						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -419,16 +420,16 @@
 			<xs:element name="lammonlahde" type="rakval:LammonlahdeType" minOccurs="0"/>
 			<xs:element name="varusteet" type="rakval:VarusteetType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="jaahdytysmuoto" type="xs:string" minOccurs="0"/>
-			<xs:element name="asuinhuoneistot" type="rakval:AsuinhuoneistotType" minOccurs="0">
+			<xs:element name="huoneistot" type="rakval:HuoneistotType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation> Asuinhuoneistotiedot</xs:documentation>
+					<xs:documentation> Asuinhuoneistot ja toimitilat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="liitettyJatevesijarjestelmaanKytkin" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="rakennusluokka" type="yht:RakennusluokkaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AsuinhuoneistotType">
+	<xs:complexType name="HuoneistotType">
 		<xs:sequence>
 			<xs:element name="huoneisto" maxOccurs="unbounded">
 				<xs:complexType>
@@ -458,12 +459,16 @@
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="asuinhuoneisto"/>
 						<xs:enumeration value="toimitila"/>
-						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="huoneistotunnus" type="rakval:HuoneistotunnusType" minOccurs="0"/>
 			<xs:element name="valtakunnallinenHuoneistotunnus" type="xs:string" minOccurs="0"/>
+			<xs:element name="kayttoonottoPvm" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Käyttöönottopäivä (rakennuksen osittainen käyttöönotto)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="KantavaRakennusaineType">
@@ -486,7 +491,6 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="elementti"/>
 			<xs:enumeration value="paikalla"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="JulkisivuType">
@@ -522,7 +526,6 @@
 			<xs:enumeration value="suora sähkö"/>
 			<xs:enumeration value="uuni"/>
 			<xs:enumeration value="ei lämmitystä"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="LammonlahdeType">
@@ -575,7 +578,6 @@
 			<xs:enumeration value="keittokomero"/>
 			<xs:enumeration value="keittotila"/>
 			<xs:enumeration value="tupakeittio"/>
-			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="RakentamistoimenpideType">
@@ -659,6 +661,8 @@
 						<xs:element name="raukeamisPvm" type="xs:date" minOccurs="0"/>
 						<xs:element name="jatkoaikaPvm" type="xs:date" minOccurs="0"/>
 						<xs:element name="rakennustietojaEimuutetaKytkin" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="korjausaste" type="xs:int" minOccurs="0"/>
+						<xs:element name="muutosala" type="xs:int" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -719,7 +723,7 @@
 			<xs:element name="katselmuksenRakennustieto" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="KatselmuksenRakennus" type="rakval:RakennustunnusType" minOccurs="0"/>
+						<xs:element name="KatselmuksenRakennus" type="yht:RakennustunnusType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -774,69 +778,6 @@
 			<xs:element name="katselmuksenTarkenne" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>esim. osittainen käyttöönotto, kerrokset 1 ja 2</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RakennustunnusType">
-		<xs:sequence>
-			<xs:element name="valtakunnallinenNumero" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Valtakunnallinen numero tulossa</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:pattern value="(([1][0-9]{8})[0-9ABCDEFHJKLMNPRSTUVWXY])"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="kunnanSisainenPysyvaRakennusnumero" type="xs:string" minOccurs="0"/>
-			<xs:element name="jarjestysnumero" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Luvan sisälllä juokseva numerointi. VRKta varten yksilöivä koodi</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="kiinttun" type="yht:KiinteistotunnusType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Kiinteistötunnus, 14 merkkiä ilman väliviivoja</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="rakennusnro" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Rakennusnumero, kolmella numerolla etunollin</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:pattern value="[0-9][0-9][0-9]"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="aanestysalue" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Äänestysalue</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="katselmusOsittainen" minOccurs="0">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="osittainen"/>
-						<xs:enumeration value="lopullinen"/>
-						<xs:enumeration value="pidetty"/>
-						<xs:enumeration value="ei tiedossa"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="kayttoonottoKytkin" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="muuTunnustieto" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="MuuTunnus" type="yht:MuuTunnusType"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="rakennuksenSelite" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Voi saada arvoja esim. "Talo A", "Talo B"</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -996,15 +937,16 @@
 					</xs:element>
 					<xs:element name="hankkeenVaativuus" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>AA Poikkeuksellisen vaativa, A Vaativa, B Tavanomainen, C Vähäinen</xs:documentation>
+							<xs:documentation>AA Poikkeuksellisen vaativa, A Vaativa, A+ Vaativa+, B+ Tavanomainen+,B Tavanomainen, C Vähäinen</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:enumeration value="AA"/>
+								<xs:enumeration value="A+"/>
 								<xs:enumeration value="A"/>
+								<xs:enumeration value="B+"/>
 								<xs:enumeration value="B"/>
 								<xs:enumeration value="C"/>
-								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -1187,7 +1129,6 @@
 							<xs:restriction base="xs:string">
 								<xs:enumeration value="liiketaloudellinen"/>
 								<xs:enumeration value="muu"/>
-								<xs:enumeration value="ei tiedossa"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -1298,7 +1239,6 @@
 						<xs:enumeration value="013 muut erilliset talot"/>
 						<xs:enumeration value="012 kahden asunnon talot"/>
 						<xs:enumeration value="011 yhden asunnon talot"/>
-						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1323,9 +1263,9 @@
 			<xs:element name="lammonlahde" type="rakval:LammonlahdeType" minOccurs="0"/>
 			<xs:element name="varusteet" type="rakval:VarusteetType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="jaahdytysmuoto" type="xs:string" minOccurs="0"/>
-			<xs:element name="asuinhuoneistot" type="rakval:ValmisAsuinhuoneistotType" minOccurs="0">
+			<xs:element name="huoneistot" type="rakval:ValmisAsuinhuoneistotType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation> Asuinhuoneistotiedot</xs:documentation>
+					<xs:documentation>Asuinhuoneistot ja toimitilat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="perusparannusPvm" type="xs:date" minOccurs="0"/>
@@ -1388,7 +1328,6 @@
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="asuinhuoneisto"/>
 						<xs:enumeration value="toimitila"/>
-						<xs:enumeration value="ei tiedossa"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>

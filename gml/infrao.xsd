@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Nosto Consulting Oy, Pasi Lappalainen, tel. +358 400 858101, http://www.nostoconsulting.fi -->
+<!-- Infra-O -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:infrao="www.kuntatietopalvelu.fi/gml/infrao" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="www.kuntatietopalvelu.fi/gml/infrao" elementFormDefault="qualified" version="1.0.2">
 	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.9/yhteiset.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.10/yhteiset.xsd"/>
 	<xs:complexType name="InfraoKohteetType">
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureCollectionType">
