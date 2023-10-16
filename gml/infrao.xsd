@@ -1,52 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Nosto Consulting Oy, Pasi Lappalainen, tel. +358 400 858101, http://www.nostoconsulting.fi -->
-<!-- Infra-O -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:infrao="www.kuntatietopalvelu.fi/gml/infrao" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="www.kuntatietopalvelu.fi/gml/infrao" elementFormDefault="qualified" version="1.0.2">
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
-	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.10/yhteiset.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	targetNamespace="www.infra-o.fi/infrao" xmlns:infrao="www.infra-o.fi/infrao"
+	xmlns:gml="http://www.opengis.net/gml/3.2" version="2.0.2">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml/3.2"
+		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
 	<xs:complexType name="InfraoKohteetType">
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureCollectionType">
 				<xs:sequence>
-					<xs:element name="toimituksentiedot" type="yht:AineistotoimitusType"/>
+					<xs:element name="toimituksentiedot" type="infrao:AineistotoimitusType"
+						minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:element name="InfraoKohteet" type="infrao:InfraoKohteetType" substitutionGroup="gml:_FeatureCollection">
+	<xs:complexType name="AineistotoimitusType">
+		<xs:sequence>
+			<xs:element name="Toimitus" type="infrao:AineistotoimituksentiedotType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AineistotoimituksentiedotType">
+		<xs:sequence>
+			<xs:element name="aineistonnimi" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Aineistoa kuvaava nimi, </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="aineistotoimittaja" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kuka on tehnyt kyseisen siirtotiedoston,
+						yhteyshenkilö</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tila" type="infrao:AineistonTilaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aineiston valmiustila; onko kokonaan valmis, luonnos, demo
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="toimitusPvm" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Milloin kyseinen siirtotiedosto on tehty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kuntakoodi" type="xs:string"/>
+			<xs:element name="kielitieto" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kunnan kieli tai kieliitieto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="metatietotunniste" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Paikkatietohakemistossa aineiston yksilöivä metatietotunniste.
+						Muita nimityksiä: UUID, tiedostotunniste, resurssitunniste, aineiston ID.
+						Esim: 924a68ba-665f-4ea0-a830- 26e80112b5dc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="metatietoXMLURL" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL, joka palauttaa aineiston metatiedot XML tiedostona ISO
+						19139 skeeman mukaisesti. Esim:
+						http://geonetwork.nls.fi/geonetwork/srv/fi/iso19139.xml?uuid=924a68ba-
+						665f-4ea0-a830-26e80112b5dc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="metatietoURL" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL www-sivulle, josta aineiston metatiedot ovat luettavissa
+						”selkokielisenä”. Esim:
+						http://www.paikkatietoikkuna.fi/web/fi/paikkatietoaineisto?inspireMetadat
+						aUIID=924a68ba-665f-4ea0-a830-26e80112b5dc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tietotuoteURL" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL, josta saadaan aineistoon liittyvän tietotuotteen
+						tiedot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AineistonTilaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="valmis"/>
+			<xs:enumeration value="keskeneräinen"/>
+			<xs:enumeration value="muu"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="InfraoKohteet" type="infrao:InfraoKohteetType"
+		substitutionGroup="gml:AbstractFeatureCollection">
 		<xs:annotation>
-			<xs:documentation>Skeeman juurielementti	</xs:documentation>
+			<xs:documentation>Skeeman juurielementti </xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="AbstractInfraomaisuusKohde" type="infrao:AbstractInfraomaisuusKohdeType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:element name="AbstractInfraomaisuusKohde" type="infrao:AbstractInfraomaisuusKohdeType"
+		substitutionGroup="infrao:AbstractPaikkatietopalveluKohde" abstract="true"/>
 	<xs:complexType name="AbstractInfraomaisuusKohdeType" abstract="true">
 		<xs:complexContent>
-			<xs:extension base="yht:AbstractPaikkatietopalveluKohde"/>
+			<xs:extension base="infrao:AbstractPaikkatietopalveluKohdeType">
+				<xs:sequence/>
+			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="AbstractInfraomaisuusKohdePropertyType">
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:AbstractInfraomaisuusKohde"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="AbstractKasvillisuus" type="infrao:AbstractKasvillisuusType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:element name="AbstractKasvillisuus" type="infrao:AbstractKasvillisuusType"
+		substitutionGroup="infrao:AbstractPaikkatietopalveluKohde" abstract="true"/>
 	<xs:complexType name="AbstractKasvillisuusType" abstract="true">
 		<xs:complexContent>
-			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+			<xs:extension base="infrao:AbstractPaikkatietopalveluKohdeType">
 				<xs:sequence>
-					<xs:element name="kuuluu" type="infrao:ViheralueenOsaPropertyType" minOccurs="0">
+					<xs:element name="omistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="haltija" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
+					<xs:element name="kuuluuViheralueenOsaan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:sisaltaa</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:ViheralueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
-					<xs:element name="kuuluuKatualueenOsaan" type="infrao:KatualueenOsaPropertyType" minOccurs="0">
+					<xs:element name="kuuluuKatuAlueenOsaan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:sisaltaaKasvillisuus</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:KatualueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
@@ -57,40 +142,102 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:AbstractKasvillisuus"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="AbstractPaikkatietopalveluKohde" type="yht:AbstractPaikkatietopalveluKohde" abstract="true" substitutionGroup="gml:_Feature">
+	<xs:element name="AbstractPaikkatietopalveluKohde"
+		type="infrao:AbstractPaikkatietopalveluKohdeType" substitutionGroup="gml:AbstractFeature"
+		abstract="true">
 		<xs:annotation>
 			<xs:documentation>Kohde josta periytetään kaikki kohteet</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="AbstractVaruste" type="infrao:AbstractVarusteType" abstract="true" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:complexType name="AbstractPaikkatietopalveluKohdeType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="metatieto" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Kohteen metatiedot. Suositeltavat kentät ovat:
+								sijaintitiedonluontitapa, tarkkuus, datan_luoja, luonti_pvm,
+								muokkaaja, muokkaus_pvm, omistaja, lahteen_pvm, lahteen_tyyppi,
+								mittausera, lisatieto_linkki</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="gml:AbstractMemberType">
+									<xs:sequence>
+										<xs:element ref="gml:metaDataProperty"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="yksilointitieto" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Kohteen lähtötietojärjestelmän tvs. mukainen
+								yksilöintitieto </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="alkuHetki" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Kohteen luontipäivämäärä</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Milloin kohde on poistettu. Tämän avulla voidaan
+								tunnistaa poistetut kohteet, jos järjestelmät tukevat
+								historiatietojen tallentamista</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractPaikkatietopalveluKohdePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:AbstractPaikkatietopalveluKohde"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</xs:complexType>
+	<xs:element name="AbstractVaruste" type="infrao:AbstractVarusteType"
+		substitutionGroup="infrao:AbstractPaikkatietopalveluKohde" abstract="true"/>
 	<xs:complexType name="AbstractVarusteType" abstract="true">
 		<xs:complexContent>
-			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+			<xs:extension base="infrao:AbstractPaikkatietopalveluKohdeType">
 				<xs:sequence>
-					<xs:element name="tarkkaSijaintieto" type="infrao:SijaintiPropertyType" minOccurs="0"/>
-					<xs:element name="malli" type="xs:string" minOccurs="0"/>
-					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="suunta" type="xs:double" minOccurs="0"/>
-					<xs:element name="valmistaja" type="xs:string" minOccurs="0"/>
-					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="kuuluuViheralueenOsaan" type="infrao:ViheralueenOsaPropertyType" minOccurs="0">
+					<xs:element name="tarkkaSijaintitieto" type="infrao:SijaintiPropertyType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="omistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="haltija" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="malli" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="suunta" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="valmistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="materiaali" type="infrao:VarustemateriaaliType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="suunnitelmalinkkitieto"
+						type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0"
+						maxOccurs="unbounded"/>
+					<xs:element name="kuuluuViheralueenOsaan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:sisaltaaVaruste</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:ViheralueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="kuuluuKatualueenOsaan" type="infrao:KatualueenOsaPropertyType" minOccurs="0">
+					<xs:element name="kuuluuKatuAlueenOsaan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:sisaltaaVaruste</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:KatualueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="viitteellinenSijaintitieto" type="infrao:SijaintiPropertyType" minOccurs="0"/>
-					<xs:element name="materiaali" type="infrao:VarustemateriaaliType" minOccurs="0"/>
-					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -99,14 +246,18 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:AbstractVaruste"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Ajoratamerkinta" type="infrao:AjoratamerkintaType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="Ajoratamerkinta" type="infrao:AjoratamerkintaType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="AjoratamerkintaType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="jyrsittyPintaKytkin" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="tyyppi" type="infrao:AjoratamerkinnanTyyppiType" minOccurs="0"/>
+					<xs:element name="jyrsittyPintaKytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="tyyppi" type="infrao:AjoratamerkinnanTyyppiType"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -115,13 +266,43 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Ajoratamerkinta"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Hulevesi" type="infrao:HulevesiType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="ErikoisrakenneKerros" type="infrao:ErikoisrakenneKerrosType"
+		substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
+	<xs:complexType name="ErikoisrakenneKerrosType">
+		<xs:complexContent>
+			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
+				<xs:sequence>
+					<xs:element name="omistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="haltija" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="selite" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="materiaali" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="tyyppi" type="infrao:ErikoisrakennekerrosmateriaaliType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sijainti" type="infrao:SijaintiPropertyType" minOccurs="0"
+						maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ErikoisrakenneKerrosPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element ref="infrao:ErikoisrakenneKerros"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</xs:complexType>
+	<xs:element name="Hulevesi" type="infrao:HulevesiType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="HulevesiType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="hulevesi" type="infrao:HulevesiTyyppiType" minOccurs="0"/>
+					<xs:element name="hulevesi" type="infrao:HulevesiTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -130,17 +311,23 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Hulevesi"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Jate" type="infrao:JateType" substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="JateType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="koko" type="xs:string" minOccurs="0"/>
-					<xs:element name="putkikeraysjarjestelmaKytkin" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="sijaintiMaanPinnallaKytkin" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="vaarallistenJateastiaKytkin" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="jate" type="infrao:JateTyyppiType" minOccurs="0"/>
+					<xs:element name="koko" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="putkikeraysjarjestelmaKytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="sijaintiMaanPinnallaKytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="vaarallistenJateastiaKytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="jate" type="infrao:JateTyyppiType" minOccurs="0" maxOccurs="1"
+					/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -149,13 +336,16 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Jate"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Kaluste" type="infrao:KalusteType" substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="KalusteType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="kaluste" type="infrao:KalusteTyyppiType" minOccurs="0"/>
+					<xs:element name="kaluste" type="infrao:KalusteTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -164,19 +354,22 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Kaluste"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Katualue" type="infrao:KatualueType" substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
+	<xs:element name="Katualue" type="infrao:KatualueType"
+		substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
 	<xs:complexType name="KatualueType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
 				<xs:sequence>
-					<xs:element name="koostuu" type="infrao:KatualueenOsaPropertyType" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="sisaltaaKatualueenOsan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:KatualueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="nimi" type="xs:string" minOccurs="0" maxOccurs="1"/>					
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -185,51 +378,72 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Katualue"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="KatualueenOsa" type="infrao:KatualueenOsaType" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:element name="KatualueenOsa" type="infrao:KatualueenOsaType"
+		substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
 	<xs:complexType name="KatualueenOsaType">
 		<xs:complexContent>
-			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+			<xs:extension base="infrao:AbstractPaikkatietopalveluKohdeType">
 				<xs:sequence>
-					<xs:element name="paatostieto" type="infrao:PaatosPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="kunnossapito" type="xs:string" minOccurs="0"/>
-					<xs:element name="leveys" type="xs:double" minOccurs="0"/>
-					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="pintaAla" type="xs:double" minOccurs="0"/>
-					<xs:element name="pituus" type="xs:double" minOccurs="0"/>
-					<xs:element name="puhtaanapito" type="xs:string" minOccurs="0"/>
-					<xs:element name="talvikunnossapito" type="xs:string" minOccurs="0"/>
-					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="kuuluu" type="infrao:KatualuePropertyType" minOccurs="0">
+					<xs:element name="paatostieto" type="infrao:PaatosPropertyType" minOccurs="0"
+						maxOccurs="unbounded"/>
+					<xs:element name="omistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="haltija" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapito" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="leveys" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="pintaAla" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="pituus" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="puhtaanapito" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="talvikunnossapito" type="xs:string" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="kuuluuKatualueeseen" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:koostuu</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:Katualue</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="sisaltaa" type="infrao:KeskilinjaPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="luokka" type="infrao:ToiminnallinenLuokkaType" minOccurs="0"/>
-					<xs:element name="laji" type="infrao:KatuosanLajiType" minOccurs="0"/>
-					<xs:element name="sisaltaaVaruste" type="infrao:AbstractVarustePropertyType" minOccurs="0">
+					<xs:element name="sisaltaaKeskilinja" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluuKatualueenOsaan</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:Keskilinja</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="pintamateriaali" type="infrao:PintamateriaaliType" minOccurs="0"/>
-					<xs:element name="kunnossapitoluokka" type="infrao:KunnossapitoluokkaType" minOccurs="0"/>
+					<xs:element name="luokka" type="infrao:ToiminnallinenLuokkaType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="laji" type="infrao:KatuosanLajiType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="viheralueenLaji" type="infrao:ViherosanLajiType" minOccurs="0"
+						maxOccurs="unbounded"/>
+					<xs:element name="pintamateriaali" type="infrao:PintamateriaaliType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitoluokka" type="infrao:HoitoluokkaType"
+						minOccurs="0" maxOccurs="1"/>
 					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
-					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="viheralueenLaji" type="infrao:ViherosanLajiType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType" minOccurs="0"/>
-					<xs:element name="sisaltaaKasvillisuus" type="infrao:AbstractKasvillisuusPropertyType" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="suunnitelmalinkkitieto"
+						type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0"
+						maxOccurs="unbounded"/>
+					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sisaltaaKasvillisuus" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluuKatualueenOsaan</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:AbstractKasvllisuus</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="sisaltaaVaruste" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:AbstractVaruste</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -238,14 +452,22 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:KatualueenOsa"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Keskilinja" type="infrao:KeskilinjaType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="Keskilinja" type="infrao:KeskilinjaType" substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
 	<xs:complexType name="KeskilinjaType">
 		<xs:complexContent>
-			<xs:extension base="gml:AbstractFeatureType">
+			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
 				<xs:sequence>
-					<xs:element name="DigiroadID" type="xs:string" minOccurs="0"/>
+					<xs:element name="DigiroadID" type="xs:string" minOccurs="0" maxOccurs="1"/>
 					<xs:element name="sijainti" type="gml:CurvePropertyType"/>
+					<xs:element name="kuuluuKatualueenOsaan" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
+						<xs:annotation>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:KatualueenOsa</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -254,15 +476,21 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Keskilinja"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Leikkivaline" type="infrao:LeikkivalineType" substitutionGroup="infrao:AbstractVaruste"/>
+
+	<xs:element name="Leikkivaline" type="infrao:LeikkivalineType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="LeikkivalineType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="toiminnallinenTarkastusPvm" type="xs:date" minOccurs="0"/>
-					<xs:element name="vuositarkastusPvm" type="xs:date" minOccurs="0"/>
-					<xs:element name="leikkivaline" type="infrao:LeikkivalineTyyppiType" minOccurs="0"/>
+					<xs:element name="toiminnallinenTarkastusPvm" type="xs:date" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="vuositarkastusPvm" type="xs:date" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="leikkivaline" type="infrao:LeikkivalineTyyppiType"
+						minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -271,12 +499,21 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Leikkivaline"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Liikennemerkki" type="infrao:LiikennemerkkiType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="Liikennemerkki" type="infrao:LiikennemerkkiType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="LiikennemerkkiType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
-				<xs:sequence/>
+				<xs:sequence>
+					<xs:element name="teksti" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="liikennemerkkityyppi" type="infrao:LiikennemerkkityyppiType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="liikennemerkkityyppi2020"
+						type="infrao:Liikennemerkkityyppi2020Type" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -284,26 +521,17 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Liikennemerkki"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Liikennevalo" type="infrao:LiikennevaloType" substitutionGroup="infrao:AbstractVaruste"/>
-	<xs:complexType name="LiikennevaloType">
-		<xs:complexContent>
-			<xs:extension base="infrao:AbstractVarusteType">
-				<xs:sequence/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="LiikennevaloPropertyType">
-		<xs:sequence minOccurs="0">
-			<xs:element ref="infrao:Liikennevalo"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:element name="Liikunta" type="infrao:LiikuntaType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="Liikunta" type="infrao:LiikuntaType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="LiikuntaType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="liikunta" type="infrao:LiikuntaTyyppiType" minOccurs="0"/>
+					<xs:element name="liikunta" type="infrao:LiikuntaTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -312,19 +540,35 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Liikunta"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Liite" type="yht:LiiteType" substitutionGroup="gml:_Object"/>
+	<xs:element name="Liite" type="infrao:LiiteType" substitutionGroup="gml:AbstractObject"/>
+	<xs:complexType name="LiiteType">
+		<xs:sequence>
+			<xs:element name="kuvaus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Liitteen sisältöä kuvaava teksti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="linkkiliitteeseen" type="xs:anyURI"/>
+			<xs:element name="muokkausHetki" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="versionumero" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="LiitePropertyType">
 		<xs:sequence>
 			<xs:element ref="infrao:Liite"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Melu" type="infrao:MeluType" substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="MeluType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="melu" type="infrao:MelutyyppiType" minOccurs="0"/>
+					<xs:element name="melu" type="infrao:MelutyyppiType" minOccurs="0" maxOccurs="1"
+					/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -333,14 +577,18 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Melu"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="MuuKasvi" type="infrao:MuuKasviType" substitutionGroup="infrao:AbstractKasvillisuus"/>
+	<xs:element name="MuuKasvi" type="infrao:MuuKasviType"
+		substitutionGroup="infrao:AbstractKasvillisuus"/>
 	<xs:complexType name="MuuKasviType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractKasvillisuusType">
 				<xs:sequence>
-					<xs:element name="kasviryhma" type="infrao:KasviryhmaTyyppiType" minOccurs="0"/>
-					<xs:element name="kasvilaji" type="infrao:KasvilajitType" minOccurs="0"/>
+					<xs:element name="kasviryhma" type="infrao:KasviryhmaTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="kasvilaji" type="infrao:KasvilajitType"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -349,13 +597,17 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:MuuKasvi"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="MuuVaruste" type="infrao:MuuVarusteType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="MuuVaruste" type="infrao:MuuVarusteType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="MuuVarusteType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="varustetyyppi" type="infrao:MuuVarusteTyyppiType" minOccurs="0"/>
+					<xs:element name="varustetyyppi" type="infrao:MuuVarusteTyyppiType"
+						minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -364,13 +616,40 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:MuuVaruste"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</xs:complexType>
+	<xs:element name="Nimi" type="infrao:NimiType" substitutionGroup="gml:AbstractObject">
+		<xs:annotation>
+			<xs:documentation>Voidaan käyttää esim. nimistö tai osoitekohteessa</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NimiType">
+		<xs:sequence>
+			<xs:element name="teksti" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute ref="xml:lang" default="fi"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NimiPropertyType">
+		<xs:sequence>
+			<xs:element ref="infrao:Nimi"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Opaste" type="infrao:OpasteType" substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="OpasteType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="opaste" type="infrao:OpasteTyyppiType" minOccurs="0"/>
+					<xs:element name="opaste" type="infrao:OpasteTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -379,21 +658,74 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Opaste"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Osoite" type="yht:OsoiteType" substitutionGroup="gml:_Object"/>
+	<xs:element name="Osoite" type="infrao:OsoiteType" substitutionGroup="gml:AbstractObject"/>
+	<xs:complexType name="OsoiteType">
+		<xs:sequence>
+			<xs:element name="kunta" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="osoitenumero" type="xs:integer" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Yksi osoitenumero esim. "24"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="osoitenumero2" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Osoitenumeroväli esimerkiksi 35-37 jälikimmäinen
+						numero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="jakokirjain" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>numeron perään tuleva pieni kirjain</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="jakokirjain2" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Jakokirjainvälin jälkimmäinen osa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="porras" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="huoneisto" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="huoneistojakokirjain" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Huoneistonumeron perään tuleva pieni
+						kirjain</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="postinumero" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="postitoimipaikannimi" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="pistesijainti" type="gml:PointPropertyType" minOccurs="0"
+				maxOccurs="1"/>
+			<xs:element name="aluesijainti" type="gml:SurfacePropertyType" minOccurs="0"
+				maxOccurs="1"/>
+			<xs:element name="viivasijainti" type="gml:CurvePropertyType" minOccurs="0"
+				maxOccurs="1"/>
+			<xs:element name="viitesijaintialue" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Esim. Korso, Tikkurila</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nimitieto" type="infrao:NimiPropertyType" minOccurs="0"
+				maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="OsoitePropertyType">
 		<xs:sequence>
 			<xs:element ref="infrao:Osoite"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Paatos" type="infrao:PaatosType" substitutionGroup="gml:_Object">
+	<xs:element name="Paatos" type="infrao:PaatosType" substitutionGroup="gml:AbstractObject">
 		<xs:annotation>
 			<xs:documentation>Päätöksen tiedot</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="PaatosType">
 		<xs:sequence>
-			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0"
+				maxOccurs="unbounded"/>
 			<xs:element name="kuvaus" type="xs:string"/>
 			<xs:element name="paivamaaraPvm" type="xs:date"/>
 		</xs:sequence>
@@ -402,16 +734,19 @@
 		<xs:sequence>
 			<xs:element ref="infrao:Paatos"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Puu" type="infrao:PuuType" substitutionGroup="infrao:AbstractKasvillisuus"/>
 	<xs:complexType name="PuuType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractKasvillisuusType">
 				<xs:sequence>
-					<xs:element name="korkeusMitta" type="xs:double" minOccurs="0"/>
-					<xs:element name="ymparysMitta" type="xs:double" minOccurs="0"/>
-					<xs:element name="puutyyppi" type="infrao:PuutyyppiType" minOccurs="0"/>
-					<xs:element name="puulajit" type="infrao:PuulajitType" minOccurs="0"/>
+					<xs:element name="korkeusMitta" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="ymparysMitta" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="puutyyppi" type="infrao:PuutyyppiType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="puulaji" type="infrao:PuulajitType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -420,13 +755,17 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Puu"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Pysakointiruutu" type="infrao:PysakointiruutuType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="Pysakointiruutu" type="infrao:PysakointiruutuType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="PysakointiruutuType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="latauspisteKytkin" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="latauspisteKytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -435,13 +774,16 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Pysakointiruutu"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:element name="Rakenne" type="infrao:RakenneType" substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="RakenneType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="rakenne" type="infrao:RakenneTyyppiType" minOccurs="0"/>
+					<xs:element name="rakenne" type="infrao:RakenneTyyppiType" minOccurs="0"
+						maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -450,25 +792,54 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Rakenne"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Sijainti" type="yht:SijaintiType" substitutionGroup="gml:_Object">
+	<xs:element name="Sijainti" type="infrao:SijaintiType" substitutionGroup="gml:AbstractObject">
 		<xs:annotation>
-			<xs:documentation>Sijaintielementin sisällön määrittely. Sijaintielementtiä käytetää niissä kohteissa, joissa kohteen geometriantyyppi(piste,viiva tai alue) voi vaihdella kohteesta toiseen</xs:documentation>
+			<xs:documentation>Sijaintielementin sisällön määrittely. Sijaintielementtiä käytetää
+				niissä kohteissa, joissa kohteen geometriantyyppi(piste,viiva tai alue) voi
+				vaihdella kohteesta toiseen</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="SijaintiType">
+		<xs:sequence>
+			<xs:element name="alue" type="gml:SurfacePropertyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="piste" type="gml:PointPropertyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="tyhjaGeometria" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="gml:AbstractMemberType">
+							<xs:sequence>
+								<xs:element ref="gml:Null"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="viiva" type="gml:CurvePropertyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="luontitapa" type="infrao:LuontiTapaType"/>
+			<xs:element name="osoitetieto" type="infrao:OsoitePropertyType" minOccurs="0"
+				maxOccurs="1"/>
+			<xs:element name="sijaintiepavarmuus" type="infrao:SijaintiepavarmuusType"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="SijaintiPropertyType">
 		<xs:sequence>
 			<xs:element ref="infrao:Sijainti"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Suunnitelma" type="infrao:SuunnitelmaType" substitutionGroup="gml:_Object">
+	<xs:element name="Suunnitelma" type="infrao:SuunnitelmaType"
+		substitutionGroup="gml:AbstractObject">
 		<xs:annotation>
 			<xs:documentation>Päätöksen tiedot</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="SuunnitelmaType">
 		<xs:sequence>
-			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="liitetieto" type="infrao:LiitePropertyType" minOccurs="0"
+				maxOccurs="unbounded"/>
 			<xs:element name="kuvaus" type="xs:string"/>
 			<xs:element name="paivamaaraPvm" type="xs:date"/>
 		</xs:sequence>
@@ -477,8 +848,10 @@
 		<xs:sequence>
 			<xs:element ref="infrao:Suunnitelma"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Suunnitelmalinkki" type="infrao:SuunnitelmalinkkiType" substitutionGroup="gml:_Object"/>
+	<xs:element name="Suunnitelmalinkki" type="infrao:SuunnitelmalinkkiType"
+		substitutionGroup="gml:AbstractObject"/>
 	<xs:complexType name="SuunnitelmalinkkiType">
 		<xs:sequence>
 			<xs:element name="suunnitelmakohdeId" type="xs:string"/>
@@ -489,32 +862,21 @@
 		<xs:sequence>
 			<xs:element ref="infrao:Suunnitelmalinkki"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Valaistus" type="infrao:ValaistusType" substitutionGroup="infrao:AbstractVaruste"/>
-	<xs:complexType name="ValaistusType">
-		<xs:complexContent>
-			<xs:extension base="infrao:AbstractVarusteType">
-				<xs:sequence/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="ValaistusPropertyType">
-		<xs:sequence minOccurs="0">
-			<xs:element ref="infrao:Valaistus"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:element name="Viheralue" type="infrao:ViheralueType" substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
+	<xs:element name="Viheralue" type="infrao:ViheralueType"
+		substitutionGroup="infrao:AbstractInfraomaisuusKohde"/>
 	<xs:complexType name="ViheralueType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractInfraomaisuusKohdeType">
 				<xs:sequence>
-					<xs:element name="koostuu" type="infrao:ViheralueenOsaPropertyType" minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="sisaltaaViheralueenOsan" type="gml:ReferenceType"
+						minOccurs="0" maxOccurs="unbounded">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:ViheralueenOsa</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="nimi" type="xs:string" minOccurs="0" maxOccurs="1"/>					
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -523,42 +885,61 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Viheralue"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="ViheralueenOsa" type="infrao:ViheralueenOsaType" substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
+	<xs:element name="ViheralueenOsa" type="infrao:ViheralueenOsaType"
+		substitutionGroup="infrao:AbstractPaikkatietopalveluKohde"/>
 	<xs:complexType name="ViheralueenOsaType">
 		<xs:complexContent>
-			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+			<xs:extension base="infrao:AbstractPaikkatietopalveluKohdeType">
 				<xs:sequence>
-					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"/>
-					<xs:element name="kuuluu" type="infrao:ViheraluePropertyType" minOccurs="0">
+
+					<xs:element name="omistaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="haltija" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="kunnossapitaja" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="perusparannusvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="valmistumisvuosi" type="xs:integer" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="suojelualuekytkin" type="xs:boolean" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="kuuluuViheralueeseen" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="1">
 						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:koostuu</gml:reversePropertyName>
-							</xs:appinfo>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:Viheralue</xs:appinfo>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="sisaltaa" type="infrao:AbstractKasvillisuusPropertyType" minOccurs="0" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluu</gml:reversePropertyName>
-							</xs:appinfo>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="sisaltaaVaruste" type="infrao:AbstractVarustePropertyType" minOccurs="0" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:appinfo>
-								<gml:reversePropertyName>infrao:kuuluuViheralueenOsaan</gml:reversePropertyName>
-							</xs:appinfo>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="kayttotarkoitus" type="infrao:ViheralueenKayttotarkoitusType" minOccurs="0"/>
-					<xs:element name="laji" type="infrao:ViherosanLajiType" minOccurs="0"/>
-					<xs:element name="hoitoluokka" type="infrao:HoitoluokkaType" minOccurs="0"/>
+					<xs:element name="kayttotarkoitus" type="infrao:ViheralueenKayttotarkoitusType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="laji" type="infrao:ViherosanLajiType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="hoitoluokka" type="infrao:HoitoluokkaType" minOccurs="0"
+						maxOccurs="1"/>
 					<xs:element name="sijaintitieto" type="infrao:SijaintiPropertyType"/>
-					<xs:element name="suunnitelmalinkkitieto" type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="katualueenLaji" type="infrao:KatuosanLajiType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType" minOccurs="0"/>
+					<xs:element name="katualueenLaji" type="infrao:KatuosanLajiType" minOccurs="0"
+						maxOccurs="1"/>
+					<xs:element name="suunnitelmalinkkitieto"
+						type="infrao:SuunnitelmalinkkiPropertyType" minOccurs="0"
+						maxOccurs="unbounded"/>
+					<xs:element name="talvihoidonLuokka" type="infrao:TalvihoidonLuokkaType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="puhtaanapitoluokka" type="infrao:PuhtaanapitoluokkaType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="muutoshoitoluokka" type="infrao:MuutoshoitoluokkaType"
+						minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sisaltaaKasvillisuus" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:AbstractKasvllisuus</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sisaltaaVaruste" type="gml:ReferenceType" minOccurs="0"
+						maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:appinfo source="urn:x-gml:targetElement">infrao:AbstractVaruste</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -567,13 +948,17 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:ViheralueenOsa"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
-	<xs:element name="Ymparistotaide" type="infrao:YmparistotaideType" substitutionGroup="infrao:AbstractVaruste"/>
+	<xs:element name="Ymparistotaide" type="infrao:YmparistotaideType"
+		substitutionGroup="infrao:AbstractVaruste"/>
 	<xs:complexType name="YmparistotaideType">
 		<xs:complexContent>
 			<xs:extension base="infrao:AbstractVarusteType">
 				<xs:sequence>
-					<xs:element name="ymparistotaide" type="infrao:YmparistotaideTyyppiType" minOccurs="0"/>
+					<xs:element name="ymparistotaide" type="infrao:YmparistotaideTyyppiType"
+						minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -582,6 +967,8 @@
 		<xs:sequence minOccurs="0">
 			<xs:element ref="infrao:Ymparistotaide"/>
 		</xs:sequence>
+		<xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<xs:attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</xs:complexType>
 	<xs:simpleType name="AjoratamerkinnanTyyppiType">
 		<xs:restriction base="xs:string">
@@ -592,35 +979,46 @@
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="ErikoisrakennekerrosmateriaaliType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="paalulaatat ja -hatut"/>
+			<xs:enumeration value="vahvistetut maarakenteet"/>
+			<xs:enumeration value="roudan- ja lämmöneristykset"/>
+			<xs:enumeration value="kevennetyt penkereet"/>
+			<xs:enumeration value="maapadot"/>
+			<xs:enumeration value="kantava kasvualusta"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="HoitoluokkaType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="A1 edustusviheralue"/>
-			<xs:enumeration value="A2 käyttöviheralue"/>
-			<xs:enumeration value="A3 käyttö- ja suojaviheralue"/>
-			<xs:enumeration value="B1 maisemapelto"/>
-			<xs:enumeration value="B2 käyttöniitty"/>
-			<xs:enumeration value="B3 maisemaniitty ja laidunalue"/>
-			<xs:enumeration value="B4 avoin alue ja näkymät"/>
-			<xs:enumeration value="B5 arvoniitty"/>
-			<xs:enumeration value="C1 lähimetsä"/>
-			<xs:enumeration value="C2 ulkoilu- ja virkistysmetsä"/>
-			<xs:enumeration value="C3 suojametsä"/>
-			<xs:enumeration value="C4 talousmetsä"/>
-			<xs:enumeration value="C5 arvometsä"/>
-			<xs:enumeration value="E erityisalue"/>
+			<xs:enumeration value="R1 Rakennettu arvoviheralue"/>
+			<xs:enumeration value="R2 Toimintaviheralue"/>
+			<xs:enumeration value="R3 Käyttöviheralue"/>
+			<xs:enumeration value="R4 Suoja- ja vaihettumisviheralue"/>
+			<xs:enumeration value="A1 Arvoniitty"/>
+			<xs:enumeration value="A2 Käyttöniitty"/>
+			<xs:enumeration value="A3 Maisemaniitty"/>
+			<xs:enumeration value="A4 Avoin alue"/>
+			<xs:enumeration value="A5 Maisemapelto"/>
+			<xs:enumeration value="M1 Arvometsä"/>
+			<xs:enumeration value="M2 Lähimetsä"/>
+			<xs:enumeration value="M3 Ulkoilu- ja virkistysmetsä"/>
+			<xs:enumeration value="M4 Suojametsä"/>
+			<xs:enumeration value="M5 Talousmetsä"/>
+			<xs:enumeration value="S Suojelualueet"/>
 			<xs:enumeration value="ei hoidossa"/>
 			<xs:enumeration value="U urheilualue"/>
 			<xs:enumeration value="ajoradat, luokka I"/>
-			<xs:enumeration value="ajoradat, luokka Il"/>
-			<xs:enumeration value="ajoradat, luokka Ill"/>
-			<xs:enumeration value="kevyen liikenteen raitti, luokka l"/>
-			<xs:enumeration value="kevyen liikenteen raitti, luokka ll"/>
-			<xs:enumeration value="kevyen liikenteen väylä, luokka l"/>
-			<xs:enumeration value="kevyen liikenteen väylä, luokka ll"/>
-			<xs:enumeration value="jalkakäytävä, luokka l"/>
-			<xs:enumeration value="jalkakäytävä, luokka ll"/>
-			<xs:enumeration value="torit ja aukiot, luokka l"/>
-			<xs:enumeration value="torit ja aukiot, luokka ll"/>
+			<xs:enumeration value="ajoradat, luokka II"/>
+			<xs:enumeration value="ajoradat, luokka III"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka I"/>
+			<xs:enumeration value="kevyen liikenteen raitti, luokka II"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka I"/>
+			<xs:enumeration value="kevyen liikenteen väylä, luokka II"/>
+			<xs:enumeration value="jalkakäytävä, luokka I"/>
+			<xs:enumeration value="jalkakäytävä, luokka II"/>
+			<xs:enumeration value="torit ja aukiot, luokka I"/>
+			<xs:enumeration value="torit ja aukiot, luokka II"/>
 			<xs:enumeration value="kiinteistön kunnossapitovastuu"/>
 			<xs:enumeration value="ei kunnossapitoa"/>
 			<xs:enumeration value="ei talvikunnossapitoa"/>
@@ -2207,42 +2605,6 @@
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="KunnossapitoluokkaType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="ajoradat, luokka I"/>
-			<xs:enumeration value="ajoradat, luokka II"/>
-			<xs:enumeration value="ajoradat, luokka III"/>
-			<xs:enumeration value="kevyen liikenteen raitti, luokka I"/>
-			<xs:enumeration value="kevyen liikenteen raitti, luokka II"/>
-			<xs:enumeration value="kevyen liikenteen väylä, luokka I"/>
-			<xs:enumeration value="kevyen liikenteen väylä, luokka II"/>
-			<xs:enumeration value="jalkakäytävä, luokka I"/>
-			<xs:enumeration value="jalkakäytävä, luokka II"/>
-			<xs:enumeration value="torit ja aukiot, luokka I"/>
-			<xs:enumeration value="torit ja aukiot, luokka II"/>
-			<xs:enumeration value="kiinteistön kunnossapitovastuu"/>
-			<xs:enumeration value="ei kunnossapitoa"/>
-			<xs:enumeration value="ei talvikunnosspitoa"/>
-			<xs:enumeration value="A1 edustusviheralue"/>
-			<xs:enumeration value="A2 käyttöviheralue"/>
-			<xs:enumeration value="A3 käyttö- ja suojaviheralue"/>
-			<xs:enumeration value="B1 maisemapelto"/>
-			<xs:enumeration value="B2 käyttöniitty"/>
-			<xs:enumeration value="B3 maisemaniitty ja laidunalue"/>
-			<xs:enumeration value="B4 avoin alue ja näkymät"/>
-			<xs:enumeration value="B5 arvoniitty"/>
-			<xs:enumeration value="C1 lähimetsä"/>
-			<xs:enumeration value="C2 ulkoilu- ja virkistysmetsä"/>
-			<xs:enumeration value="C3 suojametsä"/>
-			<xs:enumeration value="C4 talousmetsä"/>
-			<xs:enumeration value="C5 arvometsä"/>
-			<xs:enumeration value="E erityisalue"/>
-			<xs:enumeration value="ei hoidossa"/>
-			<xs:enumeration value="U urheilualue"/>
-			<xs:enumeration value="muu"/>
-			<xs:enumeration value="ei tiedossa"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="LeikkivalineTyyppiType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="aita"/>
@@ -2448,7 +2810,8 @@
 			<xs:enumeration value="677 a. Katettu pysäköinti"/>
 			<xs:enumeration value="678. Rautatieasema"/>
 			<xs:enumeration value="679. Linja-autoasema"/>
-			<xs:enumeration value="681. Tietyille ajoneuvoille tai ajoneuvoyhdistelmille tarkoitettu reitti"/>
+			<xs:enumeration
+				value="681. Tietyille ajoneuvoille tai ajoneuvoyhdistelmille tarkoitettu reitti"/>
 			<xs:enumeration value="682. Jalankulkijoille tarkoitettu reitti"/>
 			<xs:enumeration value="683. Vammaisille tarkoitettu reitti"/>
 			<xs:enumeration value="684. Vaarallisten aineiden kuljetuksille tarkoitettu reitti"/>
@@ -2541,6 +2904,370 @@
 			<xs:enumeration value="880. Hätäpuhelin ja sammutin"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="Liikennemerkkityyppi2020Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A1.2 Mutka"/>
+			<xs:enumeration value="A1.1 Mutka"/>
+			<xs:enumeration value="A2.1 Mutkia"/>
+			<xs:enumeration value="A2.2 Mutkia"/>
+			<xs:enumeration value="A3.1 Jyrkkä mäki"/>
+			<xs:enumeration value="A3.2 Jyrkkä mäki"/>
+			<xs:enumeration value="A4 Kapeneva tie"/>
+			<xs:enumeration value="A5 Kaksisuuntainen liikenne"/>
+			<xs:enumeration value="A6 Avattava silta"/>
+			<xs:enumeration value="A7 Lautta, laituri tai ranta"/>
+			<xs:enumeration value="A8 Liikenneruuhka"/>
+			<xs:enumeration value="A9 Epätasainen tie"/>
+			<xs:enumeration value="A10 Töyssyjä"/>
+			<xs:enumeration value="A11 Tietyö"/>
+			<xs:enumeration value="A12 Irtokiviä"/>
+			<xs:enumeration value="A13 Liukas ajorata"/>
+			<xs:enumeration value="A14 Vaarallinen tienreuna"/>
+			<xs:enumeration value="A15 Suojatien ennakkovaroitus"/>
+			<xs:enumeration value="A16 Jalankulkijoita"/>
+			<xs:enumeration value="A17 Lapsia"/>
+			<xs:enumeration value="A18 Pyöräilijöitä"/>
+			<xs:enumeration value="A19 Hiihtolatu"/>
+			<xs:enumeration value="A20.1 Hirvi"/>
+			<xs:enumeration value="A20.2 Poro"/>
+			<xs:enumeration value="A20.3 Kauriseläin"/>
+			<xs:enumeration value="A21 Tienristeys"/>
+			<xs:enumeration value="A22.1 Sivutien risteys"/>
+			<xs:enumeration value="A22.2 Sivutien risteys"/>
+			<xs:enumeration value="A22.3 Sivutien risteys"/>
+			<xs:enumeration value="A22.4 Sivutien risteys"/>
+			<xs:enumeration value="A23 Liikennevalot"/>
+			<xs:enumeration value="A24 Liikenneympyrä"/>
+			<xs:enumeration value="A25 Raitiovaunu"/>
+			<xs:enumeration value="A26 Rautatien tasoristeys ilman puomeja"/>
+			<xs:enumeration value="A27 Rautatien tasoristeys, jossa on puomit"/>
+			<xs:enumeration value="A28.1 Rautatien tasoristeyksen lähestymismerkki"/>
+			<xs:enumeration value="A28.2 Rautatien tasoristeyksen lähestymismerkki"/>
+			<xs:enumeration value="A28.3 Rautatien tasoristeyksen lähestymismerkki"/>
+			<xs:enumeration value="A29.1 Tasoristeys"/>
+			<xs:enumeration value="A29.2 Tasoristeys"/>
+			<xs:enumeration value="A30 Putoavia kiviä"/>
+			<xs:enumeration value="A31 Matalalla lentäviä lentokoneita"/>
+			<xs:enumeration value="A32 Sivutuuli"/>
+			<xs:enumeration value="A33 Muu vaara"/>
+			<xs:enumeration value="B1 Etuajo-oikeutettu tie"/>
+			<xs:enumeration value="B1 Etuajo-oikeutettu tie"/>
+			<xs:enumeration value="B2 Etuajo-oikeuden päättyminen"/>
+			<xs:enumeration value="B3 Etuajo-oikeus kohdattaessa"/>
+			<xs:enumeration value="B4 Väistämisvelvollisuus kohdattaessa"/>
+			<xs:enumeration value="B5 Väistämisvelvollisuus risteyksessä"/>
+			<xs:enumeration value="B6 Pakollinen pysäyttäminen"/>
+			<xs:enumeration value="B7 Väistämisvelvollisuus pyöräilijän tienylityspaikassa"/>
+			<xs:enumeration value="C1 Ajoneuvolla ajo kielletty"/>
+			<xs:enumeration value="C2 Moottorikäyttöisellä ajoneuvolla ajo kielletty"/>
+			<xs:enumeration value="C3 Kuorma- ja pakettiautolla ajo kielletty"/>
+			<xs:enumeration value="C4 Ajoneuvoyhdistelmällä ajo kielletty"/>
+			<xs:enumeration value="C5 Traktorilla ajo kielletty"/>
+			<xs:enumeration value="C6 Moottoripyörällä ajo kielletty"/>
+			<xs:enumeration value="C7 Moottorikelkalla ajo kielletty"/>
+			<xs:enumeration value="C8 Vaarallisten aineiden kuljetus kielletty"/>
+			<xs:enumeration value="C9 Linja-autolla ajo kielletty"/>
+			<xs:enumeration value="C10 Mopolla ajo kielletty"/>
+			<xs:enumeration value="C11 Polkupyörällä ajo kielletty"/>
+			<xs:enumeration value="C12 Polkupyörällä ja mopolla ajo kielletty"/>
+			<xs:enumeration value="C13 Jalankulku kielletty"/>
+			<xs:enumeration value="C14 Jalankulku ja polkupyörällä ajo kielletty"/>
+			<xs:enumeration value="C15 Jalankulku ja polkupyörällä ja mopolla ajo kielletty"/>
+			<xs:enumeration value="C16 Ratsastus kielletty"/>
+			<xs:enumeration value="C17 Kielletty ajosuunta"/>
+			<xs:enumeration value="C18 Vasemmalle kääntyminen kielletty"/>
+			<xs:enumeration value="C19 Oikealle kääntyminen kielletty"/>
+			<xs:enumeration value="C20 U-käännös kielletty"/>
+			<xs:enumeration value="C21 Ajoneuvon suurin sallittu leveys"/>
+			<xs:enumeration value="C22 Ajoneuvon suurin sallittu korkeus"/>
+			<xs:enumeration value="C23 Ajoneuvon tai ajoneuvoyhdistelmän suurin sallittu pituus"/>
+			<xs:enumeration value="C24 Ajoneuvon suurin sallittu massa"/>
+			<xs:enumeration value="C25 Ajoneuvoyhdistelmän suurin sallittu massa"/>
+			<xs:enumeration value="C26 Ajoneuvon suurin sallittu akselille kohdistuva massa"/>
+			<xs:enumeration value="C27 Ajoneuvon suurin sallittu telille kohdistuva massa"/>
+			<xs:enumeration value="C28 Ohituskielto"/>
+			<xs:enumeration value="C29 Ohituskielto päättyy"/>
+			<xs:enumeration value="C30 Ohituskielto kuorma-autolla"/>
+			<xs:enumeration value="C31 Ohituskielto kuorma-autolla päättyy"/>
+			<xs:enumeration value="C32 Nopeusrajoitus"/>
+			<xs:enumeration value="C33 Nopeusrajoitus päättyy"/>
+			<xs:enumeration value="C34 Nopeusrajoitusalue"/>
+			<xs:enumeration value="C35 Nopeusrajoitusalue päättyy"/>
+			<xs:enumeration value="C36 Ajokaistakohtainen kielto, rajoitus tai määräys"/>
+			<xs:enumeration value="C37 Pysäyttäminen kielletty"/>
+			<xs:enumeration value="C38 Pysäköinti kielletty"/>
+			<xs:enumeration value="C39 Pysäköintikieltoalue"/>
+			<xs:enumeration value="C40 Pysäköintikieltoalue päättyy"/>
+			<xs:enumeration value="C41 Taksiasema-alue"/>
+			<xs:enumeration value="C42 Taksin pysäyttämispaikka"/>
+			<xs:enumeration value="C43 Kuormauspaikka"/>
+			<xs:enumeration value="C44.1 Vuoropysäköinti"/>
+			<xs:enumeration value="C44.2 Vuoropysäköinti"/>
+			<xs:enumeration value="C45 Pakollinen pysäyttäminen tullitarkastusta varten"/>
+			<xs:enumeration value="C46 Pakollinen pysäyttäminen tarkastusta varten"/>
+			<xs:enumeration value="C47 Moottorikäyttöisten ajoneuvojen vähimmäisetäisyys"/>
+			<xs:enumeration
+				value="C48 Nastarenkailla varustetulla moottorikäyttöisellä ajoneuvolla ajo kielletty"/>
+			<xs:enumeration value="D1.1 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.2 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.3 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.4 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.5 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.6 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.7 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.8 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D1.9 Pakollinen ajosuunta"/>
+			<xs:enumeration value="D2 Pakollinen kiertosuunta"/>
+			<xs:enumeration value="D3.1 Liikenteenjakaja"/>
+			<xs:enumeration value="D3.2 Liikenteenjakaja"/>
+			<xs:enumeration value="D3.3 Liikenteenjakaja"/>
+			<xs:enumeration value="D4 Jalkakäytävä"/>
+			<xs:enumeration value="D5 Pyörätie"/>
+			<xs:enumeration value="D6 Yhdistetty pyörätie ja jalkakäytävä"/>
+			<xs:enumeration value="D7.1 Pyörätie ja jalkakäytävä rinnakkain"/>
+			<xs:enumeration value="D7.2 Pyörätie ja jalkakäytävä rinnakkain"/>
+			<xs:enumeration value="D8 Moottorikelkkailureitti"/>
+			<xs:enumeration value="D9 Ratsastustie"/>
+			<xs:enumeration value="D10 Vähimmäisnopeus"/>
+			<xs:enumeration value="D11 Vähimmäisnopeus päättyy"/>
+			<xs:enumeration value="E1 Suojatie"/>
+			<xs:enumeration value="E2 Pysäköintipaikka"/>
+			<xs:enumeration value="E3.1 Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="E3.2 Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="E3.3 Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="E3.4 Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="E3.5 Liityntäpysäköintipaikka"/>
+			<xs:enumeration value="E4.1 Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="E4.2 Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="E4.3 Ajoneuvojen sijoitus pysäköintipaikalla"/>
+			<xs:enumeration value="E5 Kohtaamispaikka"/>
+			<xs:enumeration value="E6 Linja-autopysäkki"/>
+			<xs:enumeration value="E7 Raitiovaunupysäkki"/>
+			<xs:enumeration value="E8 Taksiasema"/>
+			<xs:enumeration value="E9.1 Linja-autokaista"/>
+			<xs:enumeration value="E9.2 Linja-autokaista"/>
+			<xs:enumeration value="E10.1 Linja-autokaista päättyy"/>
+			<xs:enumeration value="E10.2 Linja-autokaista päättyy"/>
+			<xs:enumeration value="E11.1 Raitiovaunukaista"/>
+			<xs:enumeration value="E11.2 Raitiovaunukaista"/>
+			<xs:enumeration value="E12.1 Raitiovaunukaista päättyy"/>
+			<xs:enumeration value="E12.2 Raitiovaunukaista päättyy"/>
+			<xs:enumeration value="E13.1 Pyöräkaista"/>
+			<xs:enumeration value="E13.2 Pyöräkaista"/>
+			<xs:enumeration value="E14.1 Yksisuuntainen tie"/>
+			<xs:enumeration value="E14.2 Yksisuuntainen tie"/>
+			<xs:enumeration value="E15 Moottoritie"/>
+			<xs:enumeration value="E16 Moottoritie päättyy"/>
+			<xs:enumeration value="E17 Moottoriliikennetie"/>
+			<xs:enumeration value="E18 Moottoriliikennetie päättyy"/>
+			<xs:enumeration value="E19 Tunneli"/>
+			<xs:enumeration value="E20 Tunneli päättyy"/>
+			<xs:enumeration value="E21 Hätäpysäyttämispaikka"/>
+			<xs:enumeration value="E22 Taajama"/>
+			<xs:enumeration value="E23 Taajama päättyy"/>
+			<xs:enumeration value="E24 Pihakatu"/>
+			<xs:enumeration value="E25 Pihakatu päättyy"/>
+			<xs:enumeration value="E26 Kävelykatu"/>
+			<xs:enumeration value="E27 Kävelykatu päättyy"/>
+			<xs:enumeration value="E28 Pyöräkatu"/>
+			<xs:enumeration value="E29 Pyöräkatu päättyy"/>
+			<xs:enumeration value="E30 Ajokaistojen yhdistyminen"/>
+			<xs:enumeration value="F1.1 Suunnistustaulu"/>
+			<xs:enumeration value="F1.2 Suunnistustaulu"/>
+			<xs:enumeration value="F1.3 Suunnistustaulu"/>
+			<xs:enumeration value="F2.1 Suunnistustaulu"/>
+			<xs:enumeration value="F2.2 Suunnistustaulu"/>
+			<xs:enumeration value="F2.3 Suunnistustaulu"/>
+			<xs:enumeration value="F3 Ajokaistakohtainen suunnistustaulu"/>
+			<xs:enumeration value="F4.1 Kiertotien suunnistustaulu"/>
+			<xs:enumeration value="F4.2 Kiertotien suunnistustaulu"/>
+			<xs:enumeration value="F5 Kiertotieopastus"/>
+			<xs:enumeration value="F6 Ajoreittiopastus"/>
+			<xs:enumeration value="F7.1 Ajokaistaopastus"/>
+			<xs:enumeration value="F7.2 Ajokaistaopastus"/>
+			<xs:enumeration value="F7.3 Ajokaistaopastus"/>
+			<xs:enumeration value="F7.4 Ajokaistaopastus"/>
+			<xs:enumeration value="F7.5 Ajokaistaopastus"/>
+			<xs:enumeration value="F7.6 Ajokaistaopastus"/>
+			<xs:enumeration value="F8.1 Ajokaistan päättyminen"/>
+			<xs:enumeration value="F8.2 Ajokaistan päättyminen"/>
+			<xs:enumeration value="F9 Viitoituksen koontimerkki"/>
+			<xs:enumeration value="F10 Ajokaistan yläpuolinen viitta"/>
+			<xs:enumeration value="F11 Ajokaistan yläpuolinen viitta"/>
+			<xs:enumeration value="F12 Ajokaistan yläpuolinen erkanemisviitta"/>
+			<xs:enumeration value="F13 Tienviitta"/>
+			<xs:enumeration value="F14 Erkanemisviitta"/>
+			<xs:enumeration value="F15 Kiertotien viitta"/>
+			<xs:enumeration value="F16 Osoiteviitta"/>
+			<xs:enumeration value="F17 Osoiteviitan ennakkomerkki"/>
+			<xs:enumeration value="F18 Liityntäpysäköintiviitta"/>
+			<xs:enumeration value="F19 Jalankulun viitta"/>
+			<xs:enumeration value="F20.1 Pyöräilyn viitta"/>
+			<xs:enumeration value="F20.2 Pyöräilyn viitta"/>
+			<xs:enumeration value="F21.1 Pyöräilyn suunnistustaulu"/>
+			<xs:enumeration value="F21.2 Pyöräilyn suunnistustaulu"/>
+			<xs:enumeration value="F22 Pyöräilyn etäisyystaulu"/>
+			<xs:enumeration value="F23 Pyöräilyn paikannimi"/>
+			<xs:enumeration value="F24.1 Umpitie"/>
+			<xs:enumeration value="F24.2 Umpitie"/>
+			<xs:enumeration value="F25 Enimmäisnopeussuositus"/>
+			<xs:enumeration value="F26 Etäisyystaulu"/>
+			<xs:enumeration value="F27.1 Paikannimi"/>
+			<xs:enumeration value="F27.2 Paikannimi"/>
+			<xs:enumeration value="F28 Kansainvälisen pääliikenneväylän numero"/>
+			<xs:enumeration value="F29 Valtatien numero"/>
+			<xs:enumeration value="F30 Kantatien numero"/>
+			<xs:enumeration value="F30 Kantatien numero"/>
+			<xs:enumeration value="F31 Seututien numero"/>
+			<xs:enumeration value="F31 Seututien numero"/>
+			<xs:enumeration value="F32 Muun maantien numero"/>
+			<xs:enumeration value="F33 Kehätien numero"/>
+			<xs:enumeration value="F33 Kehätien numero"/>
+			<xs:enumeration value="F34 Eritasoliittymän numero"/>
+			<xs:enumeration value="F34 Eritasoliittymän numero"/>
+			<xs:enumeration value="F35 Opastus merkin tarkoittamalle tielle"/>
+			<xs:enumeration value="F35 Opastus merkin tarkoittamalle tielle"/>
+			<xs:enumeration value="F37 Moottoritien tunnus"/>
+			<xs:enumeration value="F38 Moottoriliikennetien tunnus"/>
+			<xs:enumeration value="F39 Lentoasema"/>
+			<xs:enumeration value="F40 Autolautta"/>
+			<xs:enumeration value="F41 Matkustajasatama"/>
+			<xs:enumeration value="F42 Tavarasatama"/>
+			<xs:enumeration value="F43 Tavaraterminaali"/>
+			<xs:enumeration value="F44 Teollisuusalue tai yritysalue"/>
+			<xs:enumeration value="F45 Vähittäiskaupan suuryksikkö"/>
+			<xs:enumeration value="F46.1 Pysäköinti"/>
+			<xs:enumeration value="F46.2 Pysäköinti"/>
+			<xs:enumeration value="F47 Rautatieasema"/>
+			<xs:enumeration value="F48 Linja-autoasema"/>
+			<xs:enumeration value="F49 Keskusta"/>
+			<xs:enumeration value="F50 Tietylle ajoneuvolle tarkoitettu reitti"/>
+			<xs:enumeration value="F51 Vaarallisten aineiden kuljetukselle tarkoitettu reitti"/>
+			<xs:enumeration value="F52 Jalankulkijalle tarkoitettu reitti"/>
+			<xs:enumeration value="F53 Esteetön reitti"/>
+			<xs:enumeration value="F54 Reitti, jolla on portaat"/>
+			<xs:enumeration value="F55 Reitti ilman portaita"/>
+			<xs:enumeration value="F56 Hätäuloskäynti"/>
+			<xs:enumeration value="F57 Poistumisreitti"/>
+			<xs:enumeration value="G1 Palvelukohteen opastustaulu"/>
+			<xs:enumeration value="G2 Palvelukohteen opastustaulu"/>
+			<xs:enumeration value="G3 Palvelukohteen erkanemisviitta"/>
+			<xs:enumeration value="G4 Palvelukohteen osoiteviitta"/>
+			<xs:enumeration value="G5 Palvelukohteen osoiteviitan ennakkomerkki"/>
+			<xs:enumeration value="G6 Radioaseman taajuus"/>
+			<xs:enumeration value="G7 Opastuspiste"/>
+			<xs:enumeration value="G8 Opastustoimisto"/>
+			<xs:enumeration value="G9 Ensiapu"/>
+			<xs:enumeration value="G10 Autokorjaamo"/>
+			<xs:enumeration value="G11.1 Polttoaineen jakelu"/>
+			<xs:enumeration value="G11.2 Polttoaineen jakelu"/>
+			<xs:enumeration value="G11.3 Polttoaineen jakelu"/>
+			<xs:enumeration value="G11.4 Polttoaineen jakelu"/>
+			<xs:enumeration value="G12 Hotelli tai motelli"/>
+			<xs:enumeration value="G13 Ruokailupaikka"/>
+			<xs:enumeration value="G14 Kahvila tai pikaruokapaikka"/>
+			<xs:enumeration value="G15 Käymälä"/>
+			<xs:enumeration value="G16 Retkeilymaja"/>
+			<xs:enumeration value="G17 Leirintäalue"/>
+			<xs:enumeration value="G18 Matkailuajoneuvoalue"/>
+			<xs:enumeration value="G19 Levähdysalue"/>
+			<xs:enumeration value="G20 Ulkoilualue"/>
+			<xs:enumeration value="G21 Hätäpuhelin"/>
+			<xs:enumeration value="G22 Sammutin"/>
+			<xs:enumeration value="G23 Museo tai historiallinen rakennus"/>
+			<xs:enumeration value="G24 Maailmanperintökohde"/>
+			<xs:enumeration value="G25 Luontokohde"/>
+			<xs:enumeration value="G26 Näköalapaikka"/>
+			<xs:enumeration value="G27 Eläintarha tai -puisto"/>
+			<xs:enumeration value="G28 Muu nähtävyys"/>
+			<xs:enumeration value="G29 Uintipaikka"/>
+			<xs:enumeration value="G30 Kalastuspaikka"/>
+			<xs:enumeration value="G31 Hiihtohissi"/>
+			<xs:enumeration value="G32 Maastohiihtokeskus"/>
+			<xs:enumeration value="G33 Golfkenttä"/>
+			<xs:enumeration value="G34 Huvi- ja teemapuisto"/>
+			<xs:enumeration value="G35 Mökkimajoitus"/>
+			<xs:enumeration value="G36 Aamiaismajoitus"/>
+			<xs:enumeration value="G37 Suoramyyntipaikka"/>
+			<xs:enumeration value="G38 Käsityöpaja"/>
+			<xs:enumeration value="G39 Kotieläinpiha"/>
+			<xs:enumeration value="G40 Ratsastuspaikka"/>
+			<xs:enumeration value="G41.1 Matkailutie"/>
+			<xs:enumeration value="G41.2 Matkailutie"/>
+			<xs:enumeration value="H1 Kohde risteävässä suunnassa"/>
+			<xs:enumeration value="H2.1 Kohde nuolen suunnassa"/>
+			<xs:enumeration value="H2.2 Kohde nuolen suunnassa"/>
+			<xs:enumeration value="H2.3 Kohde nuolen suunnassa"/>
+			<xs:enumeration value="H3 Vaikutusalueen pituus"/>
+			<xs:enumeration value="H4 Etäisyys kohteeseen"/>
+			<xs:enumeration value="H5 Etäisyys pakolliseen pysäyttämiseen"/>
+			<xs:enumeration value="H6 Vapaa leveys"/>
+			<xs:enumeration value="H7 Vapaa korkeus"/>
+			<xs:enumeration value="H8 Sähköjohdon korkeus"/>
+			<xs:enumeration value="H9.1 Vaikutusalue molempiin suuntiin"/>
+			<xs:enumeration value="H9.2 Vaikutusalue molempiin suuntiin"/>
+			<xs:enumeration value="H10 Vaikutusalue nuolen suuntaan"/>
+			<xs:enumeration value="H11 Vaikutusalue päättyy"/>
+			<xs:enumeration value="H12.1 Henkilöauto"/>
+			<xs:enumeration value="H12.2 Linja-auto"/>
+			<xs:enumeration value="H12.3 Kuorma-auto"/>
+			<xs:enumeration value="H12.4 Pakettiauto"/>
+			<xs:enumeration value="H12.5 Matkailuperävaunu"/>
+			<xs:enumeration value="H12.6 Matkailuauto"/>
+			<xs:enumeration value="H12.7 Invalidin ajoneuvo"/>
+			<xs:enumeration value="H12.8 Moottoripyörä"/>
+			<xs:enumeration value="H12.9 Mopo"/>
+			<xs:enumeration value="H12.10 Polkupyörä"/>
+			<xs:enumeration value="H12.11 Moottorikelkka"/>
+			<xs:enumeration value="H12.12 Traktori"/>
+			<xs:enumeration value="H12.13 Vähäpäästöinen ajoneuvo"/>
+			<xs:enumeration value="H13.1 Pysäköintitapa"/>
+			<xs:enumeration value="H13.2 Pysäköintitapa"/>
+			<xs:enumeration value="H14 Kielto ryhmän A vaarallisten aineiden kuljetukselle"/>
+			<xs:enumeration value="H15 Läpiajokielto ryhmän B vaarallisten aineiden kuljetukselle"/>
+			<xs:enumeration value="H16 Tunneliluokka"/>
+			<xs:enumeration value="H17.1 Voimassaoloaika arkisin"/>
+			<xs:enumeration value="H17.2 Voimassaoloaika lauantaisin"/>
+			<xs:enumeration value="H17.3 Voimassaoloaika sunnuntaisin ja pyhinä"/>
+			<xs:enumeration value="H18 Aikarajoitus"/>
+			<xs:enumeration value="H19.1 Pysäköintiajan alkamisen osoittamisvelvollisuus"/>
+			<xs:enumeration value="H19.2 Pysäköintiajan alkamisen osoittamisvelvollisuus"/>
+			<xs:enumeration value="H20 Maksullinen pysäköinti"/>
+			<xs:enumeration value="H21 Latauspaikka"/>
+			<xs:enumeration value="H22.1 Etuajo-oikeutetun liikenteen suunta"/>
+			<xs:enumeration value="H22.2 Etuajo-oikeutetun liikenteen suunta"/>
+			<xs:enumeration value="H23.1 Kaksisuuntainen pyörätie"/>
+			<xs:enumeration value="H23.2 Kaksisuuntainen pyörätie"/>
+			<xs:enumeration value="H24 Tekstillinen lisäkilpi"/>
+			<xs:enumeration value="H25 Huoltoajo sallittu"/>
+			<xs:enumeration value="H26 Hätäpuhelin ja sammutin"/>
+			<xs:enumeration value="I1 Sulkupuomi"/>
+			<xs:enumeration value="I2.1 Sulkuaita"/>
+			<xs:enumeration value="I3.1 Sulkupylväs"/>
+			<xs:enumeration value="I3.2 Sulkupylväs"/>
+			<xs:enumeration value="I3.3 Sulkupylväs"/>
+			<xs:enumeration value="I4 Sulkukartio"/>
+			<xs:enumeration value="I5 Taustamerkki"/>
+			<xs:enumeration value="I6 Kaarteen suuntamerkki"/>
+			<xs:enumeration value="I7.1 Reunamerkki"/>
+			<xs:enumeration value="I7.2 Reunamerkki"/>
+			<xs:enumeration value="I8 Korkeusmerkki"/>
+			<xs:enumeration value="I9 Alikulun korkeusmitta"/>
+			<xs:enumeration value="I10.1 Liikennemerkkipylvään tehostamismerkki"/>
+			<xs:enumeration value="I10.2 Liikennemerkkipylvään tehostamismerkki"/>
+			<xs:enumeration value="I11 Erkanemismerkki"/>
+			<xs:enumeration value="I12.1 Reunapaalu"/>
+			<xs:enumeration value="I12.2 Reunapaalu"/>
+			<xs:enumeration value="I13 Siirtokehotus"/>
+			<xs:enumeration value="I14 Paikannusmerkki"/>
+			<xs:enumeration value="I15 Automaattinen liikennevalvonta"/>
+			<xs:enumeration value="I16 Tekninen valvonta"/>
+			<xs:enumeration value="I17.1 Poronhoitoalue"/>
+			<xs:enumeration value="I17.2 Poronhoitoalue"/>
+			<xs:enumeration value="I18 Yleinen nopeusrajoitus"/>
+			<xs:enumeration value="I19 Valtion raja"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="LiikuntaTyyppiType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="jalkapallomaali"/>
@@ -2603,6 +3330,24 @@
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="MuutoshoitoluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="R1 Rakennettu arvoviheralue"/>
+			<xs:enumeration value="R2 Toimintaviheralue"/>
+			<xs:enumeration value="R3 Käyttöviheralue"/>
+			<xs:enumeration value="R4 Suoja- ja vaihettumisviheralue"/>
+			<xs:enumeration value="A1 Arvoniitty"/>
+			<xs:enumeration value="A2 Käyttöniitty"/>
+			<xs:enumeration value="A3 Maisemaniitty"/>
+			<xs:enumeration value="A4 Avoin alue"/>
+			<xs:enumeration value="A5 Maisemapelto"/>
+			<xs:enumeration value="M1 Arvometsä"/>
+			<xs:enumeration value="M2 Lähimetsä"/>
+			<xs:enumeration value="M3 Ulkoilu- ja virkistysmetsä"/>
+			<xs:enumeration value="M4 Suojametsä"/>
+			<xs:enumeration value="M5 Talousmetsä"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="OpasteTyyppiType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="invapaikka"/>
@@ -2633,6 +3378,17 @@
 			<xs:enumeration value="soratien pintaus (SOP)"/>
 			<xs:enumeration value="muu"/>
 			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PuhtaanapitoluokkaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="P1 Päivittäin (ma-la)"/>
+			<xs:enumeration value="P2 Työpäivinä (ma-pe)"/>
+			<xs:enumeration value="P3 Viikoittain (3 krt/vk)"/>
+			<xs:enumeration value="P4 Viikoittain (2 krt/vk)"/>
+			<xs:enumeration value="P5 Viikoittain (1 krt/vk)"/>
+			<xs:enumeration value="P6 Kuukausittain"/>
+			<xs:enumeration value="P7 Vuosittain"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PuulajitType">
@@ -3313,6 +4069,27 @@
 			<xs:enumeration value="ei tiedossa"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="SijaintiepavarmuusType">
+		<xs:annotation>
+			<xs:documentation>Kaavoitusmittausohjeet 2003 mukaiset sijaintiepävarmuus
+				tasot</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0.15"/>
+			<xs:enumeration value="0.2"/>
+			<xs:enumeration value="0.3"/>
+			<xs:enumeration value="0.5"/>
+			<xs:enumeration value="0.7"/>
+			<xs:enumeration value="1.0"/>
+			<xs:enumeration value="1.5"/>
+			<xs:enumeration value="2.0"/>
+			<xs:enumeration value="3.0"/>
+			<xs:enumeration value="5.0"/>
+			<xs:enumeration value="7.5"/>
+			<xs:enumeration value="10.0"/>
+			<xs:enumeration value="20.0"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="TalvihoidonLuokkaType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="A - kiireellisyysluokka"/>
@@ -3369,7 +4146,7 @@
 			<xs:enumeration value="puisto"/>
 			<xs:enumeration value="siirtolapuutarha"/>
 			<xs:enumeration value="suojelualue"/>
-			<xs:enumeration value="talousmetsa"/>
+			<xs:enumeration value="talousmetsä"/>
 			<xs:enumeration value="ulkoilu- ja retkeilyalue"/>
 			<xs:enumeration value="muu"/>
 			<xs:enumeration value="ei tiedossa"/>
