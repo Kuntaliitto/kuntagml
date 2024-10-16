@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Nosto Consulting Oy, Pasi Lappalainen, tel. +358 400 858101, http://www.nostoconsulting.fi -->
+<!-- KuntaGML -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ymp="http://www.kuntatietopalvelu.fi/gml/ymparisto/pilaantuneet_maa_alueet" xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset" targetNamespace="http://www.kuntatietopalvelu.fi/gml/ymparisto/pilaantuneet_maa_alueet" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1.6">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.kuntatietopalvelu.fi/gml/yhteiset/2.1.11/yhteiset.xsd"/>
+	<!-- ================================================= -->
+	<!-- Package: <<XSDschema>> Pilaantuneet maa-alueet -->
+	<!-- ================================================= -->
+	<!-- Kohdejoukko: Pilaantuneet maa-alueet -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Class: <<FeatureType>> Pilaantuneet maa-alueet-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xs:element name="PiMaAlueet" type="ymp:PiMaAlueetType" substitutionGroup="gml:_Feature">
+		<xs:annotation>
+			<xs:documentation>Skeeman juurielementti</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ToiminnanSijaintiType">
+		<xs:sequence>
+			<xs:element name="osoite" type="yht:PostiosoiteType"/>
+			<xs:element name="kunta" type="xs:string"/>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="liite" type="yht:LiiteType" minOccurs="0"/>
+			<xs:element name="kiinteistorekisterinumero" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JaksoType">
+		<xs:sequence>
+			<xs:element name="alkuHetki" type="xs:dateTime"/>
+			<xs:element name="loppuHetki" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViranomaistoimetType">
+		<xs:sequence>
+			<xs:element name="ajankohtaPvm" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Toimenpiteiden ajankohta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tulokset" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tutkimustulokset</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tarkastukset" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>alueella tehdyt tarkastukset</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paatokset" type="ymp:PaatoksetType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KunnostuksetType">
+		<xs:sequence>
+			<xs:element name="kasitellytMassaMaarat" type="xs:string" minOccurs="0"/>
+			<xs:element name="kunnostusmenetelma" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kunnostusmenetelman kuvaus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ajankohtaPvm" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Kunnostusten ajankohta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KiinteistotType">
+		<xs:sequence>
+			<xs:element name="kiinteisto" type="ymp:KiinteistoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="YmparistoOlotType">
+		<xs:sequence>
+			<xs:element name="maalaji" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alueen maalaji</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="etaisyys" type="ymp:EtaisyysType">
+				<xs:annotation>
+					<xs:documentation>Eräisyydet lähimpään rakennukseen, vesistöön etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TietolahdeType">
+		<xs:choice>
+			<xs:element name="maaperatutkimus" type="ymp:MaaperatutkimusType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>maaperäntutkimuksista myös maanomistajat ja konsulttitoimistot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ymparistokeskus" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>alueelliset ympäristökeskukset (vuoden 2010 alusta elinkein-, liikenne ja ympäristökeskukset)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ymparistoviranomainen" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>kuntien ympäristöviranomaiset</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="HarjoitettavaToimintaType">
+		<xs:sequence>
+			<xs:element name="toimiala" type="yht:ToimialaType" minOccurs="0"/>
+			<xs:element name="kaytetytHaittaAine" type="xs:string" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Käytetyn haitta-aineen kuvaus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="jakso" type="ymp:JaksoType">
+				<xs:annotation>
+					<xs:documentation>Tieto siitä miloin toimintaa harjoitettu. Jos loppuHetki ei määritetty, niin toiminta jatkuu edelleen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KiinteistoType">
+		<xs:sequence>
+			<xs:element name="kiinteistotunnus" type="xs:string" minOccurs="0"/>
+			<xs:element name="maaperanSelvitysTarve" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>kiinteistökohtainen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maaperanKayttoRajoite" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>kiinteistökohtainen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToimenpiteetType">
+		<xs:sequence>
+			<xs:element name="tehdytTutkimukset" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alueella tehdyt tutkimukset</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="viranomaistoimet" type="ymp:ViranomaistoimetType" minOccurs="0"/>
+			<xs:element name="kunnostukset" type="ymp:KunnostuksetType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LuokituskoodiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ei puhdistustarvetta"/>
+			<xs:enumeration value="Arvioitavat alueet"/>
+			<xs:enumeration value="Selvitystä vaativat alueet"/>
+			<xs:enumeration value="Toimivat kohteet"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MaaperatutkimusType">
+		<xs:sequence>
+			<xs:element name="maanomistajat" type="yht:LiiteType" minOccurs="0"/>
+			<xs:element name="konsulttitoimistot" type="yht:LiiteType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaatoksetType">
+		<xs:sequence>
+			<xs:element name="myonnetytLuvat" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Myönnetyt luvat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="evatytLuvat" type="yht:LiiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Evätyt luvat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EtaisyysType">
+		<xs:sequence>
+			<xs:element name="luonnonsuojeluAlue" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="rakennus" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="vesisto" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="pohjavesiAlue" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NaytteetType">
+		<xs:sequence>
+			<xs:element name="Nayte" type="ymp:NayteType">
+				<xs:annotation>
+					<xs:documentation>Alueelta saatu näyte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NayteType">
+		<xs:sequence>
+			<xs:element name="pistetunnus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Naytepisteen yksilöintitieto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sijainti" type="gml:PointPropertyType"/>
+			<xs:element name="alkusyvyys" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Näytteen alkusyvyys</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loppusyvyys" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Näytteen loppusyvyys</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maalaji" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maalaji</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="naytteenottotapa" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Näytteenottotapa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="naytteenottorakenne" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Näytteenottorakenne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="naytteenottoPvm" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Näytteenoton ajankohta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="naytteenottohetki" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Näytteenoton hetki (tyhjä,1, 2, 3) ??</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="havainnot" type="ymp:HavainnotType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Havaintojen  tiedot</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HavainnotType">
+		<xs:sequence>
+			<xs:element name="Havainto" type="ymp:HavaintoType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Alueella tehdyt havainto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HavaintoType">
+		<xs:sequence>
+			<xs:element name="aine" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Näyteestä löytynyt aine tai muu havainto (esim. ilmanpaine)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="arvo" type="gml:MeasureType">
+				<xs:annotation>
+					<xs:documentation>Aineen määrä</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="analyysilaite" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Analyysilaite</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NaytetyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Huokoskaasunäyte"/>
+			<xs:enumeration value="Maanäyte"/>
+			<xs:enumeration value="Pohjavesinäyte"/>
+			<xs:enumeration value="Sedimenttinäyte"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MittaustyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Kenttämittaus"/>
+			<xs:enumeration value="Laboratorioanalyysi"/>
+			<xs:enumeration value="Normalisoitu laboratorioanalyysi"/>
+			<xs:enumeration value="ei tiedossa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PiMaAlueetType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="toimituksenTiedot" type="yht:AineistotoimituksentiedotType"/>
+					<xs:element name="pimaAluetieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="ymp:PiMaAlue"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="piMaTutkimustieto" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="ymp:PiMaTutkimus"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PiMaAlueType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="kiinteistot" type="ymp:KiinteistotType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pilaantuneilla maa-alueilla sijaitsevat kiinteistöt</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="osoite" type="yht:PostiosoiteType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pilaantuneen maa-alueen osoite</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sijaintitieto" type="yht:SijaintitietoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Pilaantuneen maa-alueen sijainti</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="toiminta" type="ymp:HarjoitettavaToimintaType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Alueella harjoitettava tai aiemmin harjoitettu toiminta</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ymparistoOlot" type="ymp:YmparistoOlotType" minOccurs="0"/>
+					<xs:element name="toimenpiteet" type="ymp:ToimenpiteetType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Pilaantuneita maa-alueita koskevat toimenpiteet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="luokituskoodi" type="ymp:LuokituskoodiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alueet luokitellaan käytettävissä olevien tietojen ja tehtyjen toimien perusteella neljään luokkaan</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tietolahde" type="ymp:TietolahdeType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Käytetyt tietolähteet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PiMaTutkimusType">
+		<xs:complexContent>
+			<xs:extension base="yht:AbstractPaikkatietopalveluKohde">
+				<xs:sequence>
+					<xs:element name="tyonimi" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Mittauksen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tyoalue" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Mittausalueen nimi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ajankohtaPvm" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>Toimenpiteiden ajankohta (tallennuspvm) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="naytetyyppi" type="ymp:NaytetyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Näytteen tyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mittaustyyppi" type="ymp:MittaustyyppiType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Mittaustyyppi</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tekijaorganisaatio" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tekijä organisaatio</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="naytetieto" type="ymp:NaytteetType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Naytteiden tiedot</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PiMaAlue" type="ymp:PiMaAlueType" substitutionGroup="gml:_Feature"/>
+	<xs:element name="PiMaTutkimus" type="ymp:PiMaTutkimusType" substitutionGroup="gml:_Feature"/>
+</xs:schema>
