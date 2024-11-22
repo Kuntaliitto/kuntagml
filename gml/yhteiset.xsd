@@ -834,9 +834,8 @@ tiedot</xs:documentation>
 				<xs:annotation>
 					<xs:documentation>Suunnittelijan pätevyys:
 AA poikkeuksellisen vaativa
-A+ vaativa+
+A+ erittäin vaativa
 A vaativa
-B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
@@ -856,9 +855,8 @@ C vähäinen
 					<xs:documentation>Kunnan vaatima.
 
 AA poikkeuksellisen vaativa
-A+ vaativa+
+A+ erittäin vaativa
 A vaativa
-B+ tavanomainen+
 B tavanomainen
 C vähäinen
 </xs:documentation>
@@ -890,7 +888,7 @@ C vähäinen
 	</xs:complexType>
 	<xs:complexType name="VirallinentodistusType">
 		<xs:sequence>
-			<xs:element name="virallinenTodistus" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="linkkiPatevyysrekisteriin" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="virallisenTodistuksenantaja" type="xs:string" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="virallisenTodistuksenvoimassoloPvm" type="xs:date" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
@@ -921,6 +919,7 @@ C vähäinen
 				<xs:annotation>
 					<xs:documentation>Työnjohtajan pätevyys
 AA poikkeuksellisen vaativa
+A+ erittäin vaativa
 A vaativa
 B+ tavanomainen+
 B tavanomainen
@@ -933,6 +932,7 @@ C vähäinen
 					<xs:documentation>Kunnan vaatima
 
 AA poikkeuksellisen vaativa
+A+ erittäin vaativa
 A vaativa
 B+ tavanomainen+
 B tavanomainen
@@ -1236,8 +1236,8 @@ C vähäinen
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="rakennusoikeusKuutiometreina" type="xs:decimal"></xs:element>
-					<xs:element name="harjanKorkeusrakennusalalla"  type="xs:decimal"></xs:element>
+					<xs:element name="rakennusoikeusKuutiometreina" type="xs:decimal" minOccurs="0"></xs:element>
+					<xs:element name="harjanKorkeusrakennusalalla"  type="xs:decimal" minOccurs="0"></xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -3251,6 +3251,8 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 			<xs:enumeration value="vastaava rakennesuunnittelija"/>
 			<xs:enumeration value="kosteudenhallintakoordinaattori"/>
 			<xs:enumeration value="palotekninen suunnittelija"/>
+			<xs:enumeration value="akustiikkasuunnittelija"/>
+			<xs:enumeration value="maisemarakentamisen suunnittelija"/>			
 			<xs:enumeration value="muu"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3860,9 +3862,8 @@ False: suoramarkkinointi on sallittu</xs:documentation>
 		<xs:annotation>
 			<xs:documentation>Pätevyys:
 AA poikkeuksellisen vaativa 
-A+ vaativa +
+A+ erittäin vaativa
 A vaativa 
-B+ tavanomainen +
 B tavanomainen 
 C vähäinen</xs:documentation>
 		</xs:annotation>
@@ -3870,7 +3871,6 @@ C vähäinen</xs:documentation>
 			<xs:enumeration value="AA"/>
 			<xs:enumeration value="A+"/>
 			<xs:enumeration value="A"/>
-			<xs:enumeration value="B+"/>
 			<xs:enumeration value="B"/>
 			<xs:enumeration value="C"/>
 		</xs:restriction>
@@ -4161,6 +4161,7 @@ C vähäinen</xs:documentation>
 		<xs:annotation>
 			<xs:documentation>Pätevyys:
 AA poikkeuksellisen vaativa 
+A+ erittäin vaativa
 A vaativa 
 B+ tavanomainen +
 B tavanomainen 
@@ -4168,6 +4169,7 @@ C vähäinen</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="AA"/>
+			<xs:enumeration value="A+"/>
 			<xs:enumeration value="A"/>
 			<xs:enumeration value="B+"/>
 			<xs:enumeration value="B"/>

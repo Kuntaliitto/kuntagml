@@ -6,8 +6,7 @@
 	xmlns:gml="http://www.opengis.net/gml" xmlns:yht="http://www.kuntatietopalvelu.fi/gml/yhteiset"
 	targetNamespace="http://www.kuntatietopalvelu.fi/gml/rakennusvalvonta"
 	elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2.6">
-	<xs:import namespace="http://www.opengis.net/gml"
-		schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
 	<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="http://www.paikkatietopalvelu.fi/gml/yhteiset/2.1.11/yhteiset.xsd"/>
 	<!--<xs:import namespace="http://www.kuntatietopalvelu.fi/gml/yhteiset" schemaLocation="yhteiset.xsd"/>-->
 	<!-- ================================================= -->
@@ -32,6 +31,8 @@
 							</xs:choice>
 						</xs:complexType>
 					</xs:element>
+					<xs:element name="alueenTyyppi" type="rakval:ErityistäToimintaaVartenRakennettavanAlueenTyyppiType"  minOccurs="1" maxOccurs="1"/>
+					<xs:element name="alueenPintaAla" type="xs:integer" minOccurs="1" maxOccurs="1"/>
 					<xs:element name="lisatieto" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
@@ -1048,14 +1049,13 @@
 					</xs:element>
 					<xs:element name="hankkeenVaativuus" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>AA Poikkeuksellisen vaativa, A Vaativa, A+ Vaativa+, B+ Tavanomainen+,B Tavanomainen, C Vähäinen</xs:documentation>
+							<xs:documentation>AA Poikkeuksellisen vaativa, A Vaativa, A+ Erittäin vaativa,B Tavanomainen, C Vähäinen</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:enumeration value="AA"/>
 								<xs:enumeration value="A+"/>
 								<xs:enumeration value="A"/>
-								<xs:enumeration value="B+"/>
 								<xs:enumeration value="B"/>
 								<xs:enumeration value="C"/>
 							</xs:restriction>
@@ -1654,6 +1654,19 @@
 			<xs:enumeration value="laadunvarmistusselvitys"/>
 			<xs:enumeration value="selvitys rakennuksen kunnosta toimenpidealueen osalta"/>
 
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErityistäToimintaaVartenRakennettavanAlueenTyyppiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Aurinkopaneelikenttä"/>
+			<xs:enumeration value="Kaatopaikka"/>
+			<xs:enumeration value="Puisto"/>
+			<xs:enumeration value="Pysäköintialue"/>
+			<xs:enumeration value="Tapahtuma-alue"/>
+			<xs:enumeration value="Tori"/>
+			<xs:enumeration value="Urheilualue"/>
+			<xs:enumeration value="Varastointialue"/>
+			<xs:enumeration value="Muu maisemaa muuttava toimenpide"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
