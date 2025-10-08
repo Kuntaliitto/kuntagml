@@ -564,13 +564,17 @@ tiedot</xs:documentation>
 												<xs:enumeration value="muu katselmus"/>
 												<xs:enumeration value="muu tarkastus"/>
 												<xs:enumeration value="aloituskokous"/>
+												<xs:enumeration value="aloitusilmoitus"/>
 												<xs:enumeration value="rakennuksen paikan merkitseminen"/>
 												<xs:enumeration value="rakennuksen paikan tarkastaminen"/>
+												<xs:enumeration value="sijaintikatselmus"/>
 												<xs:enumeration value="pohjakatselmus"/>
 												<xs:enumeration value="rakennekatselmus"/>
 												<xs:enumeration value="lämpö-, vesi- ja ilmanvaihtolaitteiden katselmus"/>
+												<xs:enumeration value="erillinen valvontakäynti"/>
 												<xs:enumeration value="osittainen loppukatselmus"/>
 												<xs:enumeration value="loppukatselmus"/>
+												<xs:enumeration value="ei tiedossa"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
